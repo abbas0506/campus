@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController; //my authcontroller
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SuperAdmin;
 use App\Http\Controllers\ExamController\DepartmentController;
+use App\Http\Controllers\ExamController\HodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,5 @@ Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::group(['middleware' => 'controller'], function () {
     Route::view('controller', 'controller.index');
     Route::resource('departments', DepartmentController::class);
+    Route::resource('hods', HodController::class);
 });

@@ -5,9 +5,15 @@
         <h1 class="text-indigo-500 text-xl py-12">Departments <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>Edit</span> </h1>
     </div>
 
-    @error('edit')
-    <div class="text-red-400">Update error!</div>
-    @enderror
+    @if ($errors->any())
+    <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
     <form action="{{route('departments.update',$department)}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf

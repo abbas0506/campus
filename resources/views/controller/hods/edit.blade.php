@@ -2,7 +2,7 @@
 @section('page-content')
 <div class="container px-8">
     <div class="flex items-center">
-        <h1 class="text-indigo-500 text-xl py-12">Departments <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>Edit</span> </h1>
+        <h1 class="text-indigo-500 text-xl py-12">HODs<span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>Edit</span> </h1>
     </div>
 
     @error('edit')
