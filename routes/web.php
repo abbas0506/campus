@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController; //my authcontroller
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SuperAdmin;
-use App\Http\Controllers\superadmin\DepartmentController;
+use App\Http\Controllers\ExamController\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ Auth::routes();
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 
-Route::group(['middleware' => 'superadmin'], function () {
-    Route::view('superadmin', 'superadmin.index');
+Route::group(['middleware' => 'controller'], function () {
+    Route::view('controller', 'controller.index');
     Route::resource('departments', DepartmentController::class);
 });

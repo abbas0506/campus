@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\superadmin;
+namespace App\Http\Controllers\ExamController;
 
 use App\Http\Controllers\Controller;
-use App\Models\Department;
 use Illuminate\Http\Request;
 use Exception;
+use App\Models\Department;
+
 
 class DepartmentController extends Controller
 {
@@ -18,7 +19,7 @@ class DepartmentController extends Controller
     {
         //
         $departments = Department::all();
-        return view('superadmin.departments.index', compact('departments'));
+        return view('controller.departments.index', compact('departments'));
     }
 
     /**
@@ -29,7 +30,7 @@ class DepartmentController extends Controller
     public function create()
     {
         //
-        return view('superadmin.departments.create');
+        return view('controller.departments.create');
     }
 
     /**
@@ -75,7 +76,7 @@ class DepartmentController extends Controller
     {
         //
         $department = Department::findOrFail($id);
-        return view('superadmin.departments.edit', compact('department'));
+        return view('controller.departments.edit', compact('department'));
     }
 
     /**

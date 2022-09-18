@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->nullable();
             $table->string('pic', 100)->default('default.png');
-            $table->enum('role', ['superadmin', 'controller', 'hod', 'instructor', 'student'])->default('student');
+            $table->enum('role', ['superadmin', 'controller', 'kpo', 'hod', 'interanal', 'instructor', 'student'])->default('student');
             $table->boolean('active')->default(true);
             $table->string('facebook_id')->nullable();
             $table->string('google_id')->nullable();

@@ -23,5 +23,11 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'superadmin',
         ]);
+        User::create([
+            'name' => 'Dr Sajjad',
+            'email' => 'controller@uo.edu.pk',
+            'password' => Hash::make('password'),
+            'role' => 'controller',
+        ]);
     }
 }
