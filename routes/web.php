@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\AuthController; //my authcontroller
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +19,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        $user = Auth::user();
+        if ($user->hasRole('superadmin')) return redirect('superadmin');
+        else if ($user->hasRole('controller')) return redirect('controller');
+        else if ($user->hasRole('hod')) return redirect('hod');
+        else if ($user->hasRole('instructor')) return redirect('instructor');
+        else return redirect('student');
+    } else
+        return view('index');
+});
+
+Auth::routes();
+Route::post('login', [AuthController::class, 'login']);
+Route::get('login/secondfactor', [AuthController::class, 'view_second_factor']);
+
+Route::group(['middleware' => 'superadmin'], function () {
+    Route::view('superadmin', 'superadmin.index');
+    Route::view('departments', 'superadmin.departments.index');
 });
