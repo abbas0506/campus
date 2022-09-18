@@ -58,7 +58,7 @@ class AuthController extends Controller
         }
     }
 
-    public function verify_second_factor(Request $request)
+    public function verify_step2(Request $request)
     {
         //get 2nd factor secret code sent to gmail
         //if matched, redirect to user dashboard

@@ -11,7 +11,7 @@
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
         body {
@@ -22,7 +22,7 @@
 
 <body>
     @yield('content')
-
+    <script src="{{asset('js/sweetalert2@10.js')}}"></script>
 </body>
 
 </html>

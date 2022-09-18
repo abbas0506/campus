@@ -9,4 +9,10 @@
     .btn-indigo {
         @apply text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg;
     }
+    .icon-gray {
+        @apply text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white;
+    }
+    .alert-success {
+        @apply bg-green-100 text-green-700 px-4 py-3;
+    }
 }

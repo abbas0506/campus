@@ -1,0 +1,20 @@
+@extends('layouts.superadmin')
+@section('page-content')
+<div class="container px-8">
+    <div class="flex items-center">
+        <h1 class="text-indigo-500 text-xl py-12">Departments <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>New</span> </h1>
+    </div>
+
+    @error('create')
+    <div class="text-red-400">Error</div>
+    @enderror
+    <form action="{{route('departments.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
+        @csrf
+        <label for="" class="text-sm text-gray-400">Name</label>
+        <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter department name">
+        <button type="submit" class="btn-indigo mt-3">Save</button>
+    </form>
+
+</div>
+
+@endsection
