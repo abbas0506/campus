@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController; //my authcontroller
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SuperAdmin;
-use App\Http\Controllers\ExamController\DepartmentController;
-use App\Http\Controllers\ExamController\HodController;
+use App\Http\Controllers\CE\DepartmentController;
+use App\Http\Controllers\CE\ExamController;
+use App\Http\Controllers\CE\HodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +38,8 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 
 Route::group(['middleware' => 'controller'], function () {
-    Route::view('controller', 'controller.index');
+    Route::view('controller', 'CE.index');
     Route::resource('departments', DepartmentController::class);
     Route::resource('hods', HodController::class);
+    Route::resource('exams', ExamController::class);
 });

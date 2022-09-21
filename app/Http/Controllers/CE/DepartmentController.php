@@ -1,21 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\ExamController;
+namespace App\Http\Controllers\CE;
 
-use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use App\Models\Department;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Exception;
+use App\Models\Department;
 
-class HodController extends Controller
+
+class DepartmentController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         //
-        $hods = User::where('role', 'hod')->get();
-        return view('controller.hods.index', compact('hods'));
+        $departments = Department::all();
+        return view('CE.departments.index', compact('departments'));
     }
 
     /**
@@ -26,8 +30,7 @@ class HodController extends Controller
     public function create()
     {
         //
-        $departments = Department::all();
-        return view('controller.hods.create', compact('departments'));
+        return view('CE.departments.create');
     }
 
     /**
@@ -40,20 +43,14 @@ class HodController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
+            'name' => 'required|unique:departments',
         ]);
 
         try {
-            $request->merge([
-                'password' => Hash::make('password'),
-                'role' => 'hod',
-
-            ]);
-            User::create($request->all());
-            return redirect('hods')->with('success', 'Successfully created');
+            Department::create($request->all());
+            return redirect()->route('departments.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage());
+            return redirect()->back()->withErrors(['create' => $e->getMessage()]);
             // something went wrong
         }
     }
@@ -78,8 +75,8 @@ class HodController extends Controller
     public function edit($id)
     {
         //
-        $hod = User::findOrFail($id);
-        return view('controller.hods.edit', compact('hod'));
+        $department = Department::findOrFail($id);
+        return view('CE.departments.edit', compact('department'));
     }
 
     /**
@@ -93,12 +90,12 @@ class HodController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:departments,name,' . $id, 'id',
         ]);
-        $hod = User::findOrFail($id);
+        $department = Department::findOrFail($id);
         try {
-            $hod->update($request->all());
-            return redirect()->route('hods.index')->with('success', 'Successfully updated');;
+            $department->update($request->all());
+            return redirect()->route('departments.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
                 ->withErrors(['update' => $ex->getMessage()]);
@@ -114,9 +111,9 @@ class HodController extends Controller
     public function destroy($id)
     {
         //
-        $hod = User::findOrFail($id);
+        $department = Department::findOrFail($id);
         try {
-            $hod->delete();
+            $department->delete();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);

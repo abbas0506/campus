@@ -13,9 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('hods', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->unsignedBigInteger('user_id')->nullable(); //HOD
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
         });
     }
 
@@ -26,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hods');
+        Schema::dropIfExists('departments');
     }
 };

@@ -24,13 +24,27 @@
             @endforeach
         </select>
 
-        <label for="" class="text-sm text-gray-400 mt-3">Name</label>
+        <label for="" class="text-sm text-gray-400 mt-3">Choose from existing</label>
+        <select name="user_id" id="" class="input-indigo p-2">
+            <option value="">Select a person</option>
+            @foreach($users as $user)
+            <option value="{{$user->id}}">{{$user->name}}</option>
+            @endforeach
+        </select>
+        <div class="flex items-center text-gray-600 border-b border-t border-dashed border-indigo-800 bg-indigo-100 mt-12 mb-5 p-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-6 6m0 0l-6-6m6 6V9a6 6 0 0112 0v3" />
+            </svg>
+            Add New <span class="text-sm ml-4">(only if the person does not exist in above list)</span>
+        </div>
+
+        <label for="" class="text-sm text-gray-400">Name</label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">
 
         <label for="" class="text-sm text-gray-400 mt-3">Email</label>
         <input type="text" id='email' name='email' class="input-indigo" placeholder="Enter email address">
 
-        <button type="submit" class="btn-indigo mt-3">Save</button>
+        <button type="submit" class="btn-indigo mt-4">Save</button>
     </form>
 
 </div>

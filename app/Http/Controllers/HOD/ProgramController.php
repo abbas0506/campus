@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\ExamController;
+namespace App\Http\Controllers\Hod;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Exception;
-use App\Models\Department;
+use App\Models\Program;
 
-
-class DepartmentController extends Controller
+class ProgramController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,8 @@ class DepartmentController extends Controller
     public function index()
     {
         //
-        $departments = Department::all();
-        return view('controller.departments.index', compact('departments'));
+        $programs = Program::all();
+        return view('Hod.programs.index', compact('programs'));
     }
 
     /**
@@ -30,7 +29,7 @@ class DepartmentController extends Controller
     public function create()
     {
         //
-        return view('controller.departments.create');
+        return view('Hod.programs.create');
     }
 
     /**
@@ -47,8 +46,8 @@ class DepartmentController extends Controller
         ]);
 
         try {
-            Department::create($request->all());
-            return redirect()->route('departments.index')->with('success', 'Successfully created');
+            Program::create($request->all());
+            return redirect()->route('programs.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['create' => $e->getMessage()]);
             // something went wrong
@@ -75,8 +74,8 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         //
-        $department = Department::findOrFail($id);
-        return view('controller.departments.edit', compact('department'));
+        $department = Program::findOrFail($id);
+        return view('Hod.programs.edit', compact('department'));
     }
 
     /**
@@ -92,10 +91,10 @@ class DepartmentController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
-        $department = Department::findOrFail($id);
+        $department = Program::findOrFail($id);
         try {
             $department->update($request->all());
-            return redirect()->route('departments.index')->with('success', 'Successfully updated');;
+            return redirect()->route('programs.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
                 ->withErrors(['update' => $ex->getMessage()]);
@@ -111,7 +110,7 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         //
-        $department = Department::findOrFail($id);
+        $department = Program::findOrFail($id);
         try {
             $department->delete();
             return redirect()->back()->with('success', 'Successfully deleted');

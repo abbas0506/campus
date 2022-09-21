@@ -1,15 +1,15 @@
 @extends('layouts.basic')
 @section('content')
 <!-- header -->
-<header class="text-gray-600 body-font border-b border-gray-300">
+<header class="fixed top-0 z-10 bg-white flex w-screen text-gray-600 body-font border-b border-gray-300">
     <div class="container mx-auto flex flex-wrap px-5 py-3 items-center">
         <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
             <img class="object-cover object-center rounded" alt="logo" src="{{asset('/images/logo/logo-light.png')}}" width='100'>
-            <span class="text-lg md:text-xl ">Examination System</span>
+            <span class="text-lg md:text-xl hidden md:flex ">Examination System</span>
         </a>
         <div class="ml-auto flex flex-wrap items-center text-base justify-center">
-            <span class="invisible md:visible mr-3 ">{{auth()->user()->name}}</span>
-            <span class="invisible md:visible flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
+            <span class="hidden md:flex mr-3 ">{{auth()->user()->name}}</span>
+            <span class="hidden md:flex flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 items-center justify-center text-white relative z-10">
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
                     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
@@ -23,7 +23,7 @@
         </div>
     </div>
 </header>
-<div class="flex w-screen min-h-screen">
+<div class="flex absolute top-20 w-screen min-h-screen">
     <div class="absolute md:relative w-full md:w-1/5 bg-gray-100" id='sidebar'>
         <aside class="" aria-label="Sidebar">
             <div class="overflow-y-auto py-8 px-3">
@@ -43,7 +43,6 @@
                             </svg>
 
                             <span class="flex-1 ml-3 whitespace-nowrap">Departments</span>
-                            <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">0</span>
                         </a>
                     </li>
                     <li>
@@ -53,7 +52,32 @@
                             </svg>
 
                             <span class="flex-1 ml-3 whitespace-nowrap">HODs</span>
-                            <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">0</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('hods')}}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 icon-gray">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" />
+                            </svg>
+
+                            <span class="flex-1 ml-3 whitespace-nowrap">Sessions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('exams')}}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 icon-gray">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                            </svg>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Exams</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('hods')}}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 icon-gray">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Result Deadline</span>
                         </a>
                     </li>
                     <li>
