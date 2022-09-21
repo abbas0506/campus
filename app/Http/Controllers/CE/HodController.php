@@ -26,9 +26,10 @@ class HodController extends Controller
     public function create()
     {
         //
+        $hods = User::where('role', 'hod')->get();
         $departments = Department::all();
         $users = User::all();
-        return view('CE.hods.create', compact('departments', 'users'));
+        return view('CE.hods.create', compact('departments', 'users', 'hods'));
     }
 
     /**
