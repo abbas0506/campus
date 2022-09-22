@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('phone')->unique()->nullable();
             $table->string('cnic')->unique()->nullable();
             $table->string('pic', 100)->default('default.png');
+
             $table->boolean('active')->default(true);
             $table->string('facebook_id')->nullable();
             $table->string('google_id')->nullable();

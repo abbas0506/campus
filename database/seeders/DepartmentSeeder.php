@@ -16,6 +16,9 @@ class DepartmentSeeder extends Seeder
     public function run()
     {
         //
+        Department::create(['name' => 'Management']);
+        Department::create(['name' => 'Examination Branch']);
+        Department::create(['name' => 'Accounts']);
         Department::create(['name' => 'Department of Zoology']);
         Department::create(['name' => 'Department of Botany']);
         Department::create(['name' => 'Department of Chemistry']);

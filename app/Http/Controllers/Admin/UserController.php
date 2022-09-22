@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Models\User;
+use App\Models\UserDepartment;
+use Exception;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -15,6 +21,8 @@ class UserController extends Controller
     public function index()
     {
         //
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -25,6 +33,8 @@ class UserController extends Controller
     public function create()
     {
         //
+        $departments = Department::all();
+        return view('admin.users.create', compact('departments'));
     }
 
     /**
@@ -36,6 +46,38 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'cnic' => 'required',
+            'department_id' => 'required|numeric'
+
+        ]);
+        DB::beginTransaction();
+        try {
+
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'cnic' => $request->cnic,
+                'password' => Hash::make('password'),
+            ]);
+
+            $user->save();
+
+            UserDepartment::create(
+                [
+                    'user_id' => $user->id,
+                    'department_id' => $request->department_id,
+                ]
+            );
+            DB::commit();
+            return redirect('users')->with('success', 'Successfully created');
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()
+                ->withErrors($ex->getMessage());
+        }
     }
 
     /**
@@ -58,6 +100,8 @@ class UserController extends Controller
     public function edit($id)
     {
         //
+        $user = User::findOrFail($id);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -70,6 +114,20 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users,email,' . $id, 'id',
+            'cnic' => 'required|unique:users,cnic,' . $id, 'id',
+        ]);
+
+        $user = User::findOrFail($id);
+        try {
+            $user->update($request->all());
+            return redirect('users')->with('success', 'Successfully updated');;
+        } catch (Exception $ex) {
+            return redirect()->back()
+                ->withErrors($ex->getMessage());
+        }
     }
 
     /**
@@ -81,5 +139,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+        try {
+            $user->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 }

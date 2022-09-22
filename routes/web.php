@@ -37,16 +37,18 @@ Route::get('/', function () {
 Auth::routes();
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
+Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
 Route::group(['middleware' => 'admin'], function () {
     Route::view('admin', 'admin.index');
     Route::resource('users', UserController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('hods', HodController::class);
-    // Route::resource('hodassignment', HodAssignmentController::class);
 
     Route::get('assign/hod/{id}', [HodController::class, 'assign']);
     Route::post('post/assign/hod', [HodController::class, 'post_assign']);
+    Route::get('rep/hod/{id}', [HodController::class, 'replace']);
+    Route::post('post/rep/hod', [HodController::class, 'post_replace']);
 });
 Route::group(['middleware' => 'controller'], function () {
     Route::view('controller', 'ce.index');

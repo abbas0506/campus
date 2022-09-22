@@ -6,7 +6,7 @@
             <a href="{{url('hods')}}">
                 HODs
             </a>
-            <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>Assign</span>
+            <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>Replace</span>
         </h1>
     </div>
 
@@ -21,7 +21,7 @@
     @endif
 
     <div class="mb-4 text-lg">{{$selected_department->name}}</div>
-    <a href="{{route('hods.edit', $selected_department)}}" class="flex items-center justify-center text-gray-600 border border-indigo-600 bg-indigo-100 hover:bg-indigo-200 mt-8 mb-5 p-4 w-full">
+    <a href="{{url('create/hod',$selected_department)}}" class="flex items-center justify-center text-gray-600 border border-indigo-600 bg-indigo-100 hover:bg-indigo-200 mt-8 mb-5 p-4 w-full">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" />
         </svg>
@@ -36,7 +36,7 @@
         </div>
         <div class="flex flex-col ml-8">
             <label for="" class="text-sm text-gray-400">Filter</label>
-            <select name="department_id" id="department_filter" class="input-indigo p-2" onchange="filter()">
+            <select name="department_id" id="" class="input-indigo p-2">
                 <option value="">Click here</option>
                 @foreach($departments as $department)
                 <option value="{{$department->id}}">{{$department->name}}</option>
@@ -49,7 +49,7 @@
         <thead>
             <tr class="border-b border-slate-200">
                 <th class="py-2 text-gray-600 text-left">Name</th>
-                <th class="py-2 text-gray-600 text-left">From</th>
+                <th class="py-2 text-gray-600 text-left">Department</th>
                 <th class="py-2 text-gray-600 justify-center">Actions</th>
             </tr>
         </thead>
@@ -62,7 +62,9 @@
                     <div class="text-sm text-gray-500 font-medium">{{$user->email}}</div>
                 </td>
                 <td class="py-2 text-sm text-gray-500 font-medium">
-                    <div>{{$user->departments->first()->name}}</div>
+                    @foreach($user->departments as $department)
+                    <div>{{$department->name}}</div>
+                    @endforeach
                 </td>
                 <td class="py-2 flex items-center justify-center">
                     <form action="{{url('post/assign/hod')}}" method="POST" id='assign_form{{$user->id}}' class="mt-2 text-sm">
@@ -71,10 +73,10 @@
                         <input type="text" name='user_id' value="{{$user->id}}" class="hidden">
                         <button type="submit" class="flex bg-green-200 text-green-800 px-3 py-2 rounded" onclick="assign('{{$user->id}}')">
 
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 icon-gray">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                             </svg>
-                            assign
+                            <span class="ml-1">replace</span>
                         </button>
                     </form>
                 </td>
@@ -87,22 +89,10 @@
 <script type="text/javascript">
     function search(event) {
         var searchtext = event.target.value.toLowerCase();
+        var str = 0;
         $('.tr').each(function() {
             if (!(
                     $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
-                )) {
-                $(this).addClass('hidden');
-            } else {
-                $(this).removeClass('hidden');
-            }
-        });
-    }
-
-    function filter() {
-        var searchtext = $('#department_filter option:selected').text().toLowerCase();
-        $('.tr').each(function() {
-            if (!(
-                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
                 )) {
                 $(this).addClass('hidden');
             } else {

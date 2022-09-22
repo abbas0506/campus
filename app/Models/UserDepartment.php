@@ -5,21 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class UserDepartment extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
         'user_id',
-
+        'department_id',
     ];
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function users()
+    public function department()
     {
-        // return $this->hasMany(Department::class);
-        return $this->belongsToMany(User::class, 'user_departments');
+        return $this->belongsTo(Department::class);
     }
 }
