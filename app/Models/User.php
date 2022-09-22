@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'role',
         'phone',
+        'cnic',
         'pic',
         'facebook_id',
         'google_id',
@@ -49,6 +50,22 @@ class User extends Authenticatable
 
     public function hasRole(string $role)
     {
-        return $this->role === $role;
+        // return $this->role === $role;
+        return true;
+    }
+    public function roles()
+    {
+        // return $this->hasMany(UserRole::class);
+        $user_roles = $this->hasMany(UserRole::class)->get();
+        $roles_list = collect();
+        foreach ($user_roles as $user_role) {
+            $roles_list->add($user_role->role);
+        }
+        return $roles_list;
+    }
+
+    public function departments()
+    {
+        return $this->hasMany(Department::class);
     }
 }

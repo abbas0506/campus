@@ -1,4 +1,4 @@
-@extends('layouts.controller')
+@extends('layouts.admin')
 @section('page-content')
 <div class="container px-8">
     <div class="flex mb-5 flex-col md:flex-row md:items-center">
@@ -39,7 +39,7 @@
         <tbody>
 
             @foreach($departments->sortByDesc('id') as $department)
-            <tr class="tr">
+            <tr class="tr border-b">
                 <td class="py-2">{{$department->name}}</td>
                 <td class="py-2 flex items-center justify-center">
                     <a href="{{route('departments.edit', $department)}}">

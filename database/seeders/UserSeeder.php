@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\UserRole;
 
 class UserSeeder extends Seeder
 {
@@ -18,16 +19,18 @@ class UserSeeder extends Seeder
     {
         //
         User::create([
-            'name' => 'Super Admin',
-            'email' => 'superadmin@uo.edu.pk',
+            'name' => 'Vice Chancellor',
+            'email' => 'admin@uo.edu.pk',
             'password' => Hash::make('password'),
-            'role' => 'superadmin',
+            'cnic' => '35301-1234567-1',
         ]);
+
+
         User::create([
             'name' => 'Dr Sajjad',
             'email' => 'controller@uo.edu.pk',
             'password' => Hash::make('password'),
-            'role' => 'controller',
+            'cnic' => '36402-1234567-2',
         ]);
     }
 }

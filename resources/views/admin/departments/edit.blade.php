@@ -1,4 +1,4 @@
-@extends('layouts.controller')
+@extends('layouts.admin')
 @section('page-content')
 <div class="container px-8">
     <div class="flex items-center">

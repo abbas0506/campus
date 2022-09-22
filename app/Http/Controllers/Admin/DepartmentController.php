@@ -1,25 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\CE;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Exception;
-use App\Models\Department;
-
 
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
         $departments = Department::all();
-        return view('CE.departments.index', compact('departments'));
+        return view('admin.departments.index', compact('departments'));
     }
 
     /**
@@ -30,7 +25,7 @@ class DepartmentController extends Controller
     public function create()
     {
         //
-        return view('CE.departments.create');
+        return view('admin.departments.create');
     }
 
     /**
@@ -76,7 +71,7 @@ class DepartmentController extends Controller
     {
         //
         $department = Department::findOrFail($id);
-        return view('CE.departments.edit', compact('department'));
+        return view('admin.departments.edit', compact('department'));
     }
 
     /**
