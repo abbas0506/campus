@@ -17,13 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone')->unique()->nullable();
-            $table->string('cnic')->unique()->nullable();
-            $table->string('pic', 100)->default('default.png');
-
+            $table->timestamp('email_verified_at')->nullable();
             $table->boolean('active')->default(true);
+            $table->enum('user_type', ['employee', 'student']);
+
             $table->string('facebook_id')->nullable();
             $table->string('google_id')->nullable();
 

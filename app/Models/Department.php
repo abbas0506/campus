@@ -10,6 +10,7 @@ class Department extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'title', //degree title
         'user_id',
 
     ];

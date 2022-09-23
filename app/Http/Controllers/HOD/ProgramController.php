@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Hod;
+namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class ProgramController extends Controller
     {
         //
         $programs = Program::all();
-        return view('Hod.programs.index', compact('programs'));
+        return view('hod.programs.index', compact('programs'));
     }
 
     /**
@@ -29,7 +29,7 @@ class ProgramController extends Controller
     public function create()
     {
         //
-        return view('Hod.programs.create');
+        return view('hod.programs.create');
     }
 
     /**
@@ -75,7 +75,7 @@ class ProgramController extends Controller
     {
         //
         $department = Program::findOrFail($id);
-        return view('Hod.programs.edit', compact('department'));
+        return view('hod.programs.edit', compact('department'));
     }
 
     /**
