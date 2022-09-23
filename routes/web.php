@@ -9,7 +9,13 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\CE\ExamController;
 use App\Http\Controllers\Admin\HodController;
-use App\Http\Controllers\HodAssignmentController;
+use App\Http\Controllers\hod\CourseAllocationController;
+use App\Http\Controllers\hod\InstructorController;
+use App\Http\Controllers\Hod\ProgramController;
+use App\Http\Controllers\Hod\CourseController;
+use App\Http\Controllers\hod\ResultController;
+use App\Http\Controllers\hod\SchemeController;
+use App\Http\Controllers\hod\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,11 +31,12 @@ use App\Http\Controllers\HodAssignmentController;
 Route::get('/', function () {
     if (Auth::check()) {
         $user = Auth::user();
-        if ($user->hasRole('admin')) return redirect('admin');
-        else if ($user->hasRole('ce')) return redirect('ce');
-        else if ($user->hasRole('hod')) return redirect('hod');
-        else if ($user->hasRole('instructor')) return redirect('instructor');
-        else return redirect('student');
+        return redirect('hod');
+        // if ($user->hasRole('admin')) return redirect('admin');
+        // else if ($user->hasRole('ce')) return redirect('ce');
+        // else if ($user->hasRole('hod')) return redirect('hod');
+        // else if ($user->hasRole('instructor')) return redirect('instructor');
+        // else return redirect('student');
     } else
         return view('index');
 });
@@ -42,8 +49,10 @@ Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 Route::group(['middleware' => 'admin'], function () {
     Route::view('admin', 'admin.index');
     Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('hods', HodController::class);
+
 
     Route::get('assign/hod/{id}', [HodController::class, 'assign']);
     Route::post('post/assign/hod', [HodController::class, 'post_assign']);
@@ -53,4 +62,15 @@ Route::group(['middleware' => 'admin'], function () {
 Route::group(['middleware' => 'controller'], function () {
     Route::view('controller', 'ce.index');
     Route::resource('exams', ExamController::class);
+});
+
+Route::group(['middleware' => 'hod'], function () {
+    Route::view('hod', 'hod.index');
+    Route::resource('programs', ProgramController::class);
+    Route::resource('courses', CourseController::class);
+    Route::resource('instructors', InstructorController::class);
+    Route::resource('scheme', SchemeController::class);
+    Route::resource('course-allocations', CourseAllocationController::class);
+    Route::resource('students', StudentController::class);
+    Route::resource('results', ResultController::class);
 });

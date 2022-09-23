@@ -32,5 +32,12 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'cnic' => '36402-1234567-2',
         ]);
+
+        User::create([
+            'name' => 'Head',
+            'email' => 'hod@uo.edu.pk',
+            'password' => Hash::make('password'),
+            'cnic' => '36402-1234577-2',
+        ]);
     }
 }

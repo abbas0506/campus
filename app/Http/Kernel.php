@@ -71,5 +71,6 @@ class Kernel extends HttpKernel
 
         'admin' => \App\Http\Middleware\Admin::class,
         'controller' => \App\Http\Middleware\ExamController::class,
+        'hod' => \App\Http\Middleware\Hod::class,
     ];
 }

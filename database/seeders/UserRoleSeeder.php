@@ -28,5 +28,9 @@ class UserRoleSeeder extends Seeder
             'user_id' => 2,
             'role_id' => 6, //instructor
         ]);
+        UserRole::create([
+            'user_id' => 3,
+            'role_id' => 4, //instructor
+        ]);
     }
 }
