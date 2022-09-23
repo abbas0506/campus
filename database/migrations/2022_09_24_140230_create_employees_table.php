@@ -29,7 +29,7 @@ return new class extends Migration
             $table->unsignedBigInteger('gender_id')->nullable();
             $table->unsignedBigInteger('nationality_id')->nullable();
             $table->unsignedBigInteger('province_id')->nullable();
-            $table->unsignedBigInteger('domicile_id')->nullable();
+            $table->unsignedBigInteger('district_id')->nullable();
             $table->unsignedBigInteger('religion_id')->nullable();
 
             $table->unsignedBigInteger('department_id'); //parent department
@@ -58,9 +58,9 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 
-            $table->foreign('domicile_id')
+            $table->foreign('district_id')
                 ->references('id')
-                ->on('domiciles')
+                ->on('districts')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 

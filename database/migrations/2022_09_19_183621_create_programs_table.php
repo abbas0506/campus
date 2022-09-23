@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('code');
+            $table->string('name')->unique();
+            $table->string('short');
+            $table->string('code')->unique();
             $table->unsignedInteger('duration'); //in years
             $table->timestamps();
         });
