@@ -20,9 +20,13 @@
 
     <form action="{{route('departments.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
-        <label for="" class="text-sm text-gray-400">Name</label>
-        <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter department name">
-        <button type="submit" class="btn-indigo mt-3">Save</button>
+        <label for="" class="text-sm text-gray-400">Full Name</label>
+        <input type="text" id='' name='name' class="input-indigo" placeholder="Department of Analytical Chemistry">
+
+        <label for="" class="text-sm text-gray-400 mt-3">Display Name <span class="text-sm">(to be displayed on final degree)</span></label>
+        <input type="text" id='' name='title' class="input-indigo" placeholder="Department of Chemistry">
+
+        <button type="submit" class="btn-indigo mt-4">Save</button>
     </form>
 
 </div>

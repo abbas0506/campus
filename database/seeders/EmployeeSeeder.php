@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\UserRole;
+use App\Models\Employee;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class UserRoleSeeder extends Seeder
+class EmployeeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,21 +16,21 @@ class UserRoleSeeder extends Seeder
     public function run()
     {
         //
-        UserRole::create([
+        Employee::create([
             'user_id' => 1,
-            'role_id' => 1, //admin
+            'department_id' => 4,
+            'cnic' => '35301-1232183-0'
+
         ]);
-        UserRole::create([
+        Employee::create([
             'user_id' => 2,
-            'role_id' => 2, //ce
+            'department_id' => 4,
+            'cnic' => '35301-1232183-1'
         ]);
-        UserRole::create([
-            'user_id' => 2,
-            'role_id' => 6, //instructor
-        ]);
-        UserRole::create([
+        Employee::create([
             'user_id' => 3,
-            'role_id' => 4, //instructor
+            'department_id' => 5,
+            'cnic' => '36301-1232183-1'
         ]);
     }
 }

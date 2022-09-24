@@ -26,6 +26,7 @@
     <form action="{{route('hods.update', $selected_department)}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
         @method('PATCH')
+
         <label for="" class="text-sm text-gray-400">Name</label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">
 
@@ -35,6 +36,7 @@
         <label for="" class="text-sm text-gray-400 mt-3">CNIC <span class="ml-1">( xxxxx-xxxxxxx-x )</span></label>
         <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Enter CNIC">
 
+        <input type="text" name="department_id" value="{{$selected_department->id}}" hidden>
         <button type="submit" class="btn-indigo mt-4">Save</button>
     </form>
 

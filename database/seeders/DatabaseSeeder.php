@@ -24,8 +24,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
         $this->call([
-            RoleSeeder::class,
+            RolesAndPermissionsSeeder::class, //spatie
             GenderSeeder::class,
             ReligionSeeder::class,
             NationalitySeeder::class,
@@ -40,10 +42,8 @@ class DatabaseSeeder extends Seeder
             FacultySeeder::class,
             JobtypeSeeder::class,
 
-
             UserSeeder::class,
-            UserRoleSeeder::class,
-            UserDepartmentSeeder::class,
+            EmployeeSeeder::class,
 
         ]);
     }

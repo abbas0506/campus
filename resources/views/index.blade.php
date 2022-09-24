@@ -7,6 +7,16 @@
             <h1 class="title-font sm:text-4xl md:text-4xl mb-4 font-medium text-gray-900">EXAMINATION SYSTEM</h1>
             <p class="mb-8 leading-relaxed">University of Okara, Pakistan</p>
 
+            @if ($errors->any())
+            <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <form action="{{url('login')}}" method="post" class="w-full">
                 @csrf
                 <div class="flex flex-col w-full items-start">
@@ -20,21 +30,7 @@
                     </div>
                     <button type="submit" class="w-full md:w-1/4 mt-4 btn-indigo">Login</button>
                 </div>
-                @error('auth')
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3" role="alert" id='close_alert'>
-                    <strong class="font-bold">Error!</strong>
-                    <span class="block sm:inline">User not found</span>
-                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="hideme()">
-                        <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <title>Close</title>
-                            <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-                        </svg>
-                    </span>
-                </div>
-                @enderror
             </form>
-
-
         </div>
         <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
             <img class="object-cover object-center rounded" alt="logo" src="{{asset('/images/logo/logo-light.png')}}" width='700'>

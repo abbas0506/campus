@@ -43,11 +43,11 @@
             <tr class="tr border-b">
                 <td class="py-2">
                     <div>{{$user->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$user->cnic}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$user->employee->cnic}}</div>
                     <div class="text-sm text-gray-500 font-medium">{{$user->email}}</div>
                 </td>
                 <td class="py-2 text-sm text-gray-500 font-medium">
-                    <div>{{$user->departments->first()->name}}</div>
+                    <div>{{$user->employee->department->name}}</div>
                 </td>
                 <td class="py-2 flex items-center justify-center">
                     <a href="{{route('users.edit', $user)}}">

@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController; //my authcontroller
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\DepartmentHodController;
 use App\Http\Controllers\CE\ExamController;
 use App\Http\Controllers\Admin\HodController;
 use App\Http\Controllers\hod\CourseAllocationController;
@@ -31,12 +32,11 @@ use App\Http\Controllers\hod\StudentController;
 Route::get('/', function () {
     if (Auth::check()) {
         $user = Auth::user();
-        return redirect('hod');
-        // if ($user->hasRole('admin')) return redirect('admin');
-        // else if ($user->hasRole('ce')) return redirect('ce');
-        // else if ($user->hasRole('hod')) return redirect('hod');
-        // else if ($user->hasRole('instructor')) return redirect('instructor');
-        // else return redirect('student');
+        if ($user->hasRole('admin')) return redirect('admin');
+        else if ($user->hasRole('controller')) return redirect('controller');
+        else if ($user->hasRole('hod')) return redirect('hod');
+        else if ($user->hasRole('instructor')) return redirect('instructor');
+        else return redirect('student');
     } else
         return view('index');
 });
@@ -46,25 +46,27 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
-Route::group(['middleware' => 'admin'], function () {
+Route::group(['middleware' => ['role:admin']], function () {
     Route::view('admin', 'admin.index');
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('departments', DepartmentController::class);
-    Route::resource('hods', HodController::class);
+    Route::resource('departmenthods', DepartmentHodController::class);
 
+    // Route::resource('hods', HodController::class);
 
+    // Route::get('departmenthods/assign/{id}', [DepartmentHodController::class, 'viewAssignHod']);
     Route::get('assign/hod/{id}', [HodController::class, 'assign']);
     Route::post('post/assign/hod', [HodController::class, 'post_assign']);
     Route::get('rep/hod/{id}', [HodController::class, 'replace']);
     Route::post('post/rep/hod', [HodController::class, 'post_replace']);
 });
-Route::group(['middleware' => 'controller'], function () {
-    Route::view('controller', 'ce.index');
+Route::group(['middleware' => ['role:controller']], function () {
+    Route::view('controller', 'controller.index');
     Route::resource('exams', ExamController::class);
 });
 
-Route::group(['middleware' => 'hod'], function () {
+Route::group(['middleware' => ['role:hod']], function () {
     Route::view('hod', 'hod.index');
     Route::resource('programs', ProgramController::class);
     Route::resource('courses', CourseController::class);

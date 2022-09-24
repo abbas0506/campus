@@ -21,7 +21,7 @@
     @endif
 
     <div class="mb-4 text-lg">{{$selected_department->name}}</div>
-    <a href="{{url('create/hod',$selected_department)}}" class="flex items-center justify-center text-gray-600 border border-indigo-600 bg-indigo-100 hover:bg-indigo-200 mt-8 mb-5 p-4 w-full">
+    <a href="{{route('hods.edit', $selected_department)}}" class="flex items-center justify-center text-gray-600 border border-indigo-600 bg-indigo-100 hover:bg-indigo-200 mt-8 mb-5 p-4 w-full">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" />
         </svg>
@@ -36,7 +36,7 @@
         </div>
         <div class="flex flex-col ml-8">
             <label for="" class="text-sm text-gray-400">Filter</label>
-            <select name="department_id" id="" class="input-indigo p-2">
+            <select name="department_id" id="department_filter" class="input-indigo p-2" onchange="filter()">
                 <option value="">Click here</option>
                 @foreach($departments as $department)
                 <option value="{{$department->id}}">{{$department->name}}</option>
@@ -58,13 +58,11 @@
             <tr class="border-b tr">
                 <td class="py-2">
                     <div>{{$user->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$user->cnic}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$user->employee->cnic}}</div>
                     <div class="text-sm text-gray-500 font-medium">{{$user->email}}</div>
                 </td>
                 <td class="py-2 text-sm text-gray-500 font-medium">
-                    @foreach($user->departments as $department)
-                    <div>{{$department->name}}</div>
-                    @endforeach
+                    <div>{{$user->employee->department->name}}</div>
                 </td>
                 <td class="py-2 flex items-center justify-center">
                     <form action="{{url('post/assign/hod')}}" method="POST" id='assign_form{{$user->id}}' class="mt-2 text-sm">
@@ -100,6 +98,20 @@
             }
         });
     }
+
+    function filter() {
+        var searchtext = $('#department_filter option:selected').text().toLowerCase();
+        $('.tr').each(function() {
+            if (!(
+                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
+                )) {
+                $(this).addClass('hidden');
+            } else {
+                $(this).removeClass('hidden');
+            }
+        });
+    }
+
 
     function assign(formid) {
 

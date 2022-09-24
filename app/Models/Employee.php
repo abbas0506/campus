@@ -22,6 +22,7 @@ class Employee extends Model
         'province_id',
         'domicile_id',
         'religion_id',
+        'department_id',
         'faculty_id', //teaching, non-teaching
         'job_type_id',
         'specialization_id',
@@ -30,4 +31,13 @@ class Employee extends Model
         'salaray',
 
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

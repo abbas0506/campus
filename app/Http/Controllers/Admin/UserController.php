@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use App\Models\Employee;
 use App\Models\User;
 use App\Models\UserDepartment;
 use Exception;
@@ -33,7 +34,7 @@ class UserController extends Controller
     public function create()
     {
         //
-        $departments = Department::all();
+        $departments = Department::where('id', '>', 3)->get();
         return view('admin.users.create', compact('departments'));
     }
 
@@ -49,7 +50,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'cnic' => 'required',
+            'cnic' => 'required|unique:employees',
             'department_id' => 'required|numeric'
 
         ]);
@@ -59,16 +60,16 @@ class UserController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'cnic' => $request->cnic,
                 'password' => Hash::make('password'),
             ]);
 
             $user->save();
 
-            UserDepartment::create(
+            Employee::create(
                 [
                     'user_id' => $user->id,
                     'department_id' => $request->department_id,
+                    'cnic' => $request->cnic,
                 ]
             );
             DB::commit();
@@ -117,12 +118,20 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email,' . $id, 'id',
-            'cnic' => 'required|unique:users,cnic,' . $id, 'id',
+            'cnic' => 'required|unique:employees,cnic,' . $id, 'id',
         ]);
 
-        $user = User::findOrFail($id);
+
         try {
-            $user->update($request->all());
+            $user = User::findOrFail($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+
+            $employee = Employee::find($user->employee->id);
+            $employee->cnic = $request->cnic;
+            $employee->save();
+
             return redirect('users')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()

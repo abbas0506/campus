@@ -21,7 +21,7 @@
     @endif
 
     <div class="mb-4 text-lg">{{$selected_department->name}}</div>
-    <a href="{{route('hods.edit', $selected_department)}}" class="flex items-center justify-center text-gray-600 border border-indigo-600 bg-indigo-100 hover:bg-indigo-200 mt-8 mb-5 p-4 w-full">
+    <a href="{{route('departmenthods.edit', $selected_department)}}" class="flex items-center justify-center text-gray-600 border border-indigo-600 bg-indigo-100 hover:bg-indigo-200 mt-8 mb-5 p-4 w-full">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" />
         </svg>
@@ -54,22 +54,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($users->sortByDesc('id') as $user)
+            @foreach($employees->sortByDesc('id') as $employee)
             <tr class="border-b tr">
                 <td class="py-2">
-                    <div>{{$user->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$user->cnic}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$user->email}}</div>
+                    <div>{{$employee->user->name}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$employee->cnic}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$employee->user->email}}</div>
                 </td>
                 <td class="py-2 text-sm text-gray-500 font-medium">
-                    <div>{{$user->departments->first()->name}}</div>
+                    <div>{{$employee->department->name}}</div>
                 </td>
                 <td class="py-2 flex items-center justify-center">
-                    <form action="{{url('post/assign/hod')}}" method="POST" id='assign_form{{$user->id}}' class="mt-2 text-sm">
+                    <form action="{{route('departmenthods.store')}}" method="POST" id='assign_form{{$employee->id}}' class="mt-2 text-sm">
                         @csrf
-                        <input type="text" name='id' value="{{$selected_department->id}}" class="hidden">
-                        <input type="text" name='user_id' value="{{$user->id}}" class="hidden">
-                        <button type="submit" class="flex bg-green-200 text-green-800 px-3 py-2 rounded" onclick="assign('{{$user->id}}')">
+                        <input type="text" name='employee_id' value="{{$employee->id}}" class="hidden">
+                        <button type="submit" class="flex bg-green-200 text-green-800 px-3 py-2 rounded" onclick="assign('{{$employee->id}}')">
 
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 icon-gray">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
