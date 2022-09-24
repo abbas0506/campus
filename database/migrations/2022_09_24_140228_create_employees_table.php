@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->unique();
+            $table->enum('prefix', ['Mr', 'Mrs', 'Miss'])->default('Mr');
             $table->string('father')->nullable();
             $table->string('cnic', 15)->unique();
             $table->string('phone', 12)->nullable();

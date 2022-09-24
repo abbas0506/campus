@@ -3,14 +3,14 @@
 <div class="container px-8">
     <div class="flex items-center">
 
-        <h1 class="text-indigo-500 text-xl py-12">
+        <h1 class="text-indigo-500 text-xl py-10">
             <a href="{{url('hods')}}">
                 HODs
             </a>
             <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>Create</span>
         </h1>
     </div>
-    <div class="mb-4 text-lg">{{$selected_department->name}}</div>
+    <div class="mb-4 text-lg">{{session('selected_department')->name}}</div>
 
     @if ($errors->any())
     <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
@@ -23,10 +23,8 @@
 
     @endif
 
-    <form action="{{route('hods.update', $selected_department)}}" method='post' class="flex flex-col w-full md:w-3/4">
+    <form action="{{route('departmenthods.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
-        @method('PATCH')
-
         <label for="" class="text-sm text-gray-400">Name</label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">
 

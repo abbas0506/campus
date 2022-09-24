@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Hod extends Model
 {
     use HasFactory;
-    protected $fillables = [
+    protected $fillable = [
         'department_id',
         'employee_id',
 
@@ -18,8 +18,8 @@ class Hod extends Model
     {
         return $this->belongsTo(Employee::class);
     }
-    public function departments()
+    public function department()
     {
-        return $this->belongsToMany(Department::class);
+        return $this->belongsTo(Department::class);
     }
 }

@@ -19,7 +19,14 @@ return new class extends Migration
             $table->string('short');
             $table->string('code')->unique();
             $table->unsignedInteger('duration'); //in years
+            $table->unsignedBigInteger('department_id');
             $table->timestamps();
+
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

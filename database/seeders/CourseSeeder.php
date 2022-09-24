@@ -22,6 +22,7 @@ class CourseSeeder extends Seeder
             'code' => 'B1234',
             'credit_hrs' => 4,
             'max_marks' => 100,
+            'department_id' => 1,
         ]);
         Course::create([
             'name' => 'Fundamentals of Botany',
@@ -29,6 +30,7 @@ class CourseSeeder extends Seeder
             'code' => 'B345',
             'credit_hrs' => 4,
             'max_marks' => 100,
+            'department_id' => 1,
         ]);
     }
 }

@@ -21,6 +21,7 @@ class ProgramSeeder extends Seeder
             'short' => 'ADSB',
             'code' => 'P345',
             'duration' => 4,
+            'department_id' => 1,
         ]);
     }
 }

@@ -20,7 +20,14 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->unsignedInteger('credit_hrs');
             $table->unsignedInteger('max_marks');
+            $table->unsignedBigInteger('department_id');
             $table->timestamps();
+
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

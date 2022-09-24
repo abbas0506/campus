@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Hod;
@@ -32,6 +35,9 @@ class DepartmentHodController extends Controller
     public function create()
     {
         //
+        $departments = Department::all();
+        $selected_department = session('selected_department');
+        return view('admin.hods.create', compact('selected_department', 'departments'));
     }
 
     /**
@@ -44,17 +50,40 @@ class DepartmentHodController extends Controller
     {
         //
         $request->validate([
-            'employee_id' => 'required|numeric',
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'cnic' => 'required|unique:employees'
         ]);
-
+        DB::beginTransaction();
         try {
+
             $department = session('selected_department');
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make('password'),
+            ]);
+
+            $user->save();
+            $user->assignRole('hod');
+
+            $employee = Employee::create(
+                [
+                    'user_id' => $user->id,
+                    'department_id' => $department->id,
+                    'cnic' => $request->cnic,
+                ]
+            );
+
             Hod::create([
-                'employee_id' => $request->employee_id,
+                'employee_id' => $employee->id,
                 'department_id' => $department->id,
             ]);
-            return redirect('departmenthods')->with('success', 'Successfully assigned');
+
+            DB::commit();
+            return redirect('departmenthods')->with('success', 'Successfully created');
         } catch (Exception $ex) {
+            DB::rollBack();
             return redirect()->back()
                 ->withErrors($ex->getMessage());
         }
@@ -97,9 +126,28 @@ class DepartmentHodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $employee_id)
     {
+        try {
+            $department = session('selected_department');
 
+            if ($department->hod) {
+                //department hod exists, just update eixsting
+                $hod = $department->hod;
+                $hod->employee_id = $employee_id;
+                $hod->update();
+                return redirect('departmenthods')->with('success', 'Successfully replaced');
+            } else {
+                Hod::create([
+                    'employee_id' => $employee_id,
+                    'department_id' => $department->id,
+                ]);
+                return redirect('departmenthods')->with('success', 'Successfully assigned');
+            }
+        } catch (Exception $ex) {
+            return redirect()->back()
+                ->withErrors($ex->getMessage());
+        }
         // $request->validate([
         //     'user_id' => 'required|numeric',
         // ]);
@@ -125,10 +173,10 @@ class DepartmentHodController extends Controller
     public function destroy($id)
     {
         //
+
         try {
-            $department = Department::findOrFail($id);
-            $department->user_id = NULL;
-            $department->save();
+            $department = Department::find($id);
+            $department->hod->delete();
             return redirect('departmenthods')->with('success', 'Successfully removed');
         } catch (Exception $ex) {
             return redirect()->back()
