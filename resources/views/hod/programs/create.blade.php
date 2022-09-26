@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.hod')
 @section('page-content')
 <div class="container px-8">
     <div class="flex items-center">
-        <h1 class="text-indigo-500 text-xl py-12">
-            <a href="{{route('departments.index')}}">Departments</a>
+        <h1 class="text-indigo-500 text-xl py-10">
+            <a href="{{route('programs.index')}}">Programs</a>
             <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>New</span>
         </h1>
     </div>
@@ -18,13 +18,36 @@
     </div>
     @endif
 
-    <form action="{{route('departments.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
+    <form action="{{route('programs.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
         <label for="" class="text-sm text-gray-400">Full Name</label>
-        <input type="text" id='' name='name' class="input-indigo" placeholder="Department of Analytical Chemistry">
+        <input type="text" id='' name='name' class="input-indigo" placeholder="Bachelor of Science in Computer Science ">
 
-        <label for="" class="text-sm text-gray-400 mt-3">Display Name <span class="text-sm">(to be displayed on final degree)</span></label>
-        <input type="text" id='' name='title' class="input-indigo" placeholder="Department of Chemistry">
+        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
+            <div class="flex flex-col flex-1">
+                <label for="" class="text-sm text-gray-400 mt-3">Short Name <span class="text-sm">(if any)</span></label>
+                <input type="text" id='' name='short' class="input-indigo" placeholder="For example: BSCS">
+            </div>
+            <div class="flex flex-col md:w-48 md:ml-4">
+                <label for="" class="text-sm text-gray-400 mt-3">Program Code</label>
+                <input type="text" id='' name='code' class="input-indigo" placeholder="Enter program code">
+            </div>
+            <div class="flex flex-col md:w-48 md:ml-4">
+                <label for="" class="text-sm text-gray-400 mt-3">Duration <span class="text-sm">(Years)</span></label>
+                <select id="" name="duration" class="input-indigo p-2">
+                    <option value="2">2</option>
+                    <option value="4" selected>4</option>
+                </select>
+            </div>
+        </div>
+
+        <label for="" class="text-sm text-gray-400 mt-3">Department</label>
+        <select id="" name="department_id" class="input-indigo p-2">
+            <option value="">Select a department</option>
+            @foreach($departments->sortBy('name') as $department)
+            <option value="{{$department->id}}" @if($department->id==Auth::user()->employee->department_id) selected @endif>{{$department->name}}</option>
+            @endforeach
+        </select>
 
         <button type="submit" class="btn-indigo mt-4">Save</button>
     </form>

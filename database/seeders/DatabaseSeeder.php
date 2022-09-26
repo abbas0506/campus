@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\CourseType;
 use App\Models\ExamType;
 use App\Models\UserDepartment;
 use Illuminate\Database\Seeder;
@@ -31,16 +32,20 @@ class DatabaseSeeder extends Seeder
             GenderSeeder::class,
             ReligionSeeder::class,
             NationalitySeeder::class,
-            DistrictSeeder::class,
+            DomicileSeeder::class,
             ProvinceSeeder::class,
             QualificationSeeder::class,
             SemesterTypeSeeder::class,
             ExamTypeSeeder::class,
+            CourseTypeSeeder::class,
+            SessionSeeder::class,
             DepartmentSeeder::class,
             ProgramSeeder::class,
             CourseSeeder::class,
             FacultySeeder::class,
+            DesginationSeeder::class,
             JobtypeSeeder::class,
+            PrefixSeeder::class,
 
             UserSeeder::class,
             EmployeeSeeder::class,

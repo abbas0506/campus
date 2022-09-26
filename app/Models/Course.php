@@ -12,8 +12,16 @@ class Course extends Model
         'name',
         'short',
         'code',
-        'credit_hrs',
-        'max_marks',
-
+        'course_type_id',
+        'credit_hrs_theory',
+        'max_marks_theory',
+        'credit_hrs_practical',
+        'max_marks_practical',
+        'department_id',
     ];
+
+    public function course_type()
+    {
+        return $this->belongsTo(CourseType::class);
+    }
 }

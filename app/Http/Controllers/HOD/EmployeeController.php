@@ -3,31 +3,28 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
-use App\Models\Department;
-use App\Models\Gender;
-use App\Models\Nationality;
-use App\Models\Program;
-use App\Models\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use App\Models\Student;
+
+use App\Models\Department;
+use App\Models\Designation;
+use App\Models\Employee;
+use App\Models\Jobtype;
+use App\Models\Nationality;
+use App\Models\Prefix;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Exception;
 
-class StudentController extends Controller
+class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function index()
     {
         //
-        $students = Student::where('department_id', Auth::user()->employee->department_id)->get();
-        return view('hod.students.index', compact('students'));
+        $employees = Employee::where('department_id', Auth::user()->employee->department_id)->get();
+        return view('hod.employees.index', compact('employees'));
     }
 
     /**
@@ -39,11 +36,11 @@ class StudentController extends Controller
     {
         //
         $departments = Department::all();
-        $programs = Program::all();
-        $sessions = Session::all();
+        $prefixes = Prefix::all();
+        $designations = Designation::all();
+        $jobtypes = Jobtype::all();
         $nationalities = Nationality::all();
-        $genders = Gender::all();
-        return view('hod.students.create', compact('departments', 'programs', 'sessions', 'nationalities'));
+        return view('hod.employees.create', compact('departments', 'prefixes', 'designations', 'jobtypes', 'nationalities'));
     }
 
     /**
@@ -56,12 +53,13 @@ class StudentController extends Controller
     {
         //
         $request->validate([
+            'prefix_id' => 'required|numeric|digits:1',
             'name' => 'required|string|max:50',
-            'session_id' => 'required|numeric',
-            'program_id' => 'required|numeric',
+            'designation_id' => 'required|numeric',
+            'jobtype_id' => 'required|numeric',
             'nationality_id' => 'required|numeric',
-            'cnic' => 'required|unique:students|string|max:15',
-            'phone' => 'required|unique:students|string|max:15',
+            'cnic' => 'required|unique:employees|string|max:15',
+            'phone' => 'required|unique:employees|string|max:15',
             'email' => 'required|email|unique:users',
 
         ]);
@@ -75,13 +73,14 @@ class StudentController extends Controller
             ]);
 
             $user->save();
-            $user->assignRole('student');
+            $user->assignRole('instructor');
 
-            Student::create(
+            Employee::create(
                 [
                     'user_id' => $user->id,
-                    'program_id' => $request->program_id,
-                    'session_id' => $request->session_id,
+                    'prefix_id' => $request->prefix_id,
+                    'designation_id' => $request->designation_id,
+                    'jobtype_id' => $request->jobtype_id,
                     'phone' => $request->phone,
                     'cnic' => $request->cnic,
                     'address' => $request->address,
@@ -91,7 +90,7 @@ class StudentController extends Controller
             );
 
             DB::commit();
-            return redirect()->route('students.index')->with('success', 'Successfully created');
+            return redirect()->route('employees.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['create' => $e->getMessage()]);
             // something went wrong
@@ -118,12 +117,13 @@ class StudentController extends Controller
     public function edit($id)
     {
         //
-        $student = Student::findOrFail($id);
+        $employee = Employee::findOrFail($id);
         $departments = Department::all();
-        $programs = program::all();
-        $sessions = session::all();
+        $prefixes = Prefix::all();
+        $designations = Designation::all();
+        $jobtypes = Jobtype::all();
         $nationalities = Nationality::all();
-        return view('hod.students.edit', compact('student', 'departments', 'prefixes', 'programs', 'sessions', 'nationalities'));
+        return view('hod.employees.edit', compact('employee', 'departments', 'prefixes', 'designations', 'jobtypes', 'nationalities'));
     }
 
     /**
@@ -136,35 +136,35 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $student = Student::find($id);
+        $employee = Employee::find($id);
         $request->validate([
             'name' => 'required|string|max:50',
             'prefix_id' => 'required|numeric|digits:1',
-            'program_id' => 'required|numeric',
-            'session_id' => 'required|numeric',
+            'designation_id' => 'required|numeric',
+            'jobtype_id' => 'required|numeric',
             'nationality_id' => 'required|numeric',
-            'cnic' => 'required|string|max:15|unique:students,cnic,' . $id, 'id',
-            'phone' => 'required|string|max:15|unique:students,phone,' . $id, 'id',
-            'email' => 'required|email|unique:users,email,' . $student->user->id, 'id',
+            'cnic' => 'required|string|max:15|unique:employees,cnic,' . $id, 'id',
+            'phone' => 'required|string|max:15|unique:employees,phone,' . $id, 'id',
+            'email' => 'required|email|unique:users,email,' . $employee->user->id, 'id',
 
         ]);
 
         try {
 
-            $student->prefix_id = $request->prefix_id;
-            $student->program_id = $request->program_id;
-            $student->session_id = $request->session_id;
-            $student->phone = $request->phone;
-            $student->address = $request->address;
+            $employee->prefix_id = $request->prefix_id;
+            $employee->designation_id = $request->designation_id;
+            $employee->jobtype_id = $request->jobtype_id;
+            $employee->phone = $request->phone;
+            $employee->address = $request->address;
 
-            $student->update();
+            $employee->update();
 
-            $user = $student->user;
+            $user = $employee->user;
             $user->name = $request->name;
             $user->email = $request->email;
             $user->update();
 
-            return redirect()->route('students.index')->with('success', 'Successfully updated');;
+            return redirect()->route('employees.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
                 ->withErrors(['update' => $ex->getMessage()]);
@@ -180,9 +180,9 @@ class StudentController extends Controller
     public function destroy($id)
     {
         //
-        $student = Student::findOrFail($id);
+        $employee = Employee::findOrFail($id);
         try {
-            $student->delete();
+            $employee->delete();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);

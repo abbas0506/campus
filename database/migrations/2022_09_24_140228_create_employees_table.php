@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->unique();
-            $table->enum('prefix', ['Mr', 'Mrs', 'Miss'])->default('Mr');
+            $table->unsignedBigInteger('prefix_id')->nullable();
             $table->string('father')->nullable();
+            $table->string('phone', 15)->unique()->nullable();
             $table->string('cnic', 15)->unique();
-            $table->string('phone', 12)->nullable();
+            $table->string('address', 100)->nullable();
             $table->string('pic', 100)->default('default.png');
 
             $table->date('dob')->nullable();
@@ -30,7 +31,7 @@ return new class extends Migration
             $table->unsignedBigInteger('gender_id')->nullable();
             $table->unsignedBigInteger('nationality_id')->nullable();
             $table->unsignedBigInteger('province_id')->nullable();
-            $table->unsignedBigInteger('district_id')->nullable();
+            $table->unsignedBigInteger('domicile_id')->nullable();
             $table->unsignedBigInteger('religion_id')->nullable();
 
             $table->unsignedBigInteger('department_id'); //parent department
@@ -47,6 +48,12 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
+            $table->foreign('prefix_id')
+                ->references('id')
+                ->on('prefixes')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+
             $table->foreign('gender_id')
                 ->references('id')
                 ->on('genders')
@@ -59,9 +66,15 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 
-            $table->foreign('district_id')
+            $table->foreign('province_id')
                 ->references('id')
-                ->on('districts')
+                ->on('provinces')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+
+            $table->foreign('domicile_id')
+                ->references('id')
+                ->on('domiciles')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 

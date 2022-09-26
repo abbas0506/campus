@@ -10,9 +10,12 @@ class Employee extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
+        'prefix_id',
         'father',
-        'cnic',
         'phone',
+        'cnic',
+        'address',
+        'pic',
         'dob',
         'gender',
         'blood_group',
@@ -24,7 +27,7 @@ class Employee extends Model
         'religion_id',
         'department_id',
         'faculty_id', //teaching, non-teaching
-        'job_type_id',
+        'jobtype_id',
         'specialization_id',
         'designation_id',
         'qualification_id',
@@ -39,5 +42,49 @@ class Employee extends Model
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+    public function prefix()
+    {
+        return $this->belongsTo(Prefix::class);
+    }
+    public function gender()
+    {
+        return $this->belongsTo(Gender::class);
+    }
+    public function nationality()
+    {
+        return $this->belongsTo(Nationality::class);
+    }
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+    public function domicile()
+    {
+        return $this->belongsTo(Domicile::class);
+    }
+    public function religion()
+    {
+        return $this->belongsTo(Religion::class);
+    }
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class);
+    }
+    public function jobtype()
+    {
+        return $this->belongsTo(Jobtype::class);
+    }
+    public function speicalization()
+    {
+        return $this->belongsTo(Specialization::class);
+    }
+    public function designation()
+    {
+        return $this->belongsTo(Designation::class);
+    }
+    public function qualification()
+    {
+        return $this->belongsTo(Qualification::class);
     }
 }

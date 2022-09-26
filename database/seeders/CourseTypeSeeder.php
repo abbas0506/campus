@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Session;
+use App\Models\CourseType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class SessionSeeder extends Seeder
+class CourseTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,8 @@ class SessionSeeder extends Seeder
     public function run()
     {
         //
-        Session::create(['name' => '2022-24', 'start_year' => 2022, 'end_year' => 2024]);
-        Session::create(['name' => '2022-26', 'start_year' => 2022, 'end_year' => 2026]);
+        CourseType::create(['name' => 'Compulsory']);
+        CourseType::create(['name' => 'Optional']);
+        CourseType::create(['name' => 'General']);
     }
 }

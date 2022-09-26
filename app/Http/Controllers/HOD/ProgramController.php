@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Exception;
 use App\Models\Program;
@@ -18,6 +19,7 @@ class ProgramController extends Controller
     {
         //
         $programs = Program::all();
+
         return view('hod.programs.index', compact('programs'));
     }
 
@@ -29,7 +31,8 @@ class ProgramController extends Controller
     public function create()
     {
         //
-        return view('hod.programs.create');
+        $departments = Department::all();
+        return view('hod.programs.create', compact('departments'));
     }
 
     /**
@@ -42,7 +45,12 @@ class ProgramController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:programs',
+            'short' => 'required',
+            'code' => 'required|unique:programs',
+            'duration' => 'required|numeric',
+            'department_id' => 'required|numeric',
+
         ]);
 
         try {
@@ -74,8 +82,9 @@ class ProgramController extends Controller
     public function edit($id)
     {
         //
-        $department = Program::findOrFail($id);
-        return view('hod.programs.edit', compact('department'));
+        $program = Program::findOrFail($id);
+        $departments = Department::all();
+        return view('hod.programs.edit', compact('program', 'departments'));
     }
 
     /**
@@ -89,11 +98,17 @@ class ProgramController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:programs,name,' . $id, 'id',
+            'short' => 'required',
+            'code' => 'required|unique:programs,code,' . $id, 'id',
+            'duration' => 'required|numeric',
+            'department_id' => 'required|numeric',
+
         ]);
-        $department = Program::findOrFail($id);
+
         try {
-            $department->update($request->all());
+            $program = Program::findOrFail($id);
+            $program->update($request->all());
             return redirect()->route('programs.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
@@ -110,9 +125,9 @@ class ProgramController extends Controller
     public function destroy($id)
     {
         //
-        $department = Program::findOrFail($id);
+        $program = Program::findOrFail($id);
         try {
-            $department->delete();
+            $program->delete();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);

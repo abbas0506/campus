@@ -14,6 +14,7 @@ use App\Http\Controllers\hod\CourseAllocationController;
 use App\Http\Controllers\hod\InstructorController;
 use App\Http\Controllers\Hod\ProgramController;
 use App\Http\Controllers\Hod\CourseController;
+use App\Http\Controllers\hod\EmployeeController;
 use App\Http\Controllers\hod\ResultController;
 use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
@@ -52,14 +53,6 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('departmenthods', DepartmentHodController::class);
-
-    // Route::resource('hods', HodController::class);
-
-    // Route::get('departmenthods/assign/{id}', [DepartmentHodController::class, 'viewAssignHod']);
-    Route::get('assign/hod/{id}', [HodController::class, 'assign']);
-    Route::post('post/assign/hod', [HodController::class, 'post_assign']);
-    Route::get('rep/hod/{id}', [HodController::class, 'replace']);
-    Route::post('post/rep/hod', [HodController::class, 'post_replace']);
 });
 Route::group(['middleware' => ['role:controller']], function () {
     Route::view('controller', 'controller.index');
@@ -70,6 +63,7 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::view('hod', 'hod.index');
     Route::resource('programs', ProgramController::class);
     Route::resource('courses', CourseController::class);
+    Route::resource('employees', EmployeeController::class);
     Route::resource('instructors', InstructorController::class);
     Route::resource('scheme', SchemeController::class);
     Route::resource('course-allocations', CourseAllocationController::class);

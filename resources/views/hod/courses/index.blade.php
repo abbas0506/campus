@@ -1,10 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.hod')
 @section('page-content')
 <div class="container px-8">
     <div class="flex mb-5 flex-col md:flex-row md:items-center">
-        <div class="flex items-center mt-12 mb-5 md:my-12">
-            <h1 class="text-indigo-500 text-xl">Departments</h1>
-            <a href="{{route('departments.create')}}" class="bg-indigo-600 hover:bg-indigo-500 ml-5 p-2 rounded-full flex text-slate-200">
+        <div class="flex items-center mt-12 mb-5 md:my-10">
+            <h1 class="text-indigo-500 text-xl">Courses</h1>
+            <a href="{{route('courses.create')}}" class="bg-indigo-600 hover:bg-indigo-500 ml-5 p-2 rounded-full flex text-slate-200">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -31,34 +31,58 @@
     <table class="table-auto w-full">
         <thead>
             <tr class="border-b border-slate-200">
-                <th class="py-2 text-gray-600 text-left">Department Name</th>
+                <th class="py-2 text-gray-600 text-left">Course Name</th>
+                <th class="py-2 text-gray-600 text-left">Credit Hrs</th>
+                <th class="py-2 text-gray-600 text-left">Marks</th>
                 <th class="py-2 text-gray-600 text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
 
-            @foreach($departments->sortByDesc('id')->where('id','>',3) as $department)
+            @foreach($courses->sortByDesc('id') as $course)
             <tr class="tr border-b ">
                 <td class="py-2">
-                    <div>{{$department->name}}</div>
-                    <div class="flex items-center text-gray-600 font-medium text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
-                        </svg>
+                    <div>{{$course->name}}</div>
+                    <div class="text-sm text-gray-500">{{$course->short}}</div>
+                    <div class="text-sm text-gray-500">{{$course->code}}</div>
 
-                        {{$department->title}}
+
+
+                </td>
+                <td class="py-2">
+                    <div class="flex items-center text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="ml-1 text-sm">{{$course->credit_hrs_theory}} - {{$course->credit_hrs_practical}} hrs</span>
+                    </div>
+                    <div class="text-sm text-gray-500">{{$course->course_type->name}}</div>
+                </td>
+                <td class="py-2">
+                    <div class="flex items-center text-sm text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 icon-gray mr-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                        </svg>
+                        {{$course->max_marks_theory}}
+                    </div>
+                    <div class="flex items-center text-sm mt-1 text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 icon-gray mr-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                        </svg>
+                        {{$course->max_marks_practical}}
                     </div>
                 </td>
+
                 <td class="py-2 flex items-center justify-center">
-                    <a href="{{route('departments.edit', $department)}}">
+                    <a href="{{route('courses.edit', $course)}}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-green-600 mr-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                         </svg>
                     </a>
-                    <form action="{{route('departments.destroy',$department)}}" method="POST" id='del_form{{$department->id}}' class="mt-1">
+                    <form action="{{route('courses.destroy',$course)}}" method="POST" id='del_form{{$course->id}}' class="mt-1">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$department->id}}')">
+                        <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$course->id}}')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-red-600">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                             </svg>
@@ -98,7 +122,7 @@
         var str = 0;
         $('.tr').each(function() {
             if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
+                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
                 )) {
                 $(this).addClass('hidden');
             } else {

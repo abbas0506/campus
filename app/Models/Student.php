@@ -13,6 +13,7 @@ class Student extends Model
         'father',
         'cnic',
         'phone',
+        'address',
         'dob',
         'gender',
         'blood_group',
@@ -22,9 +23,7 @@ class Student extends Model
         'province_id',
         'domicile_id',
         'religion_id',
-
-
-        'session',
+        'session_id',
         'department_id', //
         'program_id',
         'semester',
@@ -32,4 +31,41 @@ class Student extends Model
         'rollno',
 
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
+    public function session()
+    {
+        return $this->belongsTo(Session::class);
+    }
+    public function gender()
+    {
+        return $this->belongsTo(Gender::class);
+    }
+    public function nationality()
+    {
+        return $this->belongsTo(Nationality::class);
+    }
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+    public function domicile()
+    {
+        return $this->belongsTo(Domicile::class);
+    }
+    public function religion()
+    {
+        return $this->belongsTo(Religion::class);
+    }
 }

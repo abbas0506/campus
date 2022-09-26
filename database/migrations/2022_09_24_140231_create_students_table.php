@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('father')->nullable();
             $table->string('cnic', 15)->unique();
             $table->string('phone', 12)->nullable();
+            $table->string('address', 100)->nullable();
             $table->string('pic', 100)->default('default.png');
 
             $table->date('dob')->nullable();
@@ -29,7 +30,7 @@ return new class extends Migration
             $table->unsignedBigInteger('gender_id')->nullable();
             $table->unsignedBigInteger('nationality_id')->nullable();
             $table->unsignedBigInteger('province_id')->nullable();
-            $table->unsignedBigInteger('district_id')->nullable();
+            $table->unsignedBigInteger('domicile_id')->nullable();
             $table->unsignedBigInteger('religion_id')->nullable();
 
             $table->unsignedBigInteger('session_id');
@@ -58,9 +59,9 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 
-            $table->foreign('district_id')
+            $table->foreign('domicile_id')
                 ->references('id')
-                ->on('districts')
+                ->on('domiciles')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 

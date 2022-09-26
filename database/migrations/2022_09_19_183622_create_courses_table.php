@@ -18,14 +18,22 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('short');
             $table->string('code')->unique();
-            $table->unsignedInteger('credit_hrs');
-            $table->unsignedInteger('max_marks');
+            $table->unsignedBigInteger('course_type_id')->default(1);
+            $table->unsignedInteger('credit_hrs_theory');
+            $table->unsignedInteger('max_marks_theory');
+            $table->unsignedInteger('credit_hrs_practical');
+            $table->unsignedInteger('max_marks_practical');
             $table->unsignedBigInteger('department_id');
             $table->timestamps();
 
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreign('course_type_id')
+                ->references('id')
+                ->on('course_types')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

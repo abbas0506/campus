@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
+use App\Models\CourseType;
+use App\Models\Department;
 use Illuminate\Http\Request;
+use Exception;
 
 class CourseController extends Controller
 {
@@ -15,6 +19,9 @@ class CourseController extends Controller
     public function index()
     {
         //
+        $courses = Course::all();
+
+        return view('hod.courses.index', compact('courses'));
     }
 
     /**
@@ -25,6 +32,9 @@ class CourseController extends Controller
     public function create()
     {
         //
+        $departments = Department::all();
+        $course_types = CourseType::all();
+        return view('hod.courses.create', compact('departments', 'course_types'));
     }
 
     /**
@@ -36,6 +46,26 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|unique:courses',
+            'short' => 'required',
+            'code' => 'required|unique:courses',
+            'course_type_id' => 'required|numeric',
+            'credit_hrs_theory' => 'required|numeric',
+            'max_marks_theory' => 'required|numeric',
+            'credit_hrs_practical' => 'required|numeric',
+            'max_marks_practical' => 'required|numeric',
+            'department_id' => 'required|numeric',
+
+        ]);
+
+        try {
+            Course::create($request->all());
+            return redirect()->route('courses.index')->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**
@@ -58,6 +88,10 @@ class CourseController extends Controller
     public function edit($id)
     {
         //
+        $course = Course::findOrFail($id);
+        $departments = Department::all();
+        $course_types = CourseType::all();
+        return view('hod.courses.edit', compact('course', 'departments', 'course_types'));
     }
 
     /**
@@ -70,6 +104,27 @@ class CourseController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'name' => 'required|unique:courses,name,' . $id, 'id',
+            'short' => 'required',
+            'code' => 'required|unique:courses,code,' . $id, 'id',
+            'course_type_id' => 'required|numeric',
+            'credit_hrs_theory' => 'required|numeric',
+            'max_marks_theory' => 'required|numeric',
+            'credit_hrs_practical' => 'required|numeric',
+            'max_marks_practical' => 'required|numeric',
+            'department_id' => 'required|numeric',
+
+        ]);
+
+        try {
+            $course = Course::findOrFail($id);
+            $course->update($request->all());
+            return redirect()->route('courses.index')->with('success', 'Successfully updated');;
+        } catch (Exception $ex) {
+            return redirect()->back()
+                ->withErrors($ex->getMessage());
+        }
     }
 
     /**
@@ -81,5 +136,13 @@ class CourseController extends Controller
     public function destroy($id)
     {
         //
+        $course = Course::findOrFail($id);
+        try {
+            $course->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 }

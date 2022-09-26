@@ -23,9 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'phone',
-        'cnic',
-        'pic',
+        'active',
         'facebook_id',
         'google_id',
     ];
@@ -52,6 +50,10 @@ class User extends Authenticatable
     public function employee()
     {
         return $this->hasOne(Employee::class);
+    }
+    public function student()
+    {
+        return $this->hasOne(Student::class);
     }
     public function departments()
     {
