@@ -27,7 +27,8 @@ class Student extends Model
         'department_id', //
         'program_id',
         'semester',
-        'section',
+        'shift_id',
+        'section_id',
         'rollno',
 
     ];
