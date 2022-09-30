@@ -26,9 +26,10 @@ class Student extends Model
         'session_id',
         'department_id', //
         'program_id',
-        'semester',
-        'shift_id',
-        'section_id',
+        'semester_no',
+        'semester_type_id',
+        'shift',
+        'section',
         'rollno',
 
     ];
@@ -48,6 +49,10 @@ class Student extends Model
     public function session()
     {
         return $this->belongsTo(Session::class);
+    }
+    public function semester_type()
+    {
+        return $this->belongsTo(SemesterType::class);
     }
     public function gender()
     {

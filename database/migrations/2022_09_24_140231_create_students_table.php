@@ -33,60 +33,53 @@ return new class extends Migration
             $table->unsignedBigInteger('domicile_id')->nullable();
             $table->unsignedBigInteger('religion_id')->nullable();
 
-            $table->unsignedBigInteger('session_id');
             $table->unsignedBigInteger('department_id');
+            $table->unsignedBigInteger('semester_id'); //enrollment semester
             $table->unsignedBigInteger('program_id');
+            $table->enum('shift', ['M', 'E'])->default('M');
+            $table->string('section', 20)->nullable();
             $table->string('registration_no', 20)->nullable();
-            $table->unsignedInteger('semester')->default(1);
-            $table->string('section', 20)->default();
+            $table->unsignedInteger('current_semester')->default(1); //current
             $table->unsignedInteger('rollno')->nullable();
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->foreign('gender_id')
                 ->references('id')
                 ->on('genders')
-                ->onUpdate('cascade')
                 ->onDelete('set null');
 
             $table->foreign('nationality_id')
                 ->references('id')
                 ->on('nationalities')
-                ->onUpdate('cascade')
                 ->onDelete('set null');
 
             $table->foreign('domicile_id')
                 ->references('id')
                 ->on('domiciles')
-                ->onUpdate('cascade')
                 ->onDelete('set null');
 
             $table->foreign('religion_id')
                 ->references('id')
                 ->on('religions')
-                ->onUpdate('cascade')
                 ->onDelete('set null');
 
-            $table->foreign('session_id')
+            $table->foreign('semester_id')
                 ->references('id')
-                ->on('sessions')
-                ->onUpdate('cascade')
+                ->on('semesters')
                 ->onDelete('cascade');
 
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments')
-                ->onUpdate('cascade')
                 ->onDelete('cascade');  //cascade delete
 
             $table->foreign('program_id')
                 ->references('id')
                 ->on('programs')
-                ->onUpdate('cascade')
                 ->onDelete('cascade');  //cascade delete
 
             $table->timestamps();

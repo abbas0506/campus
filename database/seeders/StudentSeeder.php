@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
+use App\Models\Student;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class RoleSeeder extends Seeder
+class StudentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +17,7 @@ class RoleSeeder extends Seeder
     public function run()
     {
         //
-
+        // User::factory()->hasStudent(20)->create();
+        // Student::factory()->count(3)->create();
     }
 }

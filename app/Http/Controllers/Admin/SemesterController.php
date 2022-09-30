@@ -3,18 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Department;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\Semester;
+use App\Models\SemesterType;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
+class SemesterController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        //
-        $departments = Department::all();
-        return view('admin.departments.index', compact('departments'));
+        ///
+        $semesters = Semester::all();
+        return view('admin.semesters.index', compact('semesters'));
     }
 
     /**
@@ -25,7 +31,8 @@ class DepartmentController extends Controller
     public function create()
     {
         //
-        return view('admin.departments.create');
+        $semester_types = SemesterType::all();
+        return view('admin.semesters.create', compact('semester_types'));
     }
 
     /**
@@ -38,12 +45,14 @@ class DepartmentController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|unique:departments',
+            'semester_type_id' => 'required|numeric',
+            'year' => 'required|numeric|min:2014|unique:semesters,year,NULL,id,semester_type_id,' . $request->semester_type_id,
+            'edit_till' => 'nullable|date',
         ]);
 
         try {
-            Department::create($request->all());
-            return redirect()->route('departments.index')->with('success', 'Successfully created');
+            Semester::create($request->all());
+            return redirect('semesters')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -53,10 +62,10 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Semester  $semester
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Semester $semester)
     {
         //
     }
@@ -64,33 +73,34 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Semester  $semester
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Semester $semester)
     {
         //
-        $department = Department::findOrFail($id);
-        return view('admin.departments.edit', compact('department'));
+        // $seemster=Semester::find($id);
+        $semester_types = SemesterType::all();
+        return view('admin.semesters.edit', compact('semester_types', 'semester'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Semester  $semester
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Semester $semester)
     {
         //
         $request->validate([
-            'name' => 'required|unique:departments,name,' . $id, 'id',
+            'edit_till' => 'nullable|date',
         ]);
-        $department = Department::findOrFail($id);
+
         try {
-            $department->update($request->all());
-            return redirect()->route('departments.index')->with('success', 'Successfully updated');;
+            $semester->update($request->all());
+            return redirect()->route('semesters.index')->with('success', 'Successfully updated');
         } catch (Exception $ex) {
             return redirect()->back()
                 ->withErrors($ex->getMessage());
@@ -100,19 +110,17 @@ class DepartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Semester  $semester
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Semester $semester)
     {
         //
-        $department = Department::findOrFail($id);
         try {
-            $department->delete();
+            $semester->delete();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
-            // something went wrong
         }
     }
 }

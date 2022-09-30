@@ -4,9 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\CourseType;
-use App\Models\ExamType;
-use App\Models\UserDepartment;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -39,8 +36,10 @@ class DatabaseSeeder extends Seeder
             ExamTypeSeeder::class,
             CourseTypeSeeder::class,
             SessionSeeder::class,
+
             DepartmentSeeder::class,
             ProgramSeeder::class,
+            SectionSeeder::class,
             CourseSeeder::class,
             FacultySeeder::class,
             DesginationSeeder::class,
@@ -49,6 +48,7 @@ class DatabaseSeeder extends Seeder
 
             UserSeeder::class,
             EmployeeSeeder::class,
+            // StudentSeeder::class,
 
         ]);
     }

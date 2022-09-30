@@ -9,13 +9,17 @@ class Exam extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
+        'semester_id',
         'exam_type_id',
-        'is_active',
+        'edit_till',
     ];
 
     public function exam_type()
     {
         return $this->belongsTo(ExamType::class, 'exam_type_id');
+    }
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class);
     }
 }

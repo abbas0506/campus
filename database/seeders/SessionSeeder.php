@@ -16,7 +16,7 @@ class SessionSeeder extends Seeder
     public function run()
     {
         //
-        Session::create(['name' => '2022-24', 'start_year' => 2022, 'end_year' => 2024]);
-        Session::create(['name' => '2022-26', 'start_year' => 2022, 'end_year' => 2026]);
+        Session::create(['name' => 'Session 2022-24', 'start_year' => 2022, 'end_year' => 2024]);
+        Session::create(['name' => 'Session 2022-26', 'start_year' => 2022, 'end_year' => 2026]);
     }
 }
