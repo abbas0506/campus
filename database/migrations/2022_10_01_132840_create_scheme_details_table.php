@@ -13,10 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('genders', function (Blueprint $table) {
+        Schema::create('scheme_details', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->unsignedBigInteger('scheme_id');
+            $table->unsignedInteger('semester_no');
+            $table->unsignedBigInteger('course_id');
+
             $table->timestamps();
+            $table->foreign('scheme_id')
+                ->references('id')
+                ->on('schemes')
+                ->onDelete('cascade');
         });
     }
 
@@ -27,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('genders');
+        Schema::dropIfExists('scheme_details');
     }
 };

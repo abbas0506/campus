@@ -21,46 +21,15 @@
     <form action="{{route('students.update',$student)}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
         @method('PATCH')
+        <label for="" class="text-sm text-gray-400">Full Name</label>
+        <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad" value="{{$student->user->name}}">
         <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
             <div class="flex flex-col md:mr-4 mt-3">
-                <label for="" class="text-sm text-gray-400">Prefix</label>
-                <select id="" name="prefix_id" class="input-indigo p-2">
-                    @foreach($prefixes as $prefix)
-                    <option value="{{$prefix->id}}" @if($prefix->id==$student->prefix_id) selected @endif>{{$prefix->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="" class="text-sm text-gray-400">Full Name</label>
-                <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad" value="{{$student->user->name}}">
-            </div>
-        </div>
-
-        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
-            <div class="flex flex-col flex-1 md:mr-4 mt-3">
-                <label for="" class="text-sm text-gray-400">Designation</label>
-                <select id="" name="designation_id" class="input-indigo p-2">
-                    @foreach($designations as $designation)
-                    <option value="{{$designation->id}}" @if($designation->id==$student->designation_id) selected @endif>{{$designation->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="" class="text-sm text-gray-400">Job Type</label>
-                <select id="" name="jobtype_id" class="input-indigo p-2">
-                    @foreach($jobtypes as $jobtype)
-                    <option value="{{$jobtype->id}}" @if($jobtype->id==$student->jobtype_id) selected @endif>{{$jobtype->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
-            <div class="flex flex-col flex-1 md:mr-4 mt-3">
-                <label for="" class="text-sm text-gray-400">Nationality</label>
-                <select id="" name="nationality_id" class="input-indigo p-2">
-                    @foreach($nationalities as $nationality)
-                    <option value="{{$nationality->id}}" @if($nationality->id==$student->nationality_id) selected @endif>{{$nationality->name}}</option>
-                    @endforeach
+                <label for="" class="text-sm text-gray-400">Gender</label>
+                <select id="" name="gender" class="input-indigo p-2">
+                    <option value="M" @if($student->gender=='M') selected @endif>M</option>
+                    <option value="F" @if($student->gender=='F') selected @endif>F</option>
+                    <option value="T" @if($student->gender=='T') selected @endif>T</option>
                 </select>
             </div>
             <div class="flex flex-col flex-1 mt-3">
@@ -81,6 +50,7 @@
 
         <label for="" class="text-sm text-gray-400 mt-3">Address <span class="text-sm">(optional)</span></label>
         <input type="text" id='' name='address' class="input-indigo" placeholder="University of Okara" value="University of Okara" value="{{$student->address}}">
+
 
         <button type="submit" class="btn-indigo mt-4">Update</button>
     </form>

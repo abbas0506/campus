@@ -8,6 +8,14 @@
         </h1>
     </div>
 
+    <div class="text-xl text-slate-800">{{session('semester')->semester_type->name}} {{session('semester')->year}}</div>
+    <div class="text-sm text-slate-500">{{session('program')->short}},
+        @if(session('shift')=='M') Morning
+        @elseif(session('shift')=='E') Evening
+        @endif
+        ({{session('section')->name}})
+    </div>
+
     @if ($errors->any())
     <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
         <ul>
@@ -18,37 +26,17 @@
     </div>
     @endif
 
-    <form action="{{route('students.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
+    <form action="{{route('students.store')}}" method='post' class="flex flex-col w-full md:w-3/4 mt-4">
         @csrf
-
-
         <label for="" class="text-sm text-gray-400">Full Name</label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad">
         <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
-            <div class="flex flex-col flex-1 md:mr-4 mt-3">
-                <label for="" class="text-sm text-gray-400">Session</label>
-                <select id="" name="session_id" class="input-indigo p-2">
-                    @foreach($sessions as $session)
-                    <option value="{{$session->id}}">{{$session->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="" class="text-sm text-gray-400">Program</label>
-                <select id="" name="program_id" class="input-indigo p-2">
-                    @foreach($programs as $program)
-                    <option value="{{$program->id}}">{{$program->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
-            <div class="flex flex-col flex-1 md:mr-4 mt-3">
-                <label for="" class="text-sm text-gray-400">Nationality</label>
-                <select id="" name="nationality_id" class="input-indigo p-2">
-                    @foreach($nationalities as $nationality)
-                    <option value="{{$nationality->id}}">{{$nationality->name}}</option>
-                    @endforeach
+            <div class="flex flex-col md:mr-4 mt-3">
+                <label for="" class="text-sm text-gray-400">Gender</label>
+                <select id="" name="gender" class="input-indigo p-2">
+                    <option value="M">M</option>
+                    <option value="F">F</option>
+                    <option value="T">T</option>
                 </select>
             </div>
             <div class="flex flex-col flex-1 mt-3">

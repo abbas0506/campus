@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RolesAndPermissionsSeeder::class, //spatie
-            GenderSeeder::class,
+            // GenderSeeder::class,
             ReligionSeeder::class,
             NationalitySeeder::class,
             DomicileSeeder::class,

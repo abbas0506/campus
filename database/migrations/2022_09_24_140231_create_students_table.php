@@ -27,30 +27,24 @@ return new class extends Migration
             $table->boolean('is_married')->nullable();
             $table->boolean('is_special')->nullable();
 
-            $table->unsignedBigInteger('gender_id')->nullable();
+            $table->enum('gender', ['M', 'F', 'T']);
             $table->unsignedBigInteger('nationality_id')->nullable();
             $table->unsignedBigInteger('province_id')->nullable();
             $table->unsignedBigInteger('domicile_id')->nullable();
             $table->unsignedBigInteger('religion_id')->nullable();
 
-            $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('semester_id'); //enrollment semester
             $table->unsignedBigInteger('program_id');
             $table->enum('shift', ['M', 'E'])->default('M');
-            $table->string('section', 20)->nullable();
+            $table->unsignedBigInteger('section_id')->nullable();
             $table->string('registration_no', 20)->nullable();
-            $table->unsignedInteger('current_semester')->default(1); //current
+            $table->unsignedInteger('semester_no')->default(1); //current
             $table->unsignedInteger('rollno')->nullable();
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-
-            $table->foreign('gender_id')
-                ->references('id')
-                ->on('genders')
-                ->onDelete('set null');
 
             $table->foreign('nationality_id')
                 ->references('id')
@@ -71,11 +65,6 @@ return new class extends Migration
                 ->references('id')
                 ->on('semesters')
                 ->onDelete('cascade');
-
-            $table->foreign('department_id')
-                ->references('id')
-                ->on('departments')
-                ->onDelete('cascade');  //cascade delete
 
             $table->foreign('program_id')
                 ->references('id')

@@ -23,13 +23,12 @@ class Student extends Model
         'province_id',
         'domicile_id',
         'religion_id',
-        'session_id',
-        'department_id', //
+        'semester_id',  //started on
         'program_id',
-        'semester_no',
-        'semester_type_id',
         'shift',
-        'section',
+        //current attributes
+        'section_id',
+        'semester_no',
         'rollno',
 
     ];
@@ -38,25 +37,18 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
+
     public function program()
     {
         return $this->belongsTo(Program::class);
     }
-    public function session()
+    public function semester()
     {
-        return $this->belongsTo(Session::class);
+        return $this->belongsTo(Semester::class);
     }
     public function semester_type()
     {
         return $this->belongsTo(SemesterType::class);
-    }
-    public function gender()
-    {
-        return $this->belongsTo(Gender::class);
     }
     public function nationality()
     {

@@ -47,10 +47,6 @@ class Employee extends Model
     {
         return $this->belongsTo(Prefix::class);
     }
-    public function gender()
-    {
-        return $this->belongsTo(Gender::class);
-    }
     public function nationality()
     {
         return $this->belongsTo(Nationality::class);

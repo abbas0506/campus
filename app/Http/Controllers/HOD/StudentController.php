@@ -4,7 +4,6 @@ namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
-use App\Models\Gender;
 use App\Models\Nationality;
 use App\Models\Program;
 use App\Models\Session;
@@ -26,8 +25,16 @@ class StudentController extends Controller
     public function index()
     {
         //
-        $students = Student::where('department_id', Auth::user()->employee->department_id)->get();
-        return view('hod.students.index', compact('students'));
+
+        if (session('semester') && session('program') && session('shift') && session('section')) {
+            $students = Student::where('semester_id', session('semester')->id)
+                ->where('program_id', session('program')->id)
+                ->where('shift', session('shift'))
+                ->where('section_id', session('section')->id)
+                ->get();
+            return view('hod.students.index', compact('students'));
+        } else
+            echo "Something missing";
     }
 
     /**
@@ -38,12 +45,7 @@ class StudentController extends Controller
     public function create()
     {
         //
-        $departments = Department::all();
-        $programs = Program::all();
-        $sessions = Session::all();
-        $nationalities = Nationality::all();
-        $genders = Gender::all();
-        return view('hod.students.create', compact('departments', 'programs', 'sessions', 'nationalities'));
+        return view('hod.students.create');
     }
 
     /**
@@ -57,11 +59,9 @@ class StudentController extends Controller
         //
         $request->validate([
             'name' => 'required|string|max:50',
-            'session_id' => 'required|numeric',
-            'program_id' => 'required|numeric',
-            'nationality_id' => 'required|numeric',
+            'gender' => 'required|string|max:1',
             'cnic' => 'required|unique:students|string|max:15',
-            'phone' => 'required|unique:students|string|max:15',
+            'phone' => 'nullable|unique:students|string|max:15',
             'email' => 'required|email|unique:users',
 
         ]);
@@ -80,13 +80,14 @@ class StudentController extends Controller
             Student::create(
                 [
                     'user_id' => $user->id,
-                    'program_id' => $request->program_id,
-                    'session_id' => $request->session_id,
+                    'program_id' => session('program')->id,
+                    'semester_id' => session('semester')->id,
+                    'shift' => session('shift'),
+                    'section_id' => session('section')->id,
+                    'gender' => $request->gender,
                     'phone' => $request->phone,
                     'cnic' => $request->cnic,
                     'address' => $request->address,
-                    'department_id' => Auth::user()->employee->department_id,
-
                 ]
             );
 
@@ -119,11 +120,7 @@ class StudentController extends Controller
     {
         //
         $student = Student::findOrFail($id);
-        $departments = Department::all();
-        $programs = program::all();
-        $sessions = session::all();
-        $nationalities = Nationality::all();
-        return view('hod.students.edit', compact('student', 'departments', 'prefixes', 'programs', 'sessions', 'nationalities'));
+        return view('hod.students.edit', compact('student'));
     }
 
     /**
@@ -139,21 +136,17 @@ class StudentController extends Controller
         $student = Student::find($id);
         $request->validate([
             'name' => 'required|string|max:50',
-            'prefix_id' => 'required|numeric|digits:1',
-            'program_id' => 'required|numeric',
-            'session_id' => 'required|numeric',
-            'nationality_id' => 'required|numeric',
+            'gender' => 'required|string|max:1',
             'cnic' => 'required|string|max:15|unique:students,cnic,' . $id, 'id',
-            'phone' => 'required|string|max:15|unique:students,phone,' . $id, 'id',
+            'phone' => 'nullable|string|max:15|unique:students,phone,' . $id, 'id',
             'email' => 'required|email|unique:users,email,' . $student->user->id, 'id',
+            'address' => 'nullable'
 
         ]);
 
         try {
-
-            $student->prefix_id = $request->prefix_id;
-            $student->program_id = $request->program_id;
-            $student->session_id = $request->session_id;
+            $student->gender = $request->gender;
+            $student->cnic = $request->cnic;
             $student->phone = $request->phone;
             $student->address = $request->address;
 
@@ -167,7 +160,7 @@ class StudentController extends Controller
             return redirect()->route('students.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
-                ->withErrors(['update' => $ex->getMessage()]);
+                ->withErrors($ex->getMessage());
         }
     }
 

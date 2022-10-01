@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Program;
 use App\Models\Section;
 use App\Models\Semester;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,8 +43,19 @@ class EnrollmentController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'shift' => 'required',
+            'section_id' => 'required|numeric|max:10',
+        ]);
 
-        echo $request->bordered_radio;
+        $section = Section::find($request->section_id);
+        session([
+            'shift' => $request->shift,
+            'section' => $section,
+        ]);
+
+        $students = Student::all();
+        return view('hod.students.index', compact('students'));
     }
 
     /**

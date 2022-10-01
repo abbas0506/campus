@@ -15,7 +15,21 @@ return new class extends Migration
     {
         Schema::create('schemes', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->unsignedBigInteger('program_id');
+            $table->unsignedBigInteger('wef_semester_id'); //with effect form
+
             $table->timestamps();
+
+            $table->foreign('program_id')
+                ->references('id')
+                ->on('programs')
+                ->onDelete('cascade');
+
+            $table->foreign('wef_semester_id')
+                ->references('id')
+                ->on('semesters')
+                ->onDelete('cascade');
         });
     }
 

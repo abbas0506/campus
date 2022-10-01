@@ -28,7 +28,7 @@ return new class extends Migration
             $table->boolean('is_married')->nullable();
             $table->boolean('is_special')->nullable();
 
-            $table->unsignedBigInteger('gender_id')->nullable();
+            $table->enum('gender', ['M', 'F', 'T']);
             $table->unsignedBigInteger('nationality_id')->nullable();
             $table->unsignedBigInteger('province_id')->nullable();
             $table->unsignedBigInteger('domicile_id')->nullable();
@@ -51,12 +51,6 @@ return new class extends Migration
             $table->foreign('prefix_id')
                 ->references('id')
                 ->on('prefixes')
-                ->onUpdate('cascade')
-                ->onDelete('set null');
-
-            $table->foreign('gender_id')
-                ->references('id')
-                ->on('genders')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
 

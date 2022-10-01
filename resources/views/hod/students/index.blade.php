@@ -12,14 +12,36 @@
         </div>
         <!-- serach field -->
         <div class="relative ml-0 md:ml-20">
-            <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
+            <input type="text" id="search_input" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
         </div>
+        <!-- filter by gender -->
+        <div class="flex flex-row items-center md:w-1/4 ml-4">
+            <label for="" class="py-2 text-sm text-gray-400 ml-4">Gender</label>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 icon-gray ml-2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+            </svg>
+            <select id="gender" name="" class="input-indigo p-1 ml-4" onchange="search(event)">
+                <option value="">All</option>
+                <option value="M">M</option>
+                <option value="F">F</option>
+                <option value="T">T</option>
+            </select>
+        </div>
     </div>
+
+    <div class="text-xl text-slate-800">{{session('semester')->semester_type->name}} {{session('semester')->year}}</div>
+    <div class="text-sm text-slate-500">{{session('program')->short}},
+        @if(session('shift')=='M') Morning
+        @elseif(session('shift')=='E') Evening
+        @endif
+        ({{session('section')->name}})
+    </div>
+
     @if(session('success'))
-    <div class="flex alert-success items-center mb-8">
+    <div class="flex alert-success items-center mt-8">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
         </svg>
@@ -27,28 +49,27 @@
     </div>
     @endif
 
-    <table class="table-auto w-full">
+    <table class="table-auto w-full mt-8">
         <thead>
             <tr class="border-b border-slate-200">
+                <th class="p-2 text-gray-600 text-left">Sr</th>
                 <th class="py-2 text-gray-600 text-left">Student</th>
-                <th class="py-2 text-gray-600 text-left">Program</th>
                 <th class="py-2 text-gray-600 text-left">Address</th>
                 <th class="py-2 text-gray-600 text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
 
+            @php $sr=$students->count();@endphp
             @foreach($students->sortByDesc('id') as $student)
             <tr class="tr border-b ">
+                <td class="p-2">#{{$sr--}}</td>
                 <td class="py-2">
                     <div>{{$student->user->name}}</div>
                     <div class="text-sm text-gray-500">{{$student->user->email}}</div>
                     <div class="text-sm text-gray-500">{{$student->cnic}}</div>
                 </td>
-                <td class="py-2">
-                    <div>@if($student->program){{$student->program->name}}@endif</div>
-                    <div class="text-sm text-gray-500">@if($student->session){{$student->session->name}}@endif</div>
-                </td>
+                <td hidden>{{$student->gender}}</td>
                 <td class="py-2">
                     <div>
                         @if($student->domicile){{$student->domicile->name}}@endif
@@ -102,17 +123,42 @@
     }
 
     function search(event) {
-        var searchtext = event.target.value.toLowerCase();
-        var str = 0;
-        $('.tr').each(function() {
-            if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
-                )) {
-                $(this).addClass('hidden');
-            } else {
-                $(this).removeClass('hidden');
-            }
-        });
+        var searchtext = $('#search_input').val().toLowerCase();
+        var filter = $('#gender').val().toLowerCase();
+
+        if (filter === '') {
+            $('.tr').each(function() {
+                if (!(
+                        $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
+                    )) {
+                    $(this).addClass('hidden');
+                } else {
+                    $(this).removeClass('hidden');
+                }
+            });
+        } else if (searchtext === '') {
+            $('.tr').each(function() {
+                if (!(
+                        ($(this).children().eq(2).prop('outerText').toLowerCase() === filter)
+                    )) {
+                    $(this).addClass('hidden');
+                } else {
+                    $(this).removeClass('hidden');
+                }
+            });
+        } else {
+
+            $('.tr').each(function() {
+                if (!($(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) &&
+                        ($(this).children().eq(2).prop('outerText').toLowerCase() === filter)
+                    )) {
+                    $(this).addClass('hidden');
+                } else {
+                    $(this).removeClass('hidden');
+                }
+            });
+        }
+
     }
 </script>
 

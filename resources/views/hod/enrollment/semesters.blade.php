@@ -3,7 +3,7 @@
 <div class="container px-8">
     <div class="flex mb-5 flex-col md:flex-row md:items-center">
         <div class="flex items-center mt-12 mb-5 md:my-10">
-            <h1 class="text-indigo-500 text-xl">Enrollment</h1>
+            <h1 class="text-indigo-500 text-xl">Fresh Enrollment</h1>
         </div>
         <!-- serach field -->
         <div class="relative ml-0 md:ml-40">
