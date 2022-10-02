@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-content')
-<div class="container px-8">
+<div class="container px-12">
     <div class="flex mb-5 flex-col md:flex-row md:items-center">
         <div class="flex items-center">
             <h1 class="text-indigo-500 text-xl py-12">

@@ -37,7 +37,7 @@
         </thead>
         <tbody>
 
-            @foreach($departments->sortByDesc('id')->where('id','>',3) as $department)
+            @foreach($departments->sortByDesc('id') as $department)
             <tr class="tr border-b ">
                 <td class="py-2">
                     <div>{{$department->name}}</div>
