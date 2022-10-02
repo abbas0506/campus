@@ -13,4 +13,13 @@ class SchemeDetail extends Model
         'semester_no',
         'course_id',
     ];
+    public function scheme()
+    {
+        return $this->belongsTo(Scheme::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }

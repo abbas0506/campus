@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
-use App\Models\Program;
-use App\Models\Scheme;
-use App\Models\Semester;
+use App\Models\Course;
+use App\Models\SchemeDetail;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class SchemeController extends Controller
+class SchemeDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +18,6 @@ class SchemeController extends Controller
     public function index()
     {
         //
-        $schemes = Scheme::all();
-        return view('hod.schemes.index', compact('schemes'));
     }
 
     /**
@@ -32,11 +28,7 @@ class SchemeController extends Controller
     public function create()
     {
         //
-        $semesters = Semester::whereNotNull('edit_till')->get();
-        // $programs = Program::all();
-        $programs = Program::where('department_id', Auth::user()->employee->department_id)->get();
 
-        return view('hod.schemes.create', compact('semesters', 'programs'));
     }
 
     /**
@@ -49,13 +41,19 @@ class SchemeController extends Controller
     {
         //
         $request->validate([
-            'wef_semester_id' => 'required|numeric',
-            'program_id' => 'required|numeric|unique:schemes,program_id,NULL,id,wef_semester_id,' . $request->wef_semester_id,
+            'course_id' => 'required|numeric',
         ]);
 
         try {
-            Scheme::create($request->all());
-            return redirect()->route('schemes.index')->with('success', 'Successfully created');
+            //should be HOD department id
+            $scheme_detail = SchemeDetail::create([
+                'scheme_id' => session('scheme')->id,
+                'semester_no' => session('semester_no'),
+                'course_id' => $request->course_id,
+            ]);
+
+            $scheme_detail->save();
+            return redirect()->route('schemes.show', session('scheme'))->with('success', 'Successfully added');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -65,51 +63,57 @@ class SchemeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\SchemeDetail  $schemeDetail
      * @return \Illuminate\Http\Response
      */
-    public function show(Scheme $scheme)
+    public function show(SchemeDetail $schemeDetail)
     {
         //
-        session(['scheme' => $scheme]);
-        return view('hod.schemes.show', compact('scheme'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\SchemeDetail  $schemeDetail
      * @return \Illuminate\Http\Response
      */
-    public function edit(Scheme $scheme)
+    public function edit($semester_no)
     {
-        //
+        //skip those course which have already been added to this scheme in any semester
+        session(['semester_no' => $semester_no]);
 
+        $course_ids = SchemeDetail::where('scheme_id', session('scheme')->id)->distinct()->get('course_id')->toArray();
+        $courses = Course::whereNotIn('id', $course_ids)->get();
+        return view('hod.scheme_details.edit', compact('courses'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\SchemeDetail  $schemeDetail
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SchemeDetail $schemeDetail)
     {
         //
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\SchemeDetail  $schemeDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Scheme $scheme)
+    public function destroy(SchemeDetail $schemeDetail)
     {
+        //
         try {
-            $scheme->delete();
-            return redirect()->back()->with('success', 'Successfully deleted');
+            $schemeDetail->delete();
+            return redirect()->back()->with('success', 'Successfully removed');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }

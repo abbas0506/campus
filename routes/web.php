@@ -22,6 +22,8 @@ use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
 use App\Http\Controllers\ProgramShiftController;
 use App\Http\Controllers\Admin\SemesterController;
+use App\Http\Controllers\hod\CourseAllocationChoiceController;
+use App\Http\Controllers\hod\SchemeDetailController;
 use App\Models\SemesterType;
 
 /*
@@ -71,8 +73,10 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('courses', CourseController::class);
     Route::resource('employees', EmployeeController::class);
     Route::resource('instructors', InstructorController::class);
-    Route::resource('scheme', SchemeController::class);
+    Route::resource('schemes', SchemeController::class);
+    Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
+    Route::resource('course-allocation-choices', CourseAllocationChoiceController::class);
     Route::resource('students', StudentController::class);
     Route::resource('results', ResultController::class);
     Route::resource('enrollments', EnrollmentController::class);

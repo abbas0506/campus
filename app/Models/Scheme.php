@@ -9,9 +9,20 @@ class Scheme extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id',
-        'name',
         'program_id',
-        'year',
+        'wef_semester_id',
     ];
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'wef_semester_id');
+    }
+    public  function scheme_details()
+    {
+        return $this->hasMany(SchemeDetail::class);
+    }
 }

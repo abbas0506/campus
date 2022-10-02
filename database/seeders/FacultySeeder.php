@@ -16,11 +16,7 @@ class FacultySeeder extends Seeder
     public function run()
     {
         //
-        Faculty::create([
-            'name' => 'Teaching',
-        ]);
-        Faculty::create([
-            'name' => 'Non Teaching',
-        ]);
+        Faculty::create(['name' => 'Teaching',]);
+        Faculty::create(['name' => 'Non Teaching',]);
     }
 }

@@ -16,17 +16,9 @@ class DesginationSeeder extends Seeder
     public function run()
     {
         //
-        Designation::create([
-            'name' => 'Lecturer',
-        ]);
-        Designation::create([
-            'name' => 'Assistant Professor',
-        ]);
-        Designation::create([
-            'name' => 'Associate Professor',
-        ]);
-        Designation::create([
-            'name' => 'Professor',
-        ]);
+        Designation::create(['name' => 'Lecturer',]);
+        Designation::create(['name' => 'Assistant Professor',]);
+        Designation::create(['name' => 'Associate Professor',]);
+        Designation::create(['name' => 'Professor',]);
     }
 }

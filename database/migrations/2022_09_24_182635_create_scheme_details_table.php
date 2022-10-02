@@ -24,6 +24,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('schemes')
                 ->onDelete('cascade');
+
+            $table->foreign('course_id')
+                ->references('id')
+                ->on('courses')
+                ->onDelete('cascade');
         });
     }
 

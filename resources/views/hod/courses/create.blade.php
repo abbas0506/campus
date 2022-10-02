@@ -34,7 +34,7 @@
             </div>
             <div class="flex flex-col md:w-48 md:ml-4">
                 <label for="" class="text-sm text-gray-400 mt-3">Course Type</label>
-                <select id="" name="department_id" class="input-indigo p-2">
+                <select id="" name="course_type_id" class="input-indigo p-2">
                     @foreach($course_types as $course_type)
                     <option value="{{$course_type->id}}">{{$course_type->name}}</option>
                     @endforeach
@@ -49,7 +49,7 @@
             </div>
             <div class="flex flex-col md:w-48 md:ml-4">
                 <label for="" class="text-sm text-gray-400 mt-3">Max Marks (Theory)</label>
-                <input type='number' id="" name="max_marks" class="input-indigo p-1 pl-2" placeholder="Marks" value='100'>
+                <input type='number' id="" name="max_marks_theory" class="input-indigo p-1 pl-2" placeholder="Marks" value='100'>
             </div>
         </div>
         <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">

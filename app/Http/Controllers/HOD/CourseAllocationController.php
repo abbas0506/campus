@@ -3,7 +3,18 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+
+use App\Models\Course;
+use App\Models\CourseAllocation;
+use App\Models\Employee;
+use App\Models\Scheme;
+use App\Models\SchemeDetail;
+use App\Models\Section;
+use App\Models\Semester;
+use Exception;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourseAllocationController extends Controller
 {
@@ -15,6 +26,8 @@ class CourseAllocationController extends Controller
     public function index()
     {
         //
+        $course_allocations = session('course_allocations');
+        return view('hod.course_allocations.index', compact('course_allocations'));
     }
 
     /**
@@ -25,6 +38,7 @@ class CourseAllocationController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -36,6 +50,45 @@ class CourseAllocationController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'scheme_id' => 'required|numeric',
+            'semester_id' => 'required',
+            'shift' => 'required',
+            'section_id' => 'required|numeric|max:10',
+        ]);
+
+        $scheme = Scheme::find($request->scheme_id);
+
+        DB::beginTransaction();
+        try {
+            foreach ($scheme->scheme_details as $scheme_detail) {
+                CourseAllocation::create([
+                    'semester_id' => $request->semester_id,
+                    'shift' => $request->shift,
+                    'section_id' => $request->section_id,
+                    'scheme_detail_id' => $scheme_detail->id,
+                    'course_id' => $scheme_detail->course_id,
+                ]);
+            }
+            DB::commit();
+            $course_allocations = CourseAllocation::where('semester_id', $request->semester_id)
+                ->where('shift', $request->shift)
+                ->where('section_id', $request->section_id)
+                ->get();
+
+            session([
+                'course_allocations' => $course_allocations,
+            ]);
+
+            return redirect()->route('course-allocations.index');
+            // return redirect()->route('course-allocations.index', ['course_allocations' => $course_allocations]);
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
+
+
+        // return view('hod.course_allocations.index', compact('scheme'));
     }
 
     /**
@@ -47,6 +100,7 @@ class CourseAllocationController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -58,6 +112,12 @@ class CourseAllocationController extends Controller
     public function edit($id)
     {
         //
+        $scheme_detail = SchemeDetail::find($id);
+        session([
+            'scheme_detail' => $scheme_detail,
+        ]);
+        $instructors = Employee::all();
+        return view('hod.course_allocations.choices.instructor', compact('instructors'));
     }
 
     /**
@@ -70,6 +130,14 @@ class CourseAllocationController extends Controller
     public function update(Request $request, $id)
     {
         //
+        CourseAllocation::create([
+            'semester_id' => session('semester')->id,
+            'shift' => session('shift'),
+            'section_id' => session('section')->id,
+            'scheme_detail_id' => session('scheme_detail')->id,
+            'instructor_id' => $request->instructor_id,
+
+        ]);
     }
 
     /**

@@ -1,11 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\hod;
 
-use App\Models\SchemeDetail;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Program;
+use App\Models\Scheme;
+use App\Models\Section;
+use App\Models\Semester;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
-class SchemeDetailController extends Controller
+class CourseAllocationChoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +21,8 @@ class SchemeDetailController extends Controller
     public function index()
     {
         //
+        $programs = Program::where('department_id', Auth::user()->employee->department_id)->get();
+        return view('hod.course_allocations.choices.index', compact('programs'));
     }
 
     /**
@@ -25,6 +33,7 @@ class SchemeDetailController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -36,26 +45,33 @@ class SchemeDetailController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SchemeDetail  $schemeDetail
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SchemeDetail $schemeDetail)
+    public function show($id)
     {
         //
+        $program = Program::find($id);
+        session(['program' => $program]);
+
+        $semesters = Semester::whereNotNull('edit_till')->get();
+        $sections = Section::all();
+        return view('hod.course_allocations.choices.scheme', compact('program', 'semesters', 'sections'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SchemeDetail  $schemeDetail
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(SchemeDetail $schemeDetail)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +80,10 @@ class SchemeDetailController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SchemeDetail  $schemeDetail
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SchemeDetail $schemeDetail)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +91,10 @@ class SchemeDetailController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SchemeDetail  $schemeDetail
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SchemeDetail $schemeDetail)
+    public function destroy($id)
     {
         //
     }

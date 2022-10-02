@@ -19,6 +19,10 @@ class Program extends Model
     {
         return $this->belongsTo(Department::class);
     }
+    public function schemes()
+    {
+        return $this->hasMany(Scheme::class);
+    }
     public function students()
     {
         return $this->hasMany(Student::class);

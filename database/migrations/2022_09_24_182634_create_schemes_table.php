@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('schemes', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
             $table->unsignedBigInteger('program_id');
             $table->unsignedBigInteger('wef_semester_id'); //with effect form
-
+            $table->unique(['wef_semester_id', 'program_id']); //composite pk
             $table->timestamps();
 
             $table->foreign('program_id')
