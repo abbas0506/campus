@@ -116,8 +116,8 @@ class CourseAllocationController extends Controller
         session([
             'scheme_detail' => $scheme_detail,
         ]);
-        $instructors = Employee::all();
-        return view('hod.course_allocations.choices.instructor', compact('instructors'));
+        $examiners = Employee::all();
+        return view('hod.course_allocations.choices.examiner', compact('examiners'));
     }
 
     /**
@@ -135,7 +135,7 @@ class CourseAllocationController extends Controller
             'shift' => session('shift'),
             'section_id' => session('section')->id,
             'scheme_detail_id' => session('scheme_detail')->id,
-            'instructor_id' => $request->instructor_id,
+            'examiner_id' => $request->examiner_id,
 
         ]);
     }

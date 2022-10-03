@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('shift', ['M', 'E']);
             $table->unsignedBigInteger('section_id');
             $table->unsignedBigInteger('scheme_detail_id');
-            $table->unsignedBigInteger('instructor_id')->nullable();
+            $table->unsignedBigInteger('examiner_id')->nullable();
 
             $table->timestamps();
 
@@ -38,7 +38,7 @@ return new class extends Migration
                 ->on('scheme_details')
                 ->onDelete('cascade');
 
-            $table->foreign('instructor_id')
+            $table->foreign('examiner_id')
                 ->references('id')
                 ->on('employees')
                 ->onDelete('cascade');

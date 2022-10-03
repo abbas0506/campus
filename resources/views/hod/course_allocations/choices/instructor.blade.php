@@ -35,24 +35,24 @@
     <table class="table-auto w-full mt-8">
         <thead>
             <tr class="border-b border-slate-200">
-                <th class="py-2 text-gray-600 text-left">Instructor</th>
+                <th class="py-2 text-gray-600 text-left">examiner</th>
                 <th class="py-2 text-gray-600 justify-center">Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($instructors->sortByDesc('id') as $instructor)
+            @foreach($examiners->sortByDesc('id') as $examiner)
             <tr class="border-b tr">
                 <td class="py-2">
-                    <div>{{$instructor->user->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$instructor->cnic}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$instructor->user->email}}</div>
+                    <div>{{$examiner->user->name}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$examiner->cnic}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$examiner->user->email}}</div>
 
                 </td>
                 <td class="py-2 flex items-center justify-center">
-                    <form action="{{route('course-allocations.store')}}" method="POST" id='assign_form{{$instructor->id}}' class="mt-2 text-sm">
+                    <form action="{{route('course-allocations.store')}}" method="POST" id='assign_form{{$examiner->id}}' class="mt-2 text-sm">
                         @csrf
-                        <input type="text" name='instructor_id' value="{{$instructor->id}}" hidden>
-                        <button type="submit" class="flex bg-green-200 text-green-800 px-3 py-2 rounded" onclick="assign('{{$instructor->id}}')">
+                        <input type="text" name='examiner_id' value="{{$examiner->id}}" hidden>
+                        <button type="submit" class="flex bg-green-200 text-green-800 px-3 py-2 rounded" onclick="assign('{{$examiner->id}}')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 icon-gray">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                             </svg>

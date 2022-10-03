@@ -53,11 +53,8 @@ class EmployeeController extends Controller
     {
         //
         $request->validate([
-            'prefix_id' => 'required|numeric|digits:1',
             'name' => 'required|string|max:50',
             'designation_id' => 'required|numeric',
-            'jobtype_id' => 'required|numeric',
-            'nationality_id' => 'required|numeric',
             'cnic' => 'required|unique:employees|string|max:15',
             'phone' => 'required|unique:employees|string|max:15',
             'email' => 'required|email|unique:users',
@@ -73,17 +70,14 @@ class EmployeeController extends Controller
             ]);
 
             $user->save();
-            $user->assignRole('instructor');
+            $user->assignRole('examiner');
 
             Employee::create(
                 [
                     'user_id' => $user->id,
-                    'prefix_id' => $request->prefix_id,
                     'designation_id' => $request->designation_id,
-                    'jobtype_id' => $request->jobtype_id,
                     'phone' => $request->phone,
                     'cnic' => $request->cnic,
-                    'address' => $request->address,
                     'department_id' => Auth::user()->employee->department_id,
 
                 ]
@@ -119,11 +113,8 @@ class EmployeeController extends Controller
         //
         $employee = Employee::findOrFail($id);
         $departments = Department::all();
-        $prefixes = Prefix::all();
         $designations = Designation::all();
-        $jobtypes = Jobtype::all();
-        $nationalities = Nationality::all();
-        return view('hod.employees.edit', compact('employee', 'departments', 'prefixes', 'designations', 'jobtypes', 'nationalities'));
+        return view('hod.employees.edit', compact('employee', 'departments', 'designations'));
     }
 
     /**
@@ -139,10 +130,7 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
         $request->validate([
             'name' => 'required|string|max:50',
-            'prefix_id' => 'required|numeric|digits:1',
             'designation_id' => 'required|numeric',
-            'jobtype_id' => 'required|numeric',
-            'nationality_id' => 'required|numeric',
             'cnic' => 'required|string|max:15|unique:employees,cnic,' . $id, 'id',
             'phone' => 'required|string|max:15|unique:employees,phone,' . $id, 'id',
             'email' => 'required|email|unique:users,email,' . $employee->user->id, 'id',
@@ -151,12 +139,8 @@ class EmployeeController extends Controller
 
         try {
 
-            $employee->prefix_id = $request->prefix_id;
             $employee->designation_id = $request->designation_id;
-            $employee->jobtype_id = $request->jobtype_id;
             $employee->phone = $request->phone;
-            $employee->address = $request->address;
-
             $employee->update();
 
             $user = $employee->user;

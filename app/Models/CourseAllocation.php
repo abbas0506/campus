@@ -13,7 +13,7 @@ class CourseAllocation extends Model
         'shift',
         'section_id',
         'scheme_detail_id',
-        'instructor_id',
+        'examiner_id',
 
     ];
 }

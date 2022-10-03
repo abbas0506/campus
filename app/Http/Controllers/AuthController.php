@@ -62,7 +62,10 @@ class AuthController extends Controller
     {
         //get 2nd factor secret code sent to gmail
         //if matched, redirect to user dashboard
-        return redirect('/');
+        if (Auth::user()->roles->count() > 1)
+            return redirect('login-options');
+        else
+            return redirect('/');
     }
 
     /**

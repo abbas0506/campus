@@ -32,7 +32,6 @@
             <tr class="border-b border-slate-200">
                 <th class="py-2 text-gray-600 text-left">Employee</th>
                 <th class="py-2 text-gray-600 text-left">Designation</th>
-                <th class="py-2 text-gray-600 text-left">Address</th>
                 <th class="py-2 text-gray-600 text-center">Actions</th>
             </tr>
         </thead>
@@ -47,14 +46,6 @@
                 </td>
                 <td class="py-2">
                     <div>@if($employee->designation){{$employee->designation->name}}@endif</div>
-                    <div class="text-sm text-gray-500">@if($employee->jobtype){{$employee->jobtype->name}}@endif</div>
-                </td>
-                <td class="py-2">
-                    <div>
-                        @if($employee->domicile){{$employee->domicile->name}}@endif
-                        @if($employee->province), {{$employee->province->name}}@endif
-                        @if($employee->nationality), {{$employee->nationality->name}}@endif </div>
-                    <div class="text-sm text-gray-500">{{$employee->address}}</div>
                 </td>
 
                 <td class="py-2 flex items-center justify-center">

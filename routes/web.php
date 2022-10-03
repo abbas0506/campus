@@ -12,7 +12,7 @@ use App\Http\Controllers\hod\EnrollmentController;
 use App\Http\Controllers\CE\ExamController;
 use App\Http\Controllers\Admin\HodController;
 use App\Http\Controllers\hod\CourseAllocationController;
-use App\Http\Controllers\hod\InstructorController;
+use App\Http\Controllers\hod\examinerController;
 use App\Http\Controllers\Hod\ProgramController;
 use App\Http\Controllers\Hod\CourseController;
 use App\Http\Controllers\hod\DepartmentSessionController;
@@ -39,11 +39,13 @@ use App\Models\SemesterType;
 
 Route::get('/', function () {
     if (Auth::check()) {
+        // return redirect(Auth::user()->role->name);
         $user = Auth::user();
+
         if ($user->hasRole('admin')) return redirect('admin');
         else if ($user->hasRole('controller')) return redirect('controller');
         else if ($user->hasRole('hod')) return redirect('hod');
-        else if ($user->hasRole('instructor')) return redirect('instructor');
+        else if ($user->hasRole('examiner')) return redirect('examiner');
         else return redirect('student');
     } else
         return view('index');
@@ -52,7 +54,9 @@ Route::get('/', function () {
 // Auth::routes();
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
+Route::view('login-options', 'login_options');
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
+
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::view('admin', 'admin.index');
@@ -72,7 +76,7 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('programs', ProgramController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('employees', EmployeeController::class);
-    Route::resource('instructors', InstructorController::class);
+    Route::resource('examiners', examinerController::class);
     Route::resource('schemes', SchemeController::class);
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
@@ -82,4 +86,8 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('enrollments', EnrollmentController::class);
     Route::resource('department-sessions', DepartmentSessionController::class);
     Route::resource('program-shifts', ProgramShiftController::class)->only('show');
+});
+
+Route::group(['middleware' => ['role:examiner']], function () {
+    Route::view('examiner', 'examiner.index');
 });

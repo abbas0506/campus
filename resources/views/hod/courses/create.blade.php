@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container px-8">
+<div class="container md:w-3/4 mx-auto px-5 md:px-0">
     <div class="flex items-center">
         <h1 class="text-indigo-500 text-xl py-10">
             <a href="{{route('courses.index')}}">Courses</a>
@@ -18,7 +18,7 @@
     </div>
     @endif
 
-    <form action="{{route('courses.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
+    <form action="{{route('courses.store')}}" method='post' class="flex flex-col w-full">
         @csrf
         <label for="" class="text-sm text-gray-400">Full Name</label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Software Engineering">
@@ -47,7 +47,7 @@
                 <label for="" class="text-sm text-gray-400 mt-3">Credit Hrs (Theory)</label>
                 <input id="" type='number' name="credit_hrs_theory" class="input-indigo p-1 pl-2" placeholder="Crdit Hrs" value='4'>
             </div>
-            <div class="flex flex-col md:w-48 md:ml-4">
+            <div class="flex flex-col flex-1 md:ml-4">
                 <label for="" class="text-sm text-gray-400 mt-3">Max Marks (Theory)</label>
                 <input type='number' id="" name="max_marks_theory" class="input-indigo p-1 pl-2" placeholder="Marks" value='100'>
             </div>
@@ -57,20 +57,20 @@
                 <label for="" class="text-sm text-gray-400 mt-3">Credit Hrs (Practical)</label>
                 <input id="" type='number' name="credit_hrs_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value='0' min=0>
             </div>
-            <div class="flex flex-col md:w-48 md:ml-4">
+            <div class="flex flex-col flex-1 md:ml-4">
                 <label for="" class="text-sm text-gray-400 mt-3">Max Marks (Practical)</label>
                 <input type='number' id="" name="max_marks_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value='0' min=0>
             </div>
         </div>
 
-        <label for="" class="text-sm text-gray-400 mt-3">Department</label>
+        <!-- <label for="" class="text-sm text-gray-400 mt-3">Department</label>
         <select id="" name="department_id" class="input-indigo p-2">
             <option value="">Select a department</option>
             @foreach($departments->sortBy('name') as $department)
             <option value="{{$department->id}}" @if($department->id==Auth::user()->employee->department_id) selected @endif>{{$department->name}}</option>
             @endforeach
-        </select>
-        <button type="submit" class="btn-indigo mt-4">Save</button>
+        </select> -->
+        <button type="submit" class="btn-indigo mt-8">Save</button>
     </form>
 
 </div>

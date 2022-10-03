@@ -20,7 +20,7 @@
 
     <form action="{{route('programs.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
-        <label for="" class="text-sm text-gray-400">Full Name *(as per scheme of study)</label>
+        <label for="" class="text-sm text-gray-400">Full Name <span class="text-red-600"> *(as per scheme of study)</span></label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Bachelor of Science in Computer Science ">
 
         <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
