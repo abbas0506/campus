@@ -76,7 +76,7 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('programs', ProgramController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('employees', EmployeeController::class);
-    Route::resource('examiners', examinerController::class);
+    // Route::resource('examiners', examinerController::class);
     Route::resource('schemes', SchemeController::class);
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
