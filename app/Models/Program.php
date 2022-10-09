@@ -23,6 +23,10 @@ class Program extends Model
     {
         return $this->hasMany(Scheme::class);
     }
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
+    }
     public function students()
     {
         return $this->hasMany(Student::class);

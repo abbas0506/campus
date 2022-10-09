@@ -31,10 +31,10 @@
     <table class="table-auto w-full">
         <thead>
             <tr class="border-b border-slate-200">
-                <th class="py-2 text-gray-600 text-left">Exam Name</th>
-                <th class="py-2 text-gray-600 text-left">Type</th>
-                <th class="py-2 text-gray-600 text-left">Status</th>
-                <th class="py-2 text-gray-600 text-center">Actions
+                <th>Exam Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th class='text-center'>Actions
                 </th>
             </tr>
         </thead>

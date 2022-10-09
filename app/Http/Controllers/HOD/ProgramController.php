@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseType;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Exception;
@@ -47,7 +48,7 @@ class ProgramController extends Controller
         $request->validate([
             'name' => 'required|unique:programs',
             'short' => 'required',
-            'code' => 'required|unique:programs',
+            'code' => 'nullable|unique:programs',
             'duration' => 'required|numeric',
             'department_id' => 'required|numeric',
 
@@ -100,7 +101,7 @@ class ProgramController extends Controller
         $request->validate([
             'name' => 'required|unique:programs,name,' . $id, 'id',
             'short' => 'required',
-            'code' => 'required|unique:programs,code,' . $id, 'id',
+            'code' => 'nullable|unique:programs,code,' . $id, 'id',
             'duration' => 'required|numeric',
             'department_id' => 'required|numeric',
 

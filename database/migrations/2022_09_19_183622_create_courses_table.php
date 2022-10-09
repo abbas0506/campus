@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('short');
-            $table->string('code')->unique();
+            $table->string('code')->unique()->nullable();
             $table->unsignedBigInteger('course_type_id')->default(1);
             $table->unsignedInteger('credit_hrs_theory');
             $table->unsignedInteger('max_marks_theory');

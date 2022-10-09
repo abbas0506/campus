@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('short');
-            $table->string('code')->unique();
+            $table->string('code')->unique()->nullable();
             $table->unsignedInteger('duration'); //in years
             $table->unsignedBigInteger('department_id');
             $table->timestamps();

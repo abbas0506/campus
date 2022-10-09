@@ -17,7 +17,8 @@ class CourseTypeSeeder extends Seeder
     {
         //
         CourseType::create(['name' => 'Compulsory']);
-        CourseType::create(['name' => 'Optional']);
-        CourseType::create(['name' => 'General']);
+        CourseType::create(['name' => 'Elective']);
+        CourseType::create(['name' => 'Special Paper']);
+        CourseType::create(['name' => 'Thesis']);
     }
 }

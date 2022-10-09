@@ -3,7 +3,7 @@
 <div class="container px-16">
     <div class="flex mb-5 flex-col md:flex-row md:items-center">
         <div class="flex items-center mb-5 md:my-16">
-            <h1 class="text-indigo-500 text-xl">Course Allocation <span class="text-sm text-slate-500">| {{$scheme->program->short}} | {{session('semester')->semester_type->name}} {{session('semester')->year}}</span> </h1>
+            <h1 class="text-indigo-500 text-xl">Course Allocation <span class="text-sm text-slate-500">| {{$scheme->program->short}} </span> </h1>
         </div>
         <!-- serach field -->
         <div class="relative ml-0 md:ml-20">
@@ -27,8 +27,8 @@
     <table class="table-auto w-full">
         <thead>
             <tr class="border-b border-slate-200">
-                <th class="py-2 text-gray-600 text-left">Semester</th>
-                <th class="py-2 text-gray-600 text-left">Program</th>
+                <th>Semester</th>
+                <th>Program</th>
             </tr>
         </thead>
         <tbody>

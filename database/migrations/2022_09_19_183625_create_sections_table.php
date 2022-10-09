@@ -16,7 +16,14 @@ return new class extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('clas_id');
             $table->timestamps();
+
+            $table->foreign('clas_id')
+                ->references('id')
+                ->on('clas')
+                ->onDelete('cascade');  //cascade delete
+
         });
     }
 

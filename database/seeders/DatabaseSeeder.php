@@ -38,7 +38,6 @@ class DatabaseSeeder extends Seeder
 
             DepartmentSeeder::class,
             ProgramSeeder::class,
-            SectionSeeder::class,
             CourseSeeder::class,
             FacultySeeder::class,
             DesginationSeeder::class,

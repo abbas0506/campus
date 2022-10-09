@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Section;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Semester;
 use Illuminate\Http\Request;
+use Spatie\Permission\Contracts\Role;
 
-class SectionController extends Controller
+class LoginOptionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,6 +17,8 @@ class SectionController extends Controller
     public function index()
     {
         //
+        $semesters = Semester::whereNotNull('edit_till')->get();
+        return view('login_options', compact('semesters'));
     }
 
     /**
@@ -37,15 +40,25 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'role_name' => 'required',
+        ]);
+
+        // $semester = Semester::find($request->semester_id);
+
+        if (Auth::user()->hasRole($request->role_name))
+            return redirect($request->role_name);
+        else
+            return redirect('/');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Section  $section
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Section $section)
+    public function show($id)
     {
         //
     }
@@ -53,10 +66,10 @@ class SectionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Section  $section
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Section $section)
+    public function edit($id)
     {
         //
     }
@@ -65,10 +78,10 @@ class SectionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Section  $section
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Section $section)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +89,10 @@ class SectionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Section  $section
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Section $section)
+    public function destroy($id)
     {
         //
     }

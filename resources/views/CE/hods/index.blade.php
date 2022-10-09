@@ -32,8 +32,8 @@
     <table class="table-auto w-full">
         <thead>
             <tr class="border-b border-slate-200">
-                <th class="py-2 text-gray-600 text-left">HOD Name</th>
-                <th class="py-2 text-gray-600 text-left">Department</th>
+                <th>HOD Name</th>
+                <th>Department</th>
                 <th class="py-2 text-gray-600 justify-center">Actions</th>
             </tr>
         </thead>

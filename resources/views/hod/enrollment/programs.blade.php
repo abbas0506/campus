@@ -48,9 +48,9 @@
     <table class="table-auto w-full mt-10">
         <thead>
             <tr class="border-b border-slate-200">
-                <th class="py-2 text-gray-600 text-left">Program</th>
-                <th class="py-2 text-gray-600 text-left">Duration</th>
-                <th class="py-2 text-gray-600 text-center">Action</th>
+                <th>Program</th>
+                <th>Duration</th>
+                <th class='text-center'>Action</th>
             </tr>
         </thead>
         <tbody>

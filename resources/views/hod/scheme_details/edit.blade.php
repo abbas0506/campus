@@ -34,7 +34,7 @@
     <table class="table-auto w-full mt-8">
         <thead>
             <tr class="border-b border-slate-200">
-                <th class="py-2 text-gray-600 text-left">Course Name</th>
+                <th>Course Name</th>
                 <th class="py-2 text-gray-600 justify-center">Actions</th>
             </tr>
         </thead>
@@ -44,7 +44,7 @@
                 <td class="py-2">
                     <div>{{$course->name}}</div>
                     <div class="text-sm text-gray-500 font-medium">{{$course->code}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$course->credit_hrs}}</div>
+                    <div class="text-sm text-gray-500 font-medium">({{$course->credit_hrs_theory}}-{{$course->credit_hrs_practical}})</div>
 
                 </td>
                 <td class="py-2 flex items-center justify-center">

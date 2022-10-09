@@ -22,8 +22,13 @@ use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
 use App\Http\Controllers\ProgramShiftController;
 use App\Http\Controllers\Admin\SemesterController;
+use App\Http\Controllers\hod\ClassController;
+use App\Http\Controllers\hod\ClassOptionsController;
 use App\Http\Controllers\hod\CourseAllocationChoiceController;
 use App\Http\Controllers\hod\SchemeDetailController;
+use App\Http\Controllers\hod\SectionController;
+use App\Http\Controllers\hod\SectionOptionsController;
+use App\Http\Controllers\LoginOptionsController;
 use App\Models\SemesterType;
 
 /*
@@ -39,14 +44,11 @@ use App\Models\SemesterType;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        // return redirect(Auth::user()->role->name);
         $user = Auth::user();
-
-        if ($user->hasRole('admin')) return redirect('admin');
-        else if ($user->hasRole('controller')) return redirect('controller');
-        else if ($user->hasRole('hod')) return redirect('hod');
-        else if ($user->hasRole('examiner')) return redirect('examiner');
-        else return redirect('student');
+        if ($user->roles->count() > 1)
+            return redirect('login-options');
+        else
+            return redirect($user->roles->first()->name);
     } else
         return view('index');
 });
@@ -54,7 +56,8 @@ Route::get('/', function () {
 // Auth::routes();
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
-Route::view('login-options', 'login_options');
+Route::resource('login-options', LoginOptionsController::class)->only('index', 'store');
+Route::resource('section-options', SectionOptionsController::class)->only('index', 'store');
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
 
@@ -74,6 +77,9 @@ Route::group(['middleware' => ['role:controller']], function () {
 Route::group(['middleware' => ['role:hod']], function () {
     Route::view('hod', 'hod.index');
     Route::resource('programs', ProgramController::class);
+    Route::resource('classes', ClassController::class);
+    Route::resource('class-options', ClassOptionsController::class);
+    Route::resource('sections', SectionController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('employees', EmployeeController::class);
     // Route::resource('examiners', examinerController::class);

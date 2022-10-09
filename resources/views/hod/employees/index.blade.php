@@ -30,9 +30,9 @@
     <table class="table-auto w-full">
         <thead>
             <tr class="border-b border-slate-200">
-                <th class="py-2 text-gray-600 text-left">Employee</th>
-                <th class="py-2 text-gray-600 text-left">Designation</th>
-                <th class="py-2 text-gray-600 text-center">Actions</th>
+                <th>Employee</th>
+                <th>Designation</th>
+                <th class='text-center'>Actions</th>
             </tr>
         </thead>
         <tbody>

@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container px-8">
+<div class="container md:w-3/4 mx-auto px-5 md:px-0">
     <div class="flex items-center">
         <h1 class="text-indigo-500 text-xl py-10">
             <a href="{{route('programs.index')}}">Programs</a>
@@ -18,7 +18,7 @@
     </div>
     @endif
 
-    <form action="{{route('programs.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
+    <form action="{{route('programs.store')}}" method='post' class="flex flex-col w-full">
         @csrf
         <label for="" class="text-sm text-gray-400">Full Name <span class="text-red-600"> *(as per scheme of study)</span></label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Bachelor of Science in Computer Science ">
@@ -28,10 +28,10 @@
                 <label for="" class="text-sm text-gray-400 mt-3">Short Name <span class="text-sm">(if any)</span></label>
                 <input type="text" id='' name='short' class="input-indigo" placeholder="For example: BSCS">
             </div>
-            <div class="flex flex-col md:w-48 md:ml-4">
+            <!-- <div class="flex flex-col md:w-48 md:ml-4">
                 <label for="" class="text-sm text-gray-400 mt-3">Program Code</label>
                 <input type="text" id='' name='code' class="input-indigo" placeholder="Enter program code">
-            </div>
+            </div> -->
             <div class="flex flex-col md:w-48 md:ml-4">
                 <label for="" class="text-sm text-gray-400 mt-3">Duration <span class="text-sm">(Years)</span></label>
                 <select id="" name="duration" class="input-indigo p-2">
@@ -40,9 +40,8 @@
                 </select>
             </div>
         </div>
-
-        <label for="" class="text-sm text-gray-400 mt-3">Department</label>
-        <select id="" name="department_id" class="input-indigo p-2">
+        <!-- <label for="" class="text-sm text-gray-400 mt-3">Department</label> -->
+        <select id="" name="department_id" class="input-indigo p-2" hidden>
             <option value="">Select a department</option>
             @foreach($departments->sortBy('name') as $department)
             <option value="{{$department->id}}" @if($department->id==Auth::user()->employee->department_id) selected @endif>{{$department->name}}</option>

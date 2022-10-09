@@ -27,7 +27,8 @@ class CourseAllocationController extends Controller
     {
         //
         $course_allocations = session('course_allocations');
-        return view('hod.course_allocations.index', compact('course_allocations'));
+        $scheme = session('course_allocations_scheme');
+        return view('hod.course_allocations.index', compact('course_allocations', 'scheme'));
     }
 
     /**
@@ -77,10 +78,12 @@ class CourseAllocationController extends Controller
                 ->get();
 
             session([
+
+                'course_allocations_scheme' => $scheme,
                 'course_allocations' => $course_allocations,
             ]);
 
-            return redirect()->route('course-allocations.index');
+            return redirect()->route('course-allocations.index')->with('msg', "data has been called");
             // return redirect()->route('course-allocations.index', ['course_allocations' => $course_allocations]);
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
@@ -116,8 +119,8 @@ class CourseAllocationController extends Controller
         session([
             'scheme_detail' => $scheme_detail,
         ]);
-        $examiners = Employee::all();
-        return view('hod.course_allocations.choices.examiner', compact('examiners'));
+        $teachers = Employee::all();
+        return view('hod.course_allocations.choices.teacher', compact('teachers'));
     }
 
     /**
@@ -135,7 +138,7 @@ class CourseAllocationController extends Controller
             'shift' => session('shift'),
             'section_id' => session('section')->id,
             'scheme_detail_id' => session('scheme_detail')->id,
-            'examiner_id' => $request->examiner_id,
+            'teacher_id' => $request->teacher_id,
 
         ]);
     }

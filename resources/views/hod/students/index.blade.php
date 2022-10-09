@@ -53,9 +53,9 @@
         <thead>
             <tr class="border-b border-slate-200">
                 <th class="p-2 text-gray-600 text-left">Sr</th>
-                <th class="py-2 text-gray-600 text-left">Student</th>
-                <th class="py-2 text-gray-600 text-left">Address</th>
-                <th class="py-2 text-gray-600 text-center">Actions</th>
+                <th>Student</th>
+                <th>Address</th>
+                <th class='text-center'>Actions</th>
             </tr>
         </thead>
         <tbody>

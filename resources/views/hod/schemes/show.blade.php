@@ -27,8 +27,8 @@
     <table class="table-auto w-full">
         <thead>
             <tr class="border-b border-slate-200">
-                <th class="py-2 text-gray-600 text-left">Semester</th>
-                <th class="py-2 text-gray-600 text-left">Program</th>
+                <th>Semester</th>
+                <th>Program</th>
             </tr>
         </thead>
         <tbody>
