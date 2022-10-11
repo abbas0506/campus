@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
-use App\Models\Employee;
+use App\Models\Teacher;
 use App\Models\User;
 use App\Models\UserDepartment;
 use Exception;
@@ -50,7 +50,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'cnic' => 'required|unique:employees',
+            'cnic' => 'required|unique:teachers',
             'department_id' => 'required|numeric'
 
         ]);
@@ -65,7 +65,7 @@ class UserController extends Controller
 
             $user->save();
 
-            Employee::create(
+            Teacher::create(
                 [
                     'user_id' => $user->id,
                     'department_id' => $request->department_id,
@@ -118,7 +118,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email,' . $id, 'id',
-            'cnic' => 'required|unique:employees,cnic,' . $id, 'id',
+            'cnic' => 'required|unique:teachers,cnic,' . $id, 'id',
         ]);
 
 
@@ -128,9 +128,9 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->save();
 
-            $employee = Employee::find($user->employee->id);
-            $employee->cnic = $request->cnic;
-            $employee->save();
+            $teacher = Teacher::find($user->teacher->id);
+            $teacher->cnic = $request->cnic;
+            $teacher->save();
 
             return redirect('users')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {

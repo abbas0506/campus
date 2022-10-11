@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Course;
 use App\Models\CourseAllocation;
-use App\Models\Employee;
+use App\Models\Teacher;
 use App\Models\Scheme;
 use App\Models\SchemeDetail;
 use App\Models\Section;
@@ -54,7 +54,7 @@ class CourseAllocationController extends Controller
         $request->validate([
             'scheme_id' => 'required|numeric',
             'semester_id' => 'required',
-            'shift' => 'required',
+            'shift_id' => 'required',
             'section_id' => 'required|numeric|max:10',
         ]);
 
@@ -65,7 +65,7 @@ class CourseAllocationController extends Controller
             foreach ($scheme->scheme_details as $scheme_detail) {
                 CourseAllocation::create([
                     'semester_id' => $request->semester_id,
-                    'shift' => $request->shift,
+                    'shift_id' => $request->shift_id,
                     'section_id' => $request->section_id,
                     'scheme_detail_id' => $scheme_detail->id,
                     'course_id' => $scheme_detail->course_id,
@@ -73,7 +73,7 @@ class CourseAllocationController extends Controller
             }
             DB::commit();
             $course_allocations = CourseAllocation::where('semester_id', $request->semester_id)
-                ->where('shift', $request->shift)
+                ->where('shift_id', $request->shift_id)
                 ->where('section_id', $request->section_id)
                 ->get();
 
@@ -119,7 +119,7 @@ class CourseAllocationController extends Controller
         session([
             'scheme_detail' => $scheme_detail,
         ]);
-        $teachers = Employee::all();
+        $teachers = Teacher::all();
         return view('hod.course_allocations.choices.teacher', compact('teachers'));
     }
 
@@ -135,7 +135,7 @@ class CourseAllocationController extends Controller
         //
         CourseAllocation::create([
             'semester_id' => session('semester')->id,
-            'shift' => session('shift'),
+            'shift_id' => session('shift_id'),
             'section_id' => session('section')->id,
             'scheme_detail_id' => session('scheme_detail')->id,
             'teacher_id' => $request->teacher_id,

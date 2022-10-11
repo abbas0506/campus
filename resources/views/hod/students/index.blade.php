@@ -34,8 +34,8 @@
 
     <div class="text-xl text-slate-800">{{session('semester')->semester_type->name}} {{session('semester')->year}}</div>
     <div class="text-sm text-slate-500">{{session('program')->short}},
-        @if(session('shift')=='M') Morning
-        @elseif(session('shift')=='E') Evening
+        @if(session('shift_id')=='M') Morning
+        @elseif(session('shift_id')=='E') Evening
         @endif
         ({{session('section')->name}})
     </div>

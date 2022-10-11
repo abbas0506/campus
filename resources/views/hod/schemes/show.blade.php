@@ -28,7 +28,7 @@
         <thead>
             <tr class="border-b border-slate-200">
                 <th>Semester</th>
-                <th>Program</th>
+                <th>Courses</th>
             </tr>
         </thead>
         <tbody>

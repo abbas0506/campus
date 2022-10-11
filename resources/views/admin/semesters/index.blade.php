@@ -3,7 +3,7 @@
 <div class="container px-8">
     <div class="flex mb-5 flex-col md:flex-row md:items-center">
         <div class="flex items-center mt-12 mb-5 md:my-12">
-            <h1 class="text-indigo-500 text-xl">Calendar</h1>
+            <h1 class="text-indigo-500 text-xl">Semesters</h1>
             <a href="{{route('semesters.create')}}" class="bg-indigo-600 hover:bg-indigo-500 ml-5 p-2 rounded-full flex text-slate-200">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -41,7 +41,7 @@
             @foreach($semesters->sortByDesc('id') as $semester)
             <tr class="tr border-b ">
                 <td class="py-2 text-slate-600">
-                    <div>{{$semester->semester_type->name}} {{$semester->year}}</div>
+                    <div>{{$semester->title()}}</div>
                 </td>
                 <td>
                     @if($semester->edit_till)

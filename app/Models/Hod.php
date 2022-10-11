@@ -10,13 +10,13 @@ class Hod extends Model
     use HasFactory;
     protected $fillable = [
         'department_id',
-        'employee_id',
+        'teacher_id',
 
     ];
 
-    public function employee()
+    public function teacher()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Teacher::class);
     }
     public function department()
     {

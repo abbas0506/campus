@@ -8,14 +8,14 @@
         </h1>
     </div>
 
-    <div class="text-xl text-slate-800">{{session('semester')->semester_type->name}} {{session('semester')->year}}</div>
-    <div class="text-sm text-slate-500">{{session('program')->short}},
-        @if(session('shift')=='M') Morning
-        @elseif(session('shift')=='E') Evening
-        @endif
-        ({{session('section')->name}})
+    <div class="flex text-slate-600 text-sm mb-4">
+        {{$section->title()}}
+        <a href="{{url('classes')}}" class="ml-4 text-indigo-600 px-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+            </svg>
+        </a>
     </div>
-
     @if ($errors->any())
     <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
         <ul>
@@ -28,36 +28,28 @@
 
     <form action="{{route('students.store')}}" method='post' class="flex flex-col w-full md:w-3/4 mt-4">
         @csrf
-        <label for="" class="text-sm text-gray-400">Full Name</label>
+
+        <label for="" class="text-sm text-gray-400">Gender</label>
+        <select id="" name="gender" class="input-indigo p-2 w-32">
+            <option value="M">M</option>
+            <option value="F">F</option>
+        </select>
+
+        <label for="" class="text-sm text-gray-400 mt-3">Full Name</label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad">
-        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
-            <div class="flex flex-col md:mr-4 mt-3">
-                <label for="" class="text-sm text-gray-400">Gender</label>
-                <select id="" name="gender" class="input-indigo p-2">
-                    <option value="M">M</option>
-                    <option value="F">F</option>
-                    <option value="T">T</option>
-                </select>
+
+        <label for="" class="text-sm text-gray-400 mt-3">Father</label>
+        <input type="text" id='' name='father' class="input-indigo" placeholder="father name">
+        <div class="flex md:space-x-8">
+            <div class="flex flex-col flex-1 mt-3">
+                <label for="" class="text-sm text-gray-400">Roll No</label>
+                <input type="text" name="rollno" class="input-indigo" placeholder="Roll No.">
             </div>
             <div class="flex flex-col flex-1 mt-3">
-                <label for="" class="text-sm text-gray-400">CNIC</label>
-                <input type="text" id='' name='cnic' class="input-indigo" placeholder="xxxxx-xxxxxxx-x">
+                <label for="" class="text-sm text-gray-400">Reg. No</label>
+                <input type="text" name="regno" class="input-indigo" placeholder="Registration No.">
             </div>
         </div>
-        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
-            <div class="flex flex-col flex-1 md:mr-4 mt-3">
-                <label for="" class="text-sm text-gray-400">Phone</label>
-                <input type="text" id='' name='phone' class="input-indigo" placeholder="xxxx-xxxxxxx">
-            </div>
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="" class="text-sm text-gray-400">Email</label>
-                <input type="text" id='' name='email' class="input-indigo" placeholder="abc@uo.edu.pk">
-            </div>
-        </div>
-
-        <label for="" class="text-sm text-gray-400 mt-3">Address <span class="text-sm">(optional)</span></label>
-        <input type="text" id='' name='address' class="input-indigo" placeholder="University of Okara" value="University of Okara">
-
         <button type="submit" class="btn-indigo mt-4">Save</button>
     </form>
 

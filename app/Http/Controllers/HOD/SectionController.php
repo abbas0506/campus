@@ -20,15 +20,7 @@ class SectionController extends Controller
     public function index()
     {
         //
-        if (session('semester_id') && session('program_id')) {
-            $semester = Semester::find(session('semester_id'));
-            $program = Program::find(session('program_id'));
 
-            return view('hod.sections.index', compact('semester', 'program'));
-        } else {
-            echo 'session or program variable not set... probably you have tried direct access to this page';
-            //send to error page showing direct access
-        }
     }
 
     /**
@@ -59,29 +51,16 @@ class SectionController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required',
+            'clas_id' => 'required|numeric',
+            'name' => 'required|unique:sections,name,NULL,id,clas_id,' . $request->clas_id,
         ]);
 
-        if (session('semester') && session('program')) {
-            $semester = session('semester');
-            $program = session('program');
-
-            try {
-                Section::create([
-                    'semester_id' => $semester->id,
-                    'program_id' => $program->id,
-                    'name' => $request->name,
-
-                ]);
-
-                return redirect('sections')->with('success', 'Successfully created');
-            } catch (Exception $e) {
-                return redirect()->back()->withErrors($e->getMessage());
-                // something went wrong
-            }
-        } else {
-            echo 'session or program variable not set... probably you have tried direct access to this page';
-            //send to error page showing direct access
+        try {
+            Section::create($request->all());
+            return redirect('classes')->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
         }
     }
 
@@ -91,9 +70,16 @@ class SectionController extends Controller
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function show(Section $section)
+    public function show($id)
     {
         //
+
+        $section = Section::find($id);
+        session([
+            'section_id' => $id,
+        ]);
+        $students = $section->students;
+        return view('hod.sections.show', compact('section', 'students'));
     }
 
     /**

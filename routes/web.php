@@ -16,7 +16,7 @@ use App\Http\Controllers\hod\examinerController;
 use App\Http\Controllers\Hod\ProgramController;
 use App\Http\Controllers\Hod\CourseController;
 use App\Http\Controllers\hod\DepartmentSessionController;
-use App\Http\Controllers\hod\EmployeeController;
+use App\Http\Controllers\hod\teacherController;
 use App\Http\Controllers\hod\ResultController;
 use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
@@ -81,7 +81,7 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('class-options', ClassOptionsController::class);
     Route::resource('sections', SectionController::class);
     Route::resource('courses', CourseController::class);
-    Route::resource('employees', EmployeeController::class);
+    Route::resource('teachers', teacherController::class);
     // Route::resource('examiners', examinerController::class);
     Route::resource('schemes', SchemeController::class);
     Route::resource('scheme-details', SchemeDetailController::class);

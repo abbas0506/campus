@@ -19,7 +19,7 @@ class ClassOptionsController extends Controller
     {
         //
         $semesters = Semester::all();
-        $programs = Program::where('department_id', Auth::user()->employee->department_id)->get();
+        $programs = Program::where('department_id', Auth::user()->teacher->department_id)->get();
         return view('hod.classes.options', compact('semesters', 'programs'));
     }
 

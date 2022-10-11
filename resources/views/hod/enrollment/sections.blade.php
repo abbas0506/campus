@@ -25,11 +25,11 @@
                             </div>
                             <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Shift</h2>
                             <div class="flex item-cetner mt-3">
-                                <input type="radio" name='shift' value="M" checked>
+                                <input type="radio" name='shift_id' value="M" checked>
                                 <label for="" class="ml-3">Mornig</label>
                             </div>
                             <div class="flex item-cetner mt-2">
-                                <input type="radio" name='shift' value="E">
+                                <input type="radio" name='shift_id' value="E">
                                 <label for="" class="ml-3">Evening</label>
                             </div>
 

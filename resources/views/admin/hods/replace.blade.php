@@ -58,11 +58,11 @@
             <tr class="border-b tr">
                 <td class="py-2">
                     <div>{{$user->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$user->employee->cnic}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$user->teacher->cnic}}</div>
                     <div class="text-sm text-gray-500 font-medium">{{$user->email}}</div>
                 </td>
                 <td class="py-2 text-sm text-gray-500 font-medium">
-                    <div>{{$user->employee->department->name}}</div>
+                    <div>{{$user->teacher->department->name}}</div>
                 </td>
                 <td class="py-2 flex items-center justify-center">
                     <form action="{{url('post/assign/hod')}}" method="POST" id='assign_form{{$user->id}}' class="mt-2 text-sm">

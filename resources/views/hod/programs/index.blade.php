@@ -42,9 +42,7 @@
             <tr class="tr border-b ">
                 <td class="py-2">
                     <div>{{$program->name}}</div>
-                    <div class="text-sm text-gray-500">{{$program->short}}</div>
-                    <div class="text-sm text-gray-500">{{$program->code}}</div>
-
+                    <div class="text-sm text-gray-500">{{$program->short}} @if($program->code) | {{$program->code}}@endif</div>
                 </td>
                 <td class="py-2">
                     <div class="flex items-center text-gray-500">

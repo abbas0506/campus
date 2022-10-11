@@ -8,6 +8,7 @@ use App\Models\Clas;
 use App\Models\Course;
 use App\Models\Program;
 use App\Models\Semester;
+use App\Models\Shift;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -39,9 +40,11 @@ class ClassController extends Controller
     {
         //
         if (session('semester_id')) {
+
             $semester = Semester::find(session('semester_id'));
-            $programs = Program::where('department_id', Auth::user()->employee->department_id)->get();
-            return view('hod.classes.create', compact('semester', 'programs'));
+            $programs = Program::where('department_id', Auth::user()->teacher->department_id)->get();
+            $shifts = Shift::all();
+            return view('hod.classes.create', compact('semester', 'programs', 'shifts'));
         } else {
             echo 'session or program variable not set... probably you have tried direct access to this page';
             //send to error page showing direct access
@@ -59,20 +62,20 @@ class ClassController extends Controller
         //
         $request->validate([
             'program_id' => 'required|numeric',
-            'shift' => 'required',
+            'shift_id' => 'required',
         ]);
 
         if (session('semester_id')) {
 
             $semester = Semester::find(session('semester_id'));
-            if ($semester->classes->where('program_id', $request->program_id)->where('shift', $request->shift)->count() > 0)
+            if ($semester->classes->where('program_id', $request->program_id)->where('shift_id', $request->shift_id)->count() > 0)
                 return redirect('classes')->with('error', 'Class already exists');
             else {
                 try {
                     Clas::create([
                         'semester_id' => session('semester_id'),
                         'program_id' => $request->program_id,
-                        'shift' => $request->shift,
+                        'shift_id' => $request->shift_id,
 
                     ]);
 
@@ -105,9 +108,11 @@ class ClassController extends Controller
      * @param  \App\Models\Clas  $clas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Clas $clas)
+    public function edit($id)
     {
         //
+        $clas = Clas::find($id);
+        return view('hod.sections.create', compact('clas'));
     }
 
     /**

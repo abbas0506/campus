@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\hod;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseType;

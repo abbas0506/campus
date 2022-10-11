@@ -3,7 +3,7 @@
 <div class="container px-8">
     <div class="flex items-center">
         <h1 class="text-indigo-500 text-xl py-12">
-            <a href="{{route('semesters.index')}}">Calendar</a>
+            <a href="{{route('semesters.index')}}">Semesters</a>
             <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>New</span>
         </h1>
     </div>

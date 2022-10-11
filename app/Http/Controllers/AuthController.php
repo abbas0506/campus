@@ -49,9 +49,8 @@ class AuthController extends Controller
         // echo $request->email;
 
         if (Auth::attempt($credentials)) {
-            // return redirect('/');
-
-            return view('second_factor');
+            return redirect('/');
+            //return view('second_factor');
         } else {
 
             return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);

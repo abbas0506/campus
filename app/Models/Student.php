@@ -9,30 +9,21 @@ class Student extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        'name',
         'father',
         'cnic',
         'phone',
+        'email',
         'address',
         'dob',
         'gender',
-        'blood_group',
-        'is_married',
-        'is_special',
-        'nationality_id',
-        'province_id',
-        'domicile_id',
-        'religion_id',
 
         //root status
-        'root_semester_id',
-        'program_id',
-        'shift',
-
-        //current status
         'section_id',
-        'current_semester_id',
-        'semester_no',
+        'regno',
+
+        //current section: if frozen 
+
         'rollno',
 
     ];
@@ -41,37 +32,17 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function root_semester()
-    {
-        return $this->belongsTo(Semester::class, 'root_semester_id');
-    }
-    public function current_semester()
-    {
-        return $this->belongsTo(Semester::class, 'current_semester_id');
-    }
-    public function program()
-    {
-        return $this->belongsTo(Program::class);
-    }
+
     public function section()
     {
         return $this->belongsTo(Section::class);
     }
-
-    public function nationality()
+    public function clas()
     {
-        return $this->belongsTo(Nationality::class);
+        return $this->section->clas;
     }
-    public function province()
+    public function program()
     {
-        return $this->belongsTo(Province::class);
-    }
-    public function domicile()
-    {
-        return $this->belongsTo(Domicile::class);
-    }
-    public function religion()
-    {
-        return $this->belongsTo(Religion::class);
+        return $this->section->clas->program;
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('hods', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('department_id')->unique();
-            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('teacher_id');
             $table->timestamps();
 
             $table->foreign('department_id')
@@ -25,9 +25,9 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->foreign('employee_id')
+            $table->foreign('teacher_id')
                 ->references('id')
-                ->on('employees')
+                ->on('teachers')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

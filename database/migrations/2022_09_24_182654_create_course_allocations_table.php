@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('course_allocations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('semester_id');
-            $table->enum('shift', ['M', 'E']);
+            $table->unsignedBigInteger('shift_id');
             $table->unsignedBigInteger('section_id');
             $table->unsignedBigInteger('scheme_detail_id');
             $table->unsignedBigInteger('examiner_id')->nullable();
@@ -26,6 +26,11 @@ return new class extends Migration
             $table->foreign('semester_id')
                 ->references('id')
                 ->on('semesters')
+                ->onDelete('cascade');
+
+            $table->foreign('shift_id')
+                ->references('id')
+                ->on('shifts')
                 ->onDelete('cascade');
 
             $table->foreign('section_id')
@@ -40,7 +45,7 @@ return new class extends Migration
 
             $table->foreign('examiner_id')
                 ->references('id')
-                ->on('employees')
+                ->on('teachers')
                 ->onDelete('cascade');
         });
     }

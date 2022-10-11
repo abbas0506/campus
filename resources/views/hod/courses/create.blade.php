@@ -24,6 +24,7 @@
 
     <form action="{{route('courses.store')}}" method='post' class="flex flex-col w-full">
         @csrf
+
         <div class="flex flex-col w-48">
             <label for="" class="text-sm mt-3 text-gray-400">Category</label>
             <select id="" name="course_type_id" class="input-indigo p-2">
@@ -34,12 +35,12 @@
         </div>
 
         <label for="" class="text-sm text-gray-400 mt-4">Full Name</label>
-        <input type="text" id='' name='name' class="input-indigo" placeholder="Software Engineering">
+        <input type="text" id='' name='name' class="input-indigo" placeholder="Object Oriented Programming">
 
         <div class="flex flex-col md:flex-row md:items-center md:space-x-8">
             <div class="flex flex-col flex-1">
-                <label for="" class="text-sm text-gray-400 mt-3">Short Name <span class="text-sm">(if any)</span></label>
-                <input type="text" id='' name='short' class="input-indigo" placeholder="For example: SE">
+                <label for="" class="text-sm text-gray-400 mt-3">Short Name <span class="text-sm">(if any, otherwise same as full name)</span></label>
+                <input type="text" id='' name='short' class="input-indigo" placeholder="OOP">
             </div>
             <div class="flex flex-col">
                 <label for="" class="text-sm text-gray-400 mt-3">Course Code</label>
@@ -66,32 +67,7 @@
             </div>
 
         </div>
-
-        <label for="" class="text-sm text-gray-400 mt-3">Select Department</label>
-        <select id="" name="department_id" class="input-indigo p-2">
-            <option value="">Select a department</option>
-            @foreach($departments->sortBy('name') as $department)
-            <option value="{{$department->id}}" @if($department->id==Auth::user()->employee->department_id) selected @endif>{{$department->name}}</option>
-            @endforeach
-        </select>
-
-
-        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
-            <div class="flex flex-col flex-1">
-
-            </div>
-            <div class="flex flex-col flex-1  md:ml-4">
-
-            </div>
-        </div>
-
-        <!-- <label for="" class="text-sm text-gray-400 mt-3">Department</label>
-        <select id="" name="department_id" class="input-indigo p-2">
-            <option value="">Select a department</option>
-            @foreach($departments->sortBy('name') as $department)
-            <option value="{{$department->id}}" @if($department->id==Auth::user()->employee->department_id) selected @endif>{{$department->name}}</option>
-            @endforeach
-        </select> -->
+        <input type="text" name='department_id' value="{{Auth::user()->teacher->department_id}}" hidden>
         <button type="submit" class="btn-indigo mt-8">Save</button>
     </form>
 

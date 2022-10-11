@@ -44,9 +44,9 @@
                 <td class="py-2">{{$department->name}}</td>
                 <td class="py-2">
                     @if($department->hod)
-                    <div class="">{{$department->hod->employee->user->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$department->hod->employee->cnic}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$department->hod->employee->user->email}}</div>
+                    <div class="">{{$department->hod->teacher->user->name}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$department->hod->teacher->cnic}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$department->hod->teacher->user->email}}</div>
                     @endif
                 </td>
                 <td class="py-2">

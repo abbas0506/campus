@@ -31,11 +31,13 @@ class DatabaseSeeder extends Seeder
             DomicileSeeder::class,
             ProvinceSeeder::class,
             QualificationSeeder::class,
+
             SemesterTypeSeeder::class,
+            SemesterSeeder::class,
             ExamTypeSeeder::class,
             CourseTypeSeeder::class,
-            SessionSeeder::class,
 
+            ShiftSeeder::class,
             DepartmentSeeder::class,
             ProgramSeeder::class,
             CourseSeeder::class,
@@ -45,7 +47,7 @@ class DatabaseSeeder extends Seeder
             PrefixSeeder::class,
 
             UserSeeder::class,
-            EmployeeSeeder::class,
+            TeacherSeeder::class,
             // StudentSeeder::class,
 
         ]);

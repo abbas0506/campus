@@ -12,7 +12,7 @@ class Clas extends Model
         'program_id',
         'semester_id', //root semester id
         'semester_no',
-        'shift',
+        'shift_id',
     ];
 
     public function semester()
@@ -23,8 +23,19 @@ class Clas extends Model
     {
         return $this->belongsTo(Program::class);
     }
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
+    }
     public function sections()
     {
         return $this->hasMany(Section::class);
+    }
+    public function title()
+    {
+        $semester = $this->semester->title();
+        $program = $this->program->name;
+        $shift = $this->shift->name;
+        return $semester . ' | ' . $program . ' | ' . $shift;
     }
 }

@@ -28,7 +28,7 @@
         <input type="text" id='email' name='email' class="input-indigo" placeholder="Enter email address" value="{{$user->email}}">
 
         <label for="" class=" text-sm text-gray-400 mt-3">CNIC <span class="ml-1">( xxxxx-xxxxxxx-x )</span></label>
-        <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Enter CNIC" value="{{$user->employee->cnic}}">
+        <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Enter CNIC" value="{{$user->teacher->cnic}}">
 
         <button type="submit" class="btn-indigo mt-3">Update</button>
     </form>

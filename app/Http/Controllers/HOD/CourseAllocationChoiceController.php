@@ -21,7 +21,7 @@ class CourseAllocationChoiceController extends Controller
     public function index()
     {
         //
-        $programs = Program::where('department_id', Auth::user()->employee->department_id)->get();
+        $programs = Program::where('department_id', Auth::user()->teacher->department_id)->get();
         return view('hod.course_allocations.choices.index', compact('programs'));
     }
 

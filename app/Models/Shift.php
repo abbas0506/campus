@@ -5,15 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CourseAllocation extends Model
+class Shift extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'semester_id',
-        'shift_id',
-        'section_id',
-        'scheme_detail_id',
-        'examiner_id',
-
+        'name',
     ];
 }

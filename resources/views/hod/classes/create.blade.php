@@ -29,14 +29,13 @@
     <form action="{{route('classes.store')}}" method='post' class="flex flex-col w-full">
         @csrf
         <!-- <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Shift</h2> -->
+
+        @foreach($shifts as $shift)
         <div class="flex item-cetner mt-3">
-            <input type="radio" name='shift' value="M" checked>
-            <label for="" class="ml-3">Mornig</label>
+            <input type="radio" name='shift_id' value="{{$shift->id}}" @if($shift->id==1) checked @endif>
+            <label for="" class="ml-3">{{$shift->name}}</label>
         </div>
-        <div class="flex item-cetner mt-2">
-            <input type="radio" name='shift' value="E">
-            <label for="" class="ml-3">Evening</label>
-        </div>
+        @endforeach
 
         <label for="" class="text-sm text-gray-400 mt-3">Program</label>
         <select id="" name="program_id" class="input-indigo p-2">

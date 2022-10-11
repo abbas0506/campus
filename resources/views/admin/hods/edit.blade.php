@@ -54,21 +54,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($employees->sortByDesc('id') as $employee)
+            @foreach($teachers->sortByDesc('id') as $teacher)
             <tr class="border-b tr">
                 <td class="py-2">
-                    <div>{{$employee->user->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$employee->cnic}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$employee->user->email}}</div>
+                    <div>{{$teacher->user->name}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$teacher->cnic}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$teacher->user->email}}</div>
                 </td>
                 <td class="py-2 text-sm text-gray-500 font-medium">
-                    <div>{{$employee->department->name}}</div>
+                    <div>{{$teacher->department->name}}</div>
                 </td>
                 <td class="py-2 flex items-center justify-center">
-                    <form action="{{route('departmenthods.update', $employee)}}" method="POST" id='assign_form{{$employee->id}}' class="mt-2 text-sm">
+                    <form action="{{route('departmenthods.update', $teacher)}}" method="POST" id='assign_form{{$teacher->id}}' class="mt-2 text-sm">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" class="flex bg-green-200 text-green-800 px-3 py-2 rounded" onclick="assign('{{$employee->id}}')">
+                        <button type="submit" class="flex bg-green-200 text-green-800 px-3 py-2 rounded" onclick="assign('{{$teacher->id}}')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 icon-gray">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                             </svg>

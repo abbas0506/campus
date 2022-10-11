@@ -20,7 +20,7 @@ class SectionOptionsController extends Controller
     {
         //
         $semesters = Semester::whereNotNull('edit_till')->get();
-        $programs = Program::where('department_id', Auth::user()->employee->department_id)->get();
+        $programs = Program::where('department_id', Auth::user()->teacher->department_id)->get();
         return view('hod.sections.options', compact('semesters', 'programs'));
     }
 

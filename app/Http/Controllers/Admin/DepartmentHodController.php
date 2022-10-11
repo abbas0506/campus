@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Department;
-use App\Models\Employee;
+use App\Models\Teacher;
 use App\Models\Hod;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -52,7 +52,7 @@ class DepartmentHodController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'cnic' => 'required|unique:employees'
+            'cnic' => 'required|unique:teachers'
         ]);
         DB::beginTransaction();
         try {
@@ -67,7 +67,7 @@ class DepartmentHodController extends Controller
             $user->save();
             $user->assignRole('hod');
 
-            $employee = Employee::create(
+            $teacher = Teacher::create(
                 [
                     'user_id' => $user->id,
                     'department_id' => $department->id,
@@ -76,7 +76,7 @@ class DepartmentHodController extends Controller
             );
 
             Hod::create([
-                'employee_id' => $employee->id,
+                'teacher_id' => $teacher->id,
                 'department_id' => $department->id,
             ]);
 
@@ -109,14 +109,14 @@ class DepartmentHodController extends Controller
     public function edit($id)
     {
         //
-        $employees = Employee::all();
+        $teachers = Teacher::all();
         $departments = Department::all();
         $selected_department = Department::find($id);
         session([
             'selected_department' => $selected_department
         ]);
 
-        return view('admin.hods.edit', compact('departments', 'employees', 'selected_department'));
+        return view('admin.hods.edit', compact('departments', 'teachers', 'selected_department'));
     }
 
     /**
@@ -126,7 +126,7 @@ class DepartmentHodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $employee_id)
+    public function update(Request $request, $teacher_id)
     {
         try {
             $department = session('selected_department');
@@ -134,12 +134,12 @@ class DepartmentHodController extends Controller
             if ($department->hod) {
                 //department hod exists, just update eixsting
                 $hod = $department->hod;
-                $hod->employee_id = $employee_id;
+                $hod->teacher_id = $teacher_id;
                 $hod->update();
                 return redirect('departmenthods')->with('success', 'Successfully replaced');
             } else {
                 Hod::create([
-                    'employee_id' => $employee_id,
+                    'teacher_id' => $teacher_id,
                     'department_id' => $department->id,
                 ]);
                 return redirect('departmenthods')->with('success', 'Successfully assigned');
@@ -186,12 +186,12 @@ class DepartmentHodController extends Controller
 
     // public function viewAssignHod(Request $request, $id)
     // {
-    //     $employees = Employee::all();
+    //     $teachers = Teacher::all();
     //     $departments = Department::all();
     //     $selected_department = Department::find($id);
 
     //     $request->session()->put('selected_department', $selected_department);
 
-    //     return view('admin.hods.assign', compact('departments', 'employees', 'selected_department'));
+    //     return view('admin.hods.assign', compact('departments', 'teachers', 'selected_department'));
     // }
 }

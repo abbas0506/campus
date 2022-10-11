@@ -44,13 +44,13 @@ class EnrollmentController extends Controller
     {
         //
         $request->validate([
-            'shift' => 'required',
+            'shift_id' => 'required',
             'section_id' => 'required|numeric|max:10',
         ]);
 
         $section = Section::find($request->section_id);
         session([
-            'shift' => $request->shift,
+            'shift_id' => $request->shift_id,
             'section' => $section,
         ]);
 

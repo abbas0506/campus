@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Department;
 use App\Models\Designation;
-use App\Models\Employee;
+use App\Models\Teacher;
 use App\Models\Jobtype;
 use App\Models\Nationality;
 use App\Models\Prefix;
@@ -17,14 +17,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Exception;
 
-class EmployeeController extends Controller
+class TeacherController extends Controller
 {
     //
     public function index()
     {
         //
-        $employees = Employee::where('department_id', Auth::user()->employee->department_id)->get();
-        return view('hod.employees.index', compact('employees'));
+        $teachers = Teacher::where('department_id', Auth::user()->teacher->department_id)->get();
+        return view('hod.teachers.index', compact('teachers'));
     }
 
     /**
@@ -40,7 +40,7 @@ class EmployeeController extends Controller
         $designations = Designation::all();
         $jobtypes = Jobtype::all();
         $nationalities = Nationality::all();
-        return view('hod.employees.create', compact('departments', 'prefixes', 'designations', 'jobtypes', 'nationalities'));
+        return view('hod.teachers.create', compact('departments', 'prefixes', 'designations', 'jobtypes', 'nationalities'));
     }
 
     /**
@@ -55,8 +55,8 @@ class EmployeeController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'designation_id' => 'required|numeric',
-            'cnic' => 'required|unique:employees|string|max:15',
-            'phone' => 'required|unique:employees|string|max:15',
+            'cnic' => 'required|unique:teachers|string|max:15',
+            'phone' => 'required|unique:teachers|string|max:15',
             'email' => 'required|email|unique:users',
 
         ]);
@@ -72,19 +72,19 @@ class EmployeeController extends Controller
             $user->save();
             $user->assignRole('examiner');
 
-            Employee::create(
+            Teacher::create(
                 [
                     'user_id' => $user->id,
                     'designation_id' => $request->designation_id,
                     'phone' => $request->phone,
                     'cnic' => $request->cnic,
-                    'department_id' => Auth::user()->employee->department_id,
+                    'department_id' => Auth::user()->teacher->department_id,
 
                 ]
             );
 
             DB::commit();
-            return redirect()->route('employees.index')->with('success', 'Successfully created');
+            return redirect()->route('teachers.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['create' => $e->getMessage()]);
             // something went wrong
@@ -111,10 +111,10 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         //
-        $employee = Employee::findOrFail($id);
+        $teacher = Teacher::findOrFail($id);
         $departments = Department::all();
         $designations = Designation::all();
-        return view('hod.employees.edit', compact('employee', 'departments', 'designations'));
+        return view('hod.teachers.edit', compact('teacher', 'departments', 'designations'));
     }
 
     /**
@@ -127,28 +127,28 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $employee = Employee::find($id);
+        $teacher = Teacher::find($id);
         $request->validate([
             'name' => 'required|string|max:50',
             'designation_id' => 'required|numeric',
-            'cnic' => 'required|string|max:15|unique:employees,cnic,' . $id, 'id',
-            'phone' => 'required|string|max:15|unique:employees,phone,' . $id, 'id',
-            'email' => 'required|email|unique:users,email,' . $employee->user->id, 'id',
+            'cnic' => 'required|string|max:15|unique:teachers,cnic,' . $id, 'id',
+            'phone' => 'required|string|max:15|unique:teachers,phone,' . $id, 'id',
+            'email' => 'required|email|unique:users,email,' . $teacher->user->id, 'id',
 
         ]);
 
         try {
 
-            $employee->designation_id = $request->designation_id;
-            $employee->phone = $request->phone;
-            $employee->update();
+            $teacher->designation_id = $request->designation_id;
+            $teacher->phone = $request->phone;
+            $teacher->update();
 
-            $user = $employee->user;
+            $user = $teacher->user;
             $user->name = $request->name;
             $user->email = $request->email;
             $user->update();
 
-            return redirect()->route('employees.index')->with('success', 'Successfully updated');;
+            return redirect()->route('teachers.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
                 ->withErrors(['update' => $ex->getMessage()]);
@@ -164,9 +164,9 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         //
-        $employee = Employee::findOrFail($id);
+        $teacher = Teacher::findOrFail($id);
         try {
-            $employee->delete();
+            $teacher->delete();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);

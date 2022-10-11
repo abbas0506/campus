@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employee;
+use App\Models\Teacher;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class EmployeeSeeder extends Seeder
+class teacherSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,20 +16,20 @@ class EmployeeSeeder extends Seeder
     public function run()
     {
         //
-        Employee::create([
+        Teacher::create([
             'user_id' => 1,
             'department_id' => 4,
             'cnic' => '35301-1232183-0'
 
         ]);
-        Employee::create([
+        Teacher::create([
             'user_id' => 2,
-            'department_id' => 4,
+            'department_id' => 1,
             'cnic' => '35301-1232183-1'
         ]);
-        Employee::create([
+        Teacher::create([
             'user_id' => 3,
-            'department_id' => 5,
+            'department_id' => 2,
             'cnic' => '36301-1232183-1'
         ]);
     }

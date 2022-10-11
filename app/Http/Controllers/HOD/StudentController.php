@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Nationality;
 use App\Models\Program;
+use App\Models\Section;
 use App\Models\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -26,15 +27,7 @@ class StudentController extends Controller
     {
         //
 
-        if (session('semester') && session('program') && session('shift') && session('section')) {
-            $students = Student::where('semester_id', session('semester')->id)
-                ->where('program_id', session('program')->id)
-                ->where('shift', session('shift'))
-                ->where('section_id', session('section')->id)
-                ->get();
-            return view('hod.students.index', compact('students'));
-        } else
-            echo "Something missing";
+
     }
 
     /**
@@ -45,7 +38,8 @@ class StudentController extends Controller
     public function create()
     {
         //
-        return view('hod.students.create');
+        $section = Section::find(session('section_id'));
+        return view('hod.students.create', compact('section'));
     }
 
     /**
@@ -57,44 +51,45 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //
+
         $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:100',
+            'father' => 'required|string|max:100',
             'gender' => 'required|string|max:1',
-            'cnic' => 'required|unique:students|string|max:15',
-            'phone' => 'nullable|unique:students|string|max:15',
-            'email' => 'required|email|unique:users',
+            'rollno' => 'required|string|max:20',
+            'rollno' => 'nullable|string|max:20',
 
         ]);
 
         try {
             //should be HOD department id
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make('password'),
-            ]);
+            // $user = User::create([
+            //     'name' => $request->name,
+            //     'email' => $request->email,
+            //     'password' => Hash::make('password'),
+            // ]);
 
-            $user->save();
-            $user->assignRole('student');
+            // $user->save();
+            // $user->assignRole('student');
 
             Student::create(
                 [
-                    'user_id' => $user->id,
-                    'program_id' => session('program')->id,
-                    'semester_id' => session('semester')->id,
-                    'shift' => session('shift'),
-                    'section_id' => session('section')->id,
+                    // 'user_id' => $user->id,
+                    'name' => $request->name,
+                    'father' => $request->father,
                     'gender' => $request->gender,
-                    'phone' => $request->phone,
-                    'cnic' => $request->cnic,
-                    'address' => $request->address,
+                    'rollno' => $request->rollno,
+                    'regno' => $request->regno,
+
+                    'section_id' => session('section_id'),
+
                 ]
             );
 
             DB::commit();
-            return redirect()->route('students.index')->with('success', 'Successfully created');
+            return redirect()->route('sections.show', session('section_id'))->with('success', 'Successfully created');
         } catch (Exception $e) {
-            return redirect()->back()->withErrors(['create' => $e->getMessage()]);
+            return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
         }
     }
@@ -135,29 +130,21 @@ class StudentController extends Controller
         //
         $student = Student::find($id);
         $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:100',
+            'father' => 'required|string|max:100',
             'gender' => 'required|string|max:1',
-            'cnic' => 'required|string|max:15|unique:students,cnic,' . $id, 'id',
-            'phone' => 'nullable|string|max:15|unique:students,phone,' . $id, 'id',
-            'email' => 'required|email|unique:users,email,' . $student->user->id, 'id',
-            'address' => 'nullable'
-
         ]);
 
         try {
-            $student->gender = $request->gender;
-            $student->cnic = $request->cnic;
-            $student->phone = $request->phone;
-            $student->address = $request->address;
 
-            $student->update();
+            // $student->name = $request->name;
+            // $student->father = $request->father;
+            // $student->gender = $request->gender;
 
-            $user = $student->user;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->update();
+            $student->update($request->all());
 
-            return redirect()->route('students.index')->with('success', 'Successfully updated');;
+
+            return redirect()->route('sections.show', $student->section)->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
                 ->withErrors($ex->getMessage());

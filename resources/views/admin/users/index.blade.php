@@ -43,11 +43,11 @@
             <tr class="tr border-b">
                 <td class="py-2">
                     <div>{{$user->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$user->employee->cnic}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$user->teacher->cnic}}</div>
                     <div class="text-sm text-gray-500 font-medium">{{$user->email}}</div>
                 </td>
                 <td class="py-2 text-sm text-gray-800 font-medium">
-                    <div>{{$user->employee->department->name}}</div>
+                    <div>{{$user->teacher->department->name}}</div>
                     <div class="flex items-center text-sm text-gray-500">
 
                         @foreach($user->roles as $role)
