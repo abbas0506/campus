@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clas;
 use App\Models\Program;
 use App\Models\Section;
 use App\Models\Semester;
@@ -114,5 +115,22 @@ class SectionController extends Controller
     public function destroy(Section $section)
     {
         //
+    }
+    public function fetchSectionsByProgramId(Request $request)
+    {
+        $clas_ids = Clas::where('semester_id', session('semester_id'))
+            ->where('program_id', $request->program_id)
+            ->where('shift_id', $request->shift_id)
+            ->pluck('id')->toArray();
+
+        $sections = Section::whereIn('clas_id', $clas_ids)->get();
+
+        //prepare courses list
+        $section_options = "<option value=''>Select a course</option>";
+        foreach ($sections as $section) {
+            $section_options .= "<option value='" . $section->id . "'>" . $section->name . "</option>";
+        }
+
+        return response()->json(['section_options' => $section_options]);
     }
 }

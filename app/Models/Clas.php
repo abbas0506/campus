@@ -34,7 +34,7 @@ class Clas extends Model
     public function title()
     {
         $semester = $this->semester->title();
-        $program = $this->program->name;
+        $program = $this->program->short;
         $shift = $this->shift->name;
         return $semester . ' | ' . $program . ' | ' . $shift;
     }

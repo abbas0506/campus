@@ -1,14 +1,14 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container px-8">
-    <div class="flex items-center">
-        <h1 class="text-indigo-500 text-xl py-10">
+<div class="container md:w-4/5 mx-auto px-5 md:px-0">
+    <div class="flex items-center ">
+        <h1 class="text-indigo-500 text-xl my-12 mb-8">
             <a href="{{route('students.index')}}">Students</a>
             <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>New</span>
         </h1>
     </div>
 
-    <div class="flex text-slate-600 text-sm mb-4">
+    <div class="flex text-slate-600 bg-slate-100 rounded p-2 text-sm mb-4">
         {{$section->title()}}
         <a href="{{url('classes')}}" class="ml-4 text-indigo-600 px-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -26,14 +26,19 @@
     </div>
     @endif
 
-    <form action="{{route('students.store')}}" method='post' class="flex flex-col w-full md:w-3/4 mt-4">
+    <form action="{{route('students.store')}}" method='post' class="flex flex-col w-full">
         @csrf
 
-        <label for="" class="text-sm text-gray-400">Gender</label>
+        <!-- <label for="" class="text-sm text-gray-400">Gender</label>
         <select id="" name="gender" class="input-indigo p-2 w-32">
             <option value="M">M</option>
             <option value="F">F</option>
-        </select>
+        </select> -->
+        <div class="flex space-x-4">
+            <label for="" class="text-sm text-gray-400">Gender</label>
+            <input type="radio" name="gender" id="" checked> <span class="ml-3">Male</span>
+            <input type="radio" name="gender" id=""> <span class="ml-3">Female</span>
+        </div>
 
         <label for="" class="text-sm text-gray-400 mt-3">Full Name</label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad">

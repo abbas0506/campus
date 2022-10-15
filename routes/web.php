@@ -22,9 +22,9 @@ use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
 use App\Http\Controllers\ProgramShiftController;
 use App\Http\Controllers\Admin\SemesterController;
+use App\Http\Controllers\hod\CourseAllocationOptionController;
 use App\Http\Controllers\hod\ClassController;
 use App\Http\Controllers\hod\ClassOptionsController;
-use App\Http\Controllers\hod\CourseAllocationChoiceController;
 use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SectionOptionsController;
@@ -80,13 +80,15 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('classes', ClassController::class);
     Route::resource('class-options', ClassOptionsController::class);
     Route::resource('sections', SectionController::class);
+    Route::post('fetchSectionsByProgramId', [SectionController::class, 'fetchSectionsByProgramId'])->name('fetchSectionsByProgramId');
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', teacherController::class);
     // Route::resource('examiners', examinerController::class);
     Route::resource('schemes', SchemeController::class);
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
-    Route::resource('course-allocation-choices', CourseAllocationChoiceController::class);
+    Route::resource('course-allocation-options', CourseAllocationOptionController::class);
+
     Route::resource('students', StudentController::class);
     Route::resource('results', ResultController::class);
     Route::resource('enrollments', EnrollmentController::class);

@@ -44,7 +44,7 @@
     <table class="table-auto w-full">
         <thead>
             <tr class="border-b border-slate-200">
-                <th>Sr</th>
+                <th><input type="checkbox"></th>
                 <th>Name</th>
                 <th>Father</th>
                 <th class='text-center'>Actions</th>
@@ -54,14 +54,14 @@
             @php $sr=$students->count();@endphp
             @foreach($students->sortByDesc('id') as $student)
             <tr class="tr border-b ">
-                <td class="py-2 text-slate-600 text-sm">#{{$sr--}}</td>
+                <td class="py-2 text-slate-600 text-sm"><input type="checkbox"></td>
                 <td class="py-2">
                     <div class="flex items-center space-x-4">
                         <div>
                             @if($student->gender=='M')
-                            <span class="bg-green-600 w-1 h-1 rounded-full"></span>
+                            <div class="bg-indigo-500 w-2 h-2 rounded-full"></div>
                             @else
-                            <span class="bg-red-800 w-1 h-1 rounded-full"></span>
+                            <div class="bg-green-500 w-2 h-2 rounded-full"></div>
                             @endif
                         </div>
                         <div>

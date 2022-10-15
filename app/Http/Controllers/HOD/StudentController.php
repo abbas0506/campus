@@ -57,7 +57,7 @@ class StudentController extends Controller
             'father' => 'required|string|max:100',
             'gender' => 'required|string|max:1',
             'rollno' => 'required|string|max:20',
-            'rollno' => 'nullable|string|max:20',
+            'regno' => 'nullable|string|max:20',
 
         ]);
 

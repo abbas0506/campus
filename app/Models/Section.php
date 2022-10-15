@@ -25,7 +25,7 @@ class Section extends Model
     public function title()
     {
         $semester = $this->clas->semester->title();
-        $program = $this->clas->program->name;
+        $program = $this->clas->program->short;
         $shift = $this->clas->shift->name;
         return $semester . ' | ' . $program . ' | ' . $shift .  ' | Semester -  ' . $this->clas->semester_no . ' | Section -  ' . $this->name;
     }

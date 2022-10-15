@@ -9,7 +9,7 @@
     <link rel="icon" href="{{ asset('/images/logo/logo-light.png') }}">
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -23,6 +23,7 @@
 <body>
     @yield('content')
     <script src="{{asset('js/sweetalert2@10.js')}}"></script>
+    @yield('script')
 </body>
 
 </html>

@@ -26,6 +26,7 @@ class CourseAllocationController extends Controller
     public function index()
     {
         //
+        
         $course_allocations = session('course_allocations');
         $scheme = session('course_allocations_scheme');
         return view('hod.course_allocations.index', compact('course_allocations', 'scheme'));

@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\hod;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Semester;
+use App\Models\Clas;
+use App\Models\Program;
+use App\Models\Section;
+use App\Models\Shift;
 use Illuminate\Http\Request;
-use Spatie\Permission\Contracts\Role;
 
-class LoginOptionsController extends Controller
+class CourseAllocationOptionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +20,26 @@ class LoginOptionsController extends Controller
     public function index()
     {
         //
-        $semesters = Semester::whereNotNull('edit_till')->get();
-        // echo $semesters->count();
-        return view('login_options', compact('semesters'));
+        //find all program of this department
+        $programs = Program::where('department_id', Auth::user()->teacher->department_id)->get();
+        $shifts = Shift::all();
+
+
+        // $classes = Clas::join('programs', function ($join) {
+        //     $join->on('program_id', '=', 'programs.id');
+        // })
+        //     ->where('programs.department_id', '=', Auth::user()->teacher->department_id)
+        //     ->get();
+
+
+        // foreach ($classes as $clas) {
+        //     echo $clas->title();
+        // }
+        //find all class of the programs
+        //find all section of a concerned class
+
+        // $classes = Clas::all();
+        return view('hod.course_allocations.options', compact('programs', 'shifts'));
     }
 
     /**
@@ -41,19 +61,6 @@ class LoginOptionsController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'role_name' => 'required',
-            'semester_id' => 'required',
-        ]);
-
-        // $semester = Semester::find($request->semester_id);
-
-        if (Auth::user()->hasRole($request->role_name)) {
-            //save selected semester for entire session
-            session(['semester_id' => $request->semester_id]);
-            return redirect($request->role_name);
-        } else
-            return redirect('/');
     }
 
     /**
