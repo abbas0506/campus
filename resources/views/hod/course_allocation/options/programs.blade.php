@@ -45,7 +45,7 @@
                     </div>
                     <div class="flex-grow pl-4">
                         <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">STEP 2</h2>
-                        <p class="leading-relaxed">Select a section. Initially, sections' list will be empty. Section list will be available only if you have already defined some section for the selected program and shift(i.e class)</p>
+                        <p class="leading-relaxed">Select section and scheme. Initially, these will be empty, will appear only after you select a program</p>
                     </div>
                 </div>
                 <div class="flex relative pb-12">
@@ -61,12 +61,12 @@
                 </div>
 
             </div>
-            <div class="md:w-1/2 object-cover object-center rounded-lg md:mt-0 mt-12">
+            <div class="md:w-1/2 rounded-lg md:mt-0 mt-12">
 
                 <form action="{{route('course-allocation-options.store')}}" method='post' class="flex flex-col border border-rounded">
                     @csrf
 
-                    <div class="flex flex-col mt-4 p-8">
+                    <div class="flex flex-col p-8">
                         <div class="flex items-center p-3 rounded bg-green-200">
                             <div class="flex text-green-900 ">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -79,15 +79,18 @@
                             @endforeach
                         </div>
 
-                        <label for="" class="text-lg text-slate-800 text-left mt-5">Program</label>
+                        <label for="" class="text-sm text-slate-800 text-left mt-5">Program</label>
                         <select id="program_id" name="program_id" class="input-indigo p-2" onchange="loadSections(event)">
                             <option value="">Select a program</option>
                             @foreach($programs as $program)
                             <option value="{{$program->id}}">{{$program->name}}</option>
                             @endforeach
                         </select>
-                        <label for="" class="text-lg text-slate-800 text-left mt-5">Section <span class="text-xs text-slate-600">(Section list will appear according to selected program)</span></label>
+                        <label for="" class="text-sm text-slate-800 text-left mt-5">Section <span class="text-xs text-slate-600">(Section list will appear according to selected program)</span></label>
                         <select id='section_id' name="section_id" class="input-indigo p-2"></select>
+
+                        <label for="" class="text-sm text-slate-800 text-left mt-5">Scheme <span class="text-xs text-slate-600">(Schemes list will appear according to selected program)</span></label>
+                        <select id='scheme_id' name="scheme_id" class="input-indigo p-2"></select>
 
                         <div class="flex md:space-x-4 justify-end">
                             <a href="{{url('hod')}}" class="flex justify-center btn-indigo mt-8">Cancel</a>
@@ -123,6 +126,7 @@
                 //
                 // alert(response.section_options)
                 $('#section_id').html(response.section_options);
+                $('#scheme_id').html(response.scheme_options);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 alert(errorThrown)

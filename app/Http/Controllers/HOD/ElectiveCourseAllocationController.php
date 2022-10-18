@@ -3,22 +3,17 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 use App\Models\Course;
-use App\Models\CourseAllocation;
+use App\Models\CourseType;
 use App\Models\Department;
-use App\Models\Teacher;
-use App\Models\Scheme;
+use App\Models\ElectiveCourseAllocation;
 use App\Models\SchemeDetail;
-use App\Models\Section;
-use App\Models\Semester;
+use App\Models\Teacher;
 use Exception;
-
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class CourseAllocationController extends Controller
+class ElectiveCourseAllocationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,13 +24,6 @@ class CourseAllocationController extends Controller
     {
         //
 
-        if (session('section_id') && session('scheme_id')) {
-            $scheme = Scheme::find(session('scheme_id'));
-            $section = Section::find(session('section_id'));
-            return view('hod.course_allocation.index', compact('section', 'scheme'));
-        } else {
-            echo "Scheme of study and section not selected";
-        }
     }
 
     /**
@@ -46,7 +34,6 @@ class CourseAllocationController extends Controller
     public function create()
     {
         //
-
     }
 
     /**
@@ -58,16 +45,19 @@ class CourseAllocationController extends Controller
     public function store(Request $request)
     {
         //
+
         $request->validate([
+            'course_id' => 'required|numeric',
             'teacher_id' => 'required|numeric',
         ]);
 
         try {
-            CourseAllocation::create([
+            ElectiveCourseAllocation::create([
                 'semester_id' => session('semester_id'),
                 'shift_id' => session('shift_id'),
                 'section_id' => session('section_id'),
-                'scheme_detail_id' => session('scheme_detail_id'),
+                'scheme_detail_id' => $request->scheme_detail_id,
+                'course_id' => $request->course_id,
                 'teacher_id' => $request->teacher_id,
 
             ]);
@@ -82,43 +72,38 @@ class CourseAllocationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\ElectiveCourseAllocation  $electiveCourseAllocation
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ElectiveCourseAllocation $electiveCourseAllocation)
     {
         //
-
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\ElectiveCourseAllocation  $electiveCourseAllocation
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //id : scehme dtail id
-
-        session([
-            'scheme_detail_id' => $id,
-        ]);
-
-
+        //id: schme detail id from course allocation index page
+        $scheme_detail = SchemeDetail::find($id);
+        $courses = Course::all();   //later on it will be filtered on selected course type only
         $department = Department::find(session('department_id'));
         $teachers = $department->teachers;
-        return view('hod.course_allocation.options.teachers', compact('teachers'));
+        return view('hod.course_allocation.options.electives', compact('scheme_detail', 'courses', 'teachers'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\ElectiveCourseAllocation  $electiveCourseAllocation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ElectiveCourseAllocation $electiveCourseAllocation)
     {
         //
     }
@@ -126,15 +111,15 @@ class CourseAllocationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\ElectiveCourseAllocation  $electiveCourseAllocation
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ElectiveCourseAllocation $electiveCourseAllocation)
     {
         //
         try {
-            $clas = CourseAllocation::find($id);
-            $clas->delete();
+            // $clas = ElectiveCourseAllocation::find($id);
+            $electiveCourseAllocation->delete();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());

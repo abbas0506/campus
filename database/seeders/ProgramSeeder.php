@@ -33,7 +33,7 @@ class ProgramSeeder extends Seeder
         ]);
 
         Program::create([
-            'name' => 'Asspciate Degree Program in Computer Science',
+            'name' => 'Associate Degree Program in Computer Science',
             'short' => 'ADPCS',
             'code' => 'P-03',
             'duration' => 4,

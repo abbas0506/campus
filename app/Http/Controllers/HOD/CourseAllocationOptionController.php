@@ -4,9 +4,9 @@ namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Clas;
 use App\Models\Program;
 use App\Models\Section;
+use App\Models\Semester;
 use App\Models\Shift;
 use Illuminate\Http\Request;
 
@@ -19,27 +19,11 @@ class CourseAllocationOptionController extends Controller
      */
     public function index()
     {
-        //
+
         //find all program of this department
         $programs = Program::where('department_id', Auth::user()->teacher->department_id)->get();
         $shifts = Shift::all();
-
-
-        // $classes = Clas::join('programs', function ($join) {
-        //     $join->on('program_id', '=', 'programs.id');
-        // })
-        //     ->where('programs.department_id', '=', Auth::user()->teacher->department_id)
-        //     ->get();
-
-
-        // foreach ($classes as $clas) {
-        //     echo $clas->title();
-        // }
-        //find all class of the programs
-        //find all section of a concerned class
-
-        // $classes = Clas::all();
-        return view('hod.course_allocations.options', compact('programs', 'shifts'));
+        return view('hod.course_allocation.options.programs', compact('programs', 'shifts'));
     }
 
     /**
@@ -61,6 +45,26 @@ class CourseAllocationOptionController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'program_id' => 'required|numeric',
+            'shift_id' => 'required|numeric',
+            'section_id' => 'required|numeric',
+            'scheme_id' => 'required|numeric',
+        ]);
+
+        $semester = Semester::find(session('semester_id'));
+        $clas = $semester->classes->where('program_id', $request->program_id)
+            ->where('shift_id', $request->shift_id)->first();
+
+        $section = Section::find($request->section_id);
+        // $scheme = Scheme::find($request->scheme_id);
+
+        session([
+            'section_id' => $section->id,
+            'scheme_id' => $request->scheme_id,
+        ]);
+
+        return redirect()->route('course-allocations.index');
     }
 
     /**

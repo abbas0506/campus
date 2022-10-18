@@ -6,6 +6,9 @@
     tr th {
         @apply py-2 text-gray-600 text-left;
     }
+    .tr:nth-child(even) {
+        @apply bg-slate-100;
+    }
 }
 
 @layer components {

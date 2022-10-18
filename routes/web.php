@@ -22,6 +22,7 @@ use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
 use App\Http\Controllers\ProgramShiftController;
 use App\Http\Controllers\Admin\SemesterController;
+use App\Http\Controllers\hod\ElectiveCourseAllocationController;
 use App\Http\Controllers\hod\CourseAllocationOptionController;
 use App\Http\Controllers\hod\ClassController;
 use App\Http\Controllers\hod\ClassOptionsController;
@@ -29,7 +30,6 @@ use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SectionOptionsController;
 use App\Http\Controllers\LoginOptionsController;
-use App\Models\SemesterType;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,7 +87,8 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('schemes', SchemeController::class);
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
-    Route::resource('course-allocation-options', CourseAllocationOptionController::class);
+    Route::resource('course-allocation-options', CourseAllocationOptionController::class)->only('index', 'store');
+    Route::resource('elective-course-allocations', ElectiveCourseAllocationController::class);
 
     Route::resource('students', StudentController::class);
     Route::resource('results', ResultController::class);

@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         //
         $user = User::create([
-            'name' => 'Vice Chancellor',
+            'name' => 'Admin',
             'email' => 'admin@uo.edu.pk',
             'password' => Hash::make('password'),
 
@@ -25,20 +25,74 @@ class UserSeeder extends Seeder
         $user->assignRole('admin');
 
         $user = User::create([
-            'name' => 'Head',
-            'email' => 'hod@uo.edu.pk',
-            'password' => Hash::make('password'),
-
-        ]);
-        $user->assignRole('hod');
-        $user->assignRole('examiner');
-
-        $user = User::create([
-            'name' => 'Dr Sajjad',
+            'name' => 'Dr Sajjad Sarwar',
             'email' => 'controller@uo.edu.pk',
             'password' => Hash::make('password'),
 
         ]);
         $user->assignRole('controller');
+
+        $user = User::create([
+            'name' => 'Prof. Rashid Hussain',
+            'email' => 'hod1@uo.edu.pk',
+            'password' => Hash::make('password'),
+
+        ]);
+        $user->assignRole(['hod', 'teacher']);
+
+        $user = User::create([
+            'name' => 'Prof. Nasir Mehmood',
+            'email' => 'hod2@uo.edu.pk',
+            'password' => Hash::make('password'),
+
+        ]);
+        $user->assignRole(['hod', 'teacher']);
+
+        $user = User::create([
+            'name' => 'Mr. Ahmad Ali',
+            'email' => 'teacher1@uo.edu.pk',
+            'password' => Hash::make('password'),
+
+        ]);
+        $user->assignRole('teacher');
+
+        $user = User::create([
+            'name' => 'Prof. Muhammad Ahmad',
+            'email' => 'teacher2@uo.edu.pk',
+            'password' => Hash::make('password'),
+
+        ]);
+        $user->assignRole('teacher');
+
+        $user = User::create([
+            'name' => 'Mr. Muhammad Ejaz',
+            'email' => 'teacher3@uo.edu.pk',
+            'password' => Hash::make('password'),
+
+        ]);
+        $user->assignRole('teacher');
+
+        $user = User::create([
+            'name' => 'Assistant Prof. Muhammad Luqman',
+            'email' => 'teacher4@uo.edu.pk',
+            'password' => Hash::make('password'),
+
+        ]);
+        $user->assignRole('teacher');
+
+        $user = User::create([
+            'name' => 'Prof. Shabbir Hussain',
+            'email' => 'teacher5@uo.edu.pk',
+            'password' => Hash::make('password'),
+
+        ]);
+        $user->assignRole('teacher');
+        $user = User::create([
+            'name' => 'Prof. Nazir Hussain',
+            'email' => 'teacher6@uo.edu.pk',
+            'password' => Hash::make('password'),
+
+        ]);
+        $user->assignRole('teacher');
     }
 }

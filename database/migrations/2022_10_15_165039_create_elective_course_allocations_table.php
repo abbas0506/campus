@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('course_allocations', function (Blueprint $table) {
+        Schema::create('elective_course_allocations', function (Blueprint $table) {
             $table->id();
+
             $table->unsignedBigInteger('semester_id');
             $table->unsignedBigInteger('section_id');
             $table->unsignedBigInteger('scheme_detail_id');
+            $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('teacher_id');
-
-            $table->timestamps();
 
             $table->foreign('semester_id')
                 ->references('id')
@@ -37,10 +37,17 @@ return new class extends Migration
                 ->on('scheme_details')
                 ->onDelete('cascade');
 
+            $table->foreign('course_id')
+                ->references('id')
+                ->on('courses')
+                ->onDelete('cascade');
+
             $table->foreign('teacher_id')
                 ->references('id')
                 ->on('teachers')
                 ->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 
@@ -51,6 +58,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_allocations');
+        Schema::dropIfExists('elective_course_allocations');
     }
 };

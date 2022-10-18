@@ -22,4 +22,13 @@ class SchemeDetail extends Model
     {
         return $this->belongsTo(Course::class);
     }
+    public  function course_allocations()
+    {
+        return $this->hasMany(CourseAllocation::class);
+    }
+
+    public  function elective_course_allocations()
+    {
+        return $this->hasMany(ElectiveCourseAllocation::class);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\hod;
 use App\Http\Controllers\Controller;
 use App\Models\Clas;
 use App\Models\Program;
+use App\Models\Scheme;
 use App\Models\Section;
 use App\Models\Semester;
 use App\Models\Session;
@@ -125,12 +126,24 @@ class SectionController extends Controller
 
         $sections = Section::whereIn('clas_id', $clas_ids)->get();
 
+
         //prepare courses list
-        $section_options = "<option value=''>Select a course</option>";
+        $section_options = "";
         foreach ($sections as $section) {
             $section_options .= "<option value='" . $section->id . "'>" . $section->name . "</option>";
         }
 
-        return response()->json(['section_options' => $section_options]);
+        $program = Program::find($request->program_id);
+        // $schemes = Scheme::where('program_id', $request->program_id)->get();
+        $schemes = $program->schemes;
+        $scheme_options = "";
+        foreach ($schemes as $scheme) {
+            $scheme_options .= "<option value='" . $scheme->id . "'>" . $scheme->semester->semester_type->name . " " . $scheme->semester->year . "</option>";
+        }
+
+        return response()->json([
+            'section_options' => $section_options,
+            'scheme_options' => $scheme_options,
+        ]);
     }
 }
