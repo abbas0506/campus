@@ -9,8 +9,8 @@
     </div>
 </div>
 
-<div class="container px-5">
-    <div class="flex items-end mt-12">
+<div class="container mt-12">
+    <div class="flex items-end">
         <div class="flex relative ">
             <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
@@ -33,13 +33,13 @@
             <tr class="border-b border-slate-200">
                 <th>Semester</th>
                 <th>Course</th>
-                <th class="text-right">Teacher</th>
+                <th>Teacher</th>
             </tr>
         </thead>
         <tbody>
             @php
             if($scheme){
-            $total_semesters=$scheme->program->duration*2;
+            $total_semesters=$scheme->program->min_duration*2;
             $semester_no;
             }
             @endphp
@@ -90,8 +90,8 @@
                                 @if($scheme_detail->has_elective_allocations())
                                 @foreach($scheme_detail->elective_allocations() as $elective_course_allocation)
                                 <div class="flex items-center justify-between w-full my-1 tr">
-                                    <div>{{$elective_course_allocation->course->name}}</div>
                                     <div>{{$elective_course_allocation->teacher->user->name}}</div>
+                                    <div> ( {{$elective_course_allocation->course->name}} )</div>
 
                                     <form action="{{route('elective-course-allocations.destroy',$elective_course_allocation)}}" method="POST" id='del_elective_form{{$elective_course_allocation->id}}' class="mt-1">
                                         @csrf

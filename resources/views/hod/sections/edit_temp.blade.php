@@ -1,15 +1,16 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container md:w-3/4 mx-auto px-5 md:px-0">
-    <div class="flex items-center">
-        <h1 class="text-indigo-500 text-xl py-12">
-            <a href="{{route('programs.index')}}">Programs</a>
-            <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>Edit</span>
-        </h1>
+<h1 class="mt-5">Sections</h1>
+<div class="flex items-center justify-between flex-wrap">
+    <div class="bread-crumb">
+        Classes / {{$clas->title()}} / new section
     </div>
+</div>
+
+<div class="container md:w-3/4 mx-auto px-5">
 
     @if ($errors->any())
-    <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
+    <div class="alert-danger mt-8">
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>

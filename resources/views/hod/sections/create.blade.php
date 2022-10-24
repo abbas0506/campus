@@ -1,15 +1,16 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container md:w-3/4 mx-auto px-5 md:px-0">
-    <div class="flex items-center">
-        <h1 class="text-indigo-500 text-xl py-10">
-            <a href="{{route('sections.index')}}">Sections</a>
-            <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>New</span>
-        </h1>
+<h1 class="mt-5">Sections</h1>
+<div class="flex items-center justify-between flex-wrap">
+    <div class="bread-crumb">
+        Classes / {{$clas->title()}} / new section
     </div>
+</div>
+
+<div class="container md:w-3/4 mx-auto px-5">
 
     @if ($errors->any())
-    <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
+    <div class="alert-danger mt-8">
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -17,17 +18,16 @@
         </ul>
     </div>
     @endif
-
-    <div class="flex text-slate-600 text-sm mb-4">
-        {{$clas->title()}}
-    </div>
-    <form action="{{route('sections.store')}}" method='post' class="flex flex-col w-full">
+    <form action="{{route('sections.store')}}" method='post' class="flex flex-col w-full mt-16">
         @csrf
         <input type="hidden" name="clas_id" value='{{$clas->id}}' hidden>
         <label for="">Section Title</label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="A">
 
-        <button type="submit" class="btn-indigo mt-4">Save</button>
+        <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
+            <a href="{{route('classes.index')}}" class="btn-indigo-rounded">Cancel</a>
+            <button type="submit" class="btn-indigo-rounded">Save</button>
+        </div>
     </form>
 
 </div>

@@ -107,6 +107,7 @@ class CourseAllocationController extends Controller
         $scheme_detail = SchemeDetail::find($id);
         $department = Department::find(session('department_id'));
         $teachers = $department->teachers;
+
         return view('hod.course_allocation.options.teachers', compact('teachers'));
     }
 

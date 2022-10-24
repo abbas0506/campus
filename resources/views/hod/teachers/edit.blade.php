@@ -1,17 +1,15 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container md:w-3/4 mx-auto px-5 md:px-0">
-    <div class="flex items-center my-12">
-        <h1 class="text-indigo-500 text-xl">
-            <a href="{{route('teachers.index')}}">
-                Teachers
-            </a>
-        </h1>
-        <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>Edit</span>
+<h1 class="mt-5">Teachers</h1>
+<div class="flex items-center justify-between flex-wrap">
+    <div class="bread-crumb">
+        Teachers / edit
     </div>
+</div>
 
+<div class="container md:w-3/4 mx-auto px-5">
     @if ($errors->any())
-    <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5">
+    <div class="alert-danger mt-8">
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -20,7 +18,7 @@
     </div>
     @endif
 
-    <form action="{{route('teachers.update',$teacher)}}" method='post' class="flex flex-col">
+    <form action="{{route('teachers.update',$teacher)}}" method='post' class="flex flex-col mt-16">
         @csrf
         @method('PATCH')
         <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
@@ -55,7 +53,10 @@
             </div>
         </div>
 
-        <button type="submit" class="btn-indigo mt-8">Update</button>
+        <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
+            <a href="{{route('teachers.index')}}" class="btn-indigo-rounded">Cancel</a>
+            <button type="submit" class="btn-indigo-rounded">Save</button>
+        </div>
     </form>
 
 </div>

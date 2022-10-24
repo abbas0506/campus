@@ -1,30 +1,35 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container px-16">
-    <div class="flex mb-5 flex-col md:flex-row md:items-center">
-        <div class="flex items-center mb-5 md:my-16">
-            <h1 class="text-indigo-500 text-xl">Course Allocation <span class="text-sm text-slate-500">| </span> </h1>
-        </div>
-        <!-- serach field -->
-        <div class="relative ml-0 md:ml-20">
-            <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
+<h1 class="mt-5">Course Allocation</h1>
+<div class="flex items-center justify-between flex-wrap">
+    <div class="bread-crumb">
+        Course Allocation /
+        <a href="{{url('course-allocation-options')}}" class="text-orange-700 mx-2">Choose Options</a> /
+        assign / teachers
+    </div>
+</div>
+
+<div class="container md:w-3/4 mx-auto px-5 mt-12">
+
+    <div class="flex items-end">
+        <div class="flex relative ">
+            <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
         </div>
-    </div>
 
-    @if ($errors->any())
-    <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    </div>
+    @if(session('success'))
+    <div class="flex alert-success items-center mt-8">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+        </svg>
+        {{session('success')}}
     </div>
     @endif
 
-    <table class="table-auto w-full">
+    <table class="table-auto w-full mt-8">
         <thead>
             <tr class="border-b border-slate-200">
                 <th>Teacher</th>
@@ -44,10 +49,11 @@
                     <form action="{{route('course-allocations.store')}}" method="POST" id='assign_form{{$teacher->id}}' class="mt-2 text-sm">
                         @csrf
                         <input type="text" name='teacher_id' value="{{$teacher->id}}" hidden>
-                        <button type="submit" class="flex bg-green-200 text-green-800 px-3 py-2 rounded" onclick="assign('{{$teacher->id}}')">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 icon-gray">
+                        <button type="submit" class="flex flex-col items-center justify-center btn-indigo" onclick="assign('{{$teacher->id}}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                             </svg>
+                            assign
                         </button>
                     </form>
                 </td>

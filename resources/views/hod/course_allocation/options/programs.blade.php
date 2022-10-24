@@ -17,41 +17,24 @@
 </div>
 @endif
 
-<div class="flex flex-col md:flex-row w-full md:space-x-8">
+<div class="flex space-x-8 mt-12 ">
+    <div class="p-5 w-1/2 bg-slate-100">
+        <h2>Read Me</h2>
+        <ul class="list-disc text-sm text-slate-500 ml-8 leading-relaxed">
+            <li>Basically, you are going to choose a program and a section whose courses will be automatically fetched according to your selected scheme.</li>
+            <li>Sections list will appear only after you select a program. If no section appears even after program selection, go back and define section for the class</li>
+            <li>Valid schemes automatically appear in the list. If no scheme appears, go back and define new scheme </li>
+            <li>When all is done, press next button to allocate courses</li>
 
-    <div class="flex flex-1 flex-col rounded bg-slate-100 p-5">
-
-        <div class="flex pb-12 mt-5">
-            <div class="bullet-indigo-sm mt-1"></div>
-            <div class="flex-grow pl-4">
-                <h2>SELECT SHIFT & PROGRAM</h2>
-                <p>If programs' list empty, go back and add new programs</p>
-            </div>
-        </div>
-
-        <div class="flex pb-12">
-            <div class="bullet-indigo-sm mt-1"></div>
-            <div class="flex-grow pl-4">
-                <h2>SELECT SECTION & SCHEME</h2>
-                <p>After program selection, corresponding sections and schemes will appear in dropdowns.</p>
-            </div>
-        </div>
-        <div class="flex">
-            <div class="bullet-indigo-sm mt-1"></div>
-            <div class="flex-grow pl-4">
-                <h2>NEXT</h2>
-                <p>Go to course allocation page</p>
-            </div>
-        </div>
-
+        </ul>
     </div>
-    <div class="rounded-lg md:mt-0 mt-12">
+    <div class="md:w-1/2 rounded md:mt-0 mt-12">
 
-        <form action="{{route('course-allocation-options.store')}}" method='post' class="flex flex-col md:border-l">
+        <form action="{{route('course-allocation-options.store')}}" method='post' class="flex flex-col">
             @csrf
 
             <div class="flex flex-col px-8">
-                <div class="flex items-center p-3 rounded bg-green-200">
+                <div class="flex items-center p-3 rounded-t bg-green-100">
                     <div class="flex text-green-900 ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" />
@@ -82,42 +65,42 @@
                 </div>
             </div>
         </form>
+
     </div>
-</div>
 
-@endsection
+    @endsection
 
-@section('script')
-<script lang="javascript">
-    function loadSections() {
-        var token = $("meta[name='csrf-token']").attr("content");
-        // var program_id = event.target.value;
-        var program_id = $('#program_id').val();
-        var shift_id = $("input[name='shift_id']:checked").val();
+    @section('script')
+    <script lang="javascript">
+        function loadSections() {
+            var token = $("meta[name='csrf-token']").attr("content");
+            // var program_id = event.target.value;
+            var program_id = $('#program_id').val();
+            var shift_id = $("input[name='shift_id']:checked").val();
 
-        $.ajax({
-            type: 'POST',
-            url: "fetchSectionsByProgramId",
-            data: {
-                "program_id": program_id,
-                "shift_id": shift_id,
-                "_token": token,
+            $.ajax({
+                type: 'POST',
+                url: "fetchSectionsByProgramId",
+                data: {
+                    "program_id": program_id,
+                    "shift_id": shift_id,
+                    "_token": token,
 
-            },
-            success: function(response) {
-                //
-                // alert(response.section_options)
-                $('#section_id').html(response.section_options);
-                $('#scheme_id').html(response.scheme_options);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(errorThrown)
-                // Toast.fire({
-                //     icon: 'warning',
-                //     title: errorThrown
-                // });
-            }
-        }); //ajax end
-    }
-</script>
-@endsection
+                },
+                success: function(response) {
+                    //
+                    // alert(response.section_options)
+                    $('#section_id').html(response.section_options);
+                    $('#scheme_id').html(response.scheme_options);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown)
+                    // Toast.fire({
+                    //     icon: 'warning',
+                    //     title: errorThrown
+                    // });
+                }
+            }); //ajax end
+        }
+    </script>
+    @endsection

@@ -56,7 +56,7 @@ class TeacherController extends Controller
             'name' => 'required|string|max:50',
             'designation_id' => 'required|numeric',
             'cnic' => 'required|unique:teachers|string|max:15',
-            'phone' => 'required|unique:teachers|string|max:15',
+            'phone' => 'nullable|unique:teachers|string|max:15',
             'email' => 'required|email|unique:users',
 
         ]);
@@ -132,7 +132,7 @@ class TeacherController extends Controller
             'name' => 'required|string|max:50',
             'designation_id' => 'required|numeric',
             'cnic' => 'required|string|max:15|unique:teachers,cnic,' . $id, 'id',
-            'phone' => 'required|string|max:15|unique:teachers,phone,' . $id, 'id',
+            'phone' => 'nullable|string|max:15|unique:teachers,phone,' . $id, 'id',
             'email' => 'required|email|unique:users,email,' . $teacher->user->id, 'id',
 
         ]);

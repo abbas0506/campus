@@ -4,7 +4,7 @@
 <h1 class="mt-5">Classes</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Classes / choose option
+        Classes / choose semester
     </div>
 </div>
 
