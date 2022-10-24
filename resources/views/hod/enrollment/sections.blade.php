@@ -45,7 +45,7 @@
                             </div>
                             <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Section</h2>
                             <div class="flex flex-col flex-1 md:mr-4 mt-3">
-                                <label for="" class="text-sm text-gray-400">Choose</label>
+                                <label for="">Choose</label>
                                 <select name="section_id" id="" class="p-1 input-indigo">
                                     @foreach($sections as $section)
                                     <option value="{{$section->id}}">{{$section->name}}</option>

@@ -22,7 +22,7 @@
         @csrf
         <div class="flex flex-col md:flex-row md:items-center w-full">
             <div class="flex flex-col md:grow">
-                <label for="" class="text-sm text-gray-400">Select Semester Type</label>
+                <label for="">Select Semester Type</label>
                 <select name="exam_type_id" id="" class="input-indigo p-2">
                     @foreach($exam_types as $exam_type)
                     <option value="{{$exam_type->id}}">{{$exam_type->name}}</option>
@@ -30,7 +30,7 @@
                 </select>
             </div>
             <div class="flex flex-col mt-3 md:mt-0 md:ml-3">
-                <label for="" class="text-sm text-gray-400">Status</label>
+                <label for="">Status</label>
                 <select name="is_active" id="" class="input-indigo p-2">
                     <option value="1">Open</option>
                     <option value="0">Locked</option>
@@ -38,7 +38,7 @@
             </div>
 
         </div>
-        <label for="" class="text-sm text-gray-400 mt-3">Examination Title <span class="text-sm"></span></label>
+        <label for="" class='mt-3'>Examination Title <span class="text-sm"></span></label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Spring 2022">
         <button type="submit" class="btn-indigo mt-3">Create</button>
     </form>

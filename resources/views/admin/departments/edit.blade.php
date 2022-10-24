@@ -21,10 +21,10 @@
     <form action="{{route('departments.update',$department)}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
         @method('PATCH')
-        <label for="" class="text-sm text-gray-400">Full Name</label>
+        <label for="">Full Name</label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Enter department name" value="{{$department->name}}">
 
-        <label for="" class="text-sm text-gray-400 mt-3">Display Name <span class="text-sm">(to be displayed on final degree)</span></label>
+        <label for="" class='mt-3'>Display Name <span class="text-sm">(to be displayed on final degree)</span></label>
         <input type="text" id='' name='title' class="input-indigo" placeholder="Department of Chemistry" value="{{$department->title}}">
 
         <button type="submit" class="btn-indigo mt-3">Update</button>

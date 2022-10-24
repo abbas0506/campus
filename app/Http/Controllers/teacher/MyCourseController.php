@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\teacher;
 
-use Illuminate\Support\Facades\Auth;
-use App\Models\Semester;
+use App\Http\Controllers\Controller;
+use App\Models\CourseAllocation;
+use App\Models\Section;
 use Illuminate\Http\Request;
-use Spatie\Permission\Contracts\Role;
+use Illuminate\Support\Facades\Auth;
 
-class LoginOptionsController extends Controller
+class MyCourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +18,13 @@ class LoginOptionsController extends Controller
     public function index()
     {
         //
-        $semesters = Semester::whereNotNull('edit_till')->get();
-        // echo $semesters->count();
-        return view('login_options', compact('semesters'));
+        $course_allocations = Auth::user()->teacher->course_allocations;
+        // $sections = Section::whereIn('id', $course_allocations->unique('sections')->pluck('section_id'))->get();
+        $section_ids = CourseAllocation::where('teacher_id', Auth::user()->teacher->id)->distinct()->pluck('section_id')->toArray();
+
+        $sections = Section::whereIn('id', $section_ids)->get();
+
+        return view('teacher.mycourses.index', compact('sections', 'course_allocations'));
     }
 
     /**
@@ -41,27 +46,6 @@ class LoginOptionsController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'role_name' => 'required',
-            'semester_id' => 'required',
-        ]);
-
-        if (Auth::user()->hasRole($request->role_name)) {
-            //save selected semester id for entire session
-            if (Auth::user()->hasAnyRole(['hod', 'teacher'])) {
-                session([
-                    'semester_id' => $request->semester_id,
-                    'department_id' => Auth::user()->teacher->department_id,
-                ]);
-            } else {
-                session([
-                    'semester_id' => $request->semester_id,
-                ]);
-            }
-
-            return redirect($request->role_name);
-        } else
-            return redirect('/');
     }
 
     /**

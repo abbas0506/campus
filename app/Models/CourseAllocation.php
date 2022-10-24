@@ -20,6 +20,10 @@ class CourseAllocation extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
     public function scheme_detail()
     {
         return $this->belongsTo(SchemeDetail::class);

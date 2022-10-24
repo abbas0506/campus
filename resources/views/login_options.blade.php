@@ -17,48 +17,34 @@
         <div class="flex flex-wrap w-full">
             <div class="md:w-1/2 md:pr-10 md:py-6">
                 <div class="flex relative pb-12">
-                    <div class="h-full w-10 absolute inset-0 flex items-center justify-center">
+                    <div class="h-full w-4 absolute inset-0 flex items-center justify-center">
                         <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
                     </div>
-                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                        </svg>
-
-
+                    <div class="flex-shrink-0 w-4 h-4 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
                     </div>
                     <div class="flex-grow pl-4">
-                        <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">STEP 1</h2>
-                        <p class="leading-relaxed">Select your role for this session.</p>
+                        <h2 class="font-bold title-font text-sm text-gray-900 mb-1 tracking-wider">SELECT YOUR ROLE</h2>
+                        <p class="leading-relaxed">In case of multiple roles, you may select any role to sign in as.</p>
                     </div>
                 </div>
 
                 <div class="flex relative pb-12">
-                    <div class="h-full w-10 absolute inset-0 flex items-center justify-center">
+                    <div class="h-full w-4 absolute inset-0 flex items-center justify-center">
                         <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
                     </div>
-                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
-                        </svg>
-
+                    <div class="flex-shrink-0 w-4 h-4 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
                     </div>
                     <div class="flex-grow pl-4">
-                        <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">STEP 2</h2>
-                        <p class="leading-relaxed">Select a semester from available list. You can manipulate only selected semester's data. If specific semester is missing, contact admin</p>
+                        <h2 class="font-bold title-font text-sm text-gray-900 mb-1 tracking-wider">SELECT SEMESTER</h2>
+                        <p class="leading-relaxed">Normally, current semester's data will be available. However, if your desired semester is not listed, contact admin!</p>
                     </div>
                 </div>
                 <div class="flex relative pb-12">
-                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z" />
-                        </svg>
-
+                    <div class="flex-shrink-0 w-4 h-4 rounded-full bg-indigo-500 inline-flex items-center justify-center text-white relative z-10">
                     </div>
                     <div class="flex-grow pl-4">
-                        <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">NEXT</h2>
-                        <p class="leading-relaxed">Go to manipulate selected semester's data</p>
+                        <h2 class="font-bold title-font text-sm text-gray-900 mb-1 tracking-wider">NEXT</h2>
+                        <p class="leading-relaxed">Click on next to manipulate the selected semester's data</p>
                     </div>
                 </div>
 
@@ -68,35 +54,43 @@
                 <form action="{{route('login-options.store')}}" method='post' class="flex flex-col border border-rounded">
                     @csrf
 
-                    <div class="flex flex-col mt-4 p-8">
-                        <div class="flex items-center p-3 rounded bg-green-200">
-                            <div class="flex text-green-900 ">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" />
+                    <div class="flex flex-col">
+                        <div class="flex items-center p-3 bg-green-200">
+                            <div class="p-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                                 </svg>
-                                Select your role and semester for current session
+                            </div>
+                            <div class="flex flex-col text-green-900 p-2">
+                                <h2 class="font-bold">{{Auth::user()->name}} </h2>
+                                How would you like to sign in?
                             </div>
 
                         </div>
 
-                        <label for="" class="text-base text-gray-700 text-left mt-3">Role</label>
-                        <select id="" name="role_name" class="input-indigo p-2">
-                            @foreach(Auth::user()->roles as $role)
-                            <option value="{{$role->name}}">{{Str::upper($role->name)}}</option>
-                            @endforeach
-                        </select>
+                        <div class="flex flex-col p-8">
+                            <label for="" class="text-base text-gray-700 text-left mt-3">Role</label>
+                            <select id="" name="role_name" class="input-indigo p-2">
+                                @foreach(Auth::user()->roles as $role)
+                                <option value="{{$role->name}}">{{Str::upper($role->name)}}</option>
+                                @endforeach
+                            </select>
 
-                        <label for="" class="text-base text-gray-700 text-left mt-3">Semester</label>
-                        <select id="" name="semester_id" class="input-indigo p-2">
-                            @foreach($semesters as $semester)
-                            <option value="{{$semester->id}}">{{$semester->title()}}</option>
-                            @endforeach
-                        </select>
-
-                        <div class="flex md:space-x-4 justify-end">
-                            <a href="{{url('signout')}}" class="flex justify-center btn-indigo mt-8">Cancel</a>
-                            <button type="submit" class="flex justify-center btn-indigo mt-8">Next</button>
+                            <label for="" class="text-base text-gray-700 text-left mt-3">Semester</label>
+                            <select id="" name="semester_id" class="input-indigo p-2">
+                                @foreach($semesters as $semester)
+                                <option value="{{$semester->id}}">{{$semester->title()}}</option>
+                                @endforeach
+                            </select>
                         </div>
+                        <div class="border-b"></div>
+                        <div class="px-8 py-4">
+                            <div class="flex md:space-x-4 justify-end items-center">
+                                <a href="{{url('signout')}}" class="flex justify-center btn-indigo">Cancel</a>
+                                <button type="submit" class="flex justify-center btn-indigo">Next</button>
+                            </div>
+                        </div>
+
                     </div>
                 </form>
             </div>

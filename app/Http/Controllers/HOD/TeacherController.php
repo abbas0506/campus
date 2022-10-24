@@ -70,7 +70,7 @@ class TeacherController extends Controller
             ]);
 
             $user->save();
-            $user->assignRole('examiner');
+            $user->assignRole('teacher');
 
             Teacher::create(
                 [
@@ -141,6 +141,7 @@ class TeacherController extends Controller
 
             $teacher->designation_id = $request->designation_id;
             $teacher->phone = $request->phone;
+            $teacher->cnic = $request->cnic;
             $teacher->update();
 
             $user = $teacher->user;

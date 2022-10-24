@@ -1,30 +1,34 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container px-16">
-    <div class="flex mb-5 flex-col md:flex-row md:items-center">
-        <div class="flex items-center mb-5 md:my-8">
-            <h1 class="text-indigo-500 text-xl">Course Allocation </h1>
-        </div>
-        <!-- serach field -->
-        <div class="relative ml-0 md:ml-20">
-            <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
+<h1 class="mt-5">Course Allocation</h1>
+<div class="flex items-center justify-between flex-wrap">
+    <div class="bread-crumb">
+        Course Allocation /
+        <a href="{{url('course-allocation-options')}}" class="text-orange-700 mx-2">Choose Options</a> /
+        {{$section->title()}}
+    </div>
+</div>
+
+<div class="container px-5">
+    <div class="flex items-end mt-12">
+        <div class="flex relative ">
+            <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
         </div>
+
     </div>
     @if(session('success'))
-    <div class="flex alert-success items-center mb-8">
+    <div class="flex alert-success items-center mt-8">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
         </svg>
-
         {{session('success')}}
     </div>
     @endif
-    <h2 class="text-base text-orange-600 mb-8">{{$section->title()}} </h2>
 
-    <table class="table-auto w-full">
+    <table class="table-auto w-full mt-8">
         <thead>
             <tr class="border-b border-slate-200">
                 <th>Semester</th>
@@ -52,9 +56,11 @@
                         </div>
                         <div class="flex flex-1 text-sm items-center justify-between">
                             <!-- for compulsory subject, if teacher assigned -->
-                            @if($scheme_detail->course->course_type_id==1)
-                            @if($scheme_detail->course_allocations->count()>0)
-                            @foreach($scheme_detail->course_allocations->where('section_id', session('section_id')) as $course_allocation)
+
+                            @if($scheme_detail->belongs_to_compulsory_course())
+                            @if($scheme_detail->has_compulsory_allocations())
+
+                            @foreach($scheme_detail->compulsory_allocations() as $course_allocation)
                             <!-- show teacer name followed by remove icon -->
                             {{$course_allocation->teacher->user->name}}
                             <form action="{{route('course-allocations.destroy',$course_allocation)}}" method="POST" id='del_form{{$course_allocation->id}}' class="mt-1">
@@ -81,8 +87,8 @@
                             <!-- if some elective subject, show add course detail icon -->
                             <div class="flex w-full flex-col items-end">
 
-                                @if($scheme_detail->elective_course_allocations->count()>0)
-                                @foreach($scheme_detail->elective_course_allocations as $elective_course_allocation)
+                                @if($scheme_detail->has_elective_allocations())
+                                @foreach($scheme_detail->elective_allocations() as $elective_course_allocation)
                                 <div class="flex items-center justify-between w-full my-1 tr">
                                     <div>{{$elective_course_allocation->course->name}}</div>
                                     <div>{{$elective_course_allocation->teacher->user->name}}</div>

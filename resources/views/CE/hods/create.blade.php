@@ -17,7 +17,7 @@
     @endif
     <form action="{{route('hods.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
-        <label for="" class="text-sm text-gray-400">Fetch data from department</label>
+        <label for="">Fetch data from department</label>
         <select name="department_id" id="" class="input-indigo p-2">
             <option value="">Click here</option>
             @foreach($departments as $department)
@@ -68,7 +68,7 @@
             </tbody>
         </table>
 
-        <label for="" class="text-sm text-gray-400 mt-3">Choose from existing</label>
+        <label for="" class='mt-3'>Choose from existing</label>
         <select name="user_id" id="" class="input-indigo p-2">
             <option value="">Select a person</option>
             @foreach($users as $user)
@@ -82,10 +82,10 @@
             Add New <span class="text-sm ml-4">(only if the person does not exist in above list)</span>
         </div>
 
-        <label for="" class="text-sm text-gray-400">Name</label>
+        <label for="">Name</label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">
 
-        <label for="" class="text-sm text-gray-400 mt-3">Email</label>
+        <label for="" class='mt-3'>Email</label>
         <input type="text" id='email' name='email' class="input-indigo" placeholder="Enter email address">
 
         <button type="submit" class="btn-indigo mt-4">Save</button>

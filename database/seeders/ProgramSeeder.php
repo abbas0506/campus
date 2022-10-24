@@ -19,24 +19,27 @@ class ProgramSeeder extends Seeder
         Program::create([
             'name' => 'Master of Science in Computer Science',
             'short' => 'MSCS',
-            'code' => 'P-01',
-            'duration' => 2,
+            // 'code' => 'P-01',
+            'min_duration' => 2,
+            'max_duration' => 3,
             'department_id' => 1,
         ]);
 
         Program::create([
             'name' => 'Bachelor of Science in Computer Science',
             'short' => 'BSCS',
-            'code' => 'P-02',
-            'duration' => 4,
+            // 'code' => 'P-02',
+            'min_duration' => 4,
+            'max_duration' => 5,
             'department_id' => 1,
         ]);
 
         Program::create([
             'name' => 'Associate Degree Program in Computer Science',
             'short' => 'ADPCS',
-            'code' => 'P-03',
-            'duration' => 4,
+            // 'code' => 'P-03',
+            'min_duration' => 4,
+            'max_duration' => 5,
             'department_id' => 1,
         ]);
     }

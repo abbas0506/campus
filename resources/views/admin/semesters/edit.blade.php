@@ -33,7 +33,7 @@
         </h4>
 
         <div class="flex flex-col flex-1 mt-4">
-            <label for="" class="text-sm text-gray-400">Allow Edit Till (mm/dd/yyyy) </label>
+            <label for="">Allow Edit Till (mm/dd/yyyy) </label>
             <input type="date" id='' name='edit_till' class="input-indigo" placeholder="Allow edit till date" value="{{$semester->edit_till}}">
         </div>
         <button type="submit" class="btn-indigo mt-3">Update</button>

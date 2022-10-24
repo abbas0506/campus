@@ -28,7 +28,6 @@ class CourseAllocationController extends Controller
     public function index()
     {
         //
-
         if (session('section_id') && session('scheme_id')) {
             $scheme = Scheme::find(session('scheme_id'));
             $section = Section::find(session('section_id'));
@@ -105,7 +104,7 @@ class CourseAllocationController extends Controller
             'scheme_detail_id' => $id,
         ]);
 
-
+        $scheme_detail = SchemeDetail::find($id);
         $department = Department::find(session('department_id'));
         $teachers = $department->teachers;
         return view('hod.course_allocation.options.teachers', compact('teachers'));

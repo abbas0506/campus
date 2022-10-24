@@ -12,7 +12,8 @@ class Program extends Model
         'name',
         'short',
         'code',
-        'duration',
+        'min_duration',
+        'max_duration',
         'department_id',
     ];
     public function department()

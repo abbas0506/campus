@@ -30,6 +30,7 @@ use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SectionOptionsController;
 use App\Http\Controllers\LoginOptionsController;
+use App\Http\Controllers\teacher\MyCourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,10 +46,11 @@ use App\Http\Controllers\LoginOptionsController;
 Route::get('/', function () {
     if (Auth::check()) {
         $user = Auth::user();
-        if ($user->roles->count() > 1)
-            return redirect('login-options');
-        else
-            return redirect($user->roles->first()->name);
+        return redirect('login-options');
+        // if ($user->roles->count() > 1)
+        //     return redirect('login-options');
+        // else
+        //     return redirect($user->roles->first()->name);
     } else
         return view('index');
 });
@@ -83,7 +85,6 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::post('fetchSectionsByProgramId', [SectionController::class, 'fetchSectionsByProgramId'])->name('fetchSectionsByProgramId');
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', teacherController::class);
-    // Route::resource('examiners', examinerController::class);
     Route::resource('schemes', SchemeController::class);
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
@@ -97,6 +98,7 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('program-shifts', ProgramShiftController::class)->only('show');
 });
 
-Route::group(['middleware' => ['role:examiner']], function () {
-    Route::view('examiner', 'examiner.index');
+Route::group(['middleware' => ['role:teacher']], function () {
+    Route::view('teacher', 'teacher.index');
+    Route::resource('mycourses', MyCourseController::class);
 });

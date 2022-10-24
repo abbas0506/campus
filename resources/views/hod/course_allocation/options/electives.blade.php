@@ -223,10 +223,19 @@
 
     function dispaly_teachers_list() {
         $("#teachers_list").toggleClass('hidden');
+
+        window.scrollTo({
+            top: $("#teachers_list").height(),
+            behavior: 'smooth'
+        })
     }
 
     function displayCourseList() {
         $("#courses_list").toggleClass('hidden');
+        window.scrollTo({
+            top: $("#courses_list").height(),
+            behavior: 'smooth'
+        })
     }
 
     function assignCourse(id, name) {
@@ -255,6 +264,7 @@
             $('#submit').removeAttr('disabled');
         }
         $("#teachers_list").toggleClass('hidden');
+
     }
 </script>
 @endsection

@@ -29,29 +29,29 @@
     <form action="{{route('students.store')}}" method='post' class="flex flex-col w-full">
         @csrf
 
-        <!-- <label for="" class="text-sm text-gray-400">Gender</label>
+        <!-- <label for="">Gender</label>
         <select id="" name="gender" class="input-indigo p-2 w-32">
             <option value="M">M</option>
             <option value="F">F</option>
         </select> -->
         <div class="flex space-x-4">
-            <label for="" class="text-sm text-gray-400">Gender</label>
+            <label for="">Gender</label>
             <input type="radio" name="gender" id="" checked> <span class="ml-3">Male</span>
             <input type="radio" name="gender" id=""> <span class="ml-3">Female</span>
         </div>
 
-        <label for="" class="text-sm text-gray-400 mt-3">Full Name</label>
+        <label for="" class='mt-3'>Full Name</label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad">
 
-        <label for="" class="text-sm text-gray-400 mt-3">Father</label>
+        <label for="" class='mt-3'>Father</label>
         <input type="text" id='' name='father' class="input-indigo" placeholder="father name">
         <div class="flex md:space-x-8">
             <div class="flex flex-col flex-1 mt-3">
-                <label for="" class="text-sm text-gray-400">Roll No</label>
+                <label for="">Roll No</label>
                 <input type="text" name="rollno" class="input-indigo" placeholder="Roll No.">
             </div>
             <div class="flex flex-col flex-1 mt-3">
-                <label for="" class="text-sm text-gray-400">Reg. No</label>
+                <label for="">Reg. No</label>
                 <input type="text" name="regno" class="input-indigo" placeholder="Registration No.">
             </div>
         </div>

@@ -32,8 +32,9 @@ class ProgramController extends Controller
     public function create()
     {
         //
+        $durations = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8];
         $departments = Department::all();
-        return view('hod.programs.create', compact('departments'));
+        return view('hod.programs.create', compact('durations', 'departments'));
     }
 
     /**
@@ -49,7 +50,8 @@ class ProgramController extends Controller
             'name' => 'required|unique:programs',
             'short' => 'required',
             'code' => 'nullable|unique:programs',
-            'duration' => 'required|numeric',
+            'min_duration' => 'required|numeric',
+            'max_duration' => 'required|numeric',
             'department_id' => 'required|numeric',
 
         ]);
@@ -84,8 +86,9 @@ class ProgramController extends Controller
     {
         //
         $program = Program::findOrFail($id);
+        $durations = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8];
         $departments = Department::all();
-        return view('hod.programs.edit', compact('program', 'departments'));
+        return view('hod.programs.edit', compact('program', 'durations', 'departments'));
     }
 
     /**
@@ -102,7 +105,8 @@ class ProgramController extends Controller
             'name' => 'required|unique:programs,name,' . $id, 'id',
             'short' => 'required',
             'code' => 'nullable|unique:programs,code,' . $id, 'id',
-            'duration' => 'required|numeric',
+            'min_duration' => 'required|numeric',
+            'max_duration' => 'required|numeric',
             'department_id' => 'required|numeric',
 
         ]);

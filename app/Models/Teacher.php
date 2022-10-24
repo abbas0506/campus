@@ -39,48 +39,20 @@ class Teacher extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
-    public function prefix()
-    {
-        return $this->belongsTo(Prefix::class);
-    }
-    public function nationality()
-    {
-        return $this->belongsTo(Nationality::class);
-    }
-    public function province()
-    {
-        return $this->belongsTo(Province::class);
-    }
-    public function domicile()
-    {
-        return $this->belongsTo(Domicile::class);
-    }
-    public function religion()
-    {
-        return $this->belongsTo(Religion::class);
-    }
-    public function faculty()
-    {
-        return $this->belongsTo(Faculty::class);
-    }
-    public function jobtype()
-    {
-        return $this->belongsTo(Jobtype::class);
-    }
-    public function speicalization()
-    {
-        return $this->belongsTo(Specialization::class);
-    }
     public function designation()
     {
         return $this->belongsTo(Designation::class);
     }
-    public function qualification()
+    public function department()
     {
-        return $this->belongsTo(Qualification::class);
+        return $this->belongsTo(Department::class);
+    }
+    public function course_allocations()
+    {
+        return $this->hasMany(CourseAllocation::class)->where('semester_id', session('semester_id'));
+    }
+    public function mycourses($section_id)
+    {
+        $this->course_allocations->where('section_id', $section_id);
     }
 }

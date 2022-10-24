@@ -114,7 +114,6 @@ class CourseController extends Controller
             'max_marks_theory' => 'required|numeric',
             'credit_hrs_practical' => 'required|numeric',
             'max_marks_practical' => 'required|numeric',
-            'department_id' => 'required|numeric',
 
         ]);
 

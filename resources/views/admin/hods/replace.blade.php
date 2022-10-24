@@ -35,7 +35,7 @@
             </svg>
         </div>
         <div class="flex flex-col ml-8">
-            <label for="" class="text-sm text-gray-400">Filter</label>
+            <label for="">Filter</label>
             <select name="department_id" id="department_filter" class="input-indigo p-2" onchange="filter()">
                 <option value="">Click here</option>
                 @foreach($departments as $department)

@@ -37,7 +37,7 @@
         </div>
         @endforeach
 
-        <label for="" class="text-sm text-gray-400 mt-3">Program</label>
+        <label for="" class='mt-3'>Program</label>
         <select id="" name="program_id" class="input-indigo p-2">
             <option value="">Select a program</option>
             @foreach($programs->sortBy('name') as $program)

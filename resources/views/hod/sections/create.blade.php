@@ -24,7 +24,7 @@
     <form action="{{route('sections.store')}}" method='post' class="flex flex-col w-full">
         @csrf
         <input type="hidden" name="clas_id" value='{{$clas->id}}' hidden>
-        <label for="" class="text-sm text-gray-400">Section Title</label>
+        <label for="">Section Title</label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="A">
 
         <button type="submit" class="btn-indigo mt-4">Save</button>

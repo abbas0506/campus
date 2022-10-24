@@ -21,10 +21,10 @@
     <form action="{{route('users.update',$user)}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
         @method('PATCH')
-        <label for="" class="text-sm text-gray-400">Name</label>
+        <label for="">Name</label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Enter user name" value="{{$user->name}}">
 
-        <label for="" class="text-sm text-gray-400 mt-3">Email</label>
+        <label for="" class='mt-3'>Email</label>
         <input type="text" id='email' name='email' class="input-indigo" placeholder="Enter email address" value="{{$user->email}}">
 
         <label for="" class=" text-sm text-gray-400 mt-3">CNIC <span class="ml-1">( xxxxx-xxxxxxx-x )</span></label>

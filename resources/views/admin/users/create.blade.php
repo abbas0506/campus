@@ -20,16 +20,16 @@
 
     <form action="{{route('users.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
-        <label for="" class="text-sm text-gray-400">Name</label>
+        <label for="">Name</label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">
 
-        <label for="" class="text-sm text-gray-400 mt-3">Email</label>
+        <label for="" class='mt-3'>Email</label>
         <input type="text" id='email' name='email' class="input-indigo" placeholder="Enter email address">
 
-        <label for="" class="text-sm text-gray-400 mt-3">CNIC <span class="ml-1">( xxxxx-xxxxxxx-x )</span></label>
+        <label for="" class='mt-3'>CNIC <span class="ml-1">( xxxxx-xxxxxxx-x )</span></label>
         <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Enter CNIC">
 
-        <label for="" class="text-sm text-gray-400">Filter</label>
+        <label for="">Filter</label>
         <select name="department_id" id='' class="input-indigo p-2">
             <option value="">Click here</option>
             @foreach($departments as $department)

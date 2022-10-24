@@ -29,6 +29,31 @@ class SchemeDetail extends Model
 
     public  function elective_course_allocations()
     {
+
         return $this->hasMany(ElectiveCourseAllocation::class);
+    }
+    public function compulsory_allocations()
+    {
+        return  $this->course_allocations->where('section_id', session('section_id'));
+    }
+    public function elective_allocations()
+    {
+        return  $this->elective_course_allocations->where('section_id', session('section_id'));
+    }
+    public function has_compulsory_allocations()
+    {
+        return $this->compulsory_allocations()->count() > 0 ? true : false;
+    }
+    public function has_elective_allocations()
+    {
+        return $this->elective_allocations()->count() > 0 ? true : false;
+    }
+    public function belongs_to_compulsory_course()
+    {
+        return $this->course->course_type_id == 1 ? true : false;
+    }
+    public function belongs_to_elective_course()
+    {
+        return $this->course->course_type_id > 1 ? true : false;
     }
 }
