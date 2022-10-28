@@ -32,11 +32,13 @@
             if($scheme){
             $total_semesters=$scheme->program->min_duration*2;
             $semester_no;
+            $roman=config('global.romans');
             }
             @endphp
             @for($semester_no=1;$semester_no<=$total_semesters;$semester_no++) <tr class="tr border-b">
                 <td class="flex py-2">
-                    Semester {{$semester_no}}
+
+                    Semester {{$roman[$semester_no-1]}}
                 </td>
 
                 <td class="">

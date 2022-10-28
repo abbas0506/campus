@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('course_allocations', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('scheme_detail_id');
             $table->unsignedBigInteger('semester_id');
             $table->unsignedBigInteger('section_id');
-            $table->unsignedBigInteger('scheme_detail_id');
+            $table->unsignedBigInteger('course_id')->nullable(); //null if compulosry
             $table->unsignedBigInteger('teacher_id');
 
             $table->timestamps();
@@ -35,6 +36,11 @@ return new class extends Migration
             $table->foreign('scheme_detail_id')
                 ->references('id')
                 ->on('scheme_details')
+                ->onDelete('cascade');
+
+            $table->foreign('course_id')
+                ->references('id')
+                ->on('courses')
                 ->onDelete('cascade');
 
             $table->foreign('teacher_id')

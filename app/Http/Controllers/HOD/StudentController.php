@@ -3,17 +3,11 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
-use App\Models\Department;
-use App\Models\Nationality;
-use App\Models\Program;
 use App\Models\Section;
-use App\Models\Session;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\Student;
-use App\Models\User;
 use Illuminate\Http\Request;
+
 use Exception;
 
 class StudentController extends Controller

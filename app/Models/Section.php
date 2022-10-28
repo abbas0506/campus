@@ -27,6 +27,7 @@ class Section extends Model
         $semester = $this->clas->semester->title();
         $program = $this->clas->program->short;
         $shift = $this->clas->shift->name;
-        return $semester . ' | ' . $program . ' | ' . $shift .  ' | Semester -  ' . $this->clas->semester_no . ' | Section -  ' . $this->name;
+        $roman = config('global.romans');
+        return $semester . ' / ' . $program . ' / ' . $shift .  ' / Semester - ' . $roman[$this->clas->semester_no - 1] . ' / Section -  ' . $this->name;
     }
 }

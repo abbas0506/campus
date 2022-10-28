@@ -63,17 +63,20 @@ class CourseAllocationController extends Controller
 
         try {
             CourseAllocation::create([
+                'scheme_detail_id' => session('scheme_detail_id'),
                 'semester_id' => session('semester_id'),
                 'shift_id' => session('shift_id'),
                 'section_id' => session('section_id'),
-                'scheme_detail_id' => session('scheme_detail_id'),
                 'teacher_id' => $request->teacher_id,
+                'course_id' => $request->course_id,
+
 
             ]);
 
             return redirect()->route('course-allocations.index')->with('success', "Successfully saved");
         } catch (Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage());
+            echo $e->getMessage();
+            // return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
         }
     }

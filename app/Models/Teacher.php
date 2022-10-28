@@ -51,8 +51,4 @@ class Teacher extends Model
     {
         return $this->hasMany(CourseAllocation::class)->where('semester_id', session('semester_id'));
     }
-    public function mycourses($section_id)
-    {
-        $this->course_allocations->where('section_id', $section_id);
-    }
 }

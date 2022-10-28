@@ -43,7 +43,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($courses->sortByDesc('id') as $course)
+            @foreach($courses as $course)
             <tr class="border-b tr">
                 <td class="py-2">
                     <div>{{$course->name}}</div>

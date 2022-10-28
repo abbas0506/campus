@@ -9,13 +9,18 @@ class CourseAllocation extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'scheme_detail_id',
         'semester_id',
         'section_id',
-        'scheme_detail_id',
+        'course_id',    //optional course id
         'teacher_id',
 
     ];
 
+    public function scheme_detail()
+    {
+        return $this->belongsTo(SchemeDetail::class);
+    }
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
@@ -24,8 +29,8 @@ class CourseAllocation extends Model
     {
         return $this->belongsTo(Section::class);
     }
-    public function scheme_detail()
+    public function course()
     {
-        return $this->belongsTo(SchemeDetail::class);
+        return $this->belongsTo(Course::class);
     }
 }

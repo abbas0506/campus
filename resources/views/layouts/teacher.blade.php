@@ -3,7 +3,7 @@
 <!-- header -->
 <x-header></x-header>
 <div class="flex relative top-16 w-screen min-h-screen">
-    <aside class="fixed hidden md:flex w-48 bg-slate-50 text-slate-600 font-thin drop-shadow-2xl" aria-label="Sidebar" id='sidebar'>
+    <aside aria-label="Sidebar" id='sidebar'>
         <div class="py-8 pr-3">
             <ul class="space-y-2">
                 <li>

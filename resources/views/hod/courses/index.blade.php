@@ -47,7 +47,7 @@
                     <div class="text-sm text-gray-500">{{$course->short}} @if($course->code) | {{$course->code}}@endif</div>
                 </td>
                 <td class="py-2">
-                    <div class="text-sm text-gray-500">{{$course->course_type->name}} ({{$course->credit_hrs_theory}} - {{$course->credit_hrs_practical}})</div>
+                    <div class="text-sm text-gray-500">{{$course->course_type->name}} {{$course->credit_hrs_theory+$course->credit_hrs_practical}}({{$course->credit_hrs_theory}}-{{$course->credit_hrs_practical}})</div>
                 </td>
                 <td class="py-2">
                     <div class="flex items-center text-sm text-gray-500">

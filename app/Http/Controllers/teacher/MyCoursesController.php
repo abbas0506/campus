@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\hod;
+namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseAllocation;
+use App\Models\ElectiveCourseAllocation;
+use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class examinerController extends Controller
+class MyCoursesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +19,11 @@ class examinerController extends Controller
     public function index()
     {
         //
+        $teacher = Auth::user()->teacher;
+        $section_ids = CourseAllocation::where('teacher_id', $teacher->id)->distinct()->pluck('section_id')->toArray();
+        $sections = Section::whereIn('id', $section_ids)->get();
+
+        return view('teacher.mycourses.index', compact('sections', 'teacher'));
     }
 
     /**

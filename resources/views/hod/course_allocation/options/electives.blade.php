@@ -26,7 +26,7 @@
     </div>
     <div class="md:w-1/2 rounded md:mt-0 mt-12">
 
-        <form action="{{route('elective-course-allocations.store')}}" method='post' class="flex flex-col border border-rounded">
+        <form action="{{route('course-allocations.store')}}" method='post' class="flex flex-col border border-rounded">
             @csrf
             <input type="text" id='' name='scheme_detail_id' value='{{$scheme_detail->id}}' hidden>
             <input type="text" id='course_id' name='course_id' value='' hidden>

@@ -63,6 +63,9 @@
         @apply flex flex-col absolute w-full top-12 right-8 z-20 bg-white font-thin drop-shadow-xl hidden;
     }
     /* sidebar */
+    aside {
+        @apply fixed top-20 hidden md:flex w-48 h-full overflow-auto bg-slate-50 text-slate-600 font-thin drop-shadow-2xl z-30;
+    }
     aside li:hover {
         @apply text-orange-500;
     }
