@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\hod;
+namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\Program;
-use App\Models\Session;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
-class DepartmentSessionController extends Controller
+class MyCourseRegistrationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,6 @@ class DepartmentSessionController extends Controller
     public function index()
     {
         //
-        $sessions = Session::all();
-        return view('hod.sessions.index', compact('sessions'));
     }
 
     /**
@@ -51,9 +48,8 @@ class DepartmentSessionController extends Controller
     public function show($id)
     {
         //
-        $session = Session::find($id);
-        $programs = Program::where('duration', $session->end_year - $session->start_year)->get();
-        return view('hod.sessions.show', compact('session', 'programs'));
+        $section = Section::find($id);
+        return view('teacher.mycourses.register', compact('section'));
     }
 
     /**

@@ -15,7 +15,6 @@ use App\Http\Controllers\hod\CourseAllocationController;
 use App\Http\Controllers\hod\examinerController;
 use App\Http\Controllers\Hod\ProgramController;
 use App\Http\Controllers\Hod\CourseController;
-use App\Http\Controllers\hod\DepartmentSessionController;
 use App\Http\Controllers\hod\teacherController;
 use App\Http\Controllers\hod\ResultController;
 use App\Http\Controllers\hod\SchemeController;
@@ -25,13 +24,13 @@ use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\hod\CourseAllocationOptionController;
 use App\Http\Controllers\hod\ClassController;
 use App\Http\Controllers\hod\ClassOptionsController;
-use App\Http\Controllers\hod\CompulsoryAllocationController;
 use App\Http\Controllers\hod\ElectiveAllocationController;
 use App\Http\Controllers\hod\ImportStudentsController;
 use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SectionOptionsController;
 use App\Http\Controllers\LoginOptionsController;
+use App\Http\Controllers\teacher\MyCourseRegistrationController;
 use App\Http\Controllers\teacher\MyCoursesController;
 
 /*
@@ -47,12 +46,7 @@ use App\Http\Controllers\teacher\MyCoursesController;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        $user = Auth::user();
         return redirect('login-options');
-        // if ($user->roles->count() > 1)
-        //     return redirect('login-options');
-        // else
-        //     return redirect($user->roles->first()->name);
     } else
         return view('index');
 });
@@ -90,7 +84,6 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('schemes', SchemeController::class);
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
-    Route::resource('compulsory-allocations', CompulsoryAllocationController::class);
 
     Route::resource('course-allocation-options', CourseAllocationOptionController::class)->only('index', 'store');
     Route::resource('elective-allocations', ElectiveAllocationController::class)->only('edit');
@@ -98,7 +91,6 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('students', StudentController::class);
     Route::resource('results', ResultController::class);
     Route::resource('enrollments', EnrollmentController::class);
-    Route::resource('department-sessions', DepartmentSessionController::class);
     Route::resource('program-shifts', ProgramShiftController::class)->only('show');
 
     Route::get('import-students/view', [ImportStudentsController::class, 'view']);
@@ -108,4 +100,5 @@ Route::group(['middleware' => ['role:hod']], function () {
 Route::group(['middleware' => ['role:teacher']], function () {
     Route::view('teacher', 'teacher.index');
     Route::resource('mycourses', MyCoursesController::class);
+    Route::resource('mycourse-registrations', MyCourseRegistrationController::class);
 });

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\CourseAllocation;
 use App\Models\ElectiveCourseAllocation;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Result;
 
 class MyCoursesController extends Controller
 {
@@ -56,6 +58,22 @@ class MyCoursesController extends Controller
     public function show($id)
     {
         //
+        $course_allocation = CourseAllocation::find($id);
+        $course_id = $course_allocation->scheme_detail->is_compulsory() ? $course_allocation->scheme_detail->course_id : $course_allocation->course_id;
+        $section_id = $course_allocation->section_id;
+        $teacher_id = $course_allocation->teacher_id;
+        $semester_id = $course_allocation->semester_id;
+        $program_id = $course_allocation->section->program_id;
+
+        $mycourse = Course::find($course_id);
+        $mycourse_students = Result::where('course_id', $course_id);
+        $section = Section::find($section_id);
+
+        //get registered students 
+        //get not notregistered students
+        //get reappear students
+
+        return view('teacher.mycourses.show', compact('mycourse', 'mycourse_students', 'section'));
     }
 
     /**

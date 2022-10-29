@@ -21,10 +21,11 @@ class Student extends Model
         //root status
         'section_id',
         'regno',
-
-        //current section: if frozen 
-
         'rollno',
+
+        //current
+        'status',
+        'section_id',
 
     ];
 

@@ -1,13 +1,13 @@
 @extends('layouts.teacher')
 @section('page-content')
-<h1 class="mt-5">Students</h1>
+<h1 class="mt-5">Course Registration</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{url('class-options')}}">My Courses </a>/ {{$course->name}} / students
+        <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">My Courses </a>/ {{$mycourse->name}} / students
     </div>
 </div>
 
-<div class="container w-full mx-auto mt-8">
+<div class="container mx-auto mt-8">
     <div class="flex items-center flex-wrap justify-between">
         <div class="flex relative ">
             <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
@@ -16,12 +16,11 @@
             </svg>
         </div>
         <div class="flex items-center space-x-4">
-            <a href="{{url('import-students/view')}}" class="btn-indigo flex items-center">
+            <a href="{{route('mycourse-registrations.show',$section)}}" class="btn-indigo flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-orange-200 mr-3">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                 </svg>
-
-                upload from excel sheet
+                Import from Section
             </a>
             <a href="{{route('students.create')}}" class="btn-indigo flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4  text-orange-200 mr-3">
@@ -63,8 +62,8 @@
             </tr>
         </thead>
         <tbody>
-            @php $sr=$students->count();@endphp
-            @foreach($students->sortByDesc('id') as $student)
+            @php $sr=$mycourse_students->count();@endphp
+            @foreach($mycourse_students as $student)
             <tr class="tr border-b ">
                 <td class="py-2 text-slate-600 text-sm"><input type="checkbox"></td>
                 <td class="py-2">

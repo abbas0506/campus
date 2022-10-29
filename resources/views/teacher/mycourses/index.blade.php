@@ -20,7 +20,7 @@
 <div class="flex flex-wrap mt-12">
     @foreach($sections as $section)
     @foreach($teacher->course_allocations->where('section_id',$section->id) as $course_allocation)
-    <a href='#' class="flex flex-col w-1/3 p-5">
+    <a href="{{route('mycourses.show',$course_allocation->id)}}" class="flex flex-col w-1/3 p-5">
         <div class="flex flex-col bg-green-200 p-4 rounded">
             <div class="flex justify-center items-center text-green-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.5" stroke="currentColor" class="w-12 h-12">
@@ -28,13 +28,13 @@
                 </svg>
             </div>
             <div class="flex flex-col items-center mt-4">
-                <label class="font-bold text-green-800 text-center mb-2">
+                <div class="font-bold text-green-800 text-center mb-2">
                     @if($course_allocation->scheme_detail->is_compulsory())
                     {{$course_allocation->scheme_detail->course->name}}
                     @else
                     {{$course_allocation->course->name}}
                     @endif
-                </label>
+                </div>
                 <h1 class="text-4xl text-center text-gray-600">{{$section->students->count()}}</h1>
             </div>
 
