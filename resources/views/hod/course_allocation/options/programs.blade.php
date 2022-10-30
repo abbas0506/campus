@@ -42,7 +42,7 @@
 
                     </div>
                     @foreach($shifts as $shift)
-                    <input type="radio" name='shift_id' value="{{$shift->id}}" class="ml-5" onclick='loadSections()' @if($shift->id==1) checked @endif ><span class="text-green-900 ml-4">{{$shift->name}}</span>
+                    <input type="radio" name='shift_id' value="{{$shift->id}}" class="ml-5" onclick='clearSelection()' @if($shift->id==1) checked @endif ><span class="text-green-900 ml-4">{{$shift->name}}</span>
                     @endforeach
                 </div>
 
@@ -72,9 +72,15 @@
 
     @section('script')
     <script lang="javascript">
+        function clearSelection() {
+            $('#program_id').val("");
+            $('#section_id').val("");
+        }
+
         function loadSections() {
+            //token for ajax call
             var token = $("meta[name='csrf-token']").attr("content");
-            // var program_id = event.target.value;
+
             var program_id = $('#program_id').val();
             var shift_id = $("input[name='shift_id']:checked").val();
 
@@ -89,7 +95,6 @@
                 },
                 success: function(response) {
                     //
-                    // alert(response.section_options)
                     $('#section_id').html(response.section_options);
                     $('#scheme_id').html(response.scheme_options);
                 },

@@ -26,12 +26,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RolesAndPermissionsSeeder::class, //spatie
-            ReligionSeeder::class,
-            NationalitySeeder::class,
-            DomicileSeeder::class,
-            ProvinceSeeder::class,
-            QualificationSeeder::class,
-
             SemesterTypeSeeder::class,
             SemesterSeeder::class,
             ExamTypeSeeder::class,
@@ -41,14 +35,10 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             ProgramSeeder::class,
             CourseSeeder::class,
-            FacultySeeder::class,
             DesginationSeeder::class,
-            JobtypeSeeder::class,
-            PrefixSeeder::class,
 
             UserSeeder::class,
             TeacherSeeder::class,
-            // StudentSeeder::class,
 
         ]);
     }

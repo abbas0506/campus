@@ -45,12 +45,10 @@ class SectionOptionsController extends Controller
         //
         $request->validate([
             'semester_id' => 'required|numeric',
-            'program_id' => 'required|numeric',
         ]);
 
         session([
             'semester_id' => $request->semester_id,
-            'program_id' => $request->program_id,
         ]);
 
         return redirect('sections');

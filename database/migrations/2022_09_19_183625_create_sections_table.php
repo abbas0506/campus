@@ -16,14 +16,27 @@ return new class extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('clas_id');
+            $table->unsignedBigInteger('semester_id');  //root
+            $table->unsignedBigInteger('program_id');
+            $table->unsignedBigInteger('shift_id');
+            $table->unsignedInteger('semester_no')->nullable()->default(1); //dynamic
+            $table->unique(['name', 'semester_id', 'program_id', 'shift_id']); //composite pk
             $table->timestamps();
 
-            $table->foreign('clas_id')
+            $table->foreign('semester_id')
                 ->references('id')
-                ->on('clas')
-                ->onDelete('cascade');  //cascade delete
+                ->on('semesters')
+                ->onDelete('cascade');
 
+            $table->foreign('shift_id')
+                ->references('id')
+                ->on('shifts')
+                ->onDelete('cascade');
+
+            $table->foreign('program_id')
+                ->references('id')
+                ->on('programs')
+                ->onDelete('cascade');
         });
     }
 

@@ -9,10 +9,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\DepartmentHodController;
 use App\Http\Controllers\hod\EnrollmentController;
-use App\Http\Controllers\CE\ExamController;
-use App\Http\Controllers\Admin\HodController;
 use App\Http\Controllers\hod\CourseAllocationController;
-use App\Http\Controllers\hod\examinerController;
 use App\Http\Controllers\Hod\ProgramController;
 use App\Http\Controllers\Hod\CourseController;
 use App\Http\Controllers\hod\teacherController;
@@ -22,8 +19,6 @@ use App\Http\Controllers\hod\StudentController;
 use App\Http\Controllers\ProgramShiftController;
 use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\hod\CourseAllocationOptionController;
-use App\Http\Controllers\hod\ClassController;
-use App\Http\Controllers\hod\ClassOptionsController;
 use App\Http\Controllers\hod\ElectiveAllocationController;
 use App\Http\Controllers\hod\ImportStudentsController;
 use App\Http\Controllers\hod\SchemeDetailController;
@@ -75,9 +70,12 @@ Route::group(['middleware' => ['role:controller']], function () {
 Route::group(['middleware' => ['role:hod']], function () {
     Route::view('hod', 'hod.index');
     Route::resource('programs', ProgramController::class);
-    Route::resource('classes', ClassController::class);
-    Route::resource('class-options', ClassOptionsController::class);
+    // Route::resource('classes', ClassController::class);
+    // Route::resource('class-options', ClassOptionsController::class);
     Route::resource('sections', SectionController::class);
+    Route::resource('section-options', SectionOptionsController::class);
+    Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
+
     Route::post('fetchSectionsByProgramId', [SectionController::class, 'fetchSectionsByProgramId'])->name('fetchSectionsByProgramId');
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', teacherController::class);

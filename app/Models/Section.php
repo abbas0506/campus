@@ -10,13 +10,29 @@ class Section extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'clas_id',
+        'semester_id', //root semester id
+        'program_id',
+        'shift_id',
+        'semester_no',  //will be dynamic
+
     ];
 
-
-    public function clas()
+    public function semester()
     {
-        return $this->belongsTo(Clas::class);
+        return $this->belongsTo(Semester::class);
+    }
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
+    }
+
+    public function similar($program_id, $shift_id)
+    {
+        return $program_id . "+" . $shift_id;
     }
     public  function students()
     {
@@ -24,10 +40,10 @@ class Section extends Model
     }
     public function title()
     {
-        $semester = $this->clas->semester->title();
-        $program = $this->clas->program->short;
-        $shift = $this->clas->shift->name;
+        $semester = $this->semester->title();
+        $program = $this->program->short;
+        $shift = $this->shift->name;
         $roman = config('global.romans');
-        return $semester . ' / ' . $program . ' / ' . $shift .  ' / Semester - ' . $roman[$this->clas->semester_no - 1] . ' / Section -  ' . $this->name;
+        return $semester . ' / ' . $program . ' / ' . $shift .  ' / Semester - ' . $roman[$this->semester_no - 1] . ' / Section -  ' . $this->name;
     }
 }

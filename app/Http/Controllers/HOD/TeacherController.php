@@ -36,11 +36,9 @@ class TeacherController extends Controller
     {
         //
         $departments = Department::all();
-        $prefixes = Prefix::all();
         $designations = Designation::all();
-        $jobtypes = Jobtype::all();
-        $nationalities = Nationality::all();
-        return view('hod.teachers.create', compact('departments', 'prefixes', 'designations', 'jobtypes', 'nationalities'));
+
+        return view('hod.teachers.create', compact('departments', 'designations'));
     }
 
     /**

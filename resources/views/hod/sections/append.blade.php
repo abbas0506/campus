@@ -29,22 +29,11 @@
     <form action="{{route('sections.store')}}" method='post' class="flex flex-col w-full mt-16">
         @csrf
 
-        @foreach($shifts as $shift)
-        <div class="flex item-cetner mt-3">
-            <input type="radio" name='shift_id' value="{{$shift->id}}" @if($shift->id==1) checked @endif>
-            <label for="" class="ml-3">{{$shift->name}}</label>
-        </div>
-        @endforeach
+        <input type="text" name="program_id" value="{{$program_id}}" hidden>
+        <input type="text" name="shift_id" value="{{$shift_id}}" hidden>
 
-        <label for="" class='mt-8'>Program</label>
-        <select id="" name="program_id" class="input-indigo p-2">
-            <option value="">Select a program</option>
-            @foreach($programs->sortBy('name') as $program)
-            <option value="{{$program->id}}">{{$program->name}}</option>
-            @endforeach
-        </select>
-
-        <input type="text" id='' name='name' class="input-indigo" placeholder="A" value="A" hidden>
+        <label for="" class="mt-3">Section Title</label>
+        <input type="text" id='' name='name' class="input-indigo" placeholder="A">
 
         <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
             <a href="{{route('sections.index')}}" class="btn-indigo-rounded">Cancel</a>

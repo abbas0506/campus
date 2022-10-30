@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Models\Clas;
 use App\Models\Program;
 use App\Models\Scheme;
 use App\Models\Section;
 use App\Models\Semester;
 use App\Models\Session;
+use App\Models\Shift;
 use Exception;
+use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SectionController extends Controller
 {
@@ -22,7 +26,12 @@ class SectionController extends Controller
     public function index()
     {
         //
+        $semester = Semester::find(session('semester_id'));
+        $program_ids = Section::where('semester_id', session('semester_id'))->distinct()->pluck('program_id')->toArray();
 
+        $programs = Program::whereIn('id', $program_ids)->get();
+        $shifts = Shift::all();
+        return view('hod.sections.index', compact('semester', 'programs', 'shifts'));
     }
 
     /**
@@ -33,10 +42,11 @@ class SectionController extends Controller
     public function create()
     {
         //
-        if (session('semester_id') && session('program_id')) {
+        if (session('semester_id')) {
             $semester = Semester::find(session('semester_id'));
-            $program = Program::find(session('program_id'));
-            return view('hod.sections.create', compact('semester', 'program'));
+            $programs = Program::all();
+            $shifts = Shift::all();
+            return view('hod.sections.create', compact('semester', 'programs', 'shifts'));
         } else {
             echo 'session or program variable not set... probably you have tried direct access to this page';
             //send to error page showing direct access
@@ -53,13 +63,29 @@ class SectionController extends Controller
     {
         //
         $request->validate([
-            'clas_id' => 'required|numeric',
-            'name' => 'required|unique:sections,name,NULL,id,clas_id,' . $request->clas_id,
+            'program_id' => 'required|numeric',
+            'shift_id' => 'required|numeric',
+            'name' => 'required',
         ]);
 
         try {
-            Section::create($request->all());
-            return redirect('classes')->with('success', 'Successfully created');
+
+            $sections = Section::where('name', $request->name)
+                ->where('semester_id', session('semester_id'))
+                ->where('program_id', $request->program_id)
+                ->where('shift_id', $request->shift_id);
+
+            if ($sections->count() > 0)   //session exists
+                return redirect()->back()->with('error', 'Section already exists');
+            else {
+                Section::create([
+                    'name' => $request->name,
+                    'semester_id' => session('semester_id'),
+                    'program_id' => $request->program_id,
+                    'shift_id' => $request->shift_id,
+                ]);
+                return redirect('sections')->with('success', 'Successfully created');
+            }
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -117,14 +143,25 @@ class SectionController extends Controller
     {
         //
     }
+
+    public function append($program_id, $shift_id)
+    {
+        if (session('semester_id')) {
+            $semester = Semester::find(session('semester_id'));
+            return view('hod.sections.append', compact('semester', 'program_id', 'shift_id'));
+        } else {
+            echo 'session or program variable not set... probably you have tried direct access to this page';
+            //send to error page showing direct access
+        }
+    }
+
     public function fetchSectionsByProgramId(Request $request)
     {
-        $clas_ids = Clas::where('semester_id', session('semester_id'))
+        $sections = Section::where('semester_id', session('semester_id'))
             ->where('program_id', $request->program_id)
-            ->where('shift_id', $request->shift_id)
-            ->pluck('id')->toArray();
+            ->where('shift_id', $request->shift_id)->get();
 
-        $sections = Section::whereIn('clas_id', $clas_ids)->get();
+        // $sections = Section::whereIn('clas_id', $clas_ids)->get();
 
 
         //prepare courses list

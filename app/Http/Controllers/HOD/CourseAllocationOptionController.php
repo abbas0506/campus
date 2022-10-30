@@ -52,13 +52,7 @@ class CourseAllocationOptionController extends Controller
             'scheme_id' => 'required|numeric',
         ]);
 
-        $semester = Semester::find(session('semester_id'));
-        $clas = $semester->classes->where('program_id', $request->program_id)
-            ->where('shift_id', $request->shift_id)->first();
-
         $section = Section::find($request->section_id);
-        // $scheme = Scheme::find($request->scheme_id);
-
         session([
             'section_id' => $section->id,
             'scheme_id' => $request->scheme_id,

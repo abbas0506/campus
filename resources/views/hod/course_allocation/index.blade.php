@@ -3,8 +3,7 @@
 <h1 class="mt-5">Course Allocation</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Course Allocation /
-        <a href="{{url('course-allocation-options')}}" class="text-orange-700 mx-2">Choose Options</a> /
+        <a href="{{url('course-allocation-options')}}" class="text-orange-700 mr-2">Choose Options</a> /
         {{$section->title()}}
     </div>
 </div>
