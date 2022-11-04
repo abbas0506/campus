@@ -29,9 +29,8 @@ class CourseAllocationController extends Controller
     {
         //
         if (session('section_id') && session('scheme_id')) {
-            $scheme = Scheme::find(session('scheme_id'));
             $section = Section::find(session('section_id'));
-            return view('hod.course_allocation.index', compact('section', 'scheme'));
+            return view('hod.course_allocation.index', compact('section'));
         } else {
             echo "Scheme of study and section not selected";
         }
@@ -45,7 +44,10 @@ class CourseAllocationController extends Controller
     public function create()
     {
         //
+        $section = Section::find(session('section_id'));
+        $scheme = Scheme::find(session('scheme_id'));
 
+        return view('hod.course_allocation.create', compact('scheme', 'section'));
     }
 
     /**
@@ -58,25 +60,23 @@ class CourseAllocationController extends Controller
     {
         //
         $request->validate([
-            'teacher_id' => 'required|numeric',
+            'course_id' => 'required|numeric',
         ]);
 
         try {
+            $section = Section::find(session('section_id'));
             CourseAllocation::create([
-                'scheme_detail_id' => session('scheme_detail_id'),
-                'semester_id' => session('semester_id'),
-                'shift_id' => session('shift_id'),
-                'section_id' => session('section_id'),
-                'teacher_id' => $request->teacher_id,
+                'section_id' => $section->id,
+                'semester_no' => $section->semester_no,
+                'scheme_detail_id' => $request->scheme_detail_id,
                 'course_id' => $request->course_id,
 
-
             ]);
+
 
             return redirect()->route('course-allocations.index')->with('success', "Successfully saved");
         } catch (Exception $e) {
             echo $e->getMessage();
-            // return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
         }
     }
@@ -101,17 +101,6 @@ class CourseAllocationController extends Controller
      */
     public function edit($id)
     {
-        //id : scehme dtail id
-
-        session([
-            'scheme_detail_id' => $id,
-        ]);
-
-        $scheme_detail = SchemeDetail::find($id);
-        $department = Department::find(session('department_id'));
-        $teachers = $department->teachers;
-
-        return view('hod.course_allocation.options.teachers', compact('teachers'));
     }
 
     /**
@@ -141,6 +130,46 @@ class CourseAllocationController extends Controller
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
+    }
+
+    public function addOptional($id)
+    {
+        $section = Section::find(session('section_id'));
+        $scheme_detail = SchemeDetail::find($id);
+        $courses = Course::where('course_type_id', $scheme_detail->course->course_type_id)->get();
+
+        return view('hod.course_allocation.assign.optional', compact('section', 'scheme_detail', 'courses'));
+    }
+    public function assignTeacher($id)
+    {
+        session([
+            'course_allocation_id' => $id,
+        ]);
+
+        $department = Department::find(session('department_id'));
+        $teachers = $department->teachers;
+
+        return view('hod.course_allocation.assign.teacher', compact('teachers'));
+    }
+    public function postAssignTeacher(Request $request)
+    {
+        $request->validate([
+            'teacher_id' => 'required|numeric',
+        ]);
+
+        try {
+
+            $course_allocation = CourseAllocation::find(session('course_allocation_id'));
+            $course_allocation->teacher_id = $request->teacher_id;
+            $course_allocation->update();
+            session([
+                'course_allocation_id' => null, //nullify stored coure allocation
+            ]);
+            return redirect()->route('course-allocations.index')->with('success', "Successfully saved");
+        } catch (Exception $e) {
+            echo $e->getMessage();
             // something went wrong
         }
     }

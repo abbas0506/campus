@@ -3,13 +3,13 @@
 <h1 class="mt-5">Course Allocation</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Course Allocation /
-        <a href="{{url('course-allocation-options')}}" class="text-orange-700 mx-2">Choose Options</a> /
+        <a href="{{url('course-allocation-options')}}" class="text-orange-700 mr-2">Choose Options</a> /
         assign / teachers
+        <span class="text-sm text-teal-700 ml-8 font-thin"> [ Step 3 / 3 ]</span>
     </div>
 </div>
 
-<div class="container md:w-3/4 mx-auto px-5 mt-12">
+<div class="container mx-auto mt-12">
 
     <div class="flex items-end">
         <div class="flex relative ">
@@ -32,22 +32,22 @@
     <table class="table-auto w-full mt-8">
         <thead>
             <tr class="border-b border-slate-200">
-                <th>Teacher</th>
-                <th class="py-2 text-gray-600 justify-center">Actions</th>
+                <th>Teacher <span class="text-sm text-slate-600 font-thin">({{$teachers->count()}} rows found)</span></th>
+                <th class="py-2 flex text-gray-600 justify-center">Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($teachers->sortByDesc('id') as $teacher)
+            @foreach($teachers as $teacher)
             <tr class="border-b tr">
                 <td class="py-2">
                     <div>{{$teacher->user->name}}</div>
                     <div class="text-sm text-gray-500 font-medium">{{$teacher->cnic}}</div>
                     <div class="text-sm text-gray-500 font-medium">{{$teacher->user->email}}</div>
-
                 </td>
                 <td class="py-2 flex items-center justify-center">
-                    <form action="{{route('course-allocations.store')}}" method="POST" id='assign_form{{$teacher->id}}' class="mt-2 text-sm">
+                    <form action="{{url('course-allocations/assign/teacher')}}" method="POST" id='assign_form{{$teacher->id}}' class="mt-2 text-sm">
                         @csrf
+                        @method('PATCH')
                         <input type="text" name='teacher_id' value="{{$teacher->id}}" hidden>
                         <button type="submit" class="flex flex-col items-center justify-center btn-indigo" onclick="assign('{{$teacher->id}}')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">

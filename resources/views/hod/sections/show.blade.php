@@ -3,7 +3,7 @@
 <h1 class="mt-5">Students</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{url('class-options')}}" class="text-orange-700 mx-1"> Choose semester </a> / {{$section->title()}} / students
+        <a href="#" class="text-orange-700 mx-1"> Choose semester </a> / {{$section->title()}} / students
     </div>
 </div>
 
@@ -21,14 +21,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                 </svg>
 
-                upload from excel sheet
+                Import from Excel
             </a>
             <a href="{{route('students.create')}}" class="btn-indigo flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4  text-orange-200 mr-3">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
                 </svg>
-
-                add new
+                Add
             </a>
         </div>
 
@@ -53,6 +52,7 @@
     </div>
     @endif
 
+    <!-- registered students -->
     <table class="table-auto w-full mt-16">
         <thead>
             <tr class="border-b border-slate-200">
@@ -64,7 +64,7 @@
         </thead>
         <tbody>
             @php $sr=$students->count();@endphp
-            @foreach($students->sortByDesc('id') as $student)
+            @foreach($students as $student)
             <tr class="tr border-b ">
                 <td class="py-2 text-slate-600 text-sm"><input type="checkbox"></td>
                 <td class="py-2">
@@ -111,10 +111,11 @@
                 </td>
             </tr>
             @endforeach
-
-
         </tbody>
     </table>
+
+    <!-- not registered -->
+
 </div>
 
 <script type="text/javascript">

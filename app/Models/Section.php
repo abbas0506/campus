@@ -30,14 +30,15 @@ class Section extends Model
         return $this->belongsTo(Shift::class);
     }
 
-    public function similar($program_id, $shift_id)
-    {
-        return $program_id . "+" . $shift_id;
-    }
     public  function students()
     {
         return $this->hasMany(Student::class);
     }
+    public  function course_allocations()
+    {
+        return $this->hasMany(CourseAllocation::class);
+    }
+
     public function title()
     {
         $semester = $this->semester->title();
@@ -45,5 +46,11 @@ class Section extends Model
         $shift = $this->shift->name;
         $roman = config('global.romans');
         return $semester . ' / ' . $program . ' / ' . $shift .  ' / Semester - ' . $roman[$this->semester_no - 1] . ' / Section -  ' . $this->name;
+    }
+
+    public function has_course($course_id)
+    {
+        // if course already scheduled, return true
+        return $this->course_allocations()->where('course_id', $course_id)->count() > 0 ? true : false;
     }
 }

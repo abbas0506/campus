@@ -35,4 +35,10 @@ class SchemeDetail extends Model
     {
         return $this->course->course_type_id == 1 ? true : false;
     }
+
+    // results
+    public  function results()
+    {
+        return $this->hasMany(Result::class);
+    }
 }

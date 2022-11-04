@@ -29,13 +29,9 @@
             </div>
             <div class="flex flex-col items-center mt-4">
                 <div class="font-bold text-green-800 text-center mb-2">
-                    @if($course_allocation->scheme_detail->is_compulsory())
-                    {{$course_allocation->scheme_detail->course->name}}
-                    @else
                     {{$course_allocation->course->name}}
-                    @endif
                 </div>
-                <h1 class="text-4xl text-center text-gray-600">{{$section->students->count()}}</h1>
+                <h1 class="text-4xl text-center atext-gray-600">{{$section->students->count()}}</h1>
             </div>
 
         </div>

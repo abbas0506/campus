@@ -10,6 +10,7 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Result;
+use App\Models\Student;
 
 class MyCoursesController extends Controller
 {
@@ -59,21 +60,21 @@ class MyCoursesController extends Controller
     {
         //
         $course_allocation = CourseAllocation::find($id);
-        $course_id = $course_allocation->scheme_detail->is_compulsory() ? $course_allocation->scheme_detail->course_id : $course_allocation->course_id;
-        $section_id = $course_allocation->section_id;
-        $teacher_id = $course_allocation->teacher_id;
-        $semester_id = $course_allocation->semester_id;
-        $program_id = $course_allocation->section->program_id;
-
-        $mycourse = Course::find($course_id);
-        $mycourse_students = Result::where('course_id', $course_id);
-        $section = Section::find($section_id);
+        $section = Section::find($course_allocation->section_id);
 
         //get registered students 
+        $registered_student_ids = Result::where('course_allocation_id', $course_allocation->id)
+            ->pluck('student_id')
+            ->toArray();
+
+        $registered_students = Student::whereIn('id', $registered_student_ids)->get();
+        $unregistered_students = Student::whereNotIn('id', $registered_student_ids)->get();
+
+
         //get not notregistered students
         //get reappear students
 
-        return view('teacher.mycourses.show', compact('mycourse', 'mycourse_students', 'section'));
+        return view('teacher.mycourses.show', compact('course_allocation', 'registered_students', 'unregistered_students'));
     }
 
     /**

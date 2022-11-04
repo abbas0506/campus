@@ -12,10 +12,8 @@ class Result extends Model
     protected $fillable = [
         'student_id',
         'semester_id',
-        // 'program_id',
-        // 'shift_id',
-        // 'section',
-        'course_id',
+        'scheme_detail_id',
+        'split_course_id',
         'is_reapper',
         'assignment',
         'presentation',

@@ -3,11 +3,11 @@
 <h1 class="mt-5">Course Registration</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">My Courses </a>/ {{$mycourse->name}} / students
+        <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">My Courses </a> / {{$course_allocation->course->name}} / students
     </div>
 </div>
 
-<div class="container mx-auto mt-8">
+<div class="container w-full mx-auto mt-8">
     <div class="flex items-center flex-wrap justify-between">
         <div class="flex relative ">
             <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
@@ -16,18 +16,17 @@
             </svg>
         </div>
         <div class="flex items-center space-x-4">
-            <a href="{{route('mycourse-registrations.show',$section)}}" class="btn-indigo flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-orange-200 mr-3">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                </svg>
-                Import from Section
-            </a>
+            <button class="btn-indigo font-thin hidden" onclick="toggleUnregistered()" id='btnToggleRegistered'>
+                Show Registered
+            </button>
+            <button class="btn-indigo font-thin" onclick="toggleUnregistered()" id='btnToggleUnregistered'>
+                Show Unregistered
+            </button>
             <a href="{{route('students.create')}}" class="btn-indigo flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4  text-orange-200 mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4  text-orange-200 mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
                 </svg>
-
-                add new
+                Re-appear
             </a>
         </div>
 
@@ -52,20 +51,20 @@
     </div>
     @endif
 
-    <table class="table-auto w-full mt-16">
+    <input type="text" id='course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
+    <!-- registered students -->
+    <table class="table-auto w-full mt-16" id='registered'>
         <thead>
             <tr class="border-b border-slate-200">
-                <th><input type="checkbox"></th>
                 <th>Name</th>
                 <th>Father</th>
                 <th class='text-center'>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @php $sr=$mycourse_students->count();@endphp
-            @foreach($mycourse_students as $student)
+            @php $sr=$registered_students->count();@endphp
+            @foreach($registered_students as $student)
             <tr class="tr border-b ">
-                <td class="py-2 text-slate-600 text-sm"><input type="checkbox"></td>
                 <td class="py-2">
                     <div class="flex items-center space-x-4">
                         <div>
@@ -93,11 +92,6 @@
                     {{$student->father}}
                 </td>
                 <td class="py-2 flex items-center justify-center">
-                    <a href="{{route('students.edit', $student)}}">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-green-600 mr-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                        </svg>
-                    </a>
                     <form action="{{route('students.destroy',$student)}}" method="POST" id='del_form{{$student->id}}' class="mt-1">
                         @csrf
                         @method('DELETE')
@@ -110,10 +104,57 @@
                 </td>
             </tr>
             @endforeach
-
-
         </tbody>
     </table>
+
+    <!-- not registered students -->
+    <section id='unregistered' class='hidden'>
+        <button class="flex px-5 py-2 bg-teal-600 text-slate-100 mt-16" onclick="registerNow()">
+            Register Now <span class="ml-2">(</span><span id='chkCount' class="">0</span>)
+        </button>
+        <table class="table-auto w-full mt-8">
+            <thead>
+                <tr class="border-b border-slate-200">
+                    <th><input type="checkbox" id='chkAll' onclick="chkAll()"></th>
+                    <th>Name</th>
+                    <th>Father</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php $sr=$unregistered_students->count();@endphp
+                @foreach($unregistered_students as $student)
+                <tr class="tr border-b ">
+                    <td class="py-2 text-slate-600 text-sm"><input type="checkbox" name='chk' value='{{$student->id}}' onclick="updateChkCount()"></td>
+                    <td class="py-2">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                @if($student->gender=='M')
+                                <div class="bg-indigo-500 w-2 h-2 rounded-full"></div>
+                                @else
+                                <div class="bg-green-500 w-2 h-2 rounded-full"></div>
+                                @endif
+                            </div>
+                            <div>
+                                <div class="text-slate-600">{{$student->name}}</div>
+                                <div class="text-slate-600 text-sm">
+                                    {{$student->rollno}}
+                                    @if($student->regno)
+                                    | {{$student->regno}}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-2 text-slate-600 text-sm">
+                        {{$student->father}}
+                    </td>
+
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </section>
+
 </div>
 
 <script type="text/javascript">
@@ -149,6 +190,93 @@
                 $(this).removeClass('hidden');
             }
         });
+    }
+
+    function toggleUnregistered() {
+        $('#registered').toggleClass('hidden');
+        $('#unregistered').toggleClass('hidden');
+        $('#btnToggleRegistered').toggleClass('hidden');
+        $('#btnToggleUnregistered').toggleClass('hidden');
+
+    }
+
+    function chkAll() {
+        $('.tr').each(function() {
+            if (!$(this).hasClass('hidden'))
+                $(this).children().find('input[type=checkbox]').prop('checked', $('#chkAll').is(':checked'));
+            updateChkCount()
+        });
+    }
+
+    function updateChkCount() {
+        var chkArray = [];
+        var chks = document.getElementsByName('chk');
+        chks.forEach((chk) => {
+            if (chk.checked) chkArray.push(chk.value);
+        })
+
+        document.getElementById("chkCount").innerHTML = chkArray.length;
+    }
+
+    function registerNow() {
+
+        var token = $("meta[name='csrf-token']").attr("content");
+
+        var course_allocation_id = $('#course_allocation_id').val();
+        var ids_array = [];
+        var chks = document.getElementsByName('chk');
+        chks.forEach((chk) => {
+            if (chk.checked) ids_array.push(chk.value);
+        })
+
+        if (ids_array.length == 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: "Nothing to save",
+            });
+        } else {
+            //show sweet alert and confirm submission
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Selected students will be registered!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, register now '
+            }).then((result) => { //if confirmed    
+                if (result.value) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "bulk_registration",
+                        data: {
+                            "course_allocation_id": course_allocation_id,
+                            "ids_array": ids_array,
+                            "_token": token,
+
+                        },
+                        success: function(response) {
+                            //
+                            Swal.fire({
+                                icon: 'warning',
+                                title: response.msg,
+                            });
+                            //refresh content after deletion
+                            location.reload();
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: errorThrown
+                            });
+                        }
+                    }); //ajax end
+                }
+            })
+
+        }
+
     }
 </script>
 

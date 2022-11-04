@@ -48,8 +48,7 @@ class MyCourseRegistrationController extends Controller
     public function show($id)
     {
         //
-        $section = Section::find($id);
-        return view('teacher.mycourses.register', compact('section'));
+
     }
 
     /**

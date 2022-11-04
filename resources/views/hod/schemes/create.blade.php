@@ -23,7 +23,7 @@
             </svg>
         </div>
         <div class="flex-grow sm:text-left text-center sm:mt-0">
-            <h2>Choose Semester (w.e.f) & Program</h2>
+            <h2>Choose Program & Semester</h2>
             <p class="text-sm">Before you proceed ahead to manipulate the classes, please tell us your target semester. If semesters' list is empty, please contact admin.</p>
         </div>
     </div>
@@ -39,22 +39,23 @@
     @endif
     <form action="{{route('schemes.store')}}" method='post' class="flex flex-col w-full text-left mt-12">
         @csrf
-        <label for="">Choose Semester</label>
-        <select id="" name="wef_semester_id" class="input-indigo p-2">
-            @foreach($semesters as $semester)
-            <option value="{{$semester->id}}">{{$semester->semester_type->name}} {{$semester->year}}</option>
-            @endforeach
-        </select>
-        <label for="" class="mt-3">Choose Program</label>
+        <label for="">Choose Program <span class="text-sm text-red-700 ml-2">(for which scheme is being defined)</span></label>
         <select id="" name="program_id" class="input-indigo p-2">
             @foreach($programs as $program)
             <option value="{{$program->id}}">{{$program->name}} </option>
             @endforeach
         </select>
+        <label for="" class="mt-3">Choose Semester<span class="text-sm text-red-700 ml-2"> (scheme will be effective from)</span></label>
+        <select id="" name="wef_semester_id" class="input-indigo p-2">
+            @foreach($semesters as $semester)
+            <option value="{{$semester->id}}">{{$semester->semester_type->name}} {{$semester->year}}</option>
+            @endforeach
+        </select>
+
 
         <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
             <a href="{{route('schemes.index')}}" class="btn-indigo-rounded">Cancel</a>
-            <button type="submit" class="btn-indigo-rounded">Save</button>
+            <button type="submit" class="btn-indigo-rounded">Next</button>
         </div>
 
     </form>

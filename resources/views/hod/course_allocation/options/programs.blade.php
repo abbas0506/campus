@@ -53,10 +53,11 @@
                     <option value="{{$program->id}}">{{$program->name}}</option>
                     @endforeach
                 </select>
-                <label for="" class="mt-5">Section <span class="text-xs text-slate-600">(Section list will appear according to selected program)</span></label>
+                <span class="text-xs text-orange-700">*Sections and schemes will appear only after you select a program</span>
+                <label for="" class="mt-5">Section for course allocation</label>
                 <select id='section_id' name="section_id" class="input-indigo p-2"></select>
 
-                <label for="" class="mt-5">Scheme <span class="text-xs text-slate-600">(Schemes list will appear according to selected program)</span></label>
+                <label for="" class="mt-5">Scheme to apply</label>
                 <select id='scheme_id' name="scheme_id" class="input-indigo p-2"></select>
 
                 <div class="flex space-x-4 justify-end">
@@ -75,6 +76,7 @@
         function clearSelection() {
             $('#program_id').val("");
             $('#section_id').val("");
+            $('#scheme_id').val("");
         }
 
         function loadSections() {
@@ -99,11 +101,10 @@
                     $('#scheme_id').html(response.scheme_options);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert(errorThrown)
-                    // Toast.fire({
-                    //     icon: 'warning',
-                    //     title: errorThrown
-                    // });
+                    Swal.fire({
+                        icon: 'warning',
+                        title: errorThrown
+                    });
                 }
             }); //ajax end
         }

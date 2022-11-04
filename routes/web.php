@@ -16,7 +16,7 @@ use App\Http\Controllers\hod\teacherController;
 use App\Http\Controllers\hod\ResultController;
 use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
-use App\Http\Controllers\ProgramShiftController;
+// use App\Http\Controllers\ProgramShiftController;
 use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\hod\CourseAllocationOptionController;
 use App\Http\Controllers\hod\ElectiveAllocationController;
@@ -25,7 +25,7 @@ use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SectionOptionsController;
 use App\Http\Controllers\LoginOptionsController;
-use App\Http\Controllers\teacher\MyCourseRegistrationController;
+use App\Http\Controllers\teacher\RegistrationController;
 use App\Http\Controllers\teacher\MyCoursesController;
 
 /*
@@ -83,13 +83,18 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
 
+    Route::get('course_allocations/assign/teacher/{id}', [CourseAllocationController::class, 'assignTeacher']);
+    Route::patch('course-allocations/assign/teacher', [CourseAllocationController::class, 'postAssignTeacher']);
+    Route::get('course_allocations/add/optional/{id}', [CourseAllocationController::class, 'addOptional']);
+    Route::patch('course_allocations/add/optional', [CourseAllocationController::class, 'postAddOptional']);
+
     Route::resource('course-allocation-options', CourseAllocationOptionController::class)->only('index', 'store');
     Route::resource('elective-allocations', ElectiveAllocationController::class)->only('edit');
 
     Route::resource('students', StudentController::class);
     Route::resource('results', ResultController::class);
     Route::resource('enrollments', EnrollmentController::class);
-    Route::resource('program-shifts', ProgramShiftController::class)->only('show');
+    // Route::resource('program-shifts', ProgramShiftController::class)->only('show');
 
     Route::get('import-students/view', [ImportStudentsController::class, 'view']);
     Route::post('import-students', [ImportStudentsController::class, 'import']);
@@ -98,5 +103,6 @@ Route::group(['middleware' => ['role:hod']], function () {
 Route::group(['middleware' => ['role:teacher']], function () {
     Route::view('teacher', 'teacher.index');
     Route::resource('mycourses', MyCoursesController::class);
-    Route::resource('mycourse-registrations', MyCourseRegistrationController::class);
+    Route::resource('registrations', RegistrationController::class);
+    Route::post('bulk_registration', [RegistrationController::class, 'bulk_registration']);
 });

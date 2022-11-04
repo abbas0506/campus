@@ -16,25 +16,30 @@ return new class extends Migration
         Schema::create('results', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('semester_id');
-            $table->unsignedBigInteger('program_id');
-            $table->unsignedBigInteger('shift_id');
-            $table->string('section', 1);
-            $table->unsignedBigInteger('course_id');
-            $table->boolean('is_reappear');
+            $table->unsignedBigInteger('course_allocation_id');
+            $table->boolean('is_reappear')->default(0);
+            $table->unsignedInteger('assignment')->default(0);
+            $table->unsignedInteger('presentation')->default(0);
+            $table->unsignedInteger('midterm')->default(0);
+            $table->unsignedInteger('summative')->default(0);
 
-            $table->unsignedInteger('assignment');
-            $table->unsignedInteger('presentation');
-            $table->unsignedInteger('midterm');
-            $table->unsignedInteger('summative');
-            $table->unsignedBigInteger('teacher_id');
-            $table->unsignedBigInteger('internal_id');
-            $table->unsignedBigInteger('hod_id');
-            $table->date('forwaded_at');
-            $table->unsignedBigInteger('kpo_id');
-            $table->unsignedBigInteger('controller_id');
-            $table->date('approved_at');
+            $table->unsignedBigInteger('internal_id')->nullable();
+            $table->unsignedBigInteger('hod_id')->nullable();
+            $table->date('forwaded_at')->nullable();
+            $table->unsignedBigInteger('kpo_id')->nullable();
+            $table->unsignedBigInteger('controller_id')->nullable();
+            $table->date('approved_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('course_allocation_id')
+                ->references('id')
+                ->on('course_allocations')
+                ->onDelete('cascade');
+
+            $table->foreign('hod_id')
+                ->references('id')
+                ->on('teachers')
+                ->onDelete('cascade');
         });
     }
 

@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\teacher;
 
+use App\Http\Controllers\Controller;
+use App\Models\Section;
+use App\Models\Student;
 use Illuminate\Http\Request;
+use LDAP\Result;
 
-class ProgramShiftController extends Controller
+class RegistrationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,6 +39,7 @@ class ProgramShiftController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
@@ -46,7 +51,15 @@ class ProgramShiftController extends Controller
     public function show($id)
     {
         //
-        echo "program shift calleed";
+        $section = Section::find($id);
+        // $registered_student_ids = Result::where('course_allocation_id', $course_allocation->id)
+        //     ->pluck('student_id')
+        //     ->toArray();
+
+        // $registered_students = Student::whereIn('id', $registered_student_ids)->get();
+        // $unregistered_students = Student::whereNotIn('id', $registered_student_ids)->get();
+
+        return view('teacher.mycourses.register', compact('section'));
     }
 
     /**
@@ -81,5 +94,25 @@ class ProgramShiftController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function bulk_registration(Request $request)
+    {
+        $request->validate([
+            'course_allocation_id' => 'required|numeric',
+            'ids_array' => 'required',
+        ]);
+        // $course_allocation_id = $request->course_allocation_id;
+        // $ids = array();
+        // $ids = $request->ids_array;
+        // $id_str = '';
+        // if ($ids) {
+        //     foreach ($ids as $id) {
+        //         Result::create([
+        //             'student_id' => $id,
+        //             'course_allocation_id' => $course_allocation_id,
+        //         ]);
+        //     }
+        // }
+        return response()->json(['msg' => "Successful"]);
     }
 }

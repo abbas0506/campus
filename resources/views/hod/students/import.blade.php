@@ -35,7 +35,7 @@
 
         <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
             <a href="#" class="btn-indigo-rounded">Cancel</a>
-            <button type="submit" class="btn-indigo-rounded">Save</button>
+            <button type="submit" class="btn-indigo-rounded">Import</button>
         </div>
     </form>
 

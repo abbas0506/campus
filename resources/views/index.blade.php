@@ -27,7 +27,7 @@
                     <label for="hero-field" class="leading-7 text-sm text-gray-600">Password</label>
                     <input type="password" id="password" name="password" class="w-full input-indigo" placeholder="Enter your login id">
                 </div>
-                <button type="submit" class="w-full md:w-1/4 mt-4 btn-indigo">Login</button>
+                <button type="submit" class="w-full md:w-1/4 mt-4 btn-indigo p-2">Login</button>
             </div>
         </form>
     </div>
