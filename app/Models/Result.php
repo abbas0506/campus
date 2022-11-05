@@ -11,15 +11,12 @@ class Result extends Model
 
     protected $fillable = [
         'student_id',
-        'semester_id',
-        'scheme_detail_id',
-        'split_course_id',
-        'is_reapper',
+        'course_allocation_id',
+        'is_reappear',
         'assignment',
         'presentation',
         'midterm',
         'summative',
-        'teacher_id',
         'internal_id',
         'hod_id',
         'forwarded_at',
@@ -28,4 +25,12 @@ class Result extends Model
         'approved_at',
 
     ];
+    public  function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+    public  function course_allocation()
+    {
+        return $this->belongsTo(CourseAllocation::class);
+    }
 }

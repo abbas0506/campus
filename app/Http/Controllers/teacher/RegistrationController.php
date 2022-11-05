@@ -5,8 +5,9 @@ namespace App\Http\Controllers\teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Section;
 use App\Models\Student;
+use Exception;
 use Illuminate\Http\Request;
-use LDAP\Result;
+use App\Models\Result;
 
 class RegistrationController extends Controller
 {
@@ -51,15 +52,7 @@ class RegistrationController extends Controller
     public function show($id)
     {
         //
-        $section = Section::find($id);
-        // $registered_student_ids = Result::where('course_allocation_id', $course_allocation->id)
-        //     ->pluck('student_id')
-        //     ->toArray();
 
-        // $registered_students = Student::whereIn('id', $registered_student_ids)->get();
-        // $unregistered_students = Student::whereNotIn('id', $registered_student_ids)->get();
-
-        return view('teacher.mycourses.register', compact('section'));
     }
 
     /**
@@ -94,6 +87,13 @@ class RegistrationController extends Controller
     public function destroy($id)
     {
         //
+        $registration = Result::find($id);
+        try {
+            $registration->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
     }
     public function bulk_registration(Request $request)
     {
@@ -101,18 +101,21 @@ class RegistrationController extends Controller
             'course_allocation_id' => 'required|numeric',
             'ids_array' => 'required',
         ]);
-        // $course_allocation_id = $request->course_allocation_id;
-        // $ids = array();
-        // $ids = $request->ids_array;
-        // $id_str = '';
-        // if ($ids) {
-        //     foreach ($ids as $id) {
-        //         Result::create([
-        //             'student_id' => $id,
-        //             'course_allocation_id' => $course_allocation_id,
-        //         ]);
-        //     }
-        // }
-        return response()->json(['msg' => "Successful"]);
+        $course_allocation_id = $request->course_allocation_id;
+        $ids = array();
+        $ids = $request->ids_array;
+        try {
+            if ($ids) {
+                foreach ($ids as $id) {
+                    Result::create([
+                        'student_id' => $id,
+                        'course_allocation_id' => $course_allocation_id,
+                    ]);
+                }
+            }
+            return response()->json(['msg' => "Successful"]);
+        } catch (Exception $ex) {
+            return response()->json(['msg' => $ex->getMessage()]);
+        }
     }
 }

@@ -31,7 +31,7 @@
                 <div class="font-bold text-green-800 text-center mb-2">
                     {{$course_allocation->course->name}}
                 </div>
-                <h1 class="text-4xl text-center atext-gray-600">{{$section->students->count()}}</h1>
+                <h1 class="text-4xl text-center atext-gray-600">{{$course_allocation->results->count()}}</h1>
             </div>
 
         </div>

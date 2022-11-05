@@ -63,18 +63,19 @@ class MyCoursesController extends Controller
         $section = Section::find($course_allocation->section_id);
 
         //get registered students 
-        $registered_student_ids = Result::where('course_allocation_id', $course_allocation->id)
-            ->pluck('student_id')
-            ->toArray();
+        $registrations = $course_allocation->results;
+        $registered_student_ids = $registrations->pluck('student_id')->toArray();
+        // $registered_student_ids = Result::where('course_allocation_id', $course_allocation->id)
+        //     ->pluck('student_id')
+        //     ->toArray();
 
-        $registered_students = Student::whereIn('id', $registered_student_ids)->get();
         $unregistered_students = Student::whereNotIn('id', $registered_student_ids)->get();
 
 
         //get not notregistered students
         //get reappear students
 
-        return view('teacher.mycourses.show', compact('course_allocation', 'registered_students', 'unregistered_students'));
+        return view('teacher.mycourses.show', compact('registrations', 'course_allocation', 'unregistered_students'));
     }
 
     /**
@@ -109,5 +110,6 @@ class MyCoursesController extends Controller
     public function destroy($id)
     {
         //
+
     }
 }

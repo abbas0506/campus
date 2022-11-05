@@ -1,6 +1,6 @@
 @extends('layouts.teacher')
 @section('page-content')
-<h1 class="mt-5">Course Registration</h1>
+<h1 class="mt-5">Course Result</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">My Courses </a> / {{$course_allocation->course->name}} / students
@@ -56,7 +56,7 @@
     <!-- registered students -->
     <section id='registered' class="mt-16">
         <div class="flex">
-            <a href="{{route('results.index')}}" class="px-5 py-2 bg-teal-600 text-slate-100">
+            <a href="{{url('registrations')}}" class="px-5 py-2 bg-teal-600 text-slate-100">
                 Start Feeding Result <span class="ml-2">(</span><span id='chkCount' class="mx-1">{{$registrations->count()}}</span>)
             </a>
         </div>

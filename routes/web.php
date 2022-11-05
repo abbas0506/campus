@@ -64,14 +64,11 @@ Route::group(['middleware' => ['role:admin']], function () {
 });
 Route::group(['middleware' => ['role:controller']], function () {
     Route::view('controller', 'controller.index');
-    // Route::resource('exams', ExamController::class);
 });
 
 Route::group(['middleware' => ['role:hod']], function () {
     Route::view('hod', 'hod.index');
     Route::resource('programs', ProgramController::class);
-    // Route::resource('classes', ClassController::class);
-    // Route::resource('class-options', ClassOptionsController::class);
     Route::resource('sections', SectionController::class);
     Route::resource('section-options', SectionOptionsController::class);
     Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
@@ -94,8 +91,6 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('students', StudentController::class);
     Route::resource('results', ResultController::class);
     Route::resource('enrollments', EnrollmentController::class);
-    // Route::resource('program-shifts', ProgramShiftController::class)->only('show');
-
     Route::get('import-students/view', [ImportStudentsController::class, 'view']);
     Route::post('import-students', [ImportStudentsController::class, 'import']);
 });

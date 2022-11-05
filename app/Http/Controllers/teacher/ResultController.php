@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\Section;
 use Illuminate\Http\Request;
 
-class MyCourseRegistrationController extends Controller
+class ResultController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -48,7 +47,6 @@ class MyCourseRegistrationController extends Controller
     public function show($id)
     {
         //
-
     }
 
     /**
