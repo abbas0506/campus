@@ -1,4 +1,6 @@
 @extends('layouts.teacher')
 @section('page-content')
-<div class="w-full h-96 flex justify-center items-center text-4xl">Under Construction</div>
+<div class="container px-8">
+    <h1 class="text-indigo-500 text-xl py-12">Teacher Dashboard</h1>
+</div>
 @endsection

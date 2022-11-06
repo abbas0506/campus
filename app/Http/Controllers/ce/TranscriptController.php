@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\hod;
+namespace App\Http\Controllers\ce;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ResultController extends Controller
+class TranscriptController extends Controller
 {
     /**
      * Display a listing of the resource.

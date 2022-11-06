@@ -37,4 +37,8 @@ class CourseAllocation extends Model
     {
         return $this->hasMany(Result::class);
     }
+    public function registrations()
+    {
+        return $this->hasMany(Result::class); //returns registrations
+    }
 }

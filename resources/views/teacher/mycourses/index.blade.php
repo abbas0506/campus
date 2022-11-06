@@ -21,7 +21,7 @@
     @foreach($sections as $section)
     @foreach($teacher->course_allocations->where('section_id',$section->id) as $course_allocation)
     <a href="{{route('mycourses.show',$course_allocation->id)}}" class="flex flex-col w-1/3 p-5">
-        <div class="flex flex-col bg-green-200 p-4 rounded">
+        <div class="flex flex-col bg-green-100 p-4 rounded">
             <div class="flex justify-center items-center text-green-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.5" stroke="currentColor" class="w-12 h-12">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
@@ -31,7 +31,7 @@
                 <div class="font-bold text-green-800 text-center mb-2">
                     {{$course_allocation->course->name}}
                 </div>
-                <h1 class="text-4xl text-center atext-gray-600">{{$course_allocation->results->count()}}</h1>
+                <h1 class="text-4xl text-center text-green-800">{{$course_allocation->results->count()}}</h1>
             </div>
 
         </div>
@@ -44,41 +44,5 @@
     @endforeach
 </div>
 </div>
-
-<script type="text/javascript">
-    function delme(formid) {
-
-        event.preventDefault();
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.value) {
-                //submit corresponding form
-                $('#del_form' + formid).submit();
-            }
-        });
-    }
-
-    function search(event) {
-        var searchtext = event.target.value.toLowerCase();
-        var str = 0;
-        $('.tr').each(function() {
-            if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
-                )) {
-                $(this).addClass('hidden');
-            } else {
-                $(this).removeClass('hidden');
-            }
-        });
-    }
-</script>
 
 @endsection

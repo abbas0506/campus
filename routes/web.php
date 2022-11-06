@@ -13,7 +13,6 @@ use App\Http\Controllers\hod\CourseAllocationController;
 use App\Http\Controllers\Hod\ProgramController;
 use App\Http\Controllers\Hod\CourseController;
 use App\Http\Controllers\hod\teacherController;
-use App\Http\Controllers\hod\ResultController;
 use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
 // use App\Http\Controllers\ProgramShiftController;
@@ -27,6 +26,7 @@ use App\Http\Controllers\hod\SectionOptionsController;
 use App\Http\Controllers\LoginOptionsController;
 use App\Http\Controllers\teacher\RegistrationController;
 use App\Http\Controllers\teacher\MyCoursesController;
+use App\Http\Controllers\teacher\ResultController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,5 +99,5 @@ Route::group(['middleware' => ['role:teacher']], function () {
     Route::view('teacher', 'teacher.index');
     Route::resource('mycourses', MyCoursesController::class);
     Route::resource('registrations', RegistrationController::class);
-    Route::post('bulk_registration', [RegistrationController::class, 'bulk_registration']);
+    Route::resource('results', ResultController::class);
 });

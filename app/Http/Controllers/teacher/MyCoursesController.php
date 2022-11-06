@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\teacher;
 
-use App\Http\Controllers\Controller;
-use App\Models\Course;
-use App\Models\CourseAllocation;
-use App\Models\ElectiveCourseAllocation;
-use App\Models\Section;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Result;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\CourseAllocation;
+use App\Models\Section;
 use App\Models\Student;
 
 class MyCoursesController extends Controller
@@ -60,22 +57,17 @@ class MyCoursesController extends Controller
     {
         //
         $course_allocation = CourseAllocation::find($id);
-        $section = Section::find($course_allocation->section_id);
 
         //get registered students 
         $registrations = $course_allocation->results;
         $registered_student_ids = $registrations->pluck('student_id')->toArray();
-        // $registered_student_ids = Result::where('course_allocation_id', $course_allocation->id)
-        //     ->pluck('student_id')
-        //     ->toArray();
-
-        $unregistered_students = Student::whereNotIn('id', $registered_student_ids)->get();
-
 
         //get not notregistered students
+        $unregistered = Student::whereNotIn('id', $registered_student_ids)->get();
+
         //get reappear students
 
-        return view('teacher.mycourses.show', compact('registrations', 'course_allocation', 'unregistered_students'));
+        return view('teacher.mycourses.show', compact('course_allocation', 'registrations', 'unregistered'));
     }
 
     /**

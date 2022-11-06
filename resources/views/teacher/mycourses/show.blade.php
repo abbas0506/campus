@@ -55,12 +55,13 @@
 
     <!-- registered students -->
     <section id='registered' class="mt-16">
+        @if($registrations->count()>0)
         <div class="flex">
-            <a href="{{route('results.index')}}" class="px-5 py-2 bg-teal-600 text-slate-100">
-                Start Feeding Result <span class="ml-2">(</span><span id='chkCount' class="mx-1">{{$registrations->count()}}</span>)
+            <a href="{{route('results.edit', $course_allocation)}}" class="px-5 py-2 bg-teal-600 text-slate-100">
+                Start Feeding Result <span class="ml-2">(</span><span class="mx-1">{{$registrations->count()}}</span>)
             </a>
         </div>
-
+        @endif
         <table class="table-auto w-full mt-8">
             <thead>
                 <tr class="border-b border-slate-200">
@@ -118,7 +119,7 @@
     <section id='unregistered' class='hidden'>
 
         <button class="flex px-5 py-2 bg-teal-600 text-slate-100 mt-16" onclick="registerNow()">
-            Register Now <span class="ml-2">(</span><span id='chkCount' class="mx-1">0</span> out of {{$unregistered_students->count()}})
+            Register Now <span class="ml-2">(</span><span id='chkCount' class="mx-1">0</span> out of {{$unregistered->count()}})
         </button>
 
         <table class="table-auto w-full mt-8">
@@ -130,8 +131,7 @@
                 </tr>
             </thead>
             <tbody>
-                @php $sr=$unregistered_students->count();@endphp
-                @foreach($unregistered_students as $student)
+                @foreach($unregistered as $student)
                 <tr class="tr border-b ">
                     <td class="py-2 text-slate-600 text-sm"><input type="checkbox" name='chk' value='{{$student->id}}' onclick="updateChkCount()"></td>
                     <td class="py-2">
@@ -213,17 +213,18 @@
         $('.tr').each(function() {
             if (!$(this).hasClass('hidden'))
                 $(this).children().find('input[type=checkbox]').prop('checked', $('#chkAll').is(':checked'));
-            updateChkCount()
+
         });
+        updateChkCount()
     }
 
     function updateChkCount() {
+
         var chkArray = [];
         var chks = document.getElementsByName('chk');
         chks.forEach((chk) => {
             if (chk.checked) chkArray.push(chk.value);
         })
-
         document.getElementById("chkCount").innerHTML = chkArray.length;
     }
 
@@ -252,12 +253,12 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, register now '
+                confirmButtonText: 'Yes, register now'
             }).then((result) => { //if confirmed    
                 if (result.value) {
                     $.ajax({
                         type: 'POST',
-                        url: "{{url('bulk_registration')}}",
+                        url: "{{route('registrations.store')}}",
                         data: {
                             "course_allocation_id": course_allocation_id,
                             "ids_array": ids_array,

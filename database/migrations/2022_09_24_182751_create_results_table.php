@@ -18,10 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('course_allocation_id');
             $table->boolean('is_reappear')->default(0);
-            $table->unsignedInteger('assignment')->default(0);
-            $table->unsignedInteger('presentation')->default(0);
-            $table->unsignedInteger('midterm')->default(0);
-            $table->unsignedInteger('summative')->default(0);
+            $table->unsignedInteger('assignment')->nullable()->default(0);
+            $table->unsignedInteger('presentation')->nullable()->default(0);
+            $table->unsignedInteger('midterm')->nullable()->default(0);
+            $table->unsignedInteger('summative')->nullable()->default(0);
 
             $table->unsignedBigInteger('internal_id')->nullable();
             $table->unsignedBigInteger('hod_id')->nullable();

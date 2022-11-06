@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\Section;
-use App\Models\Student;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Result;
@@ -40,7 +38,26 @@ class RegistrationController extends Controller
     public function store(Request $request)
     {
         //
-
+        $request->validate([
+            'course_allocation_id' => 'required|numeric',
+            'ids_array' => 'required',
+        ]);
+        $course_allocation_id = $request->course_allocation_id;
+        $ids = array();
+        $ids = $request->ids_array;
+        try {
+            if ($ids) {
+                foreach ($ids as $id) {
+                    Result::create([
+                        'student_id' => $id,
+                        'course_allocation_id' => $course_allocation_id,
+                    ]);
+                }
+            }
+            return response()->json(['msg' => "Successful"]);
+        } catch (Exception $ex) {
+            return response()->json(['msg' => $ex->getMessage()]);
+        }
     }
 
     /**
@@ -93,29 +110,6 @@ class RegistrationController extends Controller
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $ex) {
             echo $ex->getMessage();
-        }
-    }
-    public function bulk_registration(Request $request)
-    {
-        $request->validate([
-            'course_allocation_id' => 'required|numeric',
-            'ids_array' => 'required',
-        ]);
-        $course_allocation_id = $request->course_allocation_id;
-        $ids = array();
-        $ids = $request->ids_array;
-        try {
-            if ($ids) {
-                foreach ($ids as $id) {
-                    Result::create([
-                        'student_id' => $id,
-                        'course_allocation_id' => $course_allocation_id,
-                    ]);
-                }
-            }
-            return response()->json(['msg' => "Successful"]);
-        } catch (Exception $ex) {
-            return response()->json(['msg' => $ex->getMessage()]);
         }
     }
 }
