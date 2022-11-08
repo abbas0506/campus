@@ -38,12 +38,13 @@ class Student extends Model
     {
         return $this->belongsTo(Section::class);
     }
-    public function clas()
-    {
-        return $this->section->clas;
-    }
+
     public function program()
     {
-        return $this->section->clas->program;
+        return $this->section->program;
+    }
+    public function results()
+    {
+        return $this->hasMany(Result::class);
     }
 }

@@ -17,6 +17,7 @@ use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
 // use App\Http\Controllers\ProgramShiftController;
 use App\Http\Controllers\Admin\SemesterController;
+use App\Http\Controllers\ce\TranscriptController;
 use App\Http\Controllers\hod\CourseAllocationOptionController;
 use App\Http\Controllers\hod\ElectiveAllocationController;
 use App\Http\Controllers\hod\ImportStudentsController;
@@ -63,7 +64,9 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('departmenthods', DepartmentHodController::class);
 });
 Route::group(['middleware' => ['role:controller']], function () {
-    Route::view('controller', 'controller.index');
+    Route::view('controller', 'ce.index');
+    Route::resource('transcripts', TranscriptController::class);
+    Route::get('transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
 });
 
 Route::group(['middleware' => ['role:hod']], function () {

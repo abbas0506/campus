@@ -100,7 +100,7 @@
         </div>
     </aside>
 
-    <div class="w-full md:w-4/5 md:ml-auto p-5 md:mr-8 text-slate-600">
+    <div class="w-full md:w-3/4 md:ml-auto p-5 md:mr-8 text-slate-600">
         @yield('page-content')
     </div>
 
