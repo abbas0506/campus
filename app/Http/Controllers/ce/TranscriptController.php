@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
 use App\Models\Student;
 use Exception;
-// use Barryvdh\DomPDF\Facade as PDF;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+// use PDF;
 use Illuminate\Http\Request;
 use App\Models\Result;
 
@@ -58,10 +58,11 @@ class TranscriptController extends Controller
             ->get();
         $semester_nos = array_unique($results->pluck('semester_no')->toArray());
 
-        // return view('ce.transcripts.show', compact('student', 'results', 'semester_nos'));
-        $pdf = PDF::loadView('ce.transcripts.show', compact('student', 'results', 'semester_nos'))->setPaper('a4', 'portrait');
-        $pdf->output();
+        // return view('ce.transcripts.pdf', compact('student', 'results', 'semester_nos'));
+        $pdf = PDF::loadView('ce.transcripts.pdf', compact('student', 'results', 'semester_nos'))->setPaper('a4', 'portrait');
+
+        // $pdf->output();
         return $pdf->stream();
-        return $pdf->setPaper('a4')->stream();
+        // return $pdf->setPaper('a4')->stream();
     }
 }

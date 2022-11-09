@@ -18,7 +18,7 @@
 <div class="container w-full mx-auto mt-8">
     <section id='registered' class="">
         <div class="flex justify-end border-b pb-4">
-            <a href="{{url('transcripts/pdf', $student)}}" class="px-8 py-2 bg-teal-600 text-slate-100">
+            <a href="{{url('transcripts/pdf', $student)}}" class="px-8 py-2 bg-teal-600 text-slate-100" target="_blank">
                 Print
             </a>
         </div>
