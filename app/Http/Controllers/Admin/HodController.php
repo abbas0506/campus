@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Exception;
 
-class DepartmentHodController extends Controller
+class HodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,7 +36,7 @@ class DepartmentHodController extends Controller
     {
         //
         $departments = Department::all();
-        $selected_department = session('selected_department');
+        $selected_department = Department::find(session('department_id'));
         return view('admin.hods.create', compact('selected_department', 'departments'));
     }
 
@@ -81,11 +81,10 @@ class DepartmentHodController extends Controller
             ]);
 
             DB::commit();
-            return redirect('departmenthods')->with('success', 'Successfully created');
+            return redirect('departments')->with('success', 'Successfully created');
         } catch (Exception $ex) {
             DB::rollBack();
-            return redirect()->back()
-                ->withErrors($ex->getMessage());
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 
@@ -106,16 +105,16 @@ class DepartmentHodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($department_id)
     {
         //
         $teachers = Teacher::all();
-        $departments = Department::all();
-        $selected_department = Department::find($id);
+        $departments = Department::all();   //to filter by department
         session([
-            'selected_department' => $selected_department
+            'department_id' => $department_id,
         ]);
 
+        $selected_department = Department::find($department_id);
         return view('admin.hods.edit', compact('departments', 'teachers', 'selected_department'));
     }
 
@@ -128,40 +127,37 @@ class DepartmentHodController extends Controller
      */
     public function update(Request $request, $teacher_id)
     {
+        DB::beginTransaction();
         try {
-            $department = session('selected_department');
-
+            $department_id = session('department_id');
+            $department = Department::find($department_id);
+            echo $department->hod;
             if ($department->hod) {
                 //department hod exists, just update eixsting
                 $hod = $department->hod;
+                $hod->teacher->user->removeRole('hod');
                 $hod->teacher_id = $teacher_id;
                 $hod->update();
-                return redirect('departmenthods')->with('success', 'Successfully replaced');
+
+                //assign role
+                $department = Department::find($department_id);
+                $department->hod->teacher->user->assignRole('hod');
+                DB::commit();
+                return redirect('hods')->with('success', 'Successfully replaced');
             } else {
-                Hod::create([
+                $hod = Hod::create([
                     'teacher_id' => $teacher_id,
                     'department_id' => $department->id,
                 ]);
-                return redirect('departmenthods')->with('success', 'Successfully assigned');
+                //assign role
+                $hod->teacher->user->assignRole('hod');
+                DB::commit();
+                return redirect('departments')->with('success', 'Successfully assigned');
             }
         } catch (Exception $ex) {
-            return redirect()->back()
-                ->withErrors($ex->getMessage());
+            DB::rollBack();
+            return redirect()->back()->withErrors($ex->getMessage());
         }
-        // $request->validate([
-        //     'user_id' => 'required|numeric',
-        // ]);
-        // $request->mer
-        // try {
-        //     $department = Department::findOrFail($request->id);
-        //     $department->user_id = $request->user_id;
-        //     $department->save();
-        //     // $department->update($request->all());
-        //     return redirect('hods')->with('success', 'Successfully assigned');
-        // } catch (Exception $ex) {
-        //     return redirect()->back()
-        //         ->withErrors([$ex->getMessage()]);
-        // }
     }
 
     /**
@@ -176,22 +172,12 @@ class DepartmentHodController extends Controller
 
         try {
             $department = Department::find($id);
+            $department->hod->teacher->user->removeRole('hod');
             $department->hod->delete();
-            return redirect('departmenthods')->with('success', 'Successfully removed');
+            return redirect('departments')->with('success', 'Successfully removed');
         } catch (Exception $ex) {
             return redirect()->back()
                 ->withErrors($ex->getMessage());
         }
     }
-
-    // public function viewAssignHod(Request $request, $id)
-    // {
-    //     $teachers = Teacher::all();
-    //     $departments = Department::all();
-    //     $selected_department = Department::find($id);
-
-    //     $request->session()->put('selected_department', $selected_department);
-
-    //     return view('admin.hods.assign', compact('departments', 'teachers', 'selected_department'));
-    // }
 }

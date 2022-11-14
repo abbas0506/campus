@@ -60,11 +60,15 @@
         @apply flex items-center w-screen fixed top-0 z-10 bg-white text-slate-700 shadow;
     }
     header .current-user-dropdown {
-        @apply flex flex-col absolute w-full top-12 right-8 z-20 bg-white font-thin drop-shadow-xl hidden;
+        @apply flex flex-col absolute w-48 top-12 right-8 z-20 bg-white font-thin drop-shadow-xl hidden;
     }
+    header .current-user-dropdown a:hover {
+        @apply text-orange-700;
+    }
+
     /* sidebar */
     aside {
-        @apply fixed top-20 hidden md:flex w-48 h-full overflow-auto bg-slate-50 text-slate-600 font-thin drop-shadow-2xl z-30;
+        @apply fixed top-20 hidden md:flex flex-col w-48 h-full overflow-auto bg-slate-50 text-slate-600 font-thin drop-shadow-2xl z-30;
     }
     aside li:hover {
         @apply text-orange-500;
@@ -72,5 +76,8 @@
 
     .bread-crumb {
         @apply flex items-center space-x-4 text-sm italic;
+    }
+    .bread-crumb a {
+        @apply text-orange-700 mr-1;
     }
 }

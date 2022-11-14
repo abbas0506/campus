@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use App\Models\Designation;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Models\UserDepartment;
@@ -34,8 +35,9 @@ class UserController extends Controller
     public function create()
     {
         //
-        $departments = Department::where('id', '>', 3)->get();
-        return view('admin.users.create', compact('departments'));
+        $departments = Department::all();
+        $designations = Designation::all();
+        return view('admin.users.create', compact('departments', 'designations'));
     }
 
     /**
@@ -64,12 +66,14 @@ class UserController extends Controller
             ]);
 
             $user->save();
+            $user->assignRole(['teacher']);
 
             Teacher::create(
                 [
                     'user_id' => $user->id,
-                    'department_id' => $request->department_id,
+                    'phone' => $request->phone,
                     'cnic' => $request->cnic,
+                    'department_id' => $request->department_id,
                 ]
             );
             DB::commit();
@@ -102,7 +106,8 @@ class UserController extends Controller
     {
         //
         $user = User::findOrFail($id);
-        return view('admin.users.edit', compact('user'));
+        $designations = Designation::all();
+        return view('admin.users.edit', compact('user', 'designations'));
     }
 
     /**
@@ -130,6 +135,7 @@ class UserController extends Controller
 
             $teacher = Teacher::find($user->teacher->id);
             $teacher->cnic = $request->cnic;
+            $teacher->phone = $request->phone;
             $teacher->save();
 
             return redirect('users')->with('success', 'Successfully updated');;

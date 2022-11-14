@@ -4,10 +4,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\AuthController; //my authcontroller
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\Admin\DepartmentController;
-use App\Http\Controllers\Admin\DepartmentHodController;
+use App\Http\Controllers\admin\DepartmentController;
+use App\Http\Controllers\admin\HodController;
 use App\Http\Controllers\hod\EnrollmentController;
 use App\Http\Controllers\hod\CourseAllocationController;
 use App\Http\Controllers\Hod\ProgramController;
@@ -15,15 +15,13 @@ use App\Http\Controllers\Hod\CourseController;
 use App\Http\Controllers\hod\teacherController;
 use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
-// use App\Http\Controllers\ProgramShiftController;
-use App\Http\Controllers\Admin\SemesterController;
+use App\Http\Controllers\admin\SemesterController;
 use App\Http\Controllers\ce\TranscriptController;
 use App\Http\Controllers\hod\CourseAllocationOptionController;
 use App\Http\Controllers\hod\ElectiveAllocationController;
 use App\Http\Controllers\hod\ImportStudentsController;
 use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
-use App\Http\Controllers\hod\SectionOptionsController;
 use App\Http\Controllers\LoginOptionsController;
 use App\Http\Controllers\teacher\RegistrationController;
 use App\Http\Controllers\teacher\MyCoursesController;
@@ -51,7 +49,6 @@ Route::get('/', function () {
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::resource('login-options', LoginOptionsController::class)->only('index', 'store');
-Route::resource('section-options', SectionOptionsController::class)->only('index', 'store');
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
 
@@ -61,7 +58,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
-    Route::resource('departmenthods', DepartmentHodController::class);
+    Route::resource('hods', HodController::class);
 });
 Route::group(['middleware' => ['role:controller']], function () {
     Route::view('controller', 'ce.index');
@@ -73,10 +70,8 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::view('hod', 'hod.index');
     Route::resource('programs', ProgramController::class);
     Route::resource('sections', SectionController::class);
-    Route::resource('section-options', SectionOptionsController::class);
     Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
-
-    Route::post('fetchSectionsByProgramId', [SectionController::class, 'fetchSectionsByProgramId'])->name('fetchSectionsByProgramId');
+    Route::post('fetchSectionsByProgramId', [SectionController::class, 'fetchSectionsByProgramId'])->name('fetchSectionsByProgramId'); //for ajax call
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', teacherController::class);
     Route::resource('schemes', SchemeController::class);

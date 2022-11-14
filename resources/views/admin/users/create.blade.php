@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('page-content')
-<div class="container px-8">
-    <div class="flex items-center">
-        <h1 class="text-indigo-500 text-xl py-12">
-            <a href="{{route('users.index')}}">Users</a>
-            <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>New</span>
-        </h1>
+<h1 class="mt-5">Users</h1>
+<div class="flex items-center justify-between flex-wrap">
+    <div class="bread-crumb">
+        <a href="{{route('users.index')}}">Users</a> / create
     </div>
+</div>
 
+<div class="md:w-3/4 mx-auto px-5">
     @if ($errors->any())
-    <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
+    <div class="alert-danger mt-8">
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -18,25 +18,52 @@
     </div>
     @endif
 
-    <form action="{{route('users.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
+    <form action="{{route('users.store')}}" method='post' class="flex flex-col w-full mt-12">
         @csrf
-        <label for="">Name</label>
-        <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">
+        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
+            <div class="flex flex-col flex-1 mt-3">
+                <label for="">Full Name</label>
+                <input type="text" id='' name='name' class="input-indigo" placeholder="Dr. Sajjad Ahmad">
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
+            <div class="flex flex-col flex-1 md:mr-4 mt-3">
+                <label for="">Designation</label>
+                <select id="" name="designation_id" class="input-indigo p-2">
+                    @foreach($designations as $designation)
+                    <option value="{{$designation->id}}">{{$designation->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="flex flex-col flex-1 mt-3">
+                <label for="">CNIC <span class="text-xs">: 3530112345671</span></label>
+                <input type="text" id='' name='cnic' class="input-indigo" placeholder="Without dashes">
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
+            <div class="flex flex-col flex-1 md:mr-4 mt-3">
+                <label for="">Phone <span class="text-xs">: 03001234567</span></label>
+                <input type="text" id='' name='phone' class="input-indigo" placeholder="Without dash">
+            </div>
+            <div class="flex flex-col flex-1 mt-3">
+                <label for="">Email</label>
+                <input type="text" id='' name='email' class="input-indigo" placeholder="abc@uo.edu.pk">
+            </div>
+        </div>
 
-        <label for="" class='mt-3'>Email</label>
-        <input type="text" id='email' name='email' class="input-indigo" placeholder="Enter email address">
-
-        <label for="" class='mt-3'>CNIC <span class="ml-1">( xxxxx-xxxxxxx-x )</span></label>
-        <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Enter CNIC">
-
-        <label for="">Filter</label>
+        <label for="" class="mt-3">Department</label>
         <select name="department_id" id='' class="input-indigo p-2">
             <option value="">Click here</option>
             @foreach($departments as $department)
             <option value="{{$department->id}}">{{$department->name}}</option>
             @endforeach
         </select>
-        <button type="submit" class="btn-indigo mt-4">Save</button>
+
+        <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
+            <a href="{{route('users.index')}}" class="btn-indigo-rounded">Cancel</a>
+            <button type="submit" class="btn-indigo-rounded">Save</button>
+        </div>
+
     </form>
 
 </div>

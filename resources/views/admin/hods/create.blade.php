@@ -10,7 +10,7 @@
             <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>Create</span>
         </h1>
     </div>
-    <div class="mb-4 text-lg">{{session('selected_department')->name}}</div>
+    <div class="mb-4 text-lg">{{$selected_department->name}}</div>
 
     @if ($errors->any())
     <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
@@ -23,7 +23,7 @@
 
     @endif
 
-    <form action="{{route('departmenthods.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
+    <form action="{{route('hods.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
         <label for="">Name</label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">

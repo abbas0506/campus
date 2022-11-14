@@ -3,7 +3,7 @@
 <h1 class="mt-5">Sections</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{url('choose-program')}}" class="text-orange-700 mx-1"> Choose semester </a> / {{$semester->title()}} / sections / new
+        {{$semester->title()}} / sections / new
     </div>
 </div>
 

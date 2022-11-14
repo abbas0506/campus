@@ -4,7 +4,7 @@
 
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{url('choose-program')}}" class="text-orange-700 mx-1"> Choose semester </a> / {{$semester->title()}} / sections
+        {{$semester->title()}} / sections / all
     </div>
     <div class="relative ml-0 md:ml-20">
         <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">

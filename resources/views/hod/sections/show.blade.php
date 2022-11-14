@@ -3,7 +3,7 @@
 <h1 class="mt-5">Students</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="#" class="text-orange-700 mx-1"> Choose semester </a> / {{$section->title()}} / students
+        {{$section->title()}} / students
     </div>
 </div>
 
