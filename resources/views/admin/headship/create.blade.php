@@ -23,7 +23,7 @@
 
     @endif
 
-    <form action="{{route('hods.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
+    <form action="{{route('headship.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
         @csrf
         <label for="">Name</label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">

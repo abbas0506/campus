@@ -51,7 +51,7 @@ class LoginOptionsController extends Controller
             if (Auth::user()->hasAnyRole(['hod', 'teacher'])) {
                 session([
                     'semester_id' => $request->semester_id,
-                    'department_id' => Auth::user()->teacher->department_id,
+                    'department_id' => Auth::user()->department_id,
                 ]);
             } else {
                 session([

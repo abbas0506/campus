@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <input type="text" name='department_id' value="{{Auth::user()->teacher->department_id}}" hidden>
+        <input type="text" name='department_id' value="{{Auth::user()->department_id}}" hidden>
         <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
             <a href="{{route('programs.index')}}" class="btn-indigo-rounded">Cancel</a>
             <button type="submit" class="btn-indigo-rounded">Save</button>

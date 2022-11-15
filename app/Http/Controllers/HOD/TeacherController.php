@@ -23,7 +23,7 @@ class TeacherController extends Controller
     public function index()
     {
         //
-        $teachers = Teacher::where('department_id', Auth::user()->teacher->department_id)->get();
+        $teachers = Teacher::where('department_id', Auth::user()->department_id)->get();
         return view('hod.teachers.index', compact('teachers'));
     }
 
@@ -76,7 +76,7 @@ class TeacherController extends Controller
                     'designation_id' => $request->designation_id,
                     'phone' => $request->phone,
                     'cnic' => $request->cnic,
-                    'department_id' => Auth::user()->teacher->department_id,
+                    'department_id' => Auth::user()->department_id,
 
                 ]
             );

@@ -7,7 +7,7 @@ use App\Http\Controllers\AuthController; //my authcontroller
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\admin\DepartmentController;
-use App\Http\Controllers\admin\HodController;
+use App\Http\Controllers\admin\HeadshipController;
 use App\Http\Controllers\hod\EnrollmentController;
 use App\Http\Controllers\hod\CourseAllocationController;
 use App\Http\Controllers\Hod\ProgramController;
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
-    Route::resource('hods', HodController::class);
+    Route::resource('headship', HeadshipController::class);
 });
 Route::group(['middleware' => ['role:controller']], function () {
     Route::view('controller', 'ce.index');

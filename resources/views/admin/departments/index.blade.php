@@ -68,13 +68,13 @@
                     </div>
                 </td>
                 <td class="py-2">
-                    @if($department->hod)
-                    <div class="">{{$department->hod->teacher->user->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$department->hod->teacher->department->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$department->hod->teacher->user->email}}</div>
+                    @if($department->headship)
+                    <div class="">{{$department->headship->user->name}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$department->headship->department->name}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$department->headship->user->email}}</div>
                     @else
                     <div class="flex items-center py-2">
-                        <a href="{{route('hods.edit', $department->id)}}">
+                        <a href="{{route('headship.edit', $department->id)}}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-indigo-600">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
                             </svg>
@@ -84,15 +84,15 @@
                     @endif
                 </td>
                 <td class="py-2 flex flex-col justify-center items-center">
-                    @if($department->hod)
+                    @if($department->headship)
 
-                    <a href="{{route('hods.edit',$department)}}" class="flex items-center p-1 rounded bg-blue-100  hover:bg-blue-300 text-blue-900">
+                    <a href="{{route('headship.edit',$department)}}" class="flex items-center p-1 rounded bg-blue-100  hover:bg-blue-300 text-blue-900">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
                         </svg>
                     </a>
 
-                    <form action="{{route('hods.destroy',$department)}}" method="POST" id='del_form{{$department->id}}' class="mt-1 flex justify-center">
+                    <form action="{{route('headship.destroy',$department)}}" method="POST" id='del_form{{$department->id}}' class="mt-1 flex justify-center">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="flex items-center p-1 rounded bg-red-100 hover:bg-red-200 text-red-900" onclick="delme('{{$department->id}}')">

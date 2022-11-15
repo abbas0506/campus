@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Models\Headship;
+use App\Models\User;
+use Exception;
+use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Department;
-use App\Models\Teacher;
-use App\Models\Hod;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Exception;
-
-class HodController extends Controller
+class HeadshipController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +23,7 @@ class HodController extends Controller
     {
         //
         $departments = Department::all();
-        return view('admin.hods.index', compact('departments'));
+        return view('admin.headship.index', compact('departments'));
     }
 
     /**
@@ -37,7 +36,7 @@ class HodController extends Controller
         //
         $departments = Department::all();
         $selected_department = Department::find(session('department_id'));
-        return view('admin.hods.create', compact('selected_department', 'departments'));
+        return view('admin.headship.create', compact('selected_department', 'departments'));
     }
 
     /**
@@ -62,21 +61,15 @@ class HodController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make('password'),
+                'cnic' => $request->cnic,
+                'department_id' => $department->id,
             ]);
 
             $user->save();
             $user->assignRole('hod');
 
-            $teacher = Teacher::create(
-                [
-                    'user_id' => $user->id,
-                    'department_id' => $department->id,
-                    'cnic' => $request->cnic,
-                ]
-            );
-
-            Hod::create([
-                'teacher_id' => $teacher->id,
+            Headship::create([
+                'user_id' => $user->id,
                 'department_id' => $department->id,
             ]);
 
@@ -91,10 +84,10 @@ class HodController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Headship  $headship
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Headship $headship)
     {
         //
     }
@@ -102,55 +95,56 @@ class HodController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Headship  $headship
      * @return \Illuminate\Http\Response
      */
     public function edit($department_id)
     {
         //
-        $teachers = Teacher::all();
+        $users = User::all();
         $departments = Department::all();   //to filter by department
         session([
             'department_id' => $department_id,
         ]);
 
         $selected_department = Department::find($department_id);
-        return view('admin.hods.edit', compact('departments', 'teachers', 'selected_department'));
+        return view('admin.headship.edit', compact('departments', 'users', 'selected_department'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Headship  $headship
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $teacher_id)
+    public function update(Request $request, $user_id)
     {
+        //
         DB::beginTransaction();
         try {
             $department_id = session('department_id');
             $department = Department::find($department_id);
-            echo $department->hod;
-            if ($department->hod) {
+            if ($department->headship) {
                 //department hod exists, just update eixsting
-                $hod = $department->hod;
-                $hod->teacher->user->removeRole('hod');
-                $hod->teacher_id = $teacher_id;
-                $hod->update();
+                $headship = $department->headship;
+                $headship->user->removeRole('hod');
+                $headship->user_id = $user_id;
+                $headship->update();
 
                 //assign role
                 $department = Department::find($department_id);
-                $department->hod->teacher->user->assignRole('hod');
+                $department->headship->user->assignRole('hod');
                 DB::commit();
-                return redirect('hods')->with('success', 'Successfully replaced');
+                return redirect('departments')->with('success', 'Successfully replaced');
             } else {
-                $hod = Hod::create([
-                    'teacher_id' => $teacher_id,
+                $headship = Headship::create([
                     'department_id' => $department->id,
+                    'user_id' => $user_id,
+
                 ]);
                 //assign role
-                $hod->teacher->user->assignRole('hod');
+                $headship->user->assignRole('hod');
                 DB::commit();
                 return redirect('departments')->with('success', 'Successfully assigned');
             }
@@ -163,17 +157,16 @@ class HodController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Headship  $headship
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-
         try {
             $department = Department::find($id);
-            $department->hod->teacher->user->removeRole('hod');
-            $department->hod->delete();
+            $department->headship->user->removeRole('hod');
+            $department->headship->delete();
             return redirect('departments')->with('success', 'Successfully removed');
         } catch (Exception $ex) {
             return redirect()->back()

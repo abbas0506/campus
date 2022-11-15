@@ -19,12 +19,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
-            $table->boolean('active')->default(true);
-            $table->enum('user_type', ['teacher', 'student']);
-
+            $table->string('phone', 15)->unique()->nullable();
+            $table->string('cnic', 15)->unique()->nullable();
+            $table->boolean('status')->default(true);
             $table->string('facebook_id')->nullable();
             $table->string('google_id')->nullable();
 
+            $table->unsignedBigInteger('department_id'); //parent department
             $table->rememberToken();
             $table->timestamps();
         });

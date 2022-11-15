@@ -51,17 +51,16 @@
         </thead>
         <tbody>
 
-            @foreach($users as $user)
-            @if($user->teacher)
+            @foreach($users->sortDesc() as $user)
             <tr class="tr border-b">
                 <td class="py-2">
                     <div class="text-gray-900">{{$user->name}}</div>
-                    <div class="text-sm text-gray-600 font-medium">{{$user->teacher->cnic}}</div>
-                    <div class="text-sm text-gray-600 font-medium">{{$user->email}}</div>
+                    <div class="text-sm text-gray-500 font-thin">{{$user->cnic}}</div>
+                    <div class="text-sm text-gray-500 font-thin">{{$user->email}}</div>
                 </td>
-                <td class="py-2 text-gray-800 font-medium">{{$user->teacher->department->name}}</span></td>
-                <td class="py-2 text-sm text-gray-800 font-medium">
-                    <div class="flex items-center">
+                <td class="py-2 text-gray-600 font-thin text-sm">{{$user->department->name}}</span></td>
+                <td class="py-2 text-sm text-gray-600 font-thin">
+                    <div class="flex items-center flex-wrap">
                         @foreach($user->roles as $role)
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
@@ -87,10 +86,7 @@
                     </form>
                 </td>
             </tr>
-            @endif
             @endforeach
-
-
         </tbody>
     </table>
 </div>

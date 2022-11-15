@@ -10,29 +10,7 @@ class Teacher extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'prefix_id',
-        'father',
-        'phone',
-        'cnic',
-        'address',
-        'pic',
-        'dob',
-        'gender',
-        'blood_group',
-        'is_married',
-        'is_special',
-        'nationality_id',
-        'province_id',
-        'domicile_id',
-        'religion_id',
-        'department_id',
-        'faculty_id', //teaching, non-teaching
-        'jobtype_id',
-        'specialization_id',
         'designation_id',
-        'qualification_id',
-        'salaray',
-
     ];
 
     public function user()
@@ -47,6 +25,11 @@ class Teacher extends Model
     {
         return $this->belongsTo(Department::class);
     }
+    public function headships()
+    {
+        return $this->belongsTo(hod::class);
+    }
+
     public function course_allocations()
     {
         return $this->hasMany(CourseAllocation::class);

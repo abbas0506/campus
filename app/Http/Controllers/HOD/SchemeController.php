@@ -34,7 +34,7 @@ class SchemeController extends Controller
         //
         $semesters = Semester::whereNotNull('edit_till')->get();
         // $programs = Program::all();
-        $programs = Program::where('department_id', Auth::user()->teacher->department_id)->get();
+        $programs = Program::where('department_id', Auth::user()->department_id)->get();
 
         return view('hod.schemes.create', compact('semesters', 'programs'));
     }

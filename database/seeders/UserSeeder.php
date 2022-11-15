@@ -17,26 +17,21 @@ class UserSeeder extends Seeder
     public function run()
     {
         //
-        $user = User::create([
-            'name' => 'Admin',
-            'email' => 'admin@uo.edu.pk',
-            'password' => Hash::make('password'),
-
-        ]);
-        $user->assignRole('admin');
 
         $user = User::create([
             'name' => 'Dr Sajjad Sarwar',
-            'email' => 'controller@uo.edu.pk',
+            'email' => 'sajjad@uo.edu.pk',
             'password' => Hash::make('password'),
+            'department_id' => 1,
 
         ]);
-        $user->assignRole('controller');
+        $user->assignRole('teacher', 'admin', 'controller');
 
         $user = User::create([
             'name' => 'Prof. Rashid Hussain',
             'email' => 'hod1@uo.edu.pk',
             'password' => Hash::make('password'),
+            'department_id' => 1,
 
         ]);
         $user->assignRole(['teacher']);
@@ -45,6 +40,7 @@ class UserSeeder extends Seeder
             'name' => 'Prof. Nasir Mehmood',
             'email' => 'hod2@uo.edu.pk',
             'password' => Hash::make('password'),
+            'department_id' => 1,
 
         ]);
 
@@ -55,6 +51,7 @@ class UserSeeder extends Seeder
             'name' => 'Mr. Ahmad Ali',
             'email' => 'teacher1@uo.edu.pk',
             'password' => Hash::make('password'),
+            'department_id' => 1,
 
         ]);
         $user->assignRole('teacher');
@@ -63,6 +60,7 @@ class UserSeeder extends Seeder
             'name' => 'Prof. Muhammad Ahmad',
             'email' => 'teacher2@uo.edu.pk',
             'password' => Hash::make('password'),
+            'department_id' => 1,
 
         ]);
         $user->assignRole('teacher');
@@ -71,6 +69,7 @@ class UserSeeder extends Seeder
             'name' => 'Mr. Muhammad Ejaz',
             'email' => 'teacher3@uo.edu.pk',
             'password' => Hash::make('password'),
+            'department_id' => 1,
 
         ]);
         $user->assignRole('teacher');
@@ -79,6 +78,7 @@ class UserSeeder extends Seeder
             'name' => 'Assistant Prof. Muhammad Luqman',
             'email' => 'teacher4@uo.edu.pk',
             'password' => Hash::make('password'),
+            'department_id' => 1,
 
         ]);
         $user->assignRole('teacher');
@@ -87,6 +87,7 @@ class UserSeeder extends Seeder
             'name' => 'Prof. Shabbir Hussain',
             'email' => 'teacher5@uo.edu.pk',
             'password' => Hash::make('password'),
+            'department_id' => 2,
 
         ]);
         $user->assignRole('teacher');
@@ -95,6 +96,7 @@ class UserSeeder extends Seeder
             'name' => 'Prof. Nazir Hussain',
             'email' => 'teacher6@uo.edu.pk',
             'password' => Hash::make('password'),
+            'department_id' => 2,
 
         ]);
         $user->assignRole('teacher');

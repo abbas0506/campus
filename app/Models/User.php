@@ -23,8 +23,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'cnic',
+        'department_id',
         'role',
-        'active',
+        'status',
         'facebook_id',
         'google_id',
     ];
@@ -56,8 +59,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(Student::class);
     }
-    public function departments()
+    // public function departments()
+    // {
+    //     return  $this->hasMany(Department::class);
+    // }
+    public function headships()
     {
-        return  $this->hasMany(Department::class);
+        return  $this->hasMany(Headship::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 }

@@ -36,8 +36,7 @@ class UserController extends Controller
     {
         //
         $departments = Department::all();
-        $designations = Designation::all();
-        return view('admin.users.create', compact('departments', 'designations'));
+        return view('admin.users.create', compact('departments'));
     }
 
     /**
@@ -56,32 +55,22 @@ class UserController extends Controller
             'department_id' => 'required|numeric'
 
         ]);
-        DB::beginTransaction();
         try {
 
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make('password'),
+                'phone' => $request->phone,
+                'cnic' => $request->cnic,
+                'department_id' => $request->department_id,
             ]);
 
             $user->save();
             $user->assignRole(['teacher']);
-
-            Teacher::create(
-                [
-                    'user_id' => $user->id,
-                    'phone' => $request->phone,
-                    'cnic' => $request->cnic,
-                    'department_id' => $request->department_id,
-                ]
-            );
-            DB::commit();
             return redirect('users')->with('success', 'Successfully created');
         } catch (Exception $ex) {
-            DB::rollBack();
-            return redirect()->back()
-                ->withErrors($ex->getMessage());
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 
@@ -106,8 +95,8 @@ class UserController extends Controller
     {
         //
         $user = User::findOrFail($id);
-        $designations = Designation::all();
-        return view('admin.users.edit', compact('user', 'designations'));
+        $departments = Department::all();
+        return view('admin.users.edit', compact('user', 'departments'));
     }
 
     /**
@@ -123,7 +112,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email,' . $id, 'id',
-            'cnic' => 'required|unique:teachers,cnic,' . $id, 'id',
+            'cnic' => 'unique:users,cnic,' . $id, 'id',
         ]);
 
 
@@ -131,17 +120,14 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->cnic = $request->cnic;
+            $user->department_id = $request->department_id;
             $user->save();
-
-            $teacher = Teacher::find($user->teacher->id);
-            $teacher->cnic = $request->cnic;
-            $teacher->phone = $request->phone;
-            $teacher->save();
 
             return redirect('users')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
-            return redirect()->back()
-                ->withErrors($ex->getMessage());
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 
