@@ -22,8 +22,14 @@ class TeacherController extends Controller
     //
     public function index()
     {
-        //
-        $teachers = Teacher::where('department_id', Auth::user()->department_id)->get();
+        //teachers from the same department as hod
+        $teachers = $users = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'teacher');
+            }
+        )->where('department_id', Auth::user()->department_id)->get();
+
         return view('hod.teachers.index', compact('teachers'));
     }
 
@@ -51,41 +57,28 @@ class TeacherController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|string|max:50',
-            'designation_id' => 'required|numeric',
-            'cnic' => 'required|unique:teachers|string|max:15',
-            'phone' => 'nullable|unique:teachers|string|max:15',
+            'name' => 'required',
             'email' => 'required|email|unique:users',
+            'cnic' => 'required|unique:teachers',
+            'department_id' => 'required|numeric'
 
         ]);
-
         try {
-            //should be HOD department id
+
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make('password'),
+                'phone' => $request->phone,
+                'cnic' => $request->cnic,
+                'department_id' => $request->department_id,
             ]);
 
             $user->save();
-            $user->assignRole('teacher');
-
-            Teacher::create(
-                [
-                    'user_id' => $user->id,
-                    'designation_id' => $request->designation_id,
-                    'phone' => $request->phone,
-                    'cnic' => $request->cnic,
-                    'department_id' => Auth::user()->department_id,
-
-                ]
-            );
-
-            DB::commit();
-            return redirect()->route('teachers.index')->with('success', 'Successfully created');
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors(['create' => $e->getMessage()]);
-            // something went wrong
+            $user->assignRole(['teacher']);
+            return redirect('teachers')->with('success', 'Successfully created');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 
@@ -109,10 +102,9 @@ class TeacherController extends Controller
     public function edit($id)
     {
         //
-        $teacher = Teacher::findOrFail($id);
+        $teacher = User::findOrFail($id);
         $departments = Department::all();
-        $designations = Designation::all();
-        return view('hod.teachers.edit', compact('teacher', 'departments', 'designations'));
+        return view('hod.teachers.edit', compact('teacher', 'departments'));
     }
 
     /**
@@ -127,30 +119,24 @@ class TeacherController extends Controller
         //
         $teacher = Teacher::find($id);
         $request->validate([
-            'name' => 'required|string|max:50',
-            'designation_id' => 'required|numeric',
-            'cnic' => 'required|string|max:15|unique:teachers,cnic,' . $id, 'id',
-            'phone' => 'nullable|string|max:15|unique:teachers,phone,' . $id, 'id',
-            'email' => 'required|email|unique:users,email,' . $teacher->user->id, 'id',
-
+            'name' => 'required',
+            'email' => 'required|unique:users,email,' . $id, 'id',
+            'cnic' => 'unique:users,cnic,' . $id, 'id',
         ]);
 
+
         try {
-
-            $teacher->designation_id = $request->designation_id;
-            $teacher->phone = $request->phone;
-            $teacher->cnic = $request->cnic;
-            $teacher->update();
-
-            $user = $teacher->user;
+            $user = User::findOrFail($id);
             $user->name = $request->name;
             $user->email = $request->email;
-            $user->update();
+            $user->phone = $request->phone;
+            $user->cnic = $request->cnic;
+            $user->department_id = $request->department_id;
+            $user->save();
 
-            return redirect()->route('teachers.index')->with('success', 'Successfully updated');;
+            return redirect('teachers')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
-            return redirect()->back()
-                ->withErrors(['update' => $ex->getMessage()]);
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 

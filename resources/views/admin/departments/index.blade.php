@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1 class="mt-5">Departments</h1>
+<h1 class="mt-5">Departments' Headship</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         Departments / all
@@ -16,7 +16,7 @@
             </svg>
         </div>
         <a href="{{route('departments.create')}}" class="btn-indigo">
-            add new
+            + Add New Deptt.
         </a>
     </div>
     @if ($errors->any())

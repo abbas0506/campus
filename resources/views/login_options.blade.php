@@ -1,7 +1,7 @@
 @extends('layouts.basic')
 
 @section('content')
-<div class="flex flex-col justify-center items-center mx-auto w-3/5 mt-32">
+<div class="flex flex-col justify-center items-center mx-auto w-1/2 mt-16">
 
     @if ($errors->any())
     <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full">
@@ -30,23 +30,31 @@
     </div>
 
 
-    <form action="{{route('login-options.store')}}" method='post' class="mt-8 w-full">
+    <form action="{{route('login-options.store')}}" method='post' class="w-full mt-8">
         @csrf
 
         <label for="" class="text-base text-gray-700 text-left">Role</label>
-        <select id="" name="role_name" class="input-indigo px-4 py-3 w-full mb-5">
+        <select id="role" name="role" class="input-indigo px-4 py-3 w-full" onchange="loadDepartments()">
+            <option value="">Select a role</option>
             @foreach(Auth::user()->roles as $role)
             <option value="{{$role->name}}">{{Str::upper($role->name)}}</option>
             @endforeach
         </select>
+        <div class="mt-3">
+            <label for="" class="text-base text-gray-700 text-left">Department</label>
+            <select id="department_id" name="department_id" class="input-indigo px-4 py-3 w-full">
 
-        <label for="" class="text-base text-gray-700 text-left w-full">Semester</label>
-        <select id="" name="semester_id" class="input-indigo px-4 py-3 w-full">
-            @foreach($semesters as $semester)
-            <option value="{{$semester->id}}">{{$semester->title()}}</option>
-            @endforeach
-        </select>
+            </select>
+        </div>
 
+        <div class="mt-3">
+            <label for="" class="text-base text-gray-700 text-left w-full">Semester</label>
+            <select id="" name="semester_id" class="input-indigo px-4 py-3 w-full">
+                @foreach($semesters as $semester)
+                <option value="{{$semester->id}}">{{$semester->title()}}</option>
+                @endforeach
+            </select>
+        </div>
 
         <div class="flex md:space-x-4 mt-8 justify-end items-center">
             <a href="{{url('signout')}}" class="flex justify-center btn-indigo py-2 px-8">Cancel</a>
@@ -56,4 +64,38 @@
     </form>
 
 </div>
+@endsection
+
+@section('script')
+<script lang="javascript">
+    function clearSelection() {
+
+    }
+
+    function loadDepartments() {
+        //token for ajax call
+
+        var token = $("meta[name='csrf-token']").attr("content");
+        var role = $('#role').val();
+        $.ajax({
+            type: 'POST',
+            url: "fetchRoleDepttByUserId",
+            data: {
+                "role": role,
+                "_token": token,
+            },
+            success: function(response) {
+                //
+                $('#department_id').html(response.options);
+                //scheme id will also be fetched dynamically
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: errorThrown
+                });
+            }
+        }); //ajax end
+    }
+</script>
 @endsection

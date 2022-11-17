@@ -13,7 +13,7 @@
         </svg>
     </div>
     <a href="{{route('teachers.create')}}" class="btn-indigo">
-        add new
+        + Add New Teacher
     </a>
 </div>
 
@@ -25,12 +25,11 @@
     {{session('success')}}
 </div>
 @endif
-
-<table class="table-auto w-full mt-8">
+<div class="text-sm  text-gray-500 mt-8">{{$teachers->count()}} records found</div>
+<table class="table-auto w-full">
     <thead>
         <tr class="border-b border-slate-200">
             <th>Teacher</th>
-            <th>Designation</th>
             <th class='text-center'>Actions</th>
         </tr>
     </thead>
@@ -39,14 +38,10 @@
         @foreach($teachers->sortByDesc('id') as $teacher)
         <tr class="tr border-b ">
             <td class="py-2">
-                <div>@if($teacher->prefix){{$teacher->prefix->name}}. @endif {{$teacher->user->name}}</div>
-                <div class="text-sm text-gray-500">{{$teacher->user->email}}</div>
+                <div>{{$teacher->name}}</div>
+                <div class="text-sm text-gray-500">{{$teacher->email}}</div>
                 <div class="text-sm text-gray-500">{{$teacher->cnic}}</div>
             </td>
-            <td class="py-2">
-                <div>@if($teacher->designation){{$teacher->designation->name}}@endif</div>
-            </td>
-
             <td class="py-2 flex items-center justify-center">
                 <a href="{{route('teachers.edit', $teacher)}}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-green-600 mr-4">

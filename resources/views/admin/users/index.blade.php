@@ -16,7 +16,7 @@
             </svg>
         </div>
         <a href="{{route('users.create')}}" class="btn-indigo">
-            add new
+            + Add New User
         </a>
     </div>
     @if ($errors->any())
@@ -98,7 +98,7 @@
 
         Swal.fire({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: "You won't be able to revert this! Everything related to this person will be erased at all",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

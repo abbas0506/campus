@@ -42,11 +42,11 @@ class LoginOptionsController extends Controller
     {
         //
         $request->validate([
-            'role_name' => 'required',
+            'role' => 'required',
             'semester_id' => 'required',
         ]);
 
-        if (Auth::user()->hasRole($request->role_name)) {
+        if (Auth::user()->hasRole($request->role)) {
             //save selected semester id for entire session
             if (Auth::user()->hasAnyRole(['hod', 'teacher'])) {
                 session([
@@ -59,7 +59,7 @@ class LoginOptionsController extends Controller
                 ]);
             }
 
-            return redirect($request->role_name);
+            return redirect($request->role);
         } else
             return redirect('/');
     }

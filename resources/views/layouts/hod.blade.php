@@ -4,6 +4,12 @@
 <x-header></x-header>
 <div class="flex relative top-16 w-screen">
     <aside aria-label="Sidebar" id='sidebar'>
+        <div class="text-center text-gray-600 font-bold py-4">HOD Panel</div>
+        <div class="flex justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
+            </svg>
+        </div>
         <div class="mt-6">
             <ul class="space-y-2">
                 <li>

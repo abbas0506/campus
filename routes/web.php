@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\ControllershipController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +17,7 @@ use App\Http\Controllers\hod\teacherController;
 use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
 use App\Http\Controllers\admin\SemesterController;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ce\TranscriptController;
 use App\Http\Controllers\hod\CourseAllocationOptionController;
 use App\Http\Controllers\hod\ElectiveAllocationController;
@@ -59,6 +61,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('headship', HeadshipController::class);
+    Route::resource('controllership', ControllershipController::class);
 });
 Route::group(['middleware' => ['role:controller']], function () {
     Route::view('controller', 'ce.index');
@@ -72,6 +75,7 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('sections', SectionController::class);
     Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
     Route::post('fetchSectionsByProgramId', [SectionController::class, 'fetchSectionsByProgramId'])->name('fetchSectionsByProgramId'); //for ajax call
+    Route::post('fetchRoleDepttByUserId', [AjaxController::class, 'fetchRoleDepttByUserId'])->name('fetchRoleDepttByUserId');; //for ajax call
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', teacherController::class);
     Route::resource('schemes', SchemeController::class);

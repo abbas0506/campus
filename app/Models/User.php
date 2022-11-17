@@ -25,9 +25,9 @@ class User extends Authenticatable
         'password',
         'phone',
         'cnic',
-        'department_id',
         'role',
         'status',
+        'department_id',
         'facebook_id',
         'google_id',
     ];
@@ -59,10 +59,6 @@ class User extends Authenticatable
     {
         return $this->hasOne(Student::class);
     }
-    // public function departments()
-    // {
-    //     return  $this->hasMany(Department::class);
-    // }
     public function headships()
     {
         return  $this->hasMany(Headship::class);

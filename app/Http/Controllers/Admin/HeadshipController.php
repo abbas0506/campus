@@ -102,6 +102,7 @@ class HeadshipController extends Controller
     {
         //
         $users = User::all();
+
         $departments = Department::all();   //to filter by department
         session([
             'department_id' => $department_id,
