@@ -49,15 +49,8 @@ class AuthController extends Controller
         // echo $request->email;
 
         if (Auth::attempt($credentials)) {
-            // if (Auth::user()->hasRole('teacher')) {
-            session([
-                'department_id' => Auth::user()->department_id,
-            ]);
-            // }
             return redirect('/');
-            //return view('second_factor');
         } else {
-
             return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
         }
     }

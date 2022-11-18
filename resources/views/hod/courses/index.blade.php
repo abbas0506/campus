@@ -14,7 +14,7 @@
         </svg>
     </div>
     <a href="{{route('courses.create')}}" class="btn-indigo">
-        add new
+        + Add New Course
     </a>
 </div>
 

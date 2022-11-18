@@ -38,8 +38,7 @@
         @foreach($schemes->sortByDesc('id') as $scheme)
         <tr class="tr border-b">
             <td class="py-2">
-                <div>{{$scheme->semester->title()}}</div>
-                <div class="text-sm text-gray-500">{{$scheme->program->short}}</div>
+                <div class="text-gray-800">{{$scheme->program->short}} / {{$scheme->semester->title()}}</div>
             </td>
             <td class="flex items-center justify-center py-2">
                 <a href="{{route('schemes.show', $scheme)}}">

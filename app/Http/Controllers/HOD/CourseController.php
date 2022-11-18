@@ -20,7 +20,8 @@ class CourseController extends Controller
     public function index()
     {
         //
-        $courses = Course::all();
+        $department = Department::find(session('department_id'));
+        $courses = $department->courses;
 
         return view('hod.courses.index', compact('courses'));
     }
@@ -33,9 +34,8 @@ class CourseController extends Controller
     public function create()
     {
         //
-        $departments = Department::all();
         $course_types = CourseType::all();
-        return view('hod.courses.create', compact('departments', 'course_types'));
+        return view('hod.courses.create', compact('course_types'));
     }
 
     /**
@@ -90,9 +90,8 @@ class CourseController extends Controller
     {
         //
         $course = Course::findOrFail($id);
-        $departments = Department::all();
         $course_types = CourseType::all();
-        return view('hod.courses.edit', compact('course', 'departments', 'course_types'));
+        return view('hod.courses.edit', compact('course', 'course_types'));
     }
 
     /**

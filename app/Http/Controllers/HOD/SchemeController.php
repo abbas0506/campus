@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use App\Models\Program;
 use App\Models\Scheme;
 use App\Models\Semester;
@@ -20,7 +21,14 @@ class SchemeController extends Controller
     public function index()
     {
         //
-        $schemes = Scheme::all();
+        // $schemes = Scheme::all();
+        $department = Department::find(session('department_id'));
+        $program_ids = $department->programs->pluck('id')->toArray();
+
+        // echo count($program_ids);
+        $schemes = Scheme::whereIn('program_id', $program_ids)->get();
+
+
         return view('hod.schemes.index', compact('schemes'));
     }
 
@@ -33,8 +41,7 @@ class SchemeController extends Controller
     {
         //
         $semesters = Semester::whereNotNull('edit_till')->get();
-        // $programs = Program::all();
-        $programs = Program::where('department_id', Auth::user()->department_id)->get();
+        $programs = Program::where('department_id', session('department_id'))->get();
 
         return view('hod.schemes.create', compact('semesters', 'programs'));
     }

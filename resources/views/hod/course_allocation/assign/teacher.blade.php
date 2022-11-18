@@ -40,9 +40,9 @@
             @foreach($teachers as $teacher)
             <tr class="border-b tr">
                 <td class="py-2">
-                    <div>{{$teacher->user->name}}</div>
+                    <div>{{$teacher->name}}</div>
                     <div class="text-sm text-gray-500 font-medium">{{$teacher->cnic}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$teacher->user->email}}</div>
+                    <div class="text-sm text-gray-500 font-medium">{{$teacher->email}}</div>
                 </td>
                 <td class="py-2 flex items-center justify-center">
                     <form action="{{url('course-allocations/assign/teacher')}}" method="POST" id='assign_form{{$teacher->id}}' class="mt-2 text-sm">

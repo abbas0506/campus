@@ -21,7 +21,7 @@ class CourseAllocationOptionController extends Controller
     {
 
         //find all program of this department
-        $programs = Program::where('department_id', Auth::user()->department_id)->get();
+        $programs = Program::where('department_id', session('department_id'))->get();
         $shifts = Shift::all();
         return view('hod.course_allocation.options.programs', compact('programs', 'shifts'));
     }

@@ -1,7 +1,7 @@
 @extends('layouts.basic')
 
 @section('content')
-<div class="flex flex-col justify-center items-center mx-auto w-1/2 mt-16">
+<div class="flex flex-col h-screen justify-center items-center mx-auto w-1/2">
 
     @if ($errors->any())
     <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full">
@@ -40,21 +40,24 @@
             <option value="{{$role->name}}">{{Str::upper($role->name)}}</option>
             @endforeach
         </select>
-        <div class="mt-3">
-            <label for="" class="text-base text-gray-700 text-left">Department</label>
-            <select id="department_id" name="department_id" class="input-indigo px-4 py-3 w-full">
+        <div id='deptt_area' class="hidden">
+            <div class="mt-3">
+                <label for="" class="text-base text-gray-700 text-left">Department</label>
+                <select id="department_id" name="department_id" class="input-indigo px-4 py-3 w-full">
 
-            </select>
+                </select>
+            </div>
+
+            <div class="mt-3">
+                <label for="" class="text-base text-gray-700 text-left w-full">Semester</label>
+                <select id="" name="semester_id" class="input-indigo px-4 py-3 w-full">
+                    @foreach($semesters as $semester)
+                    <option value="{{$semester->id}}">{{$semester->title()}}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
 
-        <div class="mt-3">
-            <label for="" class="text-base text-gray-700 text-left w-full">Semester</label>
-            <select id="" name="semester_id" class="input-indigo px-4 py-3 w-full">
-                @foreach($semesters as $semester)
-                <option value="{{$semester->id}}">{{$semester->title()}}</option>
-                @endforeach
-            </select>
-        </div>
 
         <div class="flex md:space-x-4 mt-8 justify-end items-center">
             <a href="{{url('signout')}}" class="flex justify-center btn-indigo py-2 px-8">Cancel</a>
@@ -77,25 +80,31 @@
 
         var token = $("meta[name='csrf-token']").attr("content");
         var role = $('#role').val();
-        $.ajax({
-            type: 'POST',
-            url: "fetchRoleDepttByUserId",
-            data: {
-                "role": role,
-                "_token": token,
-            },
-            success: function(response) {
-                //
-                $('#department_id').html(response.options);
-                //scheme id will also be fetched dynamically
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: errorThrown
-                });
-            }
-        }); //ajax end
+
+        if (role === 'hod' || role === 'teacher') {
+            $('#deptt_area').slideDown()
+            $.ajax({
+                type: 'POST',
+                url: "fetchDepttByRole",
+                data: {
+                    "role": role,
+                    "_token": token,
+                },
+                success: function(response) {
+                    //
+                    $('#department_id').html(response.options);
+                    //scheme id will also be fetched dynamically
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: errorThrown
+                    });
+                }
+            }); //ajax end
+        } else {
+            $('#deptt_area').slideUp()
+        }
     }
 </script>
 @endsection

@@ -27,9 +27,17 @@ class SectionController extends Controller
     {
         //
         $semester = Semester::find(session('semester_id'));
-        $program_ids = Section::where('semester_id', session('semester_id'))->distinct()->pluck('program_id')->toArray();
 
-        $programs = Program::whereIn('id', $program_ids)->get();
+        $programs = Program::where('department_id', session('department_id'))
+            ->whereHas(
+                'sections',
+                function ($q) {
+                    $q->where('semester_id', session('semester_id'));
+                }
+            )->get();;
+        // $program_ids = Section::where('semester_id', session('semester_id'))->distinct()->pluck('program_id')->toArray();
+
+        // $programs = Program::whereIn('id', $program_ids)->get();
         $shifts = Shift::all();
         return view('hod.sections.index', compact('semester', 'programs', 'shifts'));
     }
@@ -44,7 +52,7 @@ class SectionController extends Controller
         //
         if (session('semester_id')) {
             $semester = Semester::find(session('semester_id'));
-            $programs = Program::all();
+            $programs = Program::where('department_id', session('department_id'))->get();
             $shifts = Shift::all();
             return view('hod.sections.create', compact('semester', 'programs', 'shifts'));
         } else {

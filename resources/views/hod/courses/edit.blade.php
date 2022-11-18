@@ -3,7 +3,7 @@
 <h1 class="mt-5">Courses</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Courses / edit
+        <a href="{{route('courses.index')}}"> Courses </a> / edit
     </div>
 </div>
 
@@ -69,7 +69,7 @@
 
         <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
             <a href="{{route('courses.index')}}" class="btn-indigo-rounded">Cancel</a>
-            <button type="submit" class="btn-indigo-rounded">Save</button>
+            <button type="submit" class="btn-indigo-rounded">Update</button>
         </div>
     </form>
 

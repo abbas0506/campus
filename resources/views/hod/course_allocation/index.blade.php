@@ -55,8 +55,8 @@
                         <div class="flex flex-1 text-sm">{{$course_allocation->course->name}}</div>
                         <div class="flex flex-1 text-sm">
                             <!-- if teacher name given, show name ... else show link icon -->
-                            @if($course_allocation->teacher)
-                            {{$course_allocation->teacher->user->name}}
+                            @if($course_allocation->user)
+                            {{$course_allocation->user->name}}
                             @else
                             <div class="flex items-center py-2">
                                 <a href="{{url('course_allocations/assign/teacher',$course_allocation)}}">

@@ -19,8 +19,8 @@ class ProgramController extends Controller
     public function index()
     {
         //
-        $programs = Program::all();
-
+        $department = Department::find(session('department_id'));
+        $programs = $department->programs;
         return view('hod.programs.index', compact('programs'));
     }
 
@@ -33,8 +33,7 @@ class ProgramController extends Controller
     {
         //
         $durations = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8];
-        $departments = Department::all();
-        return view('hod.programs.create', compact('durations', 'departments'));
+        return view('hod.programs.create', compact('durations'));
     }
 
     /**
@@ -87,8 +86,7 @@ class ProgramController extends Controller
         //
         $program = Program::findOrFail($id);
         $durations = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8];
-        $departments = Department::all();
-        return view('hod.programs.edit', compact('program', 'durations', 'departments'));
+        return view('hod.programs.edit', compact('program', 'durations'));
     }
 
     /**

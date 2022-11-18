@@ -51,6 +51,7 @@ Route::get('/', function () {
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::resource('login-options', LoginOptionsController::class)->only('index', 'store');
+Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
 
@@ -75,7 +76,6 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('sections', SectionController::class);
     Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
     Route::post('fetchSectionsByProgramId', [SectionController::class, 'fetchSectionsByProgramId'])->name('fetchSectionsByProgramId'); //for ajax call
-    Route::post('fetchRoleDepttByUserId', [AjaxController::class, 'fetchRoleDepttByUserId'])->name('fetchRoleDepttByUserId');; //for ajax call
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', teacherController::class);
     Route::resource('schemes', SchemeController::class);

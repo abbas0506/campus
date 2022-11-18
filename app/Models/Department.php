@@ -13,6 +13,15 @@ class Department extends Model
         'title', //degree title
 
     ];
+    public function programs()
+    {
+        return $this->hasMany(Program::class);
+    }
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
     public function hod()
     {
         return $this->hasOne(Hod::class);
@@ -23,10 +32,13 @@ class Department extends Model
     }
     public function teachers()
     {
-        return $this->hasMany(Teacher::class);
-    }
-    public function courses()
-    {
-        return $this->hasMany(Course::class);
+        // return $this->hasMany(Teacher::class);
+        $teachers = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'teacher');
+            }
+        )->where('department_id', session('department_id'))->get();
+        return $teachers;
     }
 }

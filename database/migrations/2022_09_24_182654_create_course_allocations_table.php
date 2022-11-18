@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('semester_no');
             $table->unsignedBigInteger('scheme_detail_id');
             $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('teacher_id')->nullable(); //will be initialized at step 2 of course allocation
+            $table->unsignedBigInteger('user_id')->nullable(); //will be initialized at step 2 of course allocation
 
             $table->timestamps();
 
@@ -38,9 +38,9 @@ return new class extends Migration
                 ->on('courses')
                 ->onDelete('cascade');
 
-            $table->foreign('teacher_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('teachers')
+                ->on('users')
                 ->onDelete('cascade');
         });
     }

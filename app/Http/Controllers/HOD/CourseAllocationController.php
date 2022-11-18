@@ -149,7 +149,7 @@ class CourseAllocationController extends Controller
         ]);
 
         $department = Department::find(session('department_id'));
-        $teachers = $department->teachers;
+        $teachers = $department->teachers();
 
         return view('hod.course_allocation.assign.teacher', compact('teachers'));
     }
@@ -162,7 +162,7 @@ class CourseAllocationController extends Controller
         try {
 
             $course_allocation = CourseAllocation::find(session('course_allocation_id'));
-            $course_allocation->teacher_id = $request->teacher_id;
+            $course_allocation->user_id = $request->teacher_id;
             $course_allocation->update();
             session([
                 'course_allocation_id' => null, //nullify stored coure allocation

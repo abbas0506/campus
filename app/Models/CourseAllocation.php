@@ -13,7 +13,7 @@ class CourseAllocation extends Model
         'semester_no',
         'scheme_detail_id',
         'course_id',    //optional course id
-        'teacher_id',
+        'user_id',
 
     ];
 
@@ -29,9 +29,13 @@ class CourseAllocation extends Model
     {
         return $this->belongsTo(Course::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->user;
     }
     public function results()
     {

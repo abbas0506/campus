@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Semester;
 use Illuminate\Http\Request;
@@ -18,7 +19,6 @@ class LoginOptionsController extends Controller
     {
         //
         $semesters = Semester::whereNotNull('edit_till')->get();
-        // echo $semesters->count();
         return view('login_options', compact('semesters'));
     }
 
@@ -43,22 +43,20 @@ class LoginOptionsController extends Controller
         //
         $request->validate([
             'role' => 'required',
-            'semester_id' => 'required',
+            'department_id' => 'required_if:role,hod,teacher|numeric',
+            'semester_id' => 'required_if:role,hod,teacher|numeric',
         ]);
 
         if (Auth::user()->hasRole($request->role)) {
             //save selected semester id for entire session
-            if (Auth::user()->hasAnyRole(['hod', 'teacher'])) {
+            if ($request->role == 'hod' || $request->role == 'teacher') {
+                $department = Department::find($request->department_id);
                 session([
                     'semester_id' => $request->semester_id,
-                    'department_id' => Auth::user()->department_id,
-                ]);
-            } else {
-                session([
-                    'semester_id' => $request->semester_id,
+                    'department_id' => $request->department_id,
+                    'department' => $department,
                 ]);
             }
-
             return redirect($request->role);
         } else
             return redirect('/');

@@ -31,7 +31,7 @@
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Department</label>
                 <select name="department_id" id='' class="input-indigo p-2">
-                    <option value="{{Auth::user()->department->id}}">{{Auth::user()->department->name}}</option>
+                    <option value="{{session('department_id')}}">{{session('department')->name}}</option>
                 </select>
             </div>
             <div class="flex flex-col flex-1 mt-3">
