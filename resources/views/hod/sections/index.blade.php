@@ -37,6 +37,7 @@
     <thead>
         <tr class="border-b border-slate-200">
             <th>Class</th>
+            <th>Semester</th>
             <th>Sections</th>
         </tr>
     </thead>
@@ -50,6 +51,7 @@
                 <div>{{$program->name}}</div>
                 <div class="text-sm text-gray-500">{{$program->short}} | {{$shift->name}}</div>
             </td>
+            <td>3 temp</td>
             <td class="flex items-center">
                 @foreach($program->sections->where('shift_id',$shift->id) as $section)
                 <a href="{{route('sections.show',$section)}}" class='px-1 rounded hover:bg-indigo-500 hover:text-slate-200'>{{$section->name}}</a>

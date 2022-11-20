@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<div class="flex justify-center items-center text-4xl font-bold w-full py-1 mt-24 relative">
+<div class="flex justify-center items-center text-2xl font-bold w-full py-1 mt-24 relative">
     <div class="absolute left-0 z-5">
         <img alt="logo" src="{{asset('/images/logo/logo-light.png')}}" class="w-36">
     </div>
@@ -62,10 +62,10 @@
                 <tr class="tr">
                     <td class="py-1 pl-2 border">{{$result->course_allocation->course->code}}</td>
                     <td class="py-1 pl-2 border">{{$result->course_allocation->course->name}}</td>
-                    <td class="py-1 text-center border">{{$result->course_allocation->course->credit_hrs_theory+$result->course_allocation->course->credit_hrs_practical}}</td>
-                    <td class="py-1 text-center border">{{$result->assignment+$result->practical+$result->midterm+$result->summative}}</td>
-                    <td class="py-1 text-center border"></td>
-                    <td class="py-1 text-center border"></td>
+                    <td class="py-1 text-center border">{{$result->creditHrs()}}</td>
+                    <td class="py-1 text-center border">{{$result->obtained()}}</td>
+                    <td class="py-1 text-center border">{{$result->gradePoint()}}</td>
+                    <td class="py-1 text-center border">{{$result->gradeLetter()}}</td>
                 </tr>
                 @endforeach
                 @endforeach

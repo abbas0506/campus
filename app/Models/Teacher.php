@@ -29,9 +29,4 @@ class Teacher extends Model
     {
         return $this->belongsTo(hod::class);
     }
-
-    public function course_allocations()
-    {
-        return $this->hasMany(CourseAllocation::class);
-    }
 }

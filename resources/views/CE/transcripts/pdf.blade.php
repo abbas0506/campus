@@ -71,10 +71,10 @@
                 <tr class="text-xs">
                     <td class="py-1 pl-2 border border-solid border-gray-600 w-12">{{$result->course_allocation->course->code}}</td>
                     <td class="py-1 pl-2 border border-solid border-gray-600 w-64">{{$result->course_allocation->course->name}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$result->course_allocation->course->credit_hrs_theory+$result->course_allocation->course->credit_hrs_practical}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$result->assignment+$result->practical+$result->midterm+$result->summative}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600"></td>
-                    <td class="py-1 text-center border border-solid border-gray-600"></td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$result->creditHrs()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$result->obtained()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$result->gradePoint()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$result->gradeLetter()}}</td>
                 </tr>
                 @endforeach
                 @endforeach

@@ -43,8 +43,10 @@
             @csrf
             @method('PATCH')
             <div class="flex items-center py-2 space-x-5 ">
-                <div class="flex flex-1 bg-teal-100 text-gray-600 py-2 px-5">
-                    {{$course_allocation->course->name}} : {{$course_allocation->section->title()}}
+                <div class="flex flex-col flex-1 text-sm text-indigo-600 py-3 pr-5">
+                    <div class="font-bold">{{$course_allocation->course->name}}</div>
+                    <div>{{$course_allocation->section->title()}}</div>
+
                 </div>
                 <button type="submit" class="px-8 py-2 bg-teal-600 text-slate-100 rounded-sm hover:bg-teal-500">
                     Save Result <span class="ml-2">(</span><span class="mx-1">{{$course_allocation->registrations->count()}}</span>)
