@@ -31,11 +31,15 @@ return new class extends Migration
             $table->unsignedBigInteger('kpo_id')->nullable();
             $table->unsignedBigInteger('controller_id')->nullable();
             $table->date('approved_at')->nullable();
-            $table->timestamps();
 
             $table->foreign('course_enrollment_id')
                 ->references('id')
                 ->on('course_enrollments')
+                ->onDelete('cascade');
+
+            $table->foreign('semester_id')
+                ->references('id')
+                ->on('semesters')
                 ->onDelete('cascade');
 
             $table->foreign('teacher_id')

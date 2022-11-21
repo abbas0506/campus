@@ -31,10 +31,7 @@
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Department</label>
                 <select name="department_id" id='' class="input-indigo p-2">
-                    <option value="">Click here</option>
-                    @foreach($departments as $department)
-                    <option value="{{$department->id}}" @if(@$department->id==$teacher->department_id) selected @endif>{{$department->name}}</option>
-                    @endforeach
+                    <option value="{{$department->id}}">{{$department->name}}</option>
                 </select>
             </div>
             <div class="flex flex-col flex-1 mt-3">

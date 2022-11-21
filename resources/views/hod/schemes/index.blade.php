@@ -29,7 +29,7 @@
 <table class="table-auto w-full mt-16">
     <thead>
         <tr class="border-b border-slate-200">
-            <th>Scheme Title <span class="text-sm text-orange-700 font-thin">(w.e.f semester title)</span></th>
+            <th>Scheme Title</th>
             <th class='text-center'>Actions</th>
         </tr>
     </thead>
@@ -38,7 +38,7 @@
         @foreach($schemes->sortByDesc('id') as $scheme)
         <tr class="tr border-b">
             <td class="py-2">
-                <div class="text-gray-800">{{$scheme->program->short}} / {{$scheme->semester->title()}}</div>
+                <div class="text-gray-600 text-sm">{{$scheme->title()}}</div>
             </td>
             <td class="flex items-center justify-center py-2">
                 <a href="{{route('schemes.show', $scheme)}}">

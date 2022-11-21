@@ -32,6 +32,7 @@
         <tr class="border-b border-slate-200">
             <th>Program Name</th>
             <th>Duration</th>
+            <th>Credits</th>
             <th class='text-center'>Actions</th>
         </tr>
     </thead>
@@ -48,10 +49,11 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span class="ml-1 text-sm">{{$program->min_duration}} years</span>
+                    <span class="ml-1 text-sm">{{$program->min_duration}} - {{$program->max_duration}} years</span>
                 </div>
 
             </td>
+            <td class="py-2 text-gray-500 text-sm">{{$program->credit_hrs}}</td>
 
             <td class="py-2 flex items-center justify-center">
                 <a href="{{route('programs.edit', $program)}}">

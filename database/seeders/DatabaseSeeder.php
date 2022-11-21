@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class, //spatie
             SemesterTypeSeeder::class,
             SemesterSeeder::class,
-            ExamTypeSeeder::class,
             CourseTypeSeeder::class,
 
             ShiftSeeder::class,

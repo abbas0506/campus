@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('short');
-            $table->string('code')->unique()->nullable();
+            $table->unsignedInteger('credit_hrs');  //compulsory to pass
             $table->unsignedFloat('min_duration'); //in years
             $table->unsignedFloat('max_duration'); //in years
             $table->unsignedBigInteger('department_id');

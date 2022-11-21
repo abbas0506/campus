@@ -3,7 +3,7 @@
 <h1 class="mt-5">Students</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Classes / <a href="{{url('class-options')}}" class="text-orange-700 mx-1"> choose semester </a> / {{$student->section->title()}} / students / edit
+        <a href="{{url('clases')}}"> Classes</a> / {{$student->section->clas->title()}} / {{$student->section->title()}} / {{$student->name}} / edit
     </div>
 </div>
 

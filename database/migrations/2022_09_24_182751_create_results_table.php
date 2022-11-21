@@ -35,11 +35,6 @@ return new class extends Migration
                 ->references('id')
                 ->on('course_allocations')
                 ->onDelete('cascade');
-
-            $table->foreign('hod_id')
-                ->references('id')
-                ->on('teachers')
-                ->onDelete('cascade');
         });
     }
 

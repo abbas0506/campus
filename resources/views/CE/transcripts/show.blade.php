@@ -24,7 +24,7 @@
         </div>
         <div class="flex mt-8">
             <div class="flex w-1/6 py-2 text-gray-800 font-bold">Program Name</div>
-            <div class="flex w-2/6 py-2">{{$student->section->program->name}}</div>
+            <div class="flex w-2/6 py-2">{{$student->section->clas->program->name}}</div>
             <div class="flex w-1/6 py-2 text-gray-800 font-bold">Session</div>
             <div class="flex w-2/6 py-2">2022-24</div>
         </div>

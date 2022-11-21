@@ -11,9 +11,10 @@ class CourseAllocation extends Model
     protected $fillable = [
         'section_id',
         'semester_no',
-        'scheme_detail_id',
         'course_id',    //optional course id
-        'user_id',
+        'scheme_detail_id',
+        'teacher_id',
+        'semester_id',
 
     ];
 
@@ -29,13 +30,13 @@ class CourseAllocation extends Model
     {
         return $this->belongsTo(Course::class);
     }
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
     public function teacher()
     {
-        return $this->user;
+        return $this->belongsTo(User::class, 'teacher_id');
     }
     public function results()
     {

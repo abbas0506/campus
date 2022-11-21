@@ -10,12 +10,6 @@
 
 <div class="flex flex-col md:w-3/5 m-auto text-center mt-12">
 
-    <div class="flex">
-        <a class="tab active ">Step 1 of 3</a>
-        <a class="tab">Scheme</a>
-        <a class="tab">Courses</a>
-    </div>
-
     <div class="flex items-center flex-row mt-12">
         <div class="h-16 w-16 sm:mr-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
@@ -45,7 +39,7 @@
             <option value="{{$program->id}}">{{$program->name}} </option>
             @endforeach
         </select>
-        <label for="" class="mt-3">Choose Semester<span class="text-sm text-red-700 ml-2"> (scheme will be effective from)</span></label>
+        <label for="" class="mt-3">Will be effective from</label>
         <select id="" name="wef_semester_id" class="input-indigo p-2">
             @foreach($semesters as $semester)
             <option value="{{$semester->id}}">{{$semester->semester_type->name}} {{$semester->year}}</option>

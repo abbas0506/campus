@@ -25,22 +25,28 @@
         <label for="">Full Name <span class="text-red-600"> *(as per scheme of study)</span></label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Bachelor of Science in Computer Science" value="{{$program->name}}">
 
-        <div class="flex flex-col md:flex-row flex-wrap md:justify-between md:items-center">
-            <div class="flex flex-col flex-1">
+        <div class="flex items-center space-x-4 ">
+            <div class="flex flex-col grow">
                 <label for="" class='mt-3'>Short Name <span class="text-sm">(if any)</span></label>
                 <input type="text" id='' name='short' class="input-indigo" placeholder="For example: BSCS" value="{{$program->short}}">
             </div>
+            <div class="flex flex-col">
+                <label for="" class='mt-3'>Total Credits</label>
+                <input type="text" id='' name='credit_hrs' class="input-indigo" placeholder="Credit hrs" value="{{$program->credit_hrs}}">
+            </div>
+        </div>
 
-            <div class="flex flex-col md:w-48 md:ml-4">
-                <label for="" class='mt-3'>Duration <span class="text-sm">(Years)</span></label>
+        <div class="flex space-x-4">
+            <div class="flex flex-col flex-1">
+                <label for="" class='mt-3'>Min Duration <span class="text-sm">(Years)</span></label>
                 <select id="" name="min_duration" class="input-indigo p-2">
                     @foreach($durations as $duration)
                     <option value="{{$duration}}" @if($program->min_duration==$duration) selected @endif>{{$duration}}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="flex flex-col md:w-48 md:ml-4">
-                <label for="" class='mt-3'>Duration <span class="text-sm">(Years)</span></label>
+            <div class="flex flex-col flex-1">
+                <label for="" class='mt-3'>Max Duration <span class="text-sm">(Years)</span></label>
                 <select id="" name="max_duration" class="input-indigo p-2">
                     @foreach($durations as $duration)
                     <option value="{{$duration}}" @if($program->max_duration==$duration) selected @endif>{{$duration}}</option>
@@ -48,13 +54,7 @@
                 </select>
             </div>
         </div>
-        <!-- <label for="" class='mt-3'>Department</label> -->
-        <select id="" name="department_id" class="input-indigo p-2" hidden>
-            <option value="">Select a department</option>
-            @foreach($departments->sortBy('name') as $department)
-            <option value="{{$department->id}}" @if($department->id==$program->department_id) selected @endif>{{$department->name}}</option>
-            @endforeach
-        </select>
+
 
         <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
             <a href="{{route('programs.index')}}" class="btn-indigo-rounded">Cancel</a>

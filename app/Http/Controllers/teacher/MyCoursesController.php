@@ -20,7 +20,7 @@ class MyCoursesController extends Controller
     {
         //
         $user = Auth::user();
-        $section_ids = CourseAllocation::where('user_id', $user->id)->distinct()->pluck('section_id')->toArray();
+        $section_ids = CourseAllocation::where('teacher_id', $user->id)->distinct()->pluck('section_id')->toArray();
         $sections = Section::whereIn('id', $section_ids)->get();
         $teacher = $user;
         return view('teacher.mycourses.index', compact('sections', 'teacher'));

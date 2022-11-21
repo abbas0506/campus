@@ -9,10 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Department;
 use App\Models\Designation;
-use App\Models\Teacher;
-use App\Models\Jobtype;
-use App\Models\Nationality;
-use App\Models\Prefix;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Exception;
@@ -59,7 +55,8 @@ class TeacherController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'cnic' => 'required|unique:teachers',
+            'phone' => 'unique:users',
+            'cnic' => 'required|unique:users',
             'department_id' => 'required|numeric'
 
         ]);
@@ -103,8 +100,8 @@ class TeacherController extends Controller
     {
         //
         $teacher = User::findOrFail($id);
-        $departments = Department::all();
-        return view('hod.teachers.edit', compact('teacher', 'departments'));
+        $department = Department::find(session('department_id'));
+        return view('hod.teachers.edit', compact('teacher', 'department'));
     }
 
     /**
@@ -117,7 +114,6 @@ class TeacherController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $teacher = Teacher::find($id);
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email,' . $id, 'id',
@@ -131,7 +127,6 @@ class TeacherController extends Controller
             $user->email = $request->email;
             $user->phone = $request->phone;
             $user->cnic = $request->cnic;
-            $user->department_id = $request->department_id;
             $user->save();
 
             return redirect('teachers')->with('success', 'Successfully updated');;
@@ -149,7 +144,7 @@ class TeacherController extends Controller
     public function destroy($id)
     {
         //
-        $teacher = Teacher::findOrFail($id);
+        $teacher = User::findOrFail($id);
         try {
             $teacher->delete();
             return redirect()->back()->with('success', 'Successfully deleted');

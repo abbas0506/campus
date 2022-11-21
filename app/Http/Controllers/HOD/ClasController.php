@@ -4,14 +4,16 @@ namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clas;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Program;
+use App\Models\Scheme;
 use App\Models\Section;
 use App\Models\Semester;
 use App\Models\Shift;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class CourseAllocationOptionController extends Controller
+class ClasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +22,15 @@ class CourseAllocationOptionController extends Controller
      */
     public function index()
     {
-
-        //find all program of this department
-        $clases = Clas::all();
-        return view('hod.course_allocation.options', compact('clases'));
+        //
+        $clases = Clas::whereHas(
+            'program',
+            function ($q) {
+                $q->where('department_id', session('department_id'));
+            }
+        )->get();
+        // $clases = Clas::all();
+        return view('hod.clases.index', compact('clases'));
     }
 
     /**
@@ -34,6 +41,11 @@ class CourseAllocationOptionController extends Controller
     public function create()
     {
         //
+        $programs = Program::where('department_id', session('department_id'))->get();
+        $shifts = Shift::all();
+        $schemes = Scheme::all();
+        $semesters = Semester::all();
+        return view('hod.clases.create', compact('programs', 'shifts', 'schemes', 'semesters'));
     }
 
     /**
@@ -44,16 +56,29 @@ class CourseAllocationOptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //append current semester to request
+        $request->merge(['semester_id' => session('semester_id')]);
         $request->validate([
-            'section_id' => 'required|numeric',
-        ]);
+            'program_id' => 'required|numeric',
+            'shift_id' => 'required|numeric',
+            'semester_no' => 'required|numeric',
+            'semester_id' => 'required|numeric',
 
-        session([
-            'section_id' => $request->section_id,
         ]);
-
-        return redirect()->route('course-allocations.index');
+        DB::beginTransaction();
+        try {
+            $clas = Clas::create($request->all());
+            Section::create([
+                'clas_id' => $clas->id,
+                'name' => 'A',
+            ]);
+            DB::commit();
+            return redirect('clases')->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**

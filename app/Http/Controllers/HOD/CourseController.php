@@ -47,6 +47,8 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         //
+        //append id of hod's current department
+        $request->merge(['department_id' => session('department_id')]);
         $request->validate([
             'name' => 'required|unique:courses',
             'short' => 'required',
@@ -57,7 +59,6 @@ class CourseController extends Controller
             'credit_hrs_practical' => 'required|numeric',
             'max_marks_practical' => 'required|numeric',
             'department_id' => 'required|numeric',
-
         ]);
 
         try {

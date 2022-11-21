@@ -48,11 +48,11 @@
         <div class="flex flex-col md:flex-row md:items-center md:space-x-8">
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Credit Hrs (Theory)</label>
-                <input id="" type='number' name="credit_hrs_theory" class="input-indigo p-1 pl-2" placeholder="Crdit Hrs" value='4' value="{{$course->credit_hrs_theory}}">
+                <input id="" type='number' name="credit_hrs_theory" class="input-indigo p-1 pl-2" placeholder="Crdit Hrs" value="{{$course->credit_hrs_theory}}">
             </div>
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Max Marks (Theory)</label>
-                <input type='number' id="" name="max_marks_theory" class="input-indigo p-1 pl-2" placeholder="Marks" value='100' value="{{$course->max_marks_theory}}" value="{{$course->credit_hrs_practical}}" min=0>
+                <input type='number' id="" name="max_marks_theory" class="input-indigo p-1 pl-2" placeholder="Marks" value="{{$course->max_marks_theory}}" min=0>
             </div>
         </div>
         <div class="flex flex-col md:flex-row md:items-center md:space-x-8">

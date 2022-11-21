@@ -13,8 +13,13 @@ return [
     //     'client' => 'Client',
     // ],
     'romans' => [
-        'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV' . 'XVI',
+        'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI'
     ],
+
+    'letters' => [
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'
+    ],
+
     'emails' => [
         'dev' => env('DEV_EMAIL'),
     ]

@@ -13,10 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('exam_types', function (Blueprint $table) {
+        Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
+            $table->unsignedBigInteger('clas_id');  //root
+            $table->unique(['name', 'clas_id']); //composite pk
             $table->timestamps();
+
+            $table->foreign('clas_id')
+                ->references('id')
+                ->on('clas')
+                ->onDelete('cascade');
         });
     }
 
@@ -27,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exam_types');
+        Schema::dropIfExists('sections');
     }
 };

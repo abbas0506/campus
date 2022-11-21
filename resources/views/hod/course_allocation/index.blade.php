@@ -39,7 +39,7 @@
         <tbody>
             @php
 
-            $total_semesters=$section->program->min_duration*2;
+            $total_semesters=$section->clas->program->min_duration*2;
             $semester_no;
             $roman=$roman=config('global.romans');
 
@@ -55,8 +55,8 @@
                         <div class="flex flex-1 text-sm">{{$course_allocation->course->name}}</div>
                         <div class="flex flex-1 text-sm">
                             <!-- if teacher name given, show name ... else show link icon -->
-                            @if($course_allocation->user)
-                            {{$course_allocation->user->name}}
+                            @if($course_allocation->teacher)
+                            {{$course_allocation->teacher->name}}
                             @else
                             <div class="flex items-center py-2">
                                 <a href="{{url('course_allocations/assign/teacher',$course_allocation)}}">
@@ -83,7 +83,7 @@
                     </div>
                     @endforeach
                     <!-- allow course addition only for current semester -->
-                    @if($section->semester_no==$semester_no)
+                    @if($section->clas->semester_no==$semester_no)
                     <div class="flex items-center py-2">
                         <a href="{{route('course-allocations.create')}}" class="">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-indigo-600">

@@ -30,7 +30,7 @@
             <tbody>
                 <tr class="text-xs font-bold mt-8">
                     <td class="w-32 py-1">Program Name</td>
-                    <td class="w-64 py-1">{{$student->section->program->name}}</td>
+                    <td class="w-64 py-1">{{$student->section->clas->program->name}}</td>
                     <td class="w-32 py-1">Session</td>
                     <td class="w-64 py-1">2022-24</td>
                 </tr>
@@ -42,7 +42,7 @@
                 </tr>
                 <tr class="text-xs font-bold">
                     <td class="w-32 py-1">Father Name:</td>
-                    <td class="w-64 py-1">{{$student->section->program->name}}</td>
+                    <td class="w-64 py-1">{{$student->section->clas->program->name}}</td>
                     <td class="w-32 py-1">Registration No.:</td>
                     <td class="w-64 py-1">{{$student->regno}}</td>
                 </tr>

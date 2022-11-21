@@ -65,7 +65,6 @@
                 <input type='number' id="" name="max_marks_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value='0' min=0>
             </div>
         </div>
-        <input type="text" name='department_id' value="{{session('department_id')}}" hidden>
 
         <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
             <a href="{{route('courses.index')}}" class="btn-indigo-rounded">Cancel</a>

@@ -58,10 +58,10 @@
                     <tr class="border-b border-slate-200">
                         <th>Name</th>
                         <th>Father</th>
-                        <th class="text-center">Assignment</th>
-                        <th class="text-center">Presentation</th>
-                        <th class="text-center">Midterm</th>
-                        <th class="text-center">Summative</th>
+                        <th class="text-center">Assignment <br> (10%)</th>
+                        <th class="text-center">Presentation<br> (10%)</th>
+                        <th class="text-center">Midterm<br> (30%)</th>
+                        <th class="text-center">Summative <br> (50%)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,16 +95,16 @@
                         </td>
                         <td hidden><input type="text" name='student_id[]' value="{{$result->student_id}}"></td>
                         <td class="py-3 text-center">
-                            <input type="text" name='assignment[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->assignment}}" placeholder="absent" onchange="updateMarksCount()">
+                            <input type='number' name='assignment[]' min='0' max='10' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->assignment}}" placeholder="absent" onchange="updateMarksCount()">
                         </td>
                         <td class="py-3 text-center">
-                            <input type="text" name='presentation[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks " value="{{$result->presentation}}" placeholder="absent" onchange="updateMarksCount()">
+                            <input type="number" name='presentation[]' min='0' max='10' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks " value="{{$result->presentation}}" placeholder="absent" onchange="updateMarksCount()">
                         </td>
                         <td class="py-3 text-center">
-                            <input type="text" name='midterm[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->midterm}}" placeholder="absent" onchange="updateMarksCount()">
+                            <input type="number" name='midterm[]' min='0' max='30' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->midterm}}" placeholder="absent" onchange="updateMarksCount()">
                         </td>
                         <td class="py-3 text-center">
-                            <input type="text" name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->summative}}" placeholder="absent" onchange="updateMarksCount()">
+                            <input type="number" name='summative[]' min='0' max='50' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->summative}}" placeholder="absent" onchange="updateMarksCount()">
                         </td>
 
 

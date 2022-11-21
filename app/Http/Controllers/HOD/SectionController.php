@@ -25,21 +25,6 @@ class SectionController extends Controller
      */
     public function index()
     {
-        //
-        $semester = Semester::find(session('semester_id'));
-
-        $programs = Program::where('department_id', session('department_id'))
-            ->whereHas(
-                'sections',
-                function ($q) {
-                    $q->where('semester_id', session('semester_id'));
-                }
-            )->get();;
-        // $program_ids = Section::where('semester_id', session('semester_id'))->distinct()->pluck('program_id')->toArray();
-
-        // $programs = Program::whereIn('id', $program_ids)->get();
-        $shifts = Shift::all();
-        return view('hod.sections.index', compact('semester', 'programs', 'shifts'));
     }
 
     /**
@@ -50,15 +35,6 @@ class SectionController extends Controller
     public function create()
     {
         //
-        if (session('semester_id')) {
-            $semester = Semester::find(session('semester_id'));
-            $programs = Program::where('department_id', session('department_id'))->get();
-            $shifts = Shift::all();
-            return view('hod.sections.create', compact('semester', 'programs', 'shifts'));
-        } else {
-            echo 'session or program variable not set... probably you have tried direct access to this page';
-            //send to error page showing direct access
-        }
     }
 
     /**
@@ -71,29 +47,21 @@ class SectionController extends Controller
     {
         //
         $request->validate([
-            'program_id' => 'required|numeric',
-            'shift_id' => 'required|numeric',
-            'name' => 'required',
+            'clas_id' => 'required|numeric',
         ]);
 
         try {
+            $clas = Clas::find($request->clas_id);
+            $last = $clas->lastSection()->name;
 
-            $sections = Section::where('name', $request->name)
-                ->where('semester_id', session('semester_id'))
-                ->where('program_id', $request->program_id)
-                ->where('shift_id', $request->shift_id);
+            $letters = config('global.letters');
+            $index = array_search($last, $letters);
+            Section::create([
+                'name' => $letters[$index + 1],
+                'clas_id' => $request->clas_id,
+            ]);
 
-            if ($sections->count() > 0)   //session exists
-                return redirect()->back()->with('error', 'Section already exists');
-            else {
-                Section::create([
-                    'name' => $request->name,
-                    'semester_id' => session('semester_id'),
-                    'program_id' => $request->program_id,
-                    'shift_id' => $request->shift_id,
-                ]);
-                return redirect('sections')->with('success', 'Successfully created');
-            }
+            return redirect('clases')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -163,13 +131,10 @@ class SectionController extends Controller
         }
     }
 
-    public function fetchSectionsByProgramId(Request $request)
+    public function fetchSectionsByClas(Request $request)
     {
-        $sections = Section::where('semester_id', session('semester_id'))
-            ->where('program_id', $request->program_id)
-            ->where('shift_id', $request->shift_id)->get();
-
-        // $sections = Section::whereIn('clas_id', $clas_ids)->get();
+        $clas = Clas::find($request->clas_id);
+        $sections = $clas->sections;
 
 
         //prepare courses list
@@ -178,17 +143,8 @@ class SectionController extends Controller
             $section_options .= "<option value='" . $section->id . "'>" . $section->name . "</option>";
         }
 
-        $program = Program::find($request->program_id);
-        // $schemes = Scheme::where('program_id', $request->program_id)->get();
-        $schemes = $program->schemes;
-        $scheme_options = "";
-        foreach ($schemes as $scheme) {
-            $scheme_options .= "<option value='" . $scheme->id . "'>" . $scheme->semester->semester_type->name . " " . $scheme->semester->year . "</option>";
-        }
-
         return response()->json([
             'section_options' => $section_options,
-            'scheme_options' => $scheme_options,
         ]);
     }
 }

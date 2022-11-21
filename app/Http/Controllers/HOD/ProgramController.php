@@ -44,11 +44,12 @@ class ProgramController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //append id of hod's current department
+        $request->merge(['department_id' => session('department_id')]);
         $request->validate([
             'name' => 'required|unique:programs',
             'short' => 'required',
-            'code' => 'nullable|unique:programs',
+            'credit_hrs' => 'required|numeric',
             'min_duration' => 'required|numeric',
             'max_duration' => 'required|numeric',
             'department_id' => 'required|numeric',
@@ -98,15 +99,12 @@ class ProgramController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         $request->validate([
             'name' => 'required|unique:programs,name,' . $id, 'id',
             'short' => 'required',
-            'code' => 'nullable|unique:programs,code,' . $id, 'id',
+            'credit_hrs' => 'required|numeric',
             'min_duration' => 'required|numeric',
             'max_duration' => 'required|numeric',
-            'department_id' => 'required|numeric',
-
         ]);
 
         try {

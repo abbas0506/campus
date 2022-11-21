@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Semester;
@@ -18,6 +19,8 @@ class LoginOptionsController extends Controller
     public function index()
     {
         //
+
+
         $semesters = Semester::whereNotNull('edit_till')->get();
         return view('login_options', compact('semesters'));
     }

@@ -1,10 +1,10 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-5">Sections</h1>
+<h1 class="mt-5">Classes</h1>
 
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        {{$semester->title()}} / sections / all
+        Classes / all
     </div>
     <div class="relative ml-0 md:ml-20">
         <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
@@ -12,7 +12,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
         </svg>
     </div>
-    <a href="{{route('sections.create')}}" class="btn-indigo">
+    <a href="{{route('clases.create')}}" class="btn-indigo">
         add class
     </a>
 </div>
@@ -37,35 +37,36 @@
     <thead>
         <tr class="border-b border-slate-200">
             <th>Class</th>
-            <th>Semester</th>
             <th>Sections</th>
         </tr>
     </thead>
     <tbody>
 
-        @foreach($programs as $program)
-        @foreach($shifts as $shift)
-        @if($program->sections->where('shift_id',$shift->id)->count()>0)
+        @foreach($clases as $clas)
         <tr class="tr border-b">
-            <td class="py-2 text-slate-700">
-                <div>{{$program->name}}</div>
-                <div class="text-sm text-gray-500">{{$program->short}} | {{$shift->name}}</div>
+            <td class="py-2 text-slate-600 text-sm">
+                <div>{{$clas->title()}}</div>
             </td>
-            <td>3 temp</td>
-            <td class="flex items-center">
-                @foreach($program->sections->where('shift_id',$shift->id) as $section)
+
+            <td class="flex items-center text-sm py-2">
+                @foreach($clas->sections as $section)
                 <a href="{{route('sections.show',$section)}}" class='px-1 rounded hover:bg-indigo-500 hover:text-slate-200'>{{$section->name}}</a>
                 @endforeach
-                <a href="{{url('sections/append/'.$program->id.'/'.$shift->id)}}"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-indigo-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
-                    </svg>
-                </a>
+                <form action="{{route('sections.store')}}" method="post">
+                    @csrf
+                    <input type="text" name="clas_id" value="{{$clas->id}}" hidden>
+                    <button type='submit' class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-indigo-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
+                        </svg>
+                    </button>
+                </form>
             </td>
 
         </tr>
-        @endif
+
         @endforeach
-        @endforeach
+
 
     </tbody>
 </table>

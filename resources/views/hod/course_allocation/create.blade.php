@@ -36,7 +36,7 @@
 
         @php
         if($scheme){
-        $total_semesters=$section->program->min_duration*2;
+        $total_semesters=$section->clas->program->min_duration*2;
         $semester_no;
         $roman=config('global.romans');
         }

@@ -1,8 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="bg-teal-600">
-    @foreach(Auth::user()->headships as $headship)
-    department: {{$headship->department->name}}
-    @endforeach
+<div class="text-teal-700 bg-teal-200 px-5">
+    Dashboard under construction
 </div>
 @endsection

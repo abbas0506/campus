@@ -11,7 +11,7 @@ class Program extends Model
     protected $fillable = [
         'name',
         'short',
-        'code',
+        'credit_hrs',   //total credits to pass
         'min_duration',
         'max_duration',
         'department_id',

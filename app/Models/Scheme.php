@@ -25,4 +25,8 @@ class Scheme extends Model
     {
         return $this->hasMany(SchemeDetail::class);
     }
+    public function title()
+    {
+        return $this->program->short . ' / ' . $this->semester->title();
+    }
 }

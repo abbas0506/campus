@@ -6,8 +6,7 @@
         <a href="{{route('schemes.index')}}" class="text-orange-700 mr-2">
             Schemes
         </a>
-        / {{session('scheme')->semester->title()}}
-        / {{session('scheme')->program->short}}
+        / {{$scheme->title()}}
     </div>
 </div>
 <div class="container md:w-3/4 mx-auto px-5">
@@ -53,7 +52,7 @@
                     @endphp
 
                     <div class="flex items-center justify-between @if($alternate_row%2==0) bg-slate-100 @endif">
-                        <div class="text-sm">{{$scheme_detail->course->name}}</div>
+                        <div class="text-sm">{{$scheme_detail->course->name}} <span class="text-sm text-slate-600 ml-3">{{$scheme_detail->course->credit_hrs_theory+$scheme_detail->course->credit_hrs_practical}}({{$scheme_detail->course->credit_hrs_theory}}-{{$scheme_detail->course->credit_hrs_practical}})</span></div>
                         <form action="{{route('scheme-details.destroy',$scheme_detail)}}" method="POST" id='del_form{{$scheme_detail->id}}' class="mt-1">
                             @csrf
                             @method('DELETE')
@@ -98,20 +97,6 @@
             if (result.value) {
                 //submit corresponding form
                 $('#del_form' + formid).submit();
-            }
-        });
-    }
-
-    function search(event) {
-        var searchtext = event.target.value.toLowerCase();
-        var str = 0;
-        $('.tr').each(function() {
-            if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
-                )) {
-                $(this).addClass('hidden');
-            } else {
-                $(this).removeClass('hidden');
             }
         });
     }

@@ -13,19 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('clas', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('semester_id');  //root
             $table->unsignedBigInteger('program_id');
             $table->unsignedBigInteger('shift_id');
-            $table->unsignedInteger('semester_no')->nullable()->default(1); //dynamic
-            $table->unique(['name', 'semester_id', 'program_id', 'shift_id']); //composite pk
+            $table->unsignedBigInteger('semester_id');  //root
+            $table->unsignedBigInteger('scheme_id');    //to follow
+            $table->unsignedInteger('semester_no')->default(1); //dynamic
+            $table->unique(['program_id', 'shift_id', 'semester_id', 'semester_no']); //composite pk
+
             $table->timestamps();
 
-            $table->foreign('semester_id')
+            $table->foreign('program_id')
                 ->references('id')
-                ->on('semesters')
+                ->on('programs')
                 ->onDelete('cascade');
 
             $table->foreign('shift_id')
@@ -33,9 +34,14 @@ return new class extends Migration
                 ->on('shifts')
                 ->onDelete('cascade');
 
-            $table->foreign('program_id')
+            $table->foreign('semester_id')
                 ->references('id')
-                ->on('programs')
+                ->on('semesters')
+                ->onDelete('cascade');
+
+            $table->foreign('scheme_id')
+                ->references('id')
+                ->on('schemes')
                 ->onDelete('cascade');
         });
     }
@@ -47,6 +53,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('clas');
     }
 };

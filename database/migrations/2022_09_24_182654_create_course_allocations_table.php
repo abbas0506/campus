@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('course_allocations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('section_id');
-            $table->unsignedBigInteger('semester_no');
+            $table->unsignedInteger('semester_no');
             $table->unsignedBigInteger('scheme_detail_id');
             $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('user_id')->nullable(); //will be initialized at step 2 of course allocation
-
+            $table->unsignedBigInteger('teacher_id')->nullable(); //will be initialized at step 2 of course allocation
+            $table->unsignedBigInteger('semester_id');
             $table->timestamps();
 
             $table->foreign('section_id')
@@ -38,7 +38,7 @@ return new class extends Migration
                 ->on('courses')
                 ->onDelete('cascade');
 
-            $table->foreign('user_id')
+            $table->foreign('teacher_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');

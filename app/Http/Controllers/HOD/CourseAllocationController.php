@@ -13,6 +13,7 @@ use App\Models\Scheme;
 use App\Models\SchemeDetail;
 use App\Models\Section;
 use App\Models\Semester;
+use App\Models\User;
 use Exception;
 
 use Illuminate\Http\Request;
@@ -28,11 +29,11 @@ class CourseAllocationController extends Controller
     public function index()
     {
         //
-        if (session('section_id') && session('scheme_id')) {
+        if (session('section_id')) {
             $section = Section::find(session('section_id'));
             return view('hod.course_allocation.index', compact('section'));
         } else {
-            echo "Scheme of study and section not selected";
+            echo "Section not selected";
         }
     }
 
@@ -45,7 +46,7 @@ class CourseAllocationController extends Controller
     {
         //
         $section = Section::find(session('section_id'));
-        $scheme = Scheme::find(session('scheme_id'));
+        $scheme = $section->clas->scheme;
 
         return view('hod.course_allocation.create', compact('scheme', 'section'));
     }
@@ -59,19 +60,35 @@ class CourseAllocationController extends Controller
     public function store(Request $request)
     {
         //
+
+        // echo 'semester: ' . session('semester_id') . "section:" . session('section_id');
+        //append id of hod's current department
+        $request->merge([
+            'semester_id' => session('semester_id'),
+            'section_id' => session('section_id'),
+            'semester_no' => 1,
+        ]);
+
         $request->validate([
             'course_id' => 'required|numeric',
+            'semester_id' => 'required|numeric',
+            'section_id' => 'required|numeric',
+            'semester_no' => 'required|numeric',
+
         ]);
 
         try {
-            $section = Section::find(session('section_id'));
-            CourseAllocation::create([
-                'section_id' => $section->id,
-                'semester_no' => $section->semester_no,
-                'scheme_detail_id' => $request->scheme_detail_id,
-                'course_id' => $request->course_id,
+            CourseAllocation::create($request->all());
 
-            ]);
+            // $section = Section::find(session('section_id'));
+            // CourseAllocation::create([
+            //     'semester_id' => session('semester_id'),
+            //     'section_id' => session('section_id'),
+            //     'semester_no' => $section->semester_no,
+            //     'scheme_detail_id' => $request->scheme_detail_id,
+            //     'course_id' => $request->course_id,
+
+            // ]);
 
 
             return redirect()->route('course-allocations.index')->with('success', "Successfully saved");
@@ -144,26 +161,33 @@ class CourseAllocationController extends Controller
     }
     public function assignTeacher($id)
     {
-        session([
-            'course_allocation_id' => $id,
-        ]);
+        //save which course allocation is open
+        session(['course_allocation_id' => $id,]);
 
-        $department = Department::find(session('department_id'));
-        $teachers = $department->teachers();
+        $teachers = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'teacher');
+            }
+        )->get();
 
         return view('hod.course_allocation.assign.teacher', compact('teachers'));
     }
     public function postAssignTeacher(Request $request)
     {
+
+        //append id of hod's current department
+        $request->merge(['course_allocation_id' => session('course_allocation_id')]);
         $request->validate([
+            'course_allocation_id' => 'required|numeric',
             'teacher_id' => 'required|numeric',
         ]);
 
         try {
 
             $course_allocation = CourseAllocation::find(session('course_allocation_id'));
-            $course_allocation->user_id = $request->teacher_id;
-            $course_allocation->update();
+            $course_allocation->update($request->all());
+
             session([
                 'course_allocation_id' => null, //nullify stored coure allocation
             ]);

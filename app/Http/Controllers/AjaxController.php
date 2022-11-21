@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\CourseAllocation;
 use App\Models\Department;
+use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,14 +28,7 @@ class AjaxController extends Controller
                 $options .= "<option value='" . $headship->department->id . "'>" . $headship->department->name . "</option>";
             }
         } elseif ($request->role == 'teacher') {
-            // return departments where the user tecaches any course
-            // $course_allocations = $user->course_allocations;
-
-            // foreach ($course_allocations as $course_allocation) {
-            //     $options .= "<option value='" . $course_allocation->course->department->id . "'>" . $course_allocation->course->department->name . "</option>";
-            // }
-
-            $department_ids = Course::where('user_id', $user->id)
+            $department_ids = Course::where('teacher_id', $user->id)
                 ->join('course_allocations', 'courses.id', '=', 'course_allocations.course_id')
                 ->join('departments', 'courses.department_id', '=', 'departments.id')
                 ->pluck('departments.id')->toArray();
@@ -47,6 +41,32 @@ class AjaxController extends Controller
 
         return response()->json([
             'options' => $options,
+        ]);
+    }
+
+    public function fetchSchemesByProgramId(Request $request)
+    {
+
+        $request->validate([
+            'program_id' => 'required',
+        ]);
+        $program = Program::find($request->program_id);
+        $schemes = $program->schemes;
+        $scheme_options = "";
+        foreach ($schemes as $scheme) {
+            $scheme_options .= "<option value='" . $scheme->id . "'>" . $scheme->title() . "</option>";
+        }
+        $semester_nos = '0';
+        $semester_count = $program->min_duration * 2;
+        if ($semester_count > 0) {
+            for ($i = 1; $i <= $semester_count; $i++) {
+                $semester_nos .= "<option value='" . $i . "'>" . $i . "</option>";
+            }
+        }
+
+        return response()->json([
+            'scheme_options' => $scheme_options,
+            'semester_nos' => $semester_nos,
         ]);
     }
 }

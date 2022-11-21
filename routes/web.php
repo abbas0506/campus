@@ -19,6 +19,7 @@ use App\Http\Controllers\hod\StudentController;
 use App\Http\Controllers\admin\SemesterController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ce\TranscriptController;
+use App\Http\Controllers\hod\ClasController;
 use App\Http\Controllers\hod\CourseAllocationOptionController;
 use App\Http\Controllers\hod\ElectiveAllocationController;
 use App\Http\Controllers\hod\ImportStudentsController;
@@ -52,6 +53,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::resource('login-options', LoginOptionsController::class)->only('index', 'store');
 Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
+
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
 
@@ -73,9 +75,13 @@ Route::group(['middleware' => ['role:controller']], function () {
 Route::group(['middleware' => ['role:hod']], function () {
     Route::view('hod', 'hod.index');
     Route::resource('programs', ProgramController::class);
+    Route::resource('clases', ClasController::class);
     Route::resource('sections', SectionController::class);
     Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
-    Route::post('fetchSectionsByProgramId', [SectionController::class, 'fetchSectionsByProgramId'])->name('fetchSectionsByProgramId'); //for ajax call
+    Route::post('fetchSectionsByClas', [SectionController::class, 'fetchSectionsByClas'])->name('fetchSectionsByClas'); //for ajax call
+    Route::post('fetchSchemesByProgramId', [AjaxController::class, 'fetchSchemesByProgramId'])->name('fetchSchemesByProgramId'); //for ajax call
+
+
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', teacherController::class);
     Route::resource('schemes', SchemeController::class);

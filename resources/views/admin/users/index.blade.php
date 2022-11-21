@@ -16,7 +16,7 @@
             </svg>
         </div>
         <a href="{{route('users.create')}}" class="btn-indigo">
-            + Add New User
+            add new
         </a>
     </div>
     @if ($errors->any())
