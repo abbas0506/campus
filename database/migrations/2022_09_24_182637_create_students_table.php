@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('pic', 100)->default('default.png');
             $table->date('dob')->nullable();
             $table->enum('gender', ['M', 'F', 'T']);
-            $table->string('regno', 20)->nullable();
-            $table->string('rollno', 20);
+            $table->string('regno', 20)->unique()->nullable();
+            $table->string('rollno', 20)->unique();
             $table->unsignedBigInteger('section_id');
 
 

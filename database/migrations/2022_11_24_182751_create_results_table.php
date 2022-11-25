@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('attempts', function (Blueprint $table) {
+        Schema::create('results', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('course_enrollment_id');
             $table->unsignedBigInteger('semester_id');
@@ -30,8 +30,9 @@ return new class extends Migration
             $table->date('forwaded_at')->nullable();
             $table->unsignedBigInteger('kpo_id')->nullable();
             $table->unsignedBigInteger('controller_id')->nullable();
-            $table->date('approved_at')->nullable();
+            $table->date('approved_at')->nullable(); //make null to allow editing
 
+            $table->unique(['course_enrollment_id', 'semester_id']);
             $table->foreign('course_enrollment_id')
                 ->references('id')
                 ->on('course_enrollments')
@@ -58,6 +59,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attempts');
+        Schema::dropIfExists('results');
     }
 };

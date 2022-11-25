@@ -36,10 +36,13 @@ class Section extends Model
         return $this->hasMany(CourseAllocation::class);
     }
 
+    public function name()
+    {
+        return 'Section -  ' . $this->name;
+    }
     public function title()
     {
-
-        return 'Section -  ' . $this->name;
+        return $this->clas->title() . " / " . $this->name();
     }
 
     public function has_course($course_id)

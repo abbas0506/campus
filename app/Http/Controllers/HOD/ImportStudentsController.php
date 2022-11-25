@@ -12,9 +12,11 @@ use Illuminate\Http\Request;
 class ImportStudentsController extends Controller
 {
     //
-    public function view()
+    public function view($id)
+
     {
-        return view('hod.students.import');
+        $section = Section::find($id);
+        return view('hod.students.import', compact('section'));
     }
     public function import(Request $request)
     {
@@ -27,7 +29,7 @@ class ImportStudentsController extends Controller
 
             return redirect()->route('sections.show', session('section_id'))->with('success', 'Student imported successfully');
         } catch (Exception $e) {
-            echo $e->getMessage();
+            return redirect()->back()->withErrors($e->getMessage());
         }
     }
 }

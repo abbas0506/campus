@@ -55,10 +55,10 @@
 
     <!-- registered students -->
     <section id='registered' class="mt-16">
-        @if($registrations->count()>0)
+        @if($registered->count()>0)
         <div class="flex">
             <a href="{{route('results.edit', $course_allocation)}}" class="px-5 py-2 bg-teal-600 text-slate-100">
-                Start Feeding Result <span class="ml-2">(</span><span class="mx-1">{{$registrations->count()}}</span>)
+                Start Feeding Result <span class="ml-2">(</span><span class="mx-1">{{$registered->count()}}</span>)
             </a>
         </div>
         @endif
@@ -71,23 +71,23 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($registrations as $registration)
+                @foreach($registered as $student)
                 <tr class="tr border-b ">
                     <td class="py-2">
                         <div class="flex items-center space-x-4">
                             <div>
-                                @if($registration->student->gender=='M')
+                                @if($student->gender=='M')
                                 <div class="bg-indigo-500 w-2 h-2 rounded-full"></div>
                                 @else
                                 <div class="bg-green-500 w-2 h-2 rounded-full"></div>
                                 @endif
                             </div>
                             <div>
-                                <div class="text-slate-600">{{$registration->student->name}}</div>
+                                <div class="text-slate-600">{{$student->name}}</div>
                                 <div class="text-slate-600 text-sm">
-                                    {{$registration->student->rollno}}
-                                    @if($registration->student->regno)
-                                    | {{$registration->student->regno}}
+                                    {{$student->rollno}}
+                                    @if($student->regno)
+                                    | {{$student->regno}}
                                     @endif
                                 </div>
                             </div>
@@ -95,15 +95,15 @@
                         </div>
 
                     </td>
-                    <td hidden>{{$registration->student->gender}}</td>
+                    <td hidden>{{$student->gender}}</td>
                     <td class="py-2 text-slate-600 text-sm">
-                        {{$registration->student->father}}
+                        {{$student->father}}
                     </td>
                     <td class="py-2 flex items-center justify-center">
-                        <form action="{{route('registrations.destroy',$registration)}}" method="POST" id='del_form{{$registration->student->id}}' class="mt-1">
+                        <form action="{{route('registrations.destroy',$result)}}" method="POST" id='del_form{{$student->id}}' class="mt-1">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="delme('{{$registration->student->id}}')">
+                            <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="delme('{{$student->id}}')">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
                                 </svg>
@@ -258,7 +258,7 @@
                 if (result.value) {
                     $.ajax({
                         type: 'POST',
-                        url: "{{route('registrations.store')}}",
+                        url: "{{route('coursetracks.store')}}",
                         data: {
                             "course_allocation_id": course_allocation_id,
                             "ids_array": ids_array,
@@ -267,6 +267,7 @@
                         },
                         success: function(response) {
                             //
+
                             Swal.fire({
                                 icon: 'success',
                                 title: response.msg,

@@ -1,9 +1,9 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-5">Students</h1>
+<h1 class="mt-5">Classes</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Classes / <a href="{{url('class-options')}}" class="text-orange-700 mx-1"> choose semester </a> / students / import
+        <a href="{{url('clases')}}"> Classes</a> / {{$section->title()}} / students / import
     </div>
 </div>
 
@@ -34,7 +34,7 @@
         <input type="file" name='file' class="mt-3">
 
         <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
-            <a href="#" class="btn-indigo-rounded">Cancel</a>
+            <a href="{{route('sections.show', $section)}}" class="btn-indigo-rounded">Cancel</a>
             <button type="submit" class="btn-indigo-rounded">Import</button>
         </div>
     </form>

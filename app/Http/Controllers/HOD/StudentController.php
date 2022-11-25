@@ -50,8 +50,8 @@ class StudentController extends Controller
             'name' => 'required|string|max:100',
             'father' => 'required|string|max:100',
             'gender' => 'required|string|max:1',
-            'rollno' => 'required|string|max:20',
-            'regno' => 'nullable|string|max:20',
+            'rollno' => 'required|string|unique:students|max:20',
+            'regno' => 'nullable|string|unique:students|max:20',
 
         ]);
 
@@ -152,6 +152,7 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+
     {
         //
         $student = Student::findOrFail($id);

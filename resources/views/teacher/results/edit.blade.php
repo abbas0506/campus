@@ -43,13 +43,13 @@
             @csrf
             @method('PATCH')
             <div class="flex items-center py-2 space-x-5 ">
-                <div class="flex flex-col flex-1 text-sm text-indigo-600 py-3 pr-5">
+                <div class="flex flex-col flex-1 text-sm text-green-800 py-3 pr-5">
                     <div class="font-bold">{{$course_allocation->course->name}}</div>
-                    <div>{{$course_allocation->section->title()}}</div>
+                    <div>{{$course_allocation->section->clas->title()}} / {{$course_allocation->section->title()}}</div>
 
                 </div>
                 <button type="submit" class="px-8 py-2 bg-teal-600 text-slate-100 rounded-sm hover:bg-teal-500">
-                    Save Result <span class="ml-2">(</span><span class="mx-1">{{$course_allocation->registrations->count()}}</span>)
+                    Save Result <span class="ml-2">(</span><span class="mx-1">{{$course_allocation->registrations()->count()}}</span>)
                 </button>
             </div>
 
@@ -65,24 +65,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($course_allocation->results as $result)
+                    @foreach($course_allocation->attempts() as $attempt)
 
                     <tr class="tr border-b ">
                         <td class="py-2">
                             <div class="flex items-center space-x-4">
                                 <div>
-                                    @if($result->student->gender=='M')
+                                    @if($attempt->course_enrollment->student->gender=='M')
                                     <div class="bg-indigo-500 w-2 h-2 rounded-full"></div>
                                     @else
                                     <div class="bg-green-500 w-2 h-2 rounded-full"></div>
                                     @endif
                                 </div>
                                 <div>
-                                    <div class="text-slate-600">{{$result->student->name}}</div>
+                                    <div class="text-slate-600">{{$attempt->course_enrollment->student->name}}</div>
                                     <div class="text-slate-600 text-sm">
-                                        {{$result->student->rollno}}
-                                        @if($result->student->regno)
-                                        | {{$result->student->regno}}
+                                        {{$attempt->course_enrollment->student->rollno}}
+                                        @if($attempt->course_enrollment->student->regno)
+                                        | {{$attempt->course_enrollment->student->regno}}
                                         @endif
                                     </div>
                                 </div>
@@ -91,20 +91,20 @@
 
                         </td>
                         <td class="py-2 text-slate-600 text-sm">
-                            {{$result->student->father}}
+                            {{$attempt->course_enrollment->student->father}}
                         </td>
-                        <td hidden><input type="text" name='student_id[]' value="{{$result->student_id}}"></td>
+                        <td hidden><input type="text" name='student_id[]' value="{{$attempt->course_enrollment->student_id}}"></td>
                         <td class="py-3 text-center">
-                            <input type='number' name='assignment[]' min='0' max='10' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->assignment}}" placeholder="absent" onchange="updateMarksCount()">
-                        </td>
-                        <td class="py-3 text-center">
-                            <input type="number" name='presentation[]' min='0' max='10' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks " value="{{$result->presentation}}" placeholder="absent" onchange="updateMarksCount()">
+                            <input type='number' name='assignment[]' min='0' max='10' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$attempt->assignment}}" placeholder="absent" onchange="updateMarksCount()">
                         </td>
                         <td class="py-3 text-center">
-                            <input type="number" name='midterm[]' min='0' max='30' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->midterm}}" placeholder="absent" onchange="updateMarksCount()">
+                            <input type="number" name='presentation[]' min='0' max='10' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks " value="{{$attempt->presentation}}" placeholder="absent" onchange="updateMarksCount()">
                         </td>
                         <td class="py-3 text-center">
-                            <input type="number" name='summative[]' min='0' max='50' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->summative}}" placeholder="absent" onchange="updateMarksCount()">
+                            <input type="number" name='midterm[]' min='0' max='30' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$attempt->midterm}}" placeholder="absent" onchange="updateMarksCount()">
+                        </td>
+                        <td class="py-3 text-center">
+                            <input type="number" name='summative[]' min='0' max='50' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$attempt->summative}}" placeholder="absent" onchange="updateMarksCount()">
                         </td>
 
 

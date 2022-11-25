@@ -69,6 +69,6 @@ class User extends Authenticatable
     }
     public function course_allocations()
     {
-        return $this->hasMany(CourseAllocation::class, 'teacher_id');
+        return $this->hasMany(CourseAllocation::class, 'teacher_id')->where('semester_id', session('semester_id'));
     }
 }

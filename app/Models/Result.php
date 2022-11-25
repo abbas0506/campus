@@ -10,19 +10,21 @@ class Result extends Model
     use HasFactory;
 
     protected $fillable = [
-        'student_id',
-        'course_allocation_id',
-        'is_reappear',
+        'course_enrollment_id',
+        'semester_id',
+        'semester_no',
+
         'assignment',
         'presentation',
         'midterm',
         'summative',
+        'teacher_id',
         'internal_id',
         'hod_id',
         'forwarded_at',
         'kpo_id',
         'controller_id',
-        'approved_at',
+        'approved_at',  //make it blank to allow editing
 
     ];
     public  function student()

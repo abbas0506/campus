@@ -26,7 +26,7 @@ use App\Http\Controllers\hod\ImportStudentsController;
 use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\LoginOptionsController;
-use App\Http\Controllers\teacher\RegistrationController;
+use App\Http\Controllers\teacher\CourseTrackController;
 use App\Http\Controllers\teacher\MyCoursesController;
 use App\Http\Controllers\teacher\ResultController;
 
@@ -99,13 +99,13 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('students', StudentController::class);
     Route::resource('results', ResultController::class);
     Route::resource('enrollments', EnrollmentController::class);
-    Route::get('import-students/view', [ImportStudentsController::class, 'view']);
+    Route::get('import-students/view/{id}', [ImportStudentsController::class, 'view']);
     Route::post('import-students', [ImportStudentsController::class, 'import']);
 });
 
 Route::group(['middleware' => ['role:teacher']], function () {
     Route::view('teacher', 'teacher.index');
     Route::resource('mycourses', MyCoursesController::class);
-    Route::resource('registrations', RegistrationController::class);
+    Route::resource('coursetracks', CourseTrackController::class);
     Route::resource('results', ResultController::class);
 });

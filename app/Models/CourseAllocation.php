@@ -30,20 +30,36 @@ class CourseAllocation extends Model
     {
         return $this->belongsTo(Course::class);
     }
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
     public function teacher()
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
-    public function results()
+    public function semester()
     {
-        return $this->hasMany(Result::class);
+        return $this->belongsTo(Semester::class);
+    }
+
+    public function registered()
+    {
+    }
+    public function unregistered()
+    {
     }
     public function registrations()
     {
-        return $this->hasMany(Result::class); //returns registrations
+        $course_enrollment_ids = CourseEnrollment::where('course_id', $this->course_id)->pluck('id')->toArray();
+        $results = Result::where('teacher_id', $this->teacher_id)
+            ->where('semester_id', session('semester_id'))
+            ->whereIn('course_enrollment_id', $course_enrollment_ids)
+            ->get();
+
+        return $results;
+    }
+    public function results()
+    {
+        $course_enrollment_ids = CourseEnrollment::where('course_id', $this->course_id)->pluck('id')->toArray();
+        return $this->semester->results
+            ->where('teacher_id', $this->teacher_id)
+            ->whereIn('course_enrollment_id', $course_enrollment_ids);
     }
 }
