@@ -5,6 +5,7 @@ namespace App\Http\Controllers\teacher;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
+use App\Models\CourseTrack;
 use App\Models\Result;
 use App\Models\Section;
 use Exception;
@@ -86,24 +87,22 @@ class ResultController extends Controller
     {
         //
         $request->validate([
-            'student_id' => 'required',
+            'id' => 'required',
             'assignment' => 'required',
             'presentation' => 'required',
             'midterm' => 'required',
             'summative' => 'required',
         ]);
 
-
-        $students = $request->student_id;
+        $ids = $request->id;
         $assignment = $request->assignment;
         $presentation = $request->presentation;
         $midterm = $request->midterm;
         $summative = $request->summative;
         try {
-            foreach ($students as $key => $id) {
+            foreach ($ids as $key => $id) {
 
-                $result = Result::where('student_id', $id)->where('course_allocation_id', $course_allocation_id)->first();
-
+                $result = Result::find($id);
                 $result->assignment = $assignment[$key];
                 $result->presentation = $presentation[$key];
                 $result->midterm = $midterm[$key];
@@ -123,8 +122,15 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Result $result)
     {
         //
+        try {
+
+            $result->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 }

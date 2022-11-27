@@ -43,6 +43,10 @@ class Student extends Model
     {
         return $this->section->program;
     }
+    public function course_tracks()
+    {
+        return $this->hasMany(CourseTrack::class);
+    }
     public function results()
     {
         return $this->hasMany(Result::class);

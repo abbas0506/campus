@@ -10,7 +10,7 @@ class Result extends Model
     use HasFactory;
 
     protected $fillable = [
-        'course_enrollment_id',
+        'course_track_id',
         'semester_id',
         'semester_no',
 
@@ -31,11 +31,10 @@ class Result extends Model
     {
         return $this->belongsTo(Student::class);
     }
-    public  function course_allocation()
+    public  function course_track()
     {
-        return $this->belongsTo(CourseAllocation::class);
+        return $this->belongsTo(CourseTrack::class);
     }
-
     public function obtained()
     {
         return $this->assignment + $this->presentation + $this->midterm + $this->summative;
@@ -62,6 +61,6 @@ class Result extends Model
     }
     public function creditHrs()
     {
-        return $this->course_allocation->course->credit_hrs_theory + $this->course_allocation->course->credit_hrs_practical;
+        return $this->course_track->course->credit_hrs_theory + $this->course_track->course->credit_hrs_practical;
     }
 }

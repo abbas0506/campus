@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('course_enrollment_id');
+            $table->unsignedBigInteger('course_track_id');
             $table->unsignedBigInteger('semester_id');
             $table->unsignedInteger('semester_no')->nullable()->default(0);
 
@@ -32,10 +32,10 @@ return new class extends Migration
             $table->unsignedBigInteger('controller_id')->nullable();
             $table->date('approved_at')->nullable(); //make null to allow editing
 
-            $table->unique(['course_enrollment_id', 'semester_id']);
-            $table->foreign('course_enrollment_id')
+            $table->unique(['course_track_id', 'semester_id']);
+            $table->foreign('course_track_id')
                 ->references('id')
-                ->on('course_enrollments')
+                ->on('course_tracks')
                 ->onDelete('cascade');
 
             $table->foreign('semester_id')

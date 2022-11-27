@@ -42,7 +42,7 @@
     <section id='registered' class="mt-16">
         <div class="flex">
             <a href="{{route('results.edit', $course_allocation)}}" class="px-5 py-2 bg-teal-600 text-slate-100">
-                Start Editing Result <span class="ml-2">(</span><span class="mx-1">{{$course_allocation->registrations->count()}}</span>)
+                Start Editing Result <span class="ml-2">(</span><span class="mx-1">{{$course_allocation->results()->count()}}</span>)
             </a>
         </div>
 
@@ -58,43 +58,43 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($course_allocation->registrations as $registration)
+                @foreach($course_allocation->results() as $result)
                 <tr class="tr border-b ">
                     <td class="py-2">
                         <div class="flex items-center space-x-4">
                             <div>
-                                @if($registration->student->gender=='M')
+                                @if($result->course_track->student->gender=='M')
                                 <div class="bg-indigo-500 w-2 h-2 rounded-full"></div>
                                 @else
                                 <div class="bg-green-500 w-2 h-2 rounded-full"></div>
                                 @endif
                             </div>
                             <div>
-                                <div class="text-slate-600">{{$registration->student->name}}</div>
+                                <div class="text-slate-600">{{$result->course_track->student->name}}</div>
                                 <div class="text-slate-600 text-sm">
-                                    {{$registration->student->rollno}}
-                                    @if($registration->student->regno)
-                                    | {{$registration->student->regno}}
+                                    {{$result->course_track->student->rollno}}
+                                    @if($result->course_track->student->regno)
+                                    | {{$result->course_track->student->regno}}
                                     @endif
                                 </div>
                             </div>
                         </div>
                     </td>
-                    <td hidden>{{$registration->student->gender}}</td>
+                    <td hidden>{{$result->course_track->student->gender}}</td>
                     <td class="py-2 text-slate-600 text-sm">
-                        {{$registration->student->father}}
+                        {{$result->course_track->student->father}}
                     </td>
                     <td class="py-2 text-slate-600 text-sm text-center">
-                        {{$registration->assignment}}
+                        {{$result->assignment}}
                     </td>
                     <td class="py-2 text-slate-600 text-sm text-center">
-                        {{$registration->presentation}}
+                        {{$result->presentation}}
                     </td>
                     <td class="py-2 text-slate-600 text-sm text-center">
-                        {{$registration->midterm}}
+                        {{$result->midterm}}
                     </td>
                     <td class="py-2 text-slate-600 text-sm text-center">
-                        {{$registration->summative}}
+                        {{$result->summative}}
                     </td>
                 </tr>
                 @endforeach

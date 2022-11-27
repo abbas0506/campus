@@ -57,16 +57,18 @@
                 <tr>
                     <td colspan="6">Semester-{{$semester_no}}</td>
                 </tr>
-                @foreach($results->where('semester_no',$semester_no) as $result)
+                @foreach($course_tracks->where('semester_no',$semester_no) as $course_track)
+                @foreach($course_track->results as $result)
 
                 <tr class="tr">
-                    <td class="py-1 pl-2 border">{{$result->course_allocation->course->code}}</td>
-                    <td class="py-1 pl-2 border">{{$result->course_allocation->course->name}}</td>
+                    <td class="py-1 pl-2 border">{{$result->course_track->course->code}}</td>
+                    <td class="py-1 pl-2 border">{{$result->course_track->course->name}}</td>
                     <td class="py-1 text-center border">{{$result->creditHrs()}}</td>
                     <td class="py-1 text-center border">{{$result->obtained()}}</td>
                     <td class="py-1 text-center border">{{$result->gradePoint()}}</td>
                     <td class="py-1 text-center border">{{$result->gradeLetter()}}</td>
                 </tr>
+                @endforeach
                 @endforeach
                 @endforeach
             </tbody>

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
-use App\Models\CourseEnrollment;
+use App\Models\CourseTrack;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\Result;
@@ -25,6 +25,7 @@ class MyCoursesController extends Controller
         $section_ids = CourseAllocation::where('teacher_id', $user->id)->distinct()->pluck('section_id')->toArray();
         $sections = Section::whereIn('id', $section_ids)->get();
         $teacher = $user;
+
         return view('teacher.mycourses.index', compact('sections', 'teacher'));
     }
 
@@ -60,48 +61,31 @@ class MyCoursesController extends Controller
         //
         $course_allocation = CourseAllocation::find($id);
 
-        // get registered students 
-        // $registrations = $course_allocation->results();
-        // $registered_student_ids = $registrations->pluck('student_id')->toArray();
-
-
-        //get current teacher's course enrollments for this semesters
+        //get all registrations for the selected course
         $results = $course_allocation->results();
 
-        // $results = Result::where('teacher_id', $course_allocation->teacher_id)
-        // ->where('semester_id', session('semester_id'))->get();
+        // $registered_course_tracks = CourseTrack::whereHas(
+        //     'results',
+        //     function ($q) use ($course_allocation) {
+        //         return $q
+        //             ->where('teacher_id', $course_allocation->teacher_id)
+        //             ->where('semester_id', session('semester_id'));
+        //     }
+        // )->where('course_id', $course_allocation->course_id)->get();
 
-        $course_enrollments = CourseEnrollment::whereHas(
-            'results',
-            function ($q) use ($course_allocation) {
-                return $q
-                    ->where('teacher_id', $course_allocation->teacher_id)
-                    ->where('semester_id', session('semester_id'));
-            }
-        )->where('course_id', $course_allocation->course_id)->get();
+        $registered_course_tracks = $course_allocation->registered_course_tracks();
+        $registered_student_ids = $registered_course_tracks->pluck('student_id')->toArray();
 
-        $registered_student_ids = $course_enrollments->pluck('student_id')->toArray();
-
-        $registered = Student::whereIn('student_id', $registered_student_ids)
+        $registered = Student::whereIn('id', $registered_student_ids)
             ->where('section_id', $course_allocation->course_id)->get();
-        // $registerations = CourseAllocation::join('course_enrollments', 'course_allocations.course_id', 'course_enrollments.course_id')
-        //     ->join('attempts', 'course_allocations.teacher_id', 'attempts.teacher_id')
 
-        //     ->get();
-
-        // foreach ($course_enrollments as $course_enrollment) {
-        //     echo $course_enrollment->student->name . "<br>";
-        // }
-        // $registered_student_ids = $registrations->pluck('student_id')->toArray();
-
-
-        // //get not notregistered students
+        // // //get not notregistered students
         $unregistered = Student::whereNotIn('id', $registered_student_ids)
             ->where('section_id', $course_allocation->section_id)->get();
 
-        // //get reappear students
+        // // //get reappear students
 
-        return view('teacher.mycourses.show', compact('course_allocation', 'registered', 'unregistered'));
+        return view('teacher.mycourses.show', compact('course_allocation', 'results', 'registered_course_tracks', 'registered', 'unregistered'));
     }
 
     /**

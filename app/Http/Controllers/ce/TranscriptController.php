@@ -43,23 +43,17 @@ class TranscriptController extends Controller
     public function show($id)
     {
         $student = Student::find($id);
-
-        $results = Result::join('course_allocations', 'results.course_allocation_id', 'course_allocations.id')
-            ->where('student_id', $id)
-            ->get();
-        $semester_nos = array_unique($results->pluck('semester_no')->toArray());
-        return view('ce.transcripts.show', compact('student', 'results', 'semester_nos'));
+        $course_tracks = $student->course_tracks;
+        $semester_nos = array_unique($course_tracks->pluck('semester_no')->toArray());
+        return view('ce.transcripts.show', compact('student', 'course_tracks', 'semester_nos'));
     }
     public function pdf($id)
     {
         $student = Student::find($id);
-        $results = Result::join('course_allocations', 'results.course_allocation_id', 'course_allocations.id')
-            ->where('student_id', $id)
-            ->get();
-        $semester_nos = array_unique($results->pluck('semester_no')->toArray());
+        $course_tracks = $student->course_tracks;
+        $semester_nos = array_unique($course_tracks->pluck('semester_no')->toArray());
 
-        // return view('ce.transcripts.pdf', compact('student', 'results', 'semester_nos'));
-        $pdf = PDF::loadView('ce.transcripts.pdf', compact('student', 'results', 'semester_nos'))->setPaper('a4', 'portrait');
+        $pdf = PDF::loadView('ce.transcripts.pdf', compact('student', 'course_tracks', 'semester_nos'))->setPaper('a4', 'portrait');
 
         // $pdf->output();
         return $pdf->stream();
