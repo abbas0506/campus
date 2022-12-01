@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Svg\Tag\Rect;
 
 class SectionController extends Controller
 {

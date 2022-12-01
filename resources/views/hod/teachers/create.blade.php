@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-5">Teachers</h1>
+<h1 class="mt-12">Teachers</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         Teachers / create

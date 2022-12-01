@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1 class="mt-5">Departments</h1>
+<h1 class="mt-12">Departments</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{route('departments.index')}}">Departments</a> / {{$selected_department->name}} / assign hod

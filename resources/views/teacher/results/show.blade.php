@@ -1,6 +1,6 @@
 @extends('layouts.teacher')
 @section('page-content')
-<h1 class="mt-5">Results</h1>
+<h1 class="mt-12">Results</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">My Courses </a> / {{$course_allocation->course->name}} / result

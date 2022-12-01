@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<h1 class="mt-5">Schemes</h1>
+<h1 class="mt-12">Schemes</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         Schemes / create

@@ -3,16 +3,10 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-
 use App\Models\Course;
 use App\Models\CourseAllocation;
-use App\Models\Department;
-use App\Models\Teacher;
-use App\Models\Scheme;
 use App\Models\SchemeDetail;
 use App\Models\Section;
-use App\Models\Semester;
 use App\Models\User;
 use Exception;
 
@@ -60,13 +54,10 @@ class CourseAllocationController extends Controller
     public function store(Request $request)
     {
         //
-
-        // echo 'semester: ' . session('semester_id') . "section:" . session('section_id');
         //append id of hod's current department
         $request->merge([
             'semester_id' => session('semester_id'),
             'section_id' => session('section_id'),
-            'semester_no' => 1,
         ]);
 
         $request->validate([
@@ -74,21 +65,20 @@ class CourseAllocationController extends Controller
             'semester_id' => 'required|numeric',
             'section_id' => 'required|numeric',
             'semester_no' => 'required|numeric',
-
         ]);
 
         try {
-            CourseAllocation::create($request->all());
+            // CourseAllocation::create($request->all());
 
-            // $section = Section::find(session('section_id'));
-            // CourseAllocation::create([
-            //     'semester_id' => session('semester_id'),
-            //     'section_id' => session('section_id'),
-            //     'semester_no' => $section->semester_no,
-            //     'scheme_detail_id' => $request->scheme_detail_id,
-            //     'course_id' => $request->course_id,
+            $section = Section::find(session('section_id'));
+            CourseAllocation::create([
+                'semester_id' => session('semester_id'),
+                'section_id' => session('section_id'),
+                'semester_no' => $section->clas->semester_no,
+                'scheme_detail_id' => $request->scheme_detail_id,
+                'course_id' => $request->course_id,
 
-            // ]);
+            ]);
 
 
             return redirect()->route('course-allocations.index')->with('success', "Successfully saved");

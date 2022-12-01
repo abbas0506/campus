@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<h1 class="mt-5">Courses</h1>
+<h1 class="mt-12">Courses</h1>
 
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
@@ -14,7 +14,7 @@
         </svg>
     </div>
     <a href="{{route('courses.create')}}" class="btn-indigo">
-        add new
+        Add New
     </a>
 </div>
 

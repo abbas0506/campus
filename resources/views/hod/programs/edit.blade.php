@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-5">Programs</h1>
+<h1 class="mt-12">Programs</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         Programs / edit

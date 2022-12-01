@@ -1,9 +1,9 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-5">Course Allocation</h1>
+<h1 class="mt-12">Course Allocation</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{url('course-allocation-options')}}" class="text-orange-700 mr-2">Choose Options</a> /
+        <a href="{{url('course-allocation-options')}}" class="text-orange-700 mr-2">Choose</a> /
         {{$section->title()}}
     </div>
 </div>
@@ -57,7 +57,7 @@
                             <!-- if teacher name given, show name ... else show link icon -->
                             @if($course_allocation->teacher)
                             {{$course_allocation->teacher->name}}
-                            @else
+                            @elseif($section->clas->semester_no==$semester_no)
                             <div class="flex items-center py-2">
                                 <a href="{{url('course_allocations/assign/teacher',$course_allocation)}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-indigo-600">
@@ -70,6 +70,7 @@
                             @endif
                         </div>
                         <!-- show remove icon for each allocation -->
+                        @if($section->clas->semester_no==$semester_no)
                         <form action="{{route('course-allocations.destroy',$course_allocation)}}" method="POST" id='del_elective_form{{$course_allocation->id}}' class="mt-1 justify-end">
                             @csrf
                             @method('DELETE')
@@ -79,6 +80,7 @@
                                 </svg>
                             </button>
                         </form>
+                        @endif
 
                     </div>
                     @endforeach

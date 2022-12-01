@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers\teacher;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
-use App\Models\CourseTrack;
-use App\Models\Section;
-use App\Models\Student;
-use App\Models\Result;
+use Illuminate\Http\Request;
 
-class MyCoursesController extends Controller
+class ReappearController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,8 +16,7 @@ class MyCoursesController extends Controller
     public function index()
     {
         //
-        $teacher = Auth::user();
-        return view('teacher.mycourses.index', compact('teacher'));
+
     }
 
     /**
@@ -55,22 +49,6 @@ class MyCoursesController extends Controller
     public function show($id)
     {
         //
-        $course_allocation = CourseAllocation::find($id);
-
-        //get all registrations for the selected course
-        $first_attempts = $course_allocation->first_attempts();
-        $student_ids = $first_attempts->pluck('student_id')->toArray();
-
-        $registered = Student::whereIn('id', $student_ids)
-            ->where('section_id', $course_allocation->course_id)->get();
-
-        //get not registered students
-        $unregistered = Student::whereNotIn('id', $student_ids)
-            ->where('section_id', $course_allocation->section_id)->get();
-
-        // // //get reappear students
-
-        return view('teacher.mycourses.show', compact('course_allocation', 'registered', 'unregistered'));
     }
 
     /**
@@ -105,6 +83,10 @@ class MyCoursesController extends Controller
     public function destroy($id)
     {
         //
-
+    }
+    public function register($id)
+    {
+        $course_allocation = CourseAllocation::find($id);
+        return view('teacher.reappear.register', compact('course_allocation'));
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-5">Classes</h1>
+<h1 class="mt-12">Classes</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{route('clases.index')}}"> Classes </a> / new
@@ -19,7 +19,7 @@
     </div>
     @endif
 
-    <form action="{{route('clases.store')}}" method='post' class="flex flex-col w-full mt-16">
+    <form action="{{route('clases.store')}}" method='post' class="flex flex-col w-full mt-16" onsubmit="return validate(event)">
         @csrf
 
         <label for="" class='mt-8'>Program</label>
@@ -94,6 +94,30 @@
                 });
             }
         }); //ajax end
+    }
+
+    function validate(event) {
+        var validated = true;
+        var program_id = $('#program_id').val()
+        var semester_no = $('#semester_no').val()
+        var scheme_id = $('#scheme_id').val()
+
+
+        if (program_id == '' || semester_no == '' || scheme_id == '') {
+
+            event.preventDefault();
+            validated = false;
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Required input missing!',
+                showConfirmButton: false,
+                timer: 1500,
+            })
+
+        }
+        return validated;
+
     }
 </script>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1 class="mt-5">Semester Control</h1>
+<h1 class="mt-12">Semester Control</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         Semesters / all
@@ -43,7 +43,7 @@
         <thead>
             <tr class="border-b border-slate-200">
                 <th>Semester</th>
-                <th>Edit Permission Till</th>
+                <th>Allow edit till</th>
                 <th class='text-center'>Actions</th>
             </tr>
         </thead>

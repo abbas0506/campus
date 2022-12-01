@@ -7,6 +7,7 @@ use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Semester;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Spatie\Permission\Contracts\Role;
 
 class LoginOptionsController extends Controller
@@ -51,13 +52,20 @@ class LoginOptionsController extends Controller
         ]);
 
         if (Auth::user()->hasRole($request->role)) {
+
+            session([
+                'current_role' => Str::upper($request->role)
+            ]);
             //save selected semester id for entire session
             if ($request->role == 'hod' || $request->role == 'teacher') {
                 $department = Department::find($request->department_id);
+                $semester = Semester::find($request->semester_id);
                 session([
                     'semester_id' => $request->semester_id,
+                    'semester' => $semester->title(),
                     'department_id' => $request->department_id,
                     'department' => $department,
+
                 ]);
             }
             return redirect($request->role);

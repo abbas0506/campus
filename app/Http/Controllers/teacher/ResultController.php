@@ -10,6 +10,7 @@ use App\Models\Result;
 use App\Models\Section;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ResultController extends Controller
 {
@@ -47,7 +48,30 @@ class ResultController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'course_track_id' => 'required|numeric',
+            'teacher_id' => 'required|numeric',
+            'semester_id' => 'required|numeric',
+            'semester_no' => 'required|numeric',
 
+        ]);
+
+        DB::beginTransaction();
+        try {
+            Result::create([
+                'course_track_id' => $request->course_track_id,
+                'teacher_id' => $request->teacher_id,
+                'semester_id' => $request->semester_id,
+                'semester_no' => $request->semester_no,
+
+            ]);
+
+            DB::commit();
+            return redirect()->back()->with('success', "Successfully added");
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($ex->getMessage());
+        }
     }
 
     /**

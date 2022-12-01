@@ -2,16 +2,10 @@
 @section('content')
 <!-- header -->
 <x-header></x-header>
-<div class="flex relative top-16 w-screen">
+<div class="content-page">
     <aside aria-label="Sidebar" id='sidebar'>
-        <div class="text-center text-gray-600 font-bold tracking-widest mt-4">HOD PANEL</div>
-        <div class="text-center text-gray-600 text-xs">{{session('department')->name}}</div>
-        <div class="flex justify-center mt-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 text-slate-600">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
-            </svg>
-        </div>
-        <div class="mt-6">
+        <div class="mt-4 text-sm text-center">{{date('d/m/Y')}}</div>
+        <div class="mt-12">
             <ul class="space-y-2">
                 <!-- <li>
                     <a href="{{url('hod')}}" class="flex items-center p-2">
@@ -106,7 +100,8 @@
         </div>
     </aside>
 
-    <div class="w-full md:w-3/4 md:ml-auto p-5 md:mr-8 text-slate-600">
+    <div class="w-full md:w-3/4 md:ml-auto px-5 md:mr-8 text-slate-600">
+        <div class="bg-green-200 text-center text-sm rounded-b-lg">Current Login: {{session('semester')}}, {{session('department')->name}} </div>
         @yield('page-content')
     </div>
 

@@ -5,13 +5,8 @@
 
 <div class="flex relative top-16 w-screen">
     <aside aria-label="Sidebar" id='sidebar'>
-        <div class="text-center text-gray-600 font-bold py-4">Admin Panel</div>
-        <div class="flex justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
-            </svg>
-        </div>
-        <div class="overflow-y-auto py-8 px-3">
+        <div class="mt-4 text-sm text-center">{{date('d/m/Y')}}</div>
+        <div class="mt-12">
             <ul class="space-y-2">
                 <!-- <li>
                     <a href="#" class="flex items-center p-2">

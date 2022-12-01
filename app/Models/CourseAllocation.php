@@ -76,9 +76,14 @@ class CourseAllocation extends Model
 
     public function results()
     {
-        $course_track_ids = CourseTrack::where('course_id', $this->course_id)->pluck('id')->toArray();
-        return $this->semester->results
-            ->where('teacher_id', $this->teacher_id)
-            ->whereIn('course_track_id', $course_track_ids);
+        // $course_track_ids = CourseTrack::where('course_id', $this->course_id)->pluck('id')->toArray();
+        // return $this->semester->results
+        //     ->where('teacher_id', $this->teacher_id)
+        //     ->whereIn('course_track_id', $course_track_ids);
+        return $this->hasMany(FirstAttempt::class);
+    }
+    public function first_attempts()
+    {
+        return $this->hasMany(FirstAttempt::class);
     }
 }

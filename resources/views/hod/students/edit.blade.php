@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-5">Students</h1>
+<h1 class="mt-12">Students</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{url('clases')}}"> Classes</a> / {{$student->section->clas->title()}} / {{$student->section->title()}} / {{$student->name}} / edit

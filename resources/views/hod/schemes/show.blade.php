@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-5">Schemes</h1>
+<h1 class="mt-12">Schemes</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{route('schemes.index')}}" class="text-orange-700 mr-2">
@@ -9,7 +9,7 @@
         / {{$scheme->title()}}
     </div>
 </div>
-<div class="container md:w-3/4 mx-auto px-5">
+<div class="container mx-auto">
     @if(session('success'))
     <div class="flex alert-success items-center mt-5">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">

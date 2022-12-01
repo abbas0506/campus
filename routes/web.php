@@ -27,7 +27,9 @@ use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\LoginOptionsController;
 use App\Http\Controllers\teacher\CourseTrackController;
+use App\Http\Controllers\teacher\FirstAttemptController;
 use App\Http\Controllers\teacher\MyCoursesController;
+use App\Http\Controllers\teacher\ReappearController;
 use App\Http\Controllers\teacher\ResultController;
 
 /*
@@ -53,6 +55,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::resource('login-options', LoginOptionsController::class)->only('index', 'store');
 Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
+Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
 
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
@@ -77,6 +80,9 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('programs', ProgramController::class);
     Route::resource('clases', ClasController::class);
     Route::resource('sections', SectionController::class);
+    // Route::post('sections.promote/{id}', [SectionController::class, 'promote'])->name('sections.promote');
+    // Route::post('sections.demote/{id}', [SectionController::class, 'demote'])->name('sections.demote');
+
     Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
     Route::post('fetchSectionsByClas', [SectionController::class, 'fetchSectionsByClas'])->name('fetchSectionsByClas'); //for ajax call
     Route::post('fetchSchemesByProgramId', [AjaxController::class, 'fetchSchemesByProgramId'])->name('fetchSchemesByProgramId'); //for ajax call
@@ -108,4 +114,8 @@ Route::group(['middleware' => ['role:teacher']], function () {
     Route::resource('mycourses', MyCoursesController::class);
     Route::resource('coursetracks', CourseTrackController::class);
     Route::resource('results', ResultController::class);
+
+    Route::resource('first_attempts', FirstAttemptController::class);
+    Route::resource('reappears', ReappearController::class);
+    Route::get('reappears.register/{id}', [ReappearController::class, 'register'])->name('reappears.register');
 });

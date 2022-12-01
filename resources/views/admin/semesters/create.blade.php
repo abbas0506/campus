@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1 class="mt-5">Semester Control</h1>
+<h1 class="mt-12">Semester Control</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{route('semesters.index')}}">Semesters</a> / new

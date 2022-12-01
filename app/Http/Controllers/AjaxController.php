@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\CourseAllocation;
 use App\Models\Department;
 use App\Models\Program;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -68,5 +69,27 @@ class AjaxController extends Controller
             'scheme_options' => $scheme_options,
             'semester_nos' => $semester_nos,
         ]);
+    }
+
+    public function searchReappearer(Request $request)
+    {
+        $request->validate([
+            'rollno' => 'required',
+        ]);
+
+        $student = Student::where('rollno', $request->rollno)->first();
+
+        if ($student) {
+            $course_track = $student->course_tracks->first();
+            return response()->json([
+                'course_track_id' => $course_track->id,
+                'student_info' => $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father,
+            ]);
+        } else {
+            return response()->json([
+                'course_track_id' => '',
+                'student_info' => "Not found",
+            ]);
+        }
     }
 }

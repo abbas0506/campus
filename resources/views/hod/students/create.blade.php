@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-5">Students</h1>
+<h1 class="mt-12">Students</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         Classes / <a href="{{url('class-options')}}" class="text-orange-700 mx-1"> choose semester </a> / {{$section->title()}} / students / create

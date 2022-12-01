@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-5">Classes</h1>
+<h1 class="mt-12">Classes</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{url('clases')}}"> Classes</a> / {{$section->title()}}
@@ -56,7 +56,6 @@
     <table class="table-auto w-full mt-16">
         <thead>
             <tr class="border-b border-slate-200">
-                <th><input type="checkbox"></th>
                 <th>Name</th>
                 <th>Father</th>
                 <th class='text-center'>Actions</th>
@@ -66,7 +65,6 @@
             @php $sr=$students->count();@endphp
             @foreach($students as $student)
             <tr class="tr border-b ">
-                <td class="py-2 text-slate-600 text-sm"><input type="checkbox"></td>
                 <td class="py-2">
                     <div class="flex items-center space-x-4">
                         <div>

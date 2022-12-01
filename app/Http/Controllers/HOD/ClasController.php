@@ -113,6 +113,22 @@ class ClasController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'promocode' => 'required|numeric',
+        ]);
+        try {
+            $clas = Clas::find($id);
+            $clas->semester_no += $request->promocode;
+            if ($clas->semester_no > 0 && $clas->semester_no < $clas->program->max_duration * 2) {
+                $clas->update();
+                return redirect('clases')->with('success', 'Successfully changed');
+            } else {
+
+                return redirect('clases')->with('success', 'Sorry! invalid request');
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
     /**
@@ -124,5 +140,13 @@ class ClasController extends Controller
     public function destroy($id)
     {
         //
+        $clas = Clas::findOrFail($id);
+        try {
+            $clas->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
+            // something went wrong
+        }
     }
 }

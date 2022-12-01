@@ -1,6 +1,6 @@
 @extends('layouts.teacher')
 @section('page-content')
-<h1 class="mt-5">Course Result</h1>
+<h1 class="mt-12">Course Result</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">My Courses </a> / {{$course_allocation->course->name}} / result
@@ -155,7 +155,12 @@
         $(".marks").each(function() {
             if ($(this).hasClass('border-red-500')) {
 
-                alert('some invalid value forund')
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Invalid marks!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                })
                 event.preventDefault();
                 validated = false;
             }

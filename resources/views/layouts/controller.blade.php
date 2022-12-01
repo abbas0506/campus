@@ -11,7 +11,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
             </svg>
         </div>
-        <div class="overflow-y-auto py-8 px-3">
+        <div class="mt-4 text-sm text-center">{{date('d/m/Y')}}</div>
+        <div class="mt-12">
             <ul class="space-y-2">
                 <!-- <li>
                     <a href="{{url('controller')}}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">

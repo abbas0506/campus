@@ -1,9 +1,9 @@
 @extends('layouts.teacher')
 @section('page-content')
-<h1 class="mt-5">My Courses</h1>
+<h1 class="mt-12">My Courses</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">My Courses </a> / {{$course_allocation->course->name}}
+        <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">My Courses </a> / {{$course_allocation->course->name}} / {{$course_allocation->section->title()}}
     </div>
 </div>
 
@@ -40,24 +40,25 @@
 
     <input type="text" id='course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
 
-    <div class="flex items-center space-x-4 my-8">
+    <div class="flex items-end space-x-4 my-8">
         <select name="" id="choice" class="p-2 text-teal-700 border border-teal-700 outline-none" onchange="showOrHide()">
-            <option value="0">Registered (Fresh)</option>
-            <option value="1">Registered (Re-appear)</option>
-            <option value="" disabled>------</option>
-            <option value="2">Not Registered (Fresh) </option>
-            <option value="3">Not Registered (Re-appear)</option>
+            <option value="0">Currently enrolled</option>
+            <option value="1">Remaining from this section</option>
         </select>
         <a href="{{route('results.edit', $course_allocation)}}" class="px-5 py-2 bg-teal-600 text-slate-100" id='btnStartFeeding'>
             Start Feeding Result <span class="ml-2">(</span><span class="mx-1">{{$course_allocation->results()->count()}}</span>)
         </a>
-        <button class="px-5 py-2 bg-teal-600 text-slate-100 hidden" id='btnRegisterNow' onclick="registerNow()">
-            Register Now <span class="ml-2">(</span><span id='chkCount' class="mx-1">0</span> out of {{$unregistered->count()}})
+        <button class="px-5 py-2 bg-teal-600 text-slate-100 hidden" id='btnRegisterNow' onclick="enrollFirstAttempt()">
+            Enroll Now <span class="ml-2">(</span><span id='chkCount' class="mx-1">0</span> out of {{$unregistered->count()}} )
         </button>
+        <a href="{{route('reappears.register', $course_allocation)}}" class="px-5 py-2 bg-indigo-600 text-slate-100" id='btnStartFeeding'>
+            Enroll Re-appear
+        </a>
+        <!-- <a href="" class="text-blue-600 hover:underline">Register a New Re-Appear Case</a> -->
     </div>
 
     <!-- registered students -->
-    <section id='sxnRegistered' class="mt-16">
+    <section id='sxnEnrolled' class="mt-16">
         <table class="table-auto w-full mt-8">
             <thead>
                 <tr class="border-b border-slate-200">
@@ -67,23 +68,23 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($results as $result)
+                @foreach($course_allocation->first_attempts as $first_attempt)
                 <tr class="tr border-b ">
                     <td class="py-2">
                         <div class="flex items-center space-x-4">
                             <div>
-                                @if($result->course_track->student->gender=='M')
+                                @if($first_attempt->student->gender=='M')
                                 <div class="bg-indigo-500 w-2 h-2 rounded-full"></div>
                                 @else
                                 <div class="bg-green-500 w-2 h-2 rounded-full"></div>
                                 @endif
                             </div>
                             <div>
-                                <div class="text-slate-600">{{$result->course_track->student->name}}</div>
+                                <div class="text-slate-600">{{$first_attempt->student->name}}</div>
                                 <div class="text-slate-600 text-sm">
-                                    {{$result->course_track->student->rollno}}
-                                    @if($result->course_track->student->regno)
-                                    | {{$result->course_track->student->regno}}
+                                    {{$first_attempt->student->rollno}}
+                                    @if($first_attempt->student->regno)
+                                    | {{$first_attempt->student->regno}}
                                     @endif
                                 </div>
                             </div>
@@ -91,15 +92,15 @@
                         </div>
 
                     </td>
-                    <td hidden>{{$result->course_track->student->gender}}</td>
+                    <td hidden>{{$first_attempt->student->gender}}</td>
                     <td class="py-2 text-slate-600 text-sm">
-                        {{$result->course_track->student->father}}
+                        {{$first_attempt->student->father}}
                     </td>
                     <td class="py-2 flex items-center justify-center">
-                        <form action="{{route('results.destroy',$result)}}" method="POST" id='del_form{{$result->course_track->student->id}}' class="mt-1">
+                        <form action="{{route('first_attempts.destroy',$first_attempt)}}" method="POST" id='del_form{{$first_attempt->student->id}}' class="mt-1">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="delme('{{$result->course_track->student->id}}')">
+                            <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="delme('{{$first_attempt->student->id}}')">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
                                 </svg>
@@ -112,7 +113,7 @@
         </table>
     </section>
     <!-- not registered students -->
-    <section id='sxnUnregistered' class="mt-16 hidden">
+    <section id='sxnEnrollFresh' class="mt-16 hidden">
         <table class="table-auto w-full mt-8">
             <thead>
                 <tr class="border-b border-slate-200">
@@ -195,15 +196,15 @@
     function showOrHide() {
         var choice = $('#choice').val();
         if (choice == 0) {
-            $('#sxnRegistered').removeClass('hidden')
-            $('#sxnUnregistered').addClass('hidden')
+            $('#sxnEnrolled').removeClass('hidden')
+            $('#sxnEnrollFresh').addClass('hidden')
 
             $('#btnStartFeeding').removeClass('hidden')
             $('#btnRegisterNow').addClass('hidden')
 
-        } else if (choice == 2) {
-            $('#sxnRegistered').addClass('hidden')
-            $('#sxnUnregistered').removeClass('hidden')
+        } else if (choice == 1) {
+            $('#sxnEnrolled').addClass('hidden')
+            $('#sxnEnrollFresh').removeClass('hidden')
 
             $('#btnStartFeeding').addClass('hidden')
             $('#btnRegisterNow').removeClass('hidden')
@@ -231,7 +232,7 @@
         document.getElementById("chkCount").innerHTML = chkArray.length;
     }
 
-    function registerNow() {
+    function enrollFirstAttempt() {
 
         var token = $("meta[name='csrf-token']").attr("content");
 
@@ -261,7 +262,7 @@
                 if (result.value) {
                     $.ajax({
                         type: 'POST',
-                        url: "{{route('coursetracks.store')}}",
+                        url: "{{route('first_attempts.store')}}",
                         data: {
                             "course_allocation_id": course_allocation_id,
                             "ids_array": ids_array,
@@ -287,9 +288,7 @@
                     }); //ajax end
                 }
             })
-
         }
-
     }
 </script>
 

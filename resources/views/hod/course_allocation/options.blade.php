@@ -2,7 +2,7 @@
 
 @section('page-content')
 
-<h1 class="mt-5">Course Allocation</h1>
+<h1 class="mt-12">Course Allocation</h1>
 <div class="bread-crumb mb-3">
     Course Allocation / choose section (Step 1 out of 4)
 </div>
@@ -28,11 +28,11 @@
     </div>
     <div class="rounded md:mt-0 mt-12">
 
-        <form action="{{route('course-allocation-options.store')}}" method='post' class="flex flex-col">
+        <form action="{{route('course-allocation-options.store')}}" method='post' class="flex flex-col" onsubmit="return validate(event)">
             @csrf
             <div class='flex items-center space-x-4'>
                 <div class="flex flex-col grow">
-                    <label for="" class="mt-5">Classes</label>
+                    <label for="" class="mt-3">Classes</label>
                     <select id="clas_id" name="clas_id" class="input-indigo p-2" onchange="loadSections(event)">
                         <option value="">Select a class</option>
                         @foreach($clases as $clas)
@@ -93,6 +93,28 @@
                 });
             }
         }); //ajax end
+    }
+
+    function validate(event) {
+        var validated = true;
+        var clas_id = $('#clas_id').val()
+        var section_id = $('#section_id').val()
+
+        if (clas_id == '' || section_id == '') {
+
+            event.preventDefault();
+            validated = false;
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Required input missing!',
+                showConfirmButton: false,
+                timer: 1500,
+            })
+
+        }
+        return validated;
+
     }
 </script>
 @endsection

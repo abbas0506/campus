@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<h1 class="mt-5">Course Allocation</h1>
+<h1 class="mt-12">Course Allocation</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{url('course-allocation-options')}}" class="text-orange-700 mr-1">Choose options</a>/
@@ -66,8 +66,10 @@
                     @else
                     <form action="{{route('course-allocations.store')}}" method="POST" id='del_form{{$scheme_detail->id}}' class="mt-1">
                         @csrf
-                        <input type="text" name='course_id' value="{{$scheme_detail->course_id}}" hidden>
                         <input type="text" name='scheme_detail_id' value="{{$scheme_detail->id}}" hidden>
+                        <input type="text" name='course_id' value="{{$scheme_detail->course_id}}" hidden>
+                        <input type="text" name='semester_no' value="{{$semester_no}}" hidden>
+
                         <button type="submit" class="bg-transparent p-0 border-0 text-indigo-600" onclick="delme('{{$scheme_detail->id}}')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
