@@ -54,4 +54,56 @@ class FirstAttempt extends Model
     {
         return $this->hasMany(Reappear::class);
     }
+    public function formative()
+    {
+        return $this->assignment + $this->presentation + $this->midterm;
+    }
+    public function summative()
+    {
+        return $this->assignment + $this->presentation + $this->midterm + $this->summative;
+    }
+
+    public function has_passed()
+    {
+        if ($this->formative() > 16 && $this->summative() > 49)
+            return true;
+        else
+            return false;
+    }
+    public function status()
+    {
+        if ($this->has_passed())
+            return "Pass";
+        else
+            return "Fail";
+    }
+
+    public function gp()
+    {
+        $marks = $this->summative();
+        $gp = 0;
+        if ($marks > 90) $gp = 4;
+        elseif ($marks > 50) $gp = ($marks - 10) * 0.05;
+        return $gp;
+    }
+    public function grade()
+    {
+        $gp = $this->gp();
+        $grade = '';
+        if ($gp == 4) $grade = 'A+';
+        elseif ($gp >= 3.5 && $gp <= 3.99) $grade = 'A';
+        elseif ($gp >= 3 && $gp <= 3.49) $grade = 'B';
+        elseif ($gp >= 2.5 && $gp <= 2.99) $grade = 'C';
+        elseif ($gp >= 2 && $gp <= 2.49) $grade = 'D';
+        else $grade = 'F';
+        return $grade;
+    }
+    public function last_gp()
+    {
+        if ($this->reappears->count() > 0) {
+            $last = $this->reappears->last();
+            return $last->gp();
+        } else
+            return $this->gp();
+    }
 }

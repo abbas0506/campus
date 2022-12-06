@@ -65,24 +65,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($course_allocation->results() as $result)
-
+                    @foreach($course_allocation->first_attempts as $first_attempt)
                     <tr class="tr border-b ">
                         <td class="py-2">
                             <div class="flex items-center space-x-4">
                                 <div>
-                                    @if($result->course_track->student->gender=='M')
+                                    @if($first_attempt->student->gender=='M')
                                     <div class="bg-indigo-500 w-2 h-2 rounded-full"></div>
                                     @else
                                     <div class="bg-green-500 w-2 h-2 rounded-full"></div>
                                     @endif
                                 </div>
                                 <div>
-                                    <div class="text-slate-600">{{$result->course_track->student->name}}</div>
+                                    <div class="text-slate-600">{{$first_attempt->student->name}}</div>
                                     <div class="text-slate-600 text-sm">
-                                        {{$result->course_track->student->rollno}}
-                                        @if($result->course_track->student->regno)
-                                        | {{$result->course_track->student->regno}}
+                                        {{$first_attempt->student->rollno}}
+                                        @if($first_attempt->student->regno)
+                                        | {{$first_attempt->student->regno}}
                                         @endif
                                     </div>
                                 </div>
@@ -91,20 +90,20 @@
 
                         </td>
                         <td class="py-2 text-slate-600 text-sm">
-                            {{$result->course_track->student->father}}
+                            {{$first_attempt->student->father}}
                         </td>
-                        <td hidden><input type="text" name='id[]' value="{{$result->id}}"></td>
+                        <td hidden><input type="text" name='id[]' value="{{$first_attempt->id}}"></td>
                         <td class="py-3 text-center">
-                            <input type='text' name='assignment[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->assignment}}" placeholder="absent" onchange="validate(event,10)">
-                        </td>
-                        <td class="py-3 text-center">
-                            <input type="text" name='presentation[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->presentation}}" placeholder="absent" onchange="validate(event,10)">
+                            <input type='text' name='assignment[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$first_attempt->assignment}}" placeholder="absent" onchange="validate(event,10)">
                         </td>
                         <td class="py-3 text-center">
-                            <input type="text" name='midterm[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->midterm}}" placeholder="absent" onchange="validate(event,30)">
+                            <input type="text" name='presentation[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$first_attempt->presentation}}" placeholder="absent" onchange="validate(event,10)">
                         </td>
                         <td class="py-3 text-center">
-                            <input type="text" name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$result->summative}}" placeholder="absent" onchange="validate(event,50)">
+                            <input type="text" name='midterm[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$first_attempt->midterm}}" placeholder="absent" onchange="validate(event,30)">
+                        </td>
+                        <td class="py-3 text-center">
+                            <input type="text" name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$first_attempt->summative}}" placeholder="absent" onchange="validate(event,50)">
                         </td>
                     </tr>
                     @endforeach

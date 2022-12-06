@@ -75,20 +75,56 @@ class AjaxController extends Controller
     {
         $request->validate([
             'rollno' => 'required',
+            'course_allocation_id' => 'required',
         ]);
 
         $student = Student::where('rollno', $request->rollno)->first();
+        $course_allocation = CourseAllocation::find($request->course_allocation_id);
+
+        $result = '';
 
         if ($student) {
-            $course_track = $student->course_tracks->first();
-            return response()->json([
-                'course_track_id' => $course_track->id,
-                'student_info' => $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father,
-            ]);
+            $first_attempt = $student->first_attempts
+                ->where('course_id', $course_allocation->course_id)
+                ->where('program_id', $course_allocation->scheme_detail->scheme->program_id)
+                ->where('semester_id', '<', $course_allocation->semester_id)
+                ->first();
+            if ($first_attempt) {
+                $result .= '<tr>' .
+                    '<td>' . $first_attempt->semester->title() . '</td>' .
+                    '<td>(' . $first_attempt->semester_no . ')</td>' .
+                    '<td>' . $first_attempt->summative() . '/100' . '</td>' .
+                    '<td>' . $first_attempt->gp() . '</td>' .
+                    '<td>' . $first_attempt->grade() . '</td>' .
+                    '</tr>';
+
+                foreach ($first_attempt->reappears->where('semester_id', '<', $course_allocation->semester_id) as $reappear)
+                    $result .= '<tr>' .
+                        '<td>' . $reappear->semester->title() . '</td>' .
+                        '<td>(' . $reappear->semester_no . ')</td>' .
+                        '<td>' . $reappear->summative() . '/100' . '</td>' .
+                        '<td>' . $reappear->gp() . '</td>' .
+                        '<td>' . $reappear->grade() . '</td>' .
+                        '</tr>';
+
+                //get the last attempt
+                //if last attempt failed
+                return response()->json([
+                    'result' => $result,
+                    'student_info' => $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father,
+                ]);
+            } else {
+                //student exists but has never made any attempt
+                return response()->json([
+                    'result' => '',
+                    'student_info' => $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father,
+                ]);
+            }
         } else {
+            //student not found
             return response()->json([
-                'course_track_id' => '',
-                'student_info' => "Not found",
+                'result' => '',
+                'student_info' => "Record not found",
             ]);
         }
     }

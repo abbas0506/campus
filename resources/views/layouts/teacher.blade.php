@@ -37,7 +37,7 @@
     </aside>
 
     <div class="w-full md:w-3/4 md:ml-auto px-5 md:mr-8 text-slate-600">
-        <div class="bg-green-200 text-center text-sm rounded-b-lg">Current Login: {{session('semester')}}, {{session('department')->name}} </div>
+        <div class="bg-gray-200 text-slate-600 text-center text-xs rounded-b-lg">Current Login: {{session('semester')}}, {{session('department')->name}} </div>
         @yield('page-content')
     </div>
 

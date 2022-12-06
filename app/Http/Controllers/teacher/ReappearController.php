@@ -4,6 +4,10 @@ namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
+use App\Models\FirstAttempt;
+use App\Models\Reappear;
+use App\Models\Student;
+use Exception;
 use Illuminate\Http\Request;
 
 class ReappearController extends Controller
@@ -38,6 +42,45 @@ class ReappearController extends Controller
     public function store(Request $request)
     {
         //
+
+        $request->validate([
+            'course_allocation_id' => 'required|numeric',
+            'rollno' => 'required|numeric',
+        ]);
+        $course_allocation = CourseAllocation::find($request->course_allocation_id);
+        $student = Student::where('rollno', $request->rollno)->first();
+        $first_attempt = FirstAttempt::where('student_id', $student->id)
+            ->where('program_id', $course_allocation->section->clas->program_id)
+            ->where('course_id', $course_allocation->course_id)
+            ->first();
+
+        if ($first_attempt) {
+            $exists = Reappear::where('first_attempt_id', $first_attempt->id)
+                ->where('course_allocation_id', $course_allocation->id)
+                ->where('semester_id', $course_allocation->semester_id)
+                ->count();
+            if ($exists > 0) {
+                return response()->json(['msg' => "Already enrolled!"]);
+            } else {
+
+                //if last cgp above 3.5 cant register 
+
+                try {
+                    $request->merge([
+                        'first_attempt_id' => $first_attempt->id,
+                        'semester_id' => $course_allocation->semester_id,
+                        'semester_no' => $course_allocation->semester_no,
+                    ]);
+                    Reappear::create($request->all());
+                    return response()->json(['msg' => "Successful"]);
+                } catch (Exception $e) {
+                    return response()->json(['msg' => $e->getMessage()]);
+                    // something went wrong
+                }
+            }
+        } else {
+            return response()->json(['msg' => "Record not found!"]);
+        }
     }
 
     /**
@@ -83,10 +126,12 @@ class ReappearController extends Controller
     public function destroy($id)
     {
         //
-    }
-    public function register($id)
-    {
-        $course_allocation = CourseAllocation::find($id);
-        return view('teacher.reappear.register', compact('course_allocation'));
+        try {
+            $reappear = Reappear::find($id);
+            $reappear->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 }

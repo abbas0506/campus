@@ -43,17 +43,17 @@ class TranscriptController extends Controller
     public function show($id)
     {
         $student = Student::find($id);
-        $course_tracks = $student->course_tracks;
-        $semester_nos = array_unique($course_tracks->pluck('semester_no')->toArray());
-        return view('ce.transcripts.show', compact('student', 'course_tracks', 'semester_nos'));
+        $first_attempts = $student->first_attempts;
+        $semester_nos = array_unique($first_attempts->pluck('semester_no')->toArray());
+        return view('ce.transcripts.show', compact('student', 'first_attempts', 'semester_nos'));
     }
     public function pdf($id)
     {
         $student = Student::find($id);
-        $course_tracks = $student->course_tracks;
-        $semester_nos = array_unique($course_tracks->pluck('semester_no')->toArray());
+        $first_attempts = $student->first_attempts;
+        $semester_nos = array_unique($first_attempts->pluck('semester_no')->toArray());
 
-        $pdf = PDF::loadView('ce.transcripts.pdf', compact('student', 'course_tracks', 'semester_nos'))->setPaper('a4', 'portrait');
+        $pdf = PDF::loadView('ce.transcripts.pdf', compact('student', 'first_attempts', 'semester_nos'))->setPaper('a4', 'portrait');
 
         // $pdf->output();
         return $pdf->stream();

@@ -28,9 +28,17 @@ use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\LoginOptionsController;
 use App\Http\Controllers\teacher\CourseTrackController;
 use App\Http\Controllers\teacher\FirstAttemptController;
+use App\Http\Controllers\teacher\FormativeController;
+use App\Http\Controllers\teacher\FreshEnrollController;
+use App\Http\Controllers\teacher\FreshFormativeController;
+use App\Http\Controllers\teacher\FreshSummativeController;
 use App\Http\Controllers\teacher\MyCoursesController;
 use App\Http\Controllers\teacher\ReappearController;
+use App\Http\Controllers\teacher\ReappearEnrollController;
+use App\Http\Controllers\teacher\ReappearFormativeController;
+use App\Http\Controllers\teacher\ReappearSummativeController;
 use App\Http\Controllers\teacher\ResultController;
+use App\Http\Controllers\teacher\SummativeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,10 +120,14 @@ Route::group(['middleware' => ['role:hod']], function () {
 Route::group(['middleware' => ['role:teacher']], function () {
     Route::view('teacher', 'teacher.index');
     Route::resource('mycourses', MyCoursesController::class);
-    Route::resource('coursetracks', CourseTrackController::class);
-    Route::resource('results', ResultController::class);
+
+    Route::resource('fa_formatives', FreshFormativeController::class);
+    Route::resource('ra_formatives', ReappearFormativeController::class);
+    Route::resource('fa_summatives', FreshSummativeController::class);
+    Route::resource('ra_summatives', ReappearSummativeController::class);
 
     Route::resource('first_attempts', FirstAttemptController::class);
     Route::resource('reappears', ReappearController::class);
-    Route::get('reappears.register/{id}', [ReappearController::class, 'register'])->name('reappears.register');
+    Route::get('enroll.fa/{id}', [MyCoursesController::class, 'enrollFresh'])->name('enroll.fa');
+    Route::get('enroll.ra/{id}', [MyCoursesController::class, 'enrollReappear'])->name('enroll.ra');
 });

@@ -48,6 +48,9 @@
     .btn-sky {
         @apply bg-sky-500 hover:bg-sky-800 duration-200 px-3 py-1 rounded text-slate-50;
     }
+    .btn-teal {
+        @apply bg-teal-600 hover:bg-teal-800 duration-200 px-3 py-1 rounded text-slate-50;
+    }
     .btn-violet {
         @apply bg-violet-500 hover:bg-violet-800 duration-200 px-3 py-1 rounded text-slate-50;
     }
@@ -60,11 +63,20 @@
     .alert-danger {
         @apply bg-red-100 text-red-700 px-4 py-3;
     }
-    .tab {
-        @apply flex-grow text-slate-500 text-base border-b-2 border-gray-300 py-2 px-1;
+    /* .tab {
+        @apply text-slate-500 text-base border-b-2 border-gray-300 pr-4 py-1 px-4;
     }
     .tab.active {
-        @apply text-indigo-500 border-indigo-500;
+        @apply text-teal-800 border-teal-800 bg-teal-50;
+    } */
+    .tab {
+        @apply px-2;
+    }
+    .tab.active {
+        @apply font-bold text-teal-800 relative;
+    }
+    .tab.active .bullet {
+        @apply absolute -top-1 left-0 bg-red-600 w-2 h-2 rounded-full;
     }
     .bullet-indigo-sm {
         @apply flex-shrink-0 w-2 h-2 rounded-full bg-indigo-500;

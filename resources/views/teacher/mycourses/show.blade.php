@@ -40,30 +40,46 @@
 
     <input type="text" id='course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
 
-    <div class="flex items-end space-x-4 my-8">
-        <select name="" id="choice" class="p-2 text-teal-700 border border-teal-700 outline-none" onchange="showOrHide()">
+    <div class="flex items-center justify-between py-2 mt-8 space-x-5 ">
+        <div class="flex flex-col flex-1 text-sm text-green-800 py-3 pr-5">
+            <div class="font-bold">{{$course_allocation->course->name}}</div>
+            <div>{{$course_allocation->section->title()}}</div>
+
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="{{route('fa_formatives.edit', $course_allocation)}}" class="px-5 py-2 bg-teal-600 text-slate-100" id='btnStartFeeding'>
+                Start Feeding Result
+            </a>
+            <!-- <button class="px-5 py-2 bg-teal-600 text-slate-100 hidden" id='btnRegisterNow' onclick="enrollFirstAttempt()">
+                Enroll Now <span class="ml-2">(</span><span id='chkCount' class="mx-1">0</span> out of {{$unregistered->count()}} )
+            </button> -->
+            <a href="{{route('enroll.fa', $course_allocation)}}" class="px-5 py-2 bg-indigo-600 text-slate-100" id='btnStartFeeding'>
+                Enroll New
+            </a>
+        </div>
+        <!-- <button type="submit" class="px-8 py-2 bg-teal-600 text-slate-100 rounded-sm hover:bg-teal-500">
+            Save Result
+        </button> -->
+    </div>
+
+    <div class="flex items-end space-x-4 mt-4">
+        <!-- <select name="" id="choice" class="p-2 text-teal-700 border border-teal-700 outline-none" onchange="showOrHide()">
             <option value="0">Currently enrolled</option>
             <option value="1">Remaining from this section</option>
-        </select>
-        <a href="{{route('results.edit', $course_allocation)}}" class="px-5 py-2 bg-teal-600 text-slate-100" id='btnStartFeeding'>
-            Start Feeding Result <span class="ml-2">(</span><span class="mx-1">{{$course_allocation->results()->count()}}</span>)
-        </a>
-        <button class="px-5 py-2 bg-teal-600 text-slate-100 hidden" id='btnRegisterNow' onclick="enrollFirstAttempt()">
-            Enroll Now <span class="ml-2">(</span><span id='chkCount' class="mx-1">0</span> out of {{$unregistered->count()}} )
-        </button>
-        <a href="{{route('reappears.register', $course_allocation)}}" class="px-5 py-2 bg-indigo-600 text-slate-100" id='btnStartFeeding'>
-            Enroll Re-appear
-        </a>
+        </select> -->
+
         <!-- <a href="" class="text-blue-600 hover:underline">Register a New Re-Appear Case</a> -->
     </div>
 
+    <div class="mt-4 text-slate-600">{{$course_allocation->strength()}} records found</div>
     <!-- registered students -->
-    <section id='sxnEnrolled' class="mt-16">
-        <table class="table-auto w-full mt-8">
+    <section id='sxnEnrolled' class="">
+        <table class="table-auto w-full mt-4">
             <thead>
                 <tr class="border-b border-slate-200">
                     <th>Name</th>
                     <th>Father</th>
+                    <th>Status</th>
                     <th class='text-center'>Actions</th>
                 </tr>
             </thead>
@@ -96,11 +112,55 @@
                     <td class="py-2 text-slate-600 text-sm">
                         {{$first_attempt->student->father}}
                     </td>
+                    <td>Fresh</td>
                     <td class="py-2 flex items-center justify-center">
-                        <form action="{{route('first_attempts.destroy',$first_attempt)}}" method="POST" id='del_form{{$first_attempt->student->id}}' class="mt-1">
+                        <form action="{{route('first_attempts.destroy',$first_attempt)}}" method="POST" id='del_fresh{{$first_attempt->student->id}}' class="mt-1">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="delme('{{$first_attempt->student->id}}')">
+                            <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="delFresh('{{$first_attempt->student->id}}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                                </svg>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+
+                @foreach($course_allocation->reappears as $reappear)
+                <tr class="tr border-b ">
+                    <td class="py-2">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                @if($reappear->first_attempt->student->gender=='M')
+                                <div class="bg-indigo-500 w-2 h-2 rounded-full"></div>
+                                @else
+                                <div class="bg-green-500 w-2 h-2 rounded-full"></div>
+                                @endif
+                            </div>
+                            <div>
+                                <div class="text-slate-600">{{$reappear->first_attempt->student->name}}</div>
+                                <div class="text-slate-600 text-sm">
+                                    {{$reappear->first_attempt->student->rollno}}
+                                    @if($reappear->first_attempt->student->regno)
+                                    | {{$reappear->first_attempt->student->regno}}
+                                    @endif
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </td>
+                    <td hidden>{{$reappear->first_attempt->student->gender}}</td>
+                    <td class="py-2 text-slate-600 text-sm">
+                        {{$reappear->first_attempt->student->father}}
+                    </td>
+                    <td>Reappear</td>
+                    <td class="py-2 flex items-center justify-center">
+                        <form action="{{route('reappears.destroy',$reappear)}}" method="POST" id='del_reappear{{$reappear->first_attempt->student->id}}' class="mt-1">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="delReappear('{{$reappear->first_attempt->student->id}}')">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
                                 </svg>
@@ -159,7 +219,7 @@
 </div>
 
 <script type="text/javascript">
-    function delme(formid) {
+    function delFresh(formid) {
 
         event.preventDefault();
 
@@ -174,7 +234,27 @@
         }).then((result) => {
             if (result.value) {
                 //submit corresponding form
-                $('#del_form' + formid).submit();
+                $('#del_fresh' + formid).submit();
+            }
+        });
+    }
+
+    function delReappear(formid) {
+
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                //submit corresponding form
+                $('#del_reappear' + formid).submit();
             }
         });
     }

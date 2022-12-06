@@ -42,7 +42,7 @@
                 </tr>
                 <tr class="text-xs font-bold">
                     <td class="w-32 py-1">Father Name:</td>
-                    <td class="w-64 py-1">{{$student->section->clas->program->name}}</td>
+                    <td class="w-64 py-1">{{$student->father}}</td>
                     <td class="w-32 py-1">Registration No.:</td>
                     <td class="w-64 py-1">{{$student->regno}}</td>
                 </tr>
@@ -66,18 +66,17 @@
                 <tr>
                     <td colspan="6">Semester-{{$semester_no}}</td>
                 </tr>
-                @foreach($course_tracks->where('semester_no',$semester_no) as $course_track)
-                @foreach($course_track->results as $result)
+                @foreach($first_attempts->where('semester_no',$semester_no) as $first_attempt)
 
                 <tr class="text-xs">
-                    <td class="py-1 pl-2 border border-solid border-gray-600 w-12">{{$result->course_track->course->code}}</td>
-                    <td class="py-1 pl-2 border border-solid border-gray-600 w-64">{{$result->course_track->course->name}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$result->creditHrs()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$result->obtained()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$result->gradePoint()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$result->gradeLetter()}}</td>
+                    <td class="py-1 pl-2 border border-solid border-gray-600 w-12">{{$first_attempt->course->code}}</td>
+                    <td class="py-1 pl-2 border border-solid border-gray-600 w-64">{{$first_attempt->course->name}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->course->creditHrs()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$first_attempt->summative()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->gp()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->grade()}}</td>
                 </tr>
-                @endforeach
+
                 @endforeach
                 @endforeach
                 <tr class="text-sm font-bold">

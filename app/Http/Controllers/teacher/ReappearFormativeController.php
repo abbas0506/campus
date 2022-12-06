@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers\teacher;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Models\CourseAllocation;
-use App\Models\CourseTrack;
-use App\Models\FirstAttempt;
-use App\Models\Result;
-use App\Models\Section;
+use App\Models\Reappear;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class ResultController extends Controller
+class ReappearFormativeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,11 +17,6 @@ class ResultController extends Controller
     public function index()
     {
         //
-        $teacher = Auth::user()->teacher;
-        $section_ids = CourseAllocation::where('teacher_id', $teacher->id)->distinct()->pluck('section_id')->toArray();
-        $sections = Section::whereIn('id', $section_ids)->get();
-
-        return view('teacher.results.index', compact('sections', 'teacher'));
     }
 
     /**
@@ -49,30 +38,6 @@ class ResultController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'course_track_id' => 'required|numeric',
-            'teacher_id' => 'required|numeric',
-            'semester_id' => 'required|numeric',
-            'semester_no' => 'required|numeric',
-
-        ]);
-
-        DB::beginTransaction();
-        try {
-            Result::create([
-                'course_track_id' => $request->course_track_id,
-                'teacher_id' => $request->teacher_id,
-                'semester_id' => $request->semester_id,
-                'semester_no' => $request->semester_no,
-
-            ]);
-
-            DB::commit();
-            return redirect()->back()->with('success', "Successfully added");
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return redirect()->back()->withErrors($ex->getMessage());
-        }
     }
 
     /**
@@ -84,8 +49,6 @@ class ResultController extends Controller
     public function show($id)
     {
         //
-        $course_allocation = CourseAllocation::find($id);
-        return view('teacher.results.show', compact('course_allocation'));
     }
 
     /**
@@ -97,8 +60,6 @@ class ResultController extends Controller
     public function edit($id)
     {
         //
-        $course_allocation = CourseAllocation::find($id);
-        return view('teacher.results.edit', compact('course_allocation'));
     }
 
     /**
@@ -108,7 +69,7 @@ class ResultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $course_allocation_id)
+    public function update(Request $request, $id)
     {
         //
         $request->validate([
@@ -116,22 +77,19 @@ class ResultController extends Controller
             'assignment' => 'required',
             'presentation' => 'required',
             'midterm' => 'required',
-            'summative' => 'required',
         ]);
 
         $ids = $request->id;
         $assignment = $request->assignment;
         $presentation = $request->presentation;
         $midterm = $request->midterm;
-        $summative = $request->summative;
         try {
             foreach ($ids as $key => $id) {
 
-                $first_attempt = FirstAttempt::find($id);
+                $first_attempt = Reappear::find($id);
                 $first_attempt->assignment = $assignment[$key];
                 $first_attempt->presentation = $presentation[$key];
                 $first_attempt->midterm = $midterm[$key];
-                $first_attempt->summative = $summative[$key];
 
                 $first_attempt->update();
             }
@@ -150,12 +108,5 @@ class ResultController extends Controller
     public function destroy($id)
     {
         //
-        try {
-            $first_attempt = FirstAttempt::find($id);
-            $first_attempt->delete();
-            return redirect()->back()->with('success', 'Successfully deleted');
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage());
-        }
     }
 }
