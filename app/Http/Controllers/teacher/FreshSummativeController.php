@@ -4,6 +4,8 @@ namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
+use App\Models\FirstAttempt;
+use Exception;
 use Illuminate\Http\Request;
 
 class FreshSummativeController extends Controller
@@ -60,7 +62,7 @@ class FreshSummativeController extends Controller
     {
         //
         $course_allocation = CourseAllocation::find($id);
-        return view('teacher.results.summative.edit', compact('course_allocation'));
+        return view('teacher.results.fresh.summative.edit', compact('course_allocation'));
     }
 
     /**
@@ -73,6 +75,24 @@ class FreshSummativeController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'id' => 'required',
+            'summative' => 'required',
+        ]);
+
+        $ids = $request->id;
+        $summative = $request->summative;
+        try {
+            foreach ($ids as $key => $id) {
+
+                $first_attempt = FirstAttempt::find($id);
+                $first_attempt->summative = $summative[$key];
+                $first_attempt->update();
+            }
+            return redirect()->back()->with('success', "Successfully added");
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage());
+        }
     }
 
     /**

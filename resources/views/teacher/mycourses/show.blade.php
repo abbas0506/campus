@@ -47,7 +47,7 @@
 
         </div>
         <div class="flex items-center space-x-4">
-            <a href="{{route('fa_formatives.edit', $course_allocation)}}" class="px-5 py-2 bg-teal-600 text-slate-100" id='btnStartFeeding'>
+            <a href="{{route('fresh_formative.edit', $course_allocation)}}" class="px-5 py-2 bg-teal-600 text-slate-100" id='btnStartFeeding'>
                 Start Feeding Result
             </a>
             <!-- <button class="px-5 py-2 bg-teal-600 text-slate-100 hidden" id='btnRegisterNow' onclick="enrollFirstAttempt()">

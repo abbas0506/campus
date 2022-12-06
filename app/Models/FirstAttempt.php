@@ -70,6 +70,13 @@ class FirstAttempt extends Model
         else
             return false;
     }
+    public function failed()
+    {
+        if ($this->formative() < 17)
+            return true;
+        else
+            return false;
+    }
     public function status()
     {
         if ($this->has_passed())

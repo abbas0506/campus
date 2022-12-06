@@ -121,10 +121,10 @@ Route::group(['middleware' => ['role:teacher']], function () {
     Route::view('teacher', 'teacher.index');
     Route::resource('mycourses', MyCoursesController::class);
 
-    Route::resource('fa_formatives', FreshFormativeController::class);
-    Route::resource('ra_formatives', ReappearFormativeController::class);
-    Route::resource('fa_summatives', FreshSummativeController::class);
-    Route::resource('ra_summatives', ReappearSummativeController::class);
+    Route::resource('fresh_formative', FreshFormativeController::class);
+    Route::resource('fresh_summative', FreshSummativeController::class);
+    Route::resource('reappear_formative', ReappearFormativeController::class);
+    Route::resource('reappear_summative', ReappearSummativeController::class);
 
     Route::resource('first_attempts', FirstAttemptController::class);
     Route::resource('reappears', ReappearController::class);

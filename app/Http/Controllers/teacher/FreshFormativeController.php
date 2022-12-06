@@ -62,7 +62,7 @@ class FreshFormativeController extends Controller
     {
         //
         $course_allocation = CourseAllocation::find($id);
-        return view('teacher.results.formative.edit', compact('course_allocation'));
+        return view('teacher.results.fresh.formative.edit', compact('course_allocation'));
     }
 
     /**

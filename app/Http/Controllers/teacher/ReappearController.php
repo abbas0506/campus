@@ -60,7 +60,7 @@ class ReappearController extends Controller
                 ->where('semester_id', $course_allocation->semester_id)
                 ->count();
             if ($exists > 0) {
-                return response()->json(['msg' => "Already enrolled!"]);
+                return redirect()->back()->with('error', 'Already enrolled!');
             } else {
 
                 //if last cgp above 3.5 cant register 
@@ -72,14 +72,14 @@ class ReappearController extends Controller
                         'semester_no' => $course_allocation->semester_no,
                     ]);
                     Reappear::create($request->all());
-                    return response()->json(['msg' => "Successful"]);
+                    return redirect()->back()->with('success', 'Successfully added');
                 } catch (Exception $e) {
-                    return response()->json(['msg' => $e->getMessage()]);
+                    return redirect()->back()->withErrors($e->getMessage());
                     // something went wrong
                 }
             }
         } else {
-            return response()->json(['msg' => "Record not found!"]);
+            return redirect()->back()->with('error', 'Data not found!');
         }
     }
 
@@ -129,7 +129,7 @@ class ReappearController extends Controller
         try {
             $reappear = Reappear::find($id);
             $reappear->delete();
-            return redirect()->back()->with('success', 'Successfully deleted');
+            return redirect()->back()->with('success', 'Successfully removed');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }

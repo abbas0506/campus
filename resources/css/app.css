@@ -70,7 +70,7 @@
         @apply text-teal-800 border-teal-800 bg-teal-50;
     } */
     .tab {
-        @apply px-2;
+        @apply px-2 text-slate-400 hover:text-slate-700 font-thin;
     }
     .tab.active {
         @apply font-bold text-teal-800 relative;

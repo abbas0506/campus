@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseAllocation;
+use App\Models\Reappear;
+use Exception;
 use Illuminate\Http\Request;
 
 class ReappearSummativeController extends Controller
@@ -58,6 +61,8 @@ class ReappearSummativeController extends Controller
     public function edit($id)
     {
         //
+        $course_allocation = CourseAllocation::find($id);
+        return view('teacher.results.reappear.summative.edit', compact('course_allocation'));
     }
 
     /**
@@ -70,6 +75,24 @@ class ReappearSummativeController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'id' => 'required',
+            'summative' => 'required',
+        ]);
+
+        $ids = $request->id;
+        $summative = $request->summative;
+        try {
+            foreach ($ids as $key => $id) {
+
+                $reappear = Reappear::find($id);
+                $reappear->summative = $summative[$key];
+                $reappear->update();
+            }
+            return redirect()->back()->with('success', "Successfully added");
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage());
+        }
     }
 
     /**

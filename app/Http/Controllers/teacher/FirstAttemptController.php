@@ -117,7 +117,7 @@ class FirstAttemptController extends Controller
         try {
             $first_attempt = FirstAttempt::find($id);
             $first_attempt->delete();
-            return redirect()->back()->with('success', 'Successfully deleted');
+            return redirect()->back()->with('success', 'Successfully removed');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }

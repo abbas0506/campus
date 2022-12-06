@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseAllocation;
 use App\Models\Reappear;
 use Exception;
 use Illuminate\Http\Request;
@@ -60,6 +61,8 @@ class ReappearFormativeController extends Controller
     public function edit($id)
     {
         //
+        $course_allocation = CourseAllocation::find($id);
+        return view('teacher.results.reappear.formative.edit', compact('course_allocation'));
     }
 
     /**
@@ -86,12 +89,12 @@ class ReappearFormativeController extends Controller
         try {
             foreach ($ids as $key => $id) {
 
-                $first_attempt = Reappear::find($id);
-                $first_attempt->assignment = $assignment[$key];
-                $first_attempt->presentation = $presentation[$key];
-                $first_attempt->midterm = $midterm[$key];
+                $reappear = Reappear::find($id);
+                $reappear->assignment = $assignment[$key];
+                $reappear->presentation = $presentation[$key];
+                $reappear->midterm = $midterm[$key];
 
-                $first_attempt->update();
+                $reappear->update();
             }
             return redirect()->back()->with('success', "Successfully added");
         } catch (Exception $ex) {
