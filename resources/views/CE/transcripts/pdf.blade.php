@@ -61,10 +61,15 @@
                     <th class="border border-solid text-center ">Grade Letter</th>
                 </tr>
             </thead>
+
+            @php
+            $roman = config('global.romans');
+            @endphp
+
             <tbody>
                 @foreach($semester_nos as $semester_no)
                 <tr>
-                    <td colspan="6">Semester-{{$semester_no}}</td>
+                    <td colspan="6" class="text-sm">Semester - {{$roman[$semester_no-1]}}</td>
                 </tr>
                 @foreach($first_attempts->where('semester_no',$semester_no) as $first_attempt)
 
@@ -72,9 +77,9 @@
                     <td class="py-1 pl-2 border border-solid border-gray-600 w-12">{{$first_attempt->course->code}}</td>
                     <td class="py-1 pl-2 border border-solid border-gray-600 w-64">{{$first_attempt->course->name}}</td>
                     <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->course->creditHrs()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$first_attempt->summative()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->gp()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->grade()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$first_attempt->best_summative()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_gpa($first_attempt->best_summative())}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_grade($first_attempt->best_summative())}}</td>
                 </tr>
 
                 @endforeach

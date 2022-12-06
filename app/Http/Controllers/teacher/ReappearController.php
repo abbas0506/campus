@@ -64,18 +64,21 @@ class ReappearController extends Controller
             } else {
 
                 //if last cgp above 3.5 cant register 
-
-                try {
-                    $request->merge([
-                        'first_attempt_id' => $first_attempt->id,
-                        'semester_id' => $course_allocation->semester_id,
-                        'semester_no' => $course_allocation->semester_no,
-                    ]);
-                    Reappear::create($request->all());
-                    return redirect()->back()->with('success', 'Successfully added');
-                } catch (Exception $e) {
-                    return redirect()->back()->withErrors($e->getMessage());
-                    // something went wrong
+                if ($first_attempt->last_gp() > 3.5) {
+                    return redirect()->back()->with('error', 'CGP above 3.5, not eligible!');
+                } else {
+                    try {
+                        $request->merge([
+                            'first_attempt_id' => $first_attempt->id,
+                            'semester_id' => $course_allocation->semester_id,
+                            'semester_no' => $course_allocation->semester_no,
+                        ]);
+                        Reappear::create($request->all());
+                        return redirect()->back()->with('success', 'Successfully added');
+                    } catch (Exception $e) {
+                        return redirect()->back()->withErrors($e->getMessage());
+                        // something went wrong
+                    }
                 }
             }
         } else {

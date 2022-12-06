@@ -47,19 +47,15 @@
 
         </div>
         <div class="flex items-center space-x-4">
-            <a href="{{route('fresh_formative.edit', $course_allocation)}}" class="px-5 py-2 bg-teal-600 text-slate-100" id='btnStartFeeding'>
-                Start Feeding Result
-            </a>
-            <!-- <button class="px-5 py-2 bg-teal-600 text-slate-100 hidden" id='btnRegisterNow' onclick="enrollFirstAttempt()">
-                Enroll Now <span class="ml-2">(</span><span id='chkCount' class="mx-1">0</span> out of {{$unregistered->count()}} )
-            </button> -->
-            <a href="{{route('enroll.fa', $course_allocation)}}" class="px-5 py-2 bg-indigo-600 text-slate-100" id='btnStartFeeding'>
+            <a href="{{route('enroll.fa', $course_allocation)}}" class="px-5 py-2 btn-indigo" id='btnStartFeeding'>
                 Enroll New
             </a>
+            <a href="{{route('fresh_formative.edit', $course_allocation)}}" class="px-5 py-2 btn-teal" id='btnStartFeeding'>
+                Start Feeding Result
+            </a>
+
         </div>
-        <!-- <button type="submit" class="px-8 py-2 bg-teal-600 text-slate-100 rounded-sm hover:bg-teal-500">
-            Save Result
-        </button> -->
+
     </div>
 
     <div class="flex items-end space-x-4 mt-4">

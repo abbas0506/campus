@@ -113,4 +113,33 @@ class FirstAttempt extends Model
         } else
             return $this->gp();
     }
+
+    public function best_summative()
+    {
+        if ($this->reappears->count() > 0) {
+            $last = $this->reappears->last();
+            return $last->summative();
+        } else
+            return $this->summative();
+    }
+    public function best_gpa($marks)
+    {
+        $gp = 0;
+        if ($marks > 90) $gp = 4;
+        elseif ($marks > 50) $gp = ($marks - 10) * 0.05;
+        return $gp;
+    }
+    public function best_grade($marks)
+    {
+
+        $gp = $this->best_gpa($marks);
+        $grade = '';
+        if ($gp == 4) $grade = 'A+';
+        elseif ($gp >= 3.5 && $gp <= 3.99) $grade = 'A';
+        elseif ($gp >= 3 && $gp <= 3.49) $grade = 'B';
+        elseif ($gp >= 2.5 && $gp <= 2.99) $grade = 'C';
+        elseif ($gp >= 2 && $gp <= 2.49) $grade = 'D';
+        else $grade = 'F';
+        return $grade;
+    }
 }
