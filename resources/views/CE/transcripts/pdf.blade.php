@@ -32,7 +32,7 @@
                     <td class="w-32 py-1">Program Name</td>
                     <td class="w-64 py-1">{{$student->section->clas->program->name}}</td>
                     <td class="w-32 py-1">Session</td>
-                    <td class="w-64 py-1">2022-24</td>
+                    <td class="w-64 py-1">{{$student->session()}}</td>
                 </tr>
                 <tr class="text-xs font-bold">
                     <td class="w-32 py-1">Candidate Name</td>
@@ -77,9 +77,9 @@
                     <td class="py-1 pl-2 border border-solid border-gray-600 w-12">{{$first_attempt->course->code}}</td>
                     <td class="py-1 pl-2 border border-solid border-gray-600 w-64">{{$first_attempt->course->name}}</td>
                     <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->course->creditHrs()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$first_attempt->best_summative()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_gpa($first_attempt->best_summative())}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_grade($first_attempt->best_summative())}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$first_attempt->best_attempt()->summative()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->gp()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->grade()}}</td>
                 </tr>
 
                 @endforeach
@@ -87,11 +87,11 @@
                 <tr class="text-sm font-bold">
                     <td class="px-8 text-right border border-solid" colspan="2"> Total</td>
                     <td class="text-center border border-solid">
-                        <div class="border-b">135</div>
+                        <div class="border-b">{{$student->credits_attempted()}}</div>
                     </td>
                     <td class="border border-solid">
-                        <div class="text-center border-b border-0 border-solid">135/200</div>
-                        <div class="text-center">85%</div>
+                        <div class="text-center border-b border-0 border-solid">{{$student->overall_percentage()*2}}/200</div>
+                        <div class="text-center">{{$student->overall_percentage()}}%</div>
                     </td>
                     <td class="text-center border border-solid"></td>
                     <td class="text-center border border-solid"></td>

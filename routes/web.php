@@ -26,19 +26,13 @@ use App\Http\Controllers\hod\ImportStudentsController;
 use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\LoginOptionsController;
-use App\Http\Controllers\teacher\CourseTrackController;
 use App\Http\Controllers\teacher\FirstAttemptController;
-use App\Http\Controllers\teacher\FormativeController;
-use App\Http\Controllers\teacher\FreshEnrollController;
 use App\Http\Controllers\teacher\FreshFormativeController;
 use App\Http\Controllers\teacher\FreshSummativeController;
 use App\Http\Controllers\teacher\MyCoursesController;
 use App\Http\Controllers\teacher\ReappearController;
-use App\Http\Controllers\teacher\ReappearEnrollController;
 use App\Http\Controllers\teacher\ReappearFormativeController;
 use App\Http\Controllers\teacher\ReappearSummativeController;
-use App\Http\Controllers\teacher\ResultController;
-use App\Http\Controllers\teacher\SummativeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,7 +105,6 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('elective-allocations', ElectiveAllocationController::class)->only('edit');
 
     Route::resource('students', StudentController::class);
-    Route::resource('results', ResultController::class);
     Route::resource('enrollments', EnrollmentController::class);
     Route::get('import-students/view/{id}', [ImportStudentsController::class, 'view']);
     Route::post('import-students', [ImportStudentsController::class, 'import']);

@@ -14,14 +14,6 @@ class Section extends Model
 
     ];
 
-    // public function semester()
-    // {
-    //     return $this->belongsTo(Semester::class);
-    // }
-    // public function program()
-    // {
-    //     return $this->belongsTo(Program::class);
-    // }
     public function clas()
     {
         return $this->belongsTo(Clas::class, 'clas_id');

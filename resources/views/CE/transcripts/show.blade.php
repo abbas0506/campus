@@ -7,14 +7,6 @@
     </div>
 </div>
 
-<div class="flex justify-center items-center text-2xl font-bold w-full py-1 mt-24 relative">
-    <div class="absolute left-0 z-5">
-        <img alt="logo" src="{{asset('/images/logo/logo-light.png')}}" class="w-36">
-    </div>
-    University of Okara
-</div>
-<h1 class="mt-5 font-bold text-center">Transcript</h1>
-
 <div class="container w-full mx-auto mt-8">
     <section id='registered' class="">
         <div class="flex justify-end border-b pb-4">
@@ -26,7 +18,7 @@
             <div class="flex w-1/6 py-2 text-gray-800 font-bold">Program Name</div>
             <div class="flex w-2/6 py-2">{{$student->section->clas->program->name}}</div>
             <div class="flex w-1/6 py-2 text-gray-800 font-bold">Session</div>
-            <div class="flex w-2/6 py-2">2022-24</div>
+            <div class="flex w-2/6 py-2">{{$student->session()}}</div>
         </div>
         <div class="flex">
             <div class="flex w-1/6 py-2 text-gray-800 font-bold">Candidate Name</div>
@@ -66,9 +58,9 @@
                     <td class="py-1 pl-2 border">{{$first_attempt->course->code}}</td>
                     <td class="py-1 pl-2 border">{{$first_attempt->course->name}}</td>
                     <td class="py-1 text-center border">{{$first_attempt->course->creditHrs()}}</td>
-                    <td class="py-1 text-center border">{{$first_attempt->best_summative()}}</td>
-                    <td class="py-1 text-center border">{{$first_attempt->best_gpa($first_attempt->best_summative())}}</td>
-                    <td class="py-1 text-center border">{{$first_attempt->best_grade($first_attempt->best_summative())}}</td>
+                    <td class="py-1 text-center border">{{$first_attempt->best_attempt()->summative()}}</td>
+                    <td class="py-1 text-center border">{{$first_attempt->best_attempt()->gp()}}</td>
+                    <td class="py-1 text-center border">{{$first_attempt->best_attempt()->grade()}}</td>
                 </tr>
                 @endforeach
                 @endforeach

@@ -25,8 +25,4 @@ class Semester extends Model
     {
         return $this->semester_type->name . ' ' . $this->year;
     }
-    public function results()
-    {
-        return $this->hasMany(Result::class);
-    }
 }

@@ -34,6 +34,14 @@ class Student extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function session()
+    {
+        $semester = $this->section->clas->semester->semester_type->name;
+        $start = $this->section->clas->semester->year;
+        $end = $start + $this->section->clas->program->min_duration;
+        return $semester . " " . $start . "-" . $end - 2000;
+    }
+
     public function section()
     {
         return $this->belongsTo(Section::class);
@@ -43,16 +51,30 @@ class Student extends Model
     {
         return $this->section->program;
     }
-    // public function course_tracks()
-    // {
-    //     return $this->hasMany(CourseTrack::class);
-    // }
-    // public function results()
-    // {
-    //     return $this->hasMany(Result::class);
-    // }
     public function first_attempts()
     {
         return $this->hasMany(FirstAttempt::class);
+    }
+    public function credits_attempted()
+    {
+        $sum = $this->first_attempts->sum(function ($attempt) {
+            return $attempt->course->creditHrs();
+        });
+        return $sum;
+    }
+    public function overall_obtained()
+    {
+        $sum = $this->first_attempts->sum(function ($attempt) {
+            return $attempt->best_attempt()->summative();
+        });
+        return $sum;
+    }
+    public function overall_total_marks()
+    {
+        return $this->first_attempts->count() * 100;
+    }
+    public function overall_percentage()
+    {
+        return round($this->overall_obtained() / $this->overall_total_marks() * 100, 0);
     }
 }
