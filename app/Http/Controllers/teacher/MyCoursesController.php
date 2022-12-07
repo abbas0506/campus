@@ -68,8 +68,6 @@ class MyCoursesController extends Controller
         $unregistered = Student::whereNotIn('id', $student_ids)
             ->where('section_id', $course_allocation->section_id)->get();
 
-        // // //get reappear students
-
         return view('teacher.mycourses.show', compact('course_allocation', 'registered', 'unregistered'));
     }
 
