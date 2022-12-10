@@ -39,7 +39,7 @@ class Student extends Model
         $semester = $this->section->clas->semester->semester_type->name;
         $start = $this->section->clas->semester->year;
         $end = $start + $this->section->clas->program->min_duration;
-        return $semester . " " . $start . "-" . $end - 2000;
+        return  $start . "-" . $end - 2000 . " (" . $semester . ")";
     }
 
     public function section()
@@ -76,5 +76,13 @@ class Student extends Model
     public function overall_percentage()
     {
         return round($this->overall_obtained() / $this->overall_total_marks() * 100, 0);
+    }
+    public function cgpa()
+    {
+        $sum = $this->first_attempts->sum(function ($attempt) {
+            return $attempt->course->creditHrs() * $attempt->best_attempt()->gpa();
+        });
+        $cgpa = round($sum / $this->credits_attempted(), 2);
+        return $cgpa;
     }
 }

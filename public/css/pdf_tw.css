@@ -42,6 +42,11 @@ td {
     border-width: thin !important;
 }
 
+tr th.border,
+tr td.border {
+    border: solid thin #333;
+}
+
 b,
 strong {
     font-weight: bolder;
@@ -92,14 +97,27 @@ sup {
 .left-0 {
     left: 0;
 }
+.left-10 {
+    left: 40px;
+}
+.left-20 {
+    left: 80px;
+}
+.left-30 {
+    left: 120px;
+}
+.left-40 {
+    left: 240px;
+}
+
 .right-0 {
-    left: 0;
+    right: 0;
 }
 .top-0 {
-    left: 0;
+    top: 0;
 }
 .bottom-0 {
-    left: 0;
+    bottom: 0;
 }
 .w-0 {
     width: 0;

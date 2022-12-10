@@ -78,7 +78,7 @@
                     <td class="py-1 pl-2 border border-solid border-gray-600 w-64">{{$first_attempt->course->name}}</td>
                     <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->course->creditHrs()}}</td>
                     <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$first_attempt->best_attempt()->summative()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->gp()}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->gpa()}}</td>
                     <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->grade()}}</td>
                 </tr>
 
@@ -90,11 +90,11 @@
                         <div class="border-b">{{$student->credits_attempted()}}</div>
                     </td>
                     <td class="border border-solid">
-                        <div class="text-center border-b border-0 border-solid">{{$student->overall_percentage()*2}}/200</div>
+                        <div class="text-center border-b border-0 border-solid">{{$student->overall_obtained()}}/{{$student->overall_total_marks()}}</div>
                         <div class="text-center">{{$student->overall_percentage()}}%</div>
                     </td>
-                    <td class="text-center border border-solid"></td>
-                    <td class="text-center border border-solid"></td>
+                    <td class="text-center border border-solid">CGPA</td>
+                    <td class="text-center border border-solid">{{$student->cgpa()}}</td>
                 </tr>
             </tbody>
         </table>

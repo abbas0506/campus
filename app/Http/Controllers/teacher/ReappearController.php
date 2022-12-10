@@ -64,7 +64,7 @@ class ReappearController extends Controller
             } else {
 
                 //if last cgp above 3.5 cant register 
-                if ($first_attempt->last_gp() > 3.5) {
+                if ($first_attempt->last_gpa() > 3.5) {
                     return redirect()->back()->with('error', 'CGP above 3.5, not eligible!');
                 } else {
                     try {

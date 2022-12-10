@@ -56,7 +56,7 @@ class Reappear extends Model
         else
             return "Fail";
     }
-    public function gp()
+    public function gpa()
     {
         $marks = $this->summative();
         $gp = 0;
@@ -66,7 +66,7 @@ class Reappear extends Model
     }
     public function grade()
     {
-        $gp = $this->gp();
+        $gp = $this->gpa();
         $grade = '';
         if ($gp == 4) $grade = 'A+';
         elseif ($gp >= 3.5 && $gp <= 3.99) $grade = 'A';

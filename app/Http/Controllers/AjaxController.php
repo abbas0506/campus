@@ -94,7 +94,7 @@ class AjaxController extends Controller
                     '<td>' . $first_attempt->semester->title() . '</td>' .
                     '<td>' . $roman[$first_attempt->semester_no] . '</td>' .
                     '<td>' . $first_attempt->summative() . '/100' . '</td>' .
-                    '<td>' . $first_attempt->gp() . '</td>' .
+                    '<td>' . $first_attempt->gpa() . '</td>' .
                     '<td>' . $first_attempt->grade() . '</td>' .
                     '</tr>';
 
@@ -103,7 +103,7 @@ class AjaxController extends Controller
                         '<td>' . $reappear->semester->title() . '</td>' .
                         '<td>' . $roman[$first_attempt->semester_no] . '</td>' .
                         '<td>' . $reappear->summative() . '/100' . '</td>' .
-                        '<td>' . $reappear->gp() . '</td>' .
+                        '<td>' . $reappear->gpa() . '</td>' .
                         '<td>' . $reappear->grade() . '</td>' .
                         '</tr>';
 

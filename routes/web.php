@@ -26,6 +26,7 @@ use App\Http\Controllers\hod\ImportStudentsController;
 use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\LoginOptionsController;
+use App\Http\Controllers\teacher\AssessmentSheetController;
 use App\Http\Controllers\teacher\FirstAttemptController;
 use App\Http\Controllers\teacher\FreshFormativeController;
 use App\Http\Controllers\teacher\FreshSummativeController;
@@ -123,4 +124,6 @@ Route::group(['middleware' => ['role:teacher']], function () {
     Route::resource('reappears', ReappearController::class);
     Route::get('enroll.fa/{id}', [MyCoursesController::class, 'enrollFresh'])->name('enroll.fa');
     Route::get('enroll.ra/{id}', [MyCoursesController::class, 'enrollReappear'])->name('enroll.ra');
+    Route::resource('assessment_sheets', AssessmentSheetController::class);
+    Route::get('assessment_sheets/pdf/{id}', [AssessmentSheetController::class, 'pdf']);
 });

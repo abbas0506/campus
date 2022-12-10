@@ -60,8 +60,9 @@
                 <tr class="border-b border-slate-200">
                     <th>Name</th>
                     <th>Father</th>
-                    <th class="text-center text-sm">Midterm<br> <span class="font-thin">(30%)</span></th>
+                    <th class="text-center text-sm">Midterm<br> <span class="font-thin">(50%)</span></th>
                     <th class="text-center text-sm">Summative <br> <span class="font-thin">(50%)</span></th>
+                    <th class="text-center text-sm">Total <br> <span class="font-thin">(100)</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -105,6 +106,9 @@
                         <td class="py-3 text-center">{{$reappear->formative()}}</td>
                         <td class="py-3 text-center">
                             <input type="text" name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$reappear->summative}}" placeholder="absent" onchange="validate(event,50)">
+                        </td>
+                        <td class="py-3 text-center">
+                            {{$reappear->summative()}}
                         </td>
                         @endif
                 </tr>

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\teacher;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
 use App\Models\Student;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
-class MyCoursesController extends Controller
+class AssessmentSheetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +20,7 @@ class MyCoursesController extends Controller
     {
         //
         $teacher = Auth::user();
-        return view('teacher.mycourses.index', compact('teacher'));
+        return view('teacher.assessment_sheets.index', compact('teacher'));
     }
 
     /**
@@ -53,19 +54,7 @@ class MyCoursesController extends Controller
     {
         //
         $course_allocation = CourseAllocation::find($id);
-
-        //get all registrations for the selected course
-        $first_attempts = $course_allocation->first_attempts();
-        $student_ids = $first_attempts->pluck('student_id')->toArray();
-
-        $registered = Student::whereIn('id', $student_ids)
-            ->where('section_id', $course_allocation->course_id)->get();
-
-        //get not registered students
-        $unregistered = Student::whereNotIn('id', $student_ids)
-            ->where('section_id', $course_allocation->section_id)->get();
-
-        return view('teacher.mycourses.show', compact('course_allocation', 'registered', 'unregistered'));
+        return view('teacher.assessment_sheets.show', compact('course_allocation'));
     }
 
     /**
@@ -100,27 +89,12 @@ class MyCoursesController extends Controller
     public function destroy($id)
     {
         //
-
     }
-    public function enrollFresh($id)
+    public function pdf($id)
     {
         $course_allocation = CourseAllocation::find($id);
+        $pdf = PDF::loadView('teacher.assessment_sheets.pdf', compact('course_allocation'))->setPaper('a4', 'landscape');
 
-        $first_attempts = $course_allocation->first_attempts();
-        $student_ids = $first_attempts->pluck('student_id')->toArray();
-
-        $registered = Student::whereIn('id', $student_ids)
-            ->where('section_id', $course_allocation->course_id)->get();
-
-        //get not registered students
-        $unregistered = Student::whereNotIn('id', $student_ids)
-            ->where('section_id', $course_allocation->section_id)->get();
-
-        return view('teacher.mycourses.enroll.fresh', compact('course_allocation', 'unregistered'));
-    }
-    public function enrollReappear($id)
-    {
-        $course_allocation = CourseAllocation::find($id);
-        return view('teacher.mycourses.enroll.reappear', compact('course_allocation'));
+        return $pdf->stream();
     }
 }

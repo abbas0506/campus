@@ -59,7 +59,7 @@
                     <td class="py-1 pl-2 border">{{$first_attempt->course->name}}</td>
                     <td class="py-1 text-center border">{{$first_attempt->course->creditHrs()}}</td>
                     <td class="py-1 text-center border">{{$first_attempt->best_attempt()->summative()}}</td>
-                    <td class="py-1 text-center border">{{$first_attempt->best_attempt()->gp()}}</td>
+                    <td class="py-1 text-center border">{{$first_attempt->best_attempt()->gpa()}}</td>
                     <td class="py-1 text-center border">{{$first_attempt->best_attempt()->grade()}}</td>
                 </tr>
                 @endforeach

@@ -65,6 +65,7 @@
                     <th class="text-center text-sm">Assignment <br> <span class="font-thin">(10%)</span></th>
                     <th class="text-center text-sm">Presentation<br> <span class="font-thin">(10%)</span></th>
                     <th class="text-center text-sm">Midterm<br> <span class="font-thin">(30%)</span></th>
+                    <th class="text-center text-sm">Formative<br> <span class="font-thin">(50%)</span></th>
 
                 </tr>
             </thead>
@@ -105,6 +106,9 @@
                     </td>
                     <td class="py-3 text-center">
                         <input type="text" name='midterm[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$first_attempt->midterm}}" placeholder="absent" onchange="validate(event,30)">
+                    </td>
+                    <td class="py-3 text-center">
+                        {{$first_attempt->formative()}}
                     </td>
                 </tr>
                 @endforeach

@@ -63,6 +63,7 @@
                     <th>Father</th>
                     <th class="text-center text-sm">Formative <br> <span class="font-thin">(50%)</span></th>
                     <th class="text-center text-sm">Summative<br> <span class="font-thin">(50%)</span></th>
+                    <th class="text-center text-sm">Total<br> <span class="font-thin">(100)</span></th>
 
                 </tr>
             </thead>
@@ -107,6 +108,10 @@
                         <td class="py-3 text-center">
                             <input type="text" name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$first_attempt->summative}}" placeholder="absent" onchange="validate(event,50)">
                         </td>
+                        <td class="py-3 text-center">
+                            {{$first_attempt->summative()}}
+                        </td>
+
                         @endif
                 </tr>
                 @endforeach

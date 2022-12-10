@@ -85,7 +85,10 @@ class FirstAttempt extends Model
             return "Fail";
     }
 
-    public function gp()
+    public function credit_hrs()
+    {
+    }
+    public function gpa()
     {
         $marks = $this->summative();
         $gp = 0;
@@ -95,7 +98,7 @@ class FirstAttempt extends Model
     }
     public function grade()
     {
-        $gp = $this->gp();
+        $gp = $this->gpa();
         $grade = '';
         if ($gp == 4) $grade = 'A+';
         elseif ($gp >= 3.5 && $gp <= 3.99) $grade = 'A';
@@ -105,13 +108,13 @@ class FirstAttempt extends Model
         else $grade = 'F';
         return $grade;
     }
-    public function last_gp()
+    public function last_gpa()
     {
         if ($this->reappears->count() > 0) {
             $last = $this->reappears->last();
-            return $last->gp();
+            return $last->gpa();
         } else
-            return $this->gp();
+            return $this->gpa();
     }
 
     public function best_attempt()
