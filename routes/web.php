@@ -22,6 +22,7 @@ use App\Http\Controllers\ce\TranscriptController;
 use App\Http\Controllers\hod\ClasController;
 use App\Http\Controllers\hod\CourseAllocationOptionController;
 use App\Http\Controllers\hod\ElectiveAllocationController;
+use App\Http\Controllers\hod\GazzetteController;
 use App\Http\Controllers\hod\ImportStudentsController;
 use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\SectionController;
@@ -83,9 +84,6 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('programs', ProgramController::class);
     Route::resource('clases', ClasController::class);
     Route::resource('sections', SectionController::class);
-    // Route::post('sections.promote/{id}', [SectionController::class, 'promote'])->name('sections.promote');
-    // Route::post('sections.demote/{id}', [SectionController::class, 'demote'])->name('sections.demote');
-
     Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
     Route::post('fetchSectionsByClas', [SectionController::class, 'fetchSectionsByClas'])->name('fetchSectionsByClas'); //for ajax call
     Route::post('fetchSchemesByProgramId', [AjaxController::class, 'fetchSchemesByProgramId'])->name('fetchSchemesByProgramId'); //for ajax call
@@ -109,6 +107,8 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::resource('enrollments', EnrollmentController::class);
     Route::get('import-students/view/{id}', [ImportStudentsController::class, 'view']);
     Route::post('import-students', [ImportStudentsController::class, 'import']);
+    Route::resource('gazzette', GazzetteController::class);
+    Route::get('gazzette/pdf/{id}', [GazzetteController::class, 'pdf']);
 });
 
 Route::group(['middleware' => ['role:teacher']], function () {

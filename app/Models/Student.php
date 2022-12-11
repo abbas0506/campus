@@ -75,14 +75,16 @@ class Student extends Model
     }
     public function overall_percentage()
     {
-        return round($this->overall_obtained() / $this->overall_total_marks() * 100, 0);
+        if ($this->overall_total_marks() == 0) return '-';
+        else return round($this->overall_obtained() / $this->overall_total_marks() * 100, 0);
     }
     public function cgpa()
     {
         $sum = $this->first_attempts->sum(function ($attempt) {
             return $attempt->course->creditHrs() * $attempt->best_attempt()->gpa();
         });
-        $cgpa = round($sum / $this->credits_attempted(), 2);
+        if ($this->credits_attempted() == 0) $cgpa = '-';
+        else $cgpa = round($sum / $this->credits_attempted(), 2);
         return $cgpa;
     }
 }
