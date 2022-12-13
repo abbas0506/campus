@@ -64,14 +64,20 @@ class Student extends Model
     }
     public function overall_obtained()
     {
+        //exclude the marks of subjects that have been failed
         $sum = $this->first_attempts->sum(function ($attempt) {
-            return $attempt->best_attempt()->summative();
+            $bestscore = $attempt->best_attempt()->summative();
+            if ($bestscore < 50) return 0;
+            else return $bestscore;
         });
         return $sum;
     }
     public function overall_total_marks()
     {
-        return $this->first_attempts->count() * 100;
+        $sum = $this->first_attempts->sum(function ($attempt) {
+            return $attempt->course->marks();
+        });
+        return $sum;
     }
     public function overall_percentage()
     {
@@ -83,8 +89,48 @@ class Student extends Model
         $sum = $this->first_attempts->sum(function ($attempt) {
             return $attempt->course->creditHrs() * $attempt->best_attempt()->gpa();
         });
-        if ($this->credits_attempted() == 0) $cgpa = '-';
+        if ($this->credits_attempted() == 0) $cgpa = 0;
         else $cgpa = round($sum / $this->credits_attempted(), 2);
         return $cgpa;
+    }
+
+    //promotion according to hec rules
+    public function promotion_status()
+    {
+        $status = '';
+        $required_cgpa = 2.0;
+        if ($this->semester_no == 1) $required_cgpa = 1.7;
+        else if ($this->semester_no == 2) $required_cgpa = 1.8;
+
+        if ($this->cgpa() >= $required_cgpa) $status = 'Promoted';
+        else $status = 'Ceased';
+        return $status;
+    }
+
+    //overall failing subjects
+    public function failed_subjects()
+    {
+        $subjects = '';
+        $failed = false;
+        foreach ($this->first_attempts as $attempt) {
+            if ($attempt->summative() < 50) {
+                $failed = true;
+                //now check re-attempts, skip if passed
+                foreach ($attempt->reappears as $reappear) {
+                    if ($reappear->summative() >= 50) {
+                        $failed = false;
+                        break;
+                    }
+                }
+                //if has never passed, add to overall failing subjects list
+                if ($failed) {
+                    if ($subjects == '')
+                        $subjects = $subjects . $attempt->course->short;
+                    else
+                        $subjects = $subjects . ', ' . $attempt->course->short;
+                }
+            }
+        }
+        return $subjects;
     }
 }

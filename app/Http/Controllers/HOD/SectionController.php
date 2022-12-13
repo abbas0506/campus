@@ -52,15 +52,29 @@ class SectionController extends Controller
         ]);
 
         try {
-            $clas = Clas::find($request->clas_id);
-            $last = $clas->lastSection()->name;
 
             $letters = config('global.letters');
-            $index = array_search($last, $letters);
-            Section::create([
-                'name' => $letters[$index + 1],
-                'clas_id' => $request->clas_id,
-            ]);
+            $clas = Clas::find($request->clas_id);
+
+            //if section exists, assign next letter
+            if ($clas->lastSection()) {
+                $last = $clas->lastSection()->name;
+                $index = array_search($last, $letters);
+                Section::create([
+                    'name' => $letters[$index + 1],
+                    'clas_id' => $request->clas_id,
+                ]);
+            } else {
+                //else start naming from A
+                Section::create([
+                    'name' => $letters[0],
+                    'clas_id' => $request->clas_id,
+                ]);
+            }
+
+
+
+
 
             return redirect('clases')->with('success', 'Successfully created');
         } catch (Exception $e) {
@@ -119,6 +133,12 @@ class SectionController extends Controller
     public function destroy(Section $section)
     {
         //
+        try {
+            $section->delete();
+            return redirect('clases')->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
     public function append($program_id, $shift_id)

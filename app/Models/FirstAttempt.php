@@ -63,23 +63,16 @@ class FirstAttempt extends Model
         return $this->assignment + $this->presentation + $this->midterm + $this->summative;
     }
 
-    public function has_passed()
-    {
-        if ($this->formative() > 16 && $this->summative() > 49)
-            return true;
-        else
-            return false;
-    }
-    public function failed()
-    {
-        if ($this->formative() < 17)
-            return true;
-        else
-            return false;
-    }
+    // public function failed()
+    // {
+    //     if ($this->formative() < 17)
+    //         return true;
+    //     else
+    //         return false;
+    // }
     public function status()
     {
-        if ($this->has_passed())
+        if ($this->formative() > 25 && $this->summative() > 49)
             return "Pass";
         else
             return "Fail";
@@ -92,8 +85,8 @@ class FirstAttempt extends Model
     {
         $marks = $this->summative();
         $gp = 0;
-        if ($marks > 90) $gp = 4;
-        elseif ($marks > 50) $gp = ($marks - 10) * 0.05;
+        if ($marks >= 90) $gp = 4;
+        elseif ($marks >= 50) $gp = ($marks - 10) * 0.05;
         return $gp;
     }
     public function grade()
@@ -127,5 +120,25 @@ class FirstAttempt extends Model
             }
         }
         return $best;
+    }
+    public function attempt_stars()
+    {
+        //if passed, return starts equal to successful attempt
+        $best = $this;
+        $attempt_no = 0;
+        $stars = '';
+        if ($this->reappears->count() > 0) {
+            foreach ($this->reappears as $reappear) {
+                $attempt_no++;
+                if ($reappear->summative() > $best->summative())
+                    $best = $reappear;
+            }
+            if ($best->summative() >= 50) {
+                for ($i = 1; $i <= $attempt_no; $i++) {
+                    $stars .= '*';
+                }
+            }
+        }
+        return $stars;
     }
 }

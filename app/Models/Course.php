@@ -32,4 +32,8 @@ class Course extends Model
     {
         return $this->credit_hrs_theory + $this->credit_hrs_practical;
     }
+    public function marks()
+    {
+        return $this->max_marks_theory + $this->max_marks_practical;
+    }
 }

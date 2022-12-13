@@ -83,8 +83,8 @@ $roman = config('global.romans');
                     <td class="py-2 border pl-1">{{$student->father}}</td>
                     <td class="py-2 text-center border">{{$student->overall_percentage()}} %</td>
                     <td class="py-2 text-center border">{{$student->cgpa()}}</td>
-                    <td class="py-2 text-center border">promoted</td>
-                    <td class="py-2 border pl-1">subjects</td>
+                    <td class="py-2 text-center border">{{$student->promotion_status()}}</td>
+                    <td class="py-2 border pl-1">{{$student->failed_subjects()}}</td>
 
                 </tr>
                 @endforeach

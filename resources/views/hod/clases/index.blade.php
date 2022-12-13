@@ -12,10 +12,19 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
         </svg>
     </div>
-    <a href="{{route('clases.create')}}" class="btn-indigo">
-        add class
+    <a href="{{route('clases.create')}}" class="btn-teal">
+        + Add Class
     </a>
 </div>
+@if ($errors->any())
+<div class="alert-danger mt-8">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 @if(session('success'))
 <div class="flex alert-success items-center mt-8">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
@@ -33,50 +42,38 @@
 </div>
 @endif
 
-<div class="flex item-center space-x-8 bg-sky-50 p-3 mt-8 rounded">
-    <div>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+<div class="flex item-center space-x-4 border border-teal-100 bg-teal-50 p-3 mt-8 rounded">
+    <button class="flex items-center text-sm btn-teal" onclick="promote()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
         </svg>
-    </div>
+        <span class="ml-2">Promote to next semester</span>
+    </button>
 
-    <div class="flex items-center">
-        <button class="btn-green">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-        </button>
-        <div class="text-sm ml-1">(promote to next semester)</div>
-    </div>
-    <div class="flex items-center">
-        <button class="btn-violet">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-        </button>
-        <div class="text-sm ml-1">(demote to previous semester)</div>
-    </div>
-    <div class="flex items-center">
-        <button class="btn-red">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-            </svg>
-        </button>
-        <div class="text-sm ml-1">(delete, highly destructive)</div>
-    </div>
+    <button class="flex items-center text-sm  btn-indigo" onclick="demote()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
+        <span class="ml-2">Demote to previous semester</span>
+    </button>
+</div>
+<div class="text-slate-600 text-sm mt-8">
+    <span id='chkCount' class="mr-1">0</span>records selected
 </div>
 <table class="table-auto w-full mt-8">
     <thead>
         <tr class="border-b border-slate-200">
+            <th><input type="checkbox" id='chkAll' onclick="chkAll()"></th>
             <th>Class</th>
             <th>Sections</th>
-            <th class="text-right pr-2">Actions</th>
+            <th class="text-center">Actions</th>
         </tr>
     </thead>
     <tbody>
 
         @foreach($clases as $clas)
         <tr class="tr border-b">
+            <td class="py-2 text-slate-600 text-sm"><input type="checkbox" name='chk' value='{{$clas->id}}' onclick="updateChkCount()"></td>
             <td class="py-2 text-slate-600 text-sm">
                 <div>{{$clas->title()}}</div>
             </td>
@@ -96,42 +93,16 @@
                 </form>
             </td>
             <td>
-                <div class="flex items-center justify-end space-x-2">
-                    @if($clas->semester_no < $clas->program->max_duration*2-1)
-                        <form action="{{route('clases.update', $clas)}}" method="post">
-                            @csrf
-                            @method('PATCH')
-                            <input type="text" name='promocode' value="1" hidden>
-                            <button type='submit' href="" class="btn-green">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                                </svg>
-                            </button>
-                        </form>
-                        @endif
-                        @if($clas->semester_no>1)
-                        <form action="{{route('clases.update', $clas)}}" method="post">
-                            @csrf
-                            @method('PATCH')
-                            <input type="text" name='promocode' value="-1" hidden>
-                            <button type='submit' href="" class="btn-violet">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                </svg>
-                            </button>
-                        </form>
-                        @endif
+                <form action="{{route('clases.destroy',$clas)}}" method="POST" id='del_form{{$clas->id}}' class="flex items-center justify-center">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn-red" onclick="delme('{{$clas->id}}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                    </button>
+                </form>
 
-                        <form action="{{route('clases.destroy',$clas)}}" method="POST" id='del_form{{$clas->id}}'>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-red" onclick="delme('{{$clas->id}}')">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                </svg>
-                            </button>
-                        </form>
-                </div>
             </td>
 
         </tr>
@@ -175,6 +146,138 @@
                 $(this).removeClass('hidden');
             }
         });
+    }
+
+    function chkAll() {
+        $('.tr').each(function() {
+            if (!$(this).hasClass('hidden'))
+                $(this).children().find('input[type=checkbox]').prop('checked', $('#chkAll').is(':checked'));
+
+        });
+        updateChkCount()
+    }
+
+    function updateChkCount() {
+
+        var chkArray = [];
+        var chks = document.getElementsByName('chk');
+        chks.forEach((chk) => {
+            if (chk.checked) chkArray.push(chk.value);
+        })
+        document.getElementById("chkCount").innerHTML = chkArray.length;
+    }
+
+    function promote() {
+
+        var token = $("meta[name='csrf-token']").attr("content");
+        var ids_array = [];
+        var chks = document.getElementsByName('chk');
+        chks.forEach((chk) => {
+            if (chk.checked) ids_array.push(chk.value);
+        })
+
+        if (ids_array.length == 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: "Nothing to promote",
+            });
+        } else {
+            //show sweet alert and confirm submission
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Selected classes will be promoted to next semester!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, promote now'
+            }).then((result) => { //if confirmed    
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{route('clases.promote')}}",
+                        data: {
+                            "ids_array": ids_array,
+                            "_token": token,
+
+                        },
+                        success: function(response) {
+                            //
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.msg,
+                            });
+                            //refresh content after deletion
+                            location.reload();
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: errorThrown
+                            });
+                        }
+                    }); //ajax end
+                }
+            })
+        }
+    }
+
+
+    function demote() {
+
+        var token = $("meta[name='csrf-token']").attr("content");
+        var ids_array = [];
+        var chks = document.getElementsByName('chk');
+        chks.forEach((chk) => {
+            if (chk.checked) ids_array.push(chk.value);
+        })
+
+        if (ids_array.length == 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: "Nothing to demote",
+            });
+        } else {
+            //show sweet alert and confirm submission
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Selected classes will be demoted to previous semester!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, demote now'
+            }).then((result) => { //if confirmed    
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{route('clases.demote')}}",
+                        data: {
+                            "ids_array": ids_array,
+                            "_token": token,
+
+                        },
+                        success: function(response) {
+                            //
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.msg,
+                            });
+                            //refresh content after deletion
+                            location.reload();
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: errorThrown
+                            });
+                        }
+                    }); //ajax end
+                }
+            })
+        }
     }
 </script>
 

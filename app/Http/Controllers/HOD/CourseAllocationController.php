@@ -64,7 +64,7 @@ class CourseAllocationController extends Controller
             'course_id' => 'required|numeric',
             'semester_id' => 'required|numeric',
             'section_id' => 'required|numeric',
-            'semester_no' => 'required|numeric',
+            // 'semester_no' => 'required|numeric',
         ]);
 
         try {

@@ -42,16 +42,9 @@ class Reappear extends Model
         return $this->assignment + $this->presentation + $this->midterm + $this->summative;
     }
 
-    public function has_passed()
-    {
-        if ($this->formative() > 16 && $this->summative() > 49)
-            return true;
-        else
-            return false;
-    }
     public function status()
     {
-        if ($this->has_passed())
+        if ($this->formative() > 16 && $this->summative() > 49)
             return "Pass";
         else
             return "Fail";

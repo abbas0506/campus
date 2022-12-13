@@ -22,12 +22,12 @@ $roman = config('global.romans');
 
         <div class="w-1/2 mx-auto">
             <div class="relative">
-                <div class="absolute left-40"><img alt="logo" src="{{public_path('/images/logo/logo-light.png')}}" class="w-32"></div>
+                <div class="absolute"><img alt="logo" src="{{public_path('/images/logo/logo-light.png')}}" class="w-32"></div>
             </div>
             <table class="w-full">
                 <tbody>
                     <tr>
-                        <td class="text-center text-3xl font-bold">University of Okara</td>
+                        <td class="text-center text-3xl font-bold">UNIVERSITY OF OKARA</td>
                     </tr>
                     <tr>
                         <td class="text-center text-xl font-bold">Assessment / Result Sheet</td>

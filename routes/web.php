@@ -83,6 +83,9 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::view('hod', 'hod.index');
     Route::resource('programs', ProgramController::class);
     Route::resource('clases', ClasController::class);
+    Route::post('clases.promote', [ClasController::class, 'promote'])->name('clases.promote');
+    Route::post('clases.demote', [ClasController::class, 'demote'])->name('clases.demote');
+
     Route::resource('sections', SectionController::class);
     Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
     Route::post('fetchSectionsByClas', [SectionController::class, 'fetchSectionsByClas'])->name('fetchSectionsByClas'); //for ajax call

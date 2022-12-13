@@ -113,22 +113,7 @@ class ClasController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $request->validate([
-            'promocode' => 'required|numeric',
-        ]);
-        try {
-            $clas = Clas::find($id);
-            $clas->semester_no += $request->promocode;
-            if ($clas->semester_no > 0 && $clas->semester_no < $clas->program->max_duration * 2) {
-                $clas->update();
-                return redirect('clases')->with('success', 'Successfully changed');
-            } else {
 
-                return redirect('clases')->with('success', 'Sorry! invalid request');
-            }
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage());
-        }
     }
 
     /**
@@ -147,6 +132,58 @@ class ClasController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
             // something went wrong
+        }
+    }
+
+    public function promote(Request $request)
+    {
+        $request->validate([
+            'ids_array' => 'required',
+        ]);
+
+        $ids = array();
+        $ids = $request->ids_array;
+        DB::beginTransaction();
+        try {
+            if ($ids) {
+                foreach ($ids as $id) {
+                    //create course enrollment entry
+                    $clas = Clas::find($id);
+                    $clas->semester_no = $clas->semester_no + 1;
+                    $clas->update();
+                }
+            }
+            DB::commit();
+            return response()->json(['msg' => "Successful"]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['msg' => $ex->getMessage()]);
+        }
+    }
+
+    public function demote(Request $request)
+    {
+        $request->validate([
+            'ids_array' => 'required',
+        ]);
+
+        $ids = array();
+        $ids = $request->ids_array;
+        DB::beginTransaction();
+        try {
+            if ($ids) {
+                foreach ($ids as $id) {
+                    //create course enrollment entry
+                    $clas = Clas::find($id);
+                    $clas->semester_no = $clas->semester_no - 1;
+                    $clas->update();
+                }
+            }
+            DB::commit();
+            return response()->json(['msg' => "Successful"]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['msg' => $ex->getMessage()]);
         }
     }
 }
