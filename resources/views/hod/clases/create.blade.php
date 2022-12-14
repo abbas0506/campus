@@ -18,14 +18,13 @@
         </ul>
     </div>
     @endif
-
     <form action="{{route('clases.store')}}" method='post' class="flex flex-col w-full mt-16" onsubmit="return validate(event)">
         @csrf
 
         <label for="" class='mt-8'>Program</label>
         <select id="program_id" name="program_id" class="input-indigo p-2" onchange="loadSchemes()">
             <option value="">Select a program</option>
-            @foreach($programs->sortBy('name') as $program)
+            @foreach($programs as $program)
             <option value="{{$program->id}}">{{$program->name}}</option>
             @endforeach
         </select>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('semester_id');  //root
             $table->unsignedBigInteger('scheme_id');    //to follow
             $table->unsignedInteger('semester_no')->default(1); //dynamic
+            $table->boolean('status')->default(1);
             $table->unique(['program_id', 'shift_id', 'semester_id', 'semester_no']); //composite pk
 
             $table->timestamps();

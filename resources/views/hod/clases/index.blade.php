@@ -34,7 +34,7 @@
 </div>
 @endif
 @if(session('error'))
-<div class="alert-danger mt-8">
+<div class="flex items-center alert-danger mt-8">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
         <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
     </svg>
@@ -45,20 +45,21 @@
 <div class="flex item-center space-x-4 border border-teal-100 bg-teal-50 p-3 mt-8 rounded">
     <button class="flex items-center text-sm btn-teal" onclick="promote()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
         </svg>
+
         <span class="ml-2">Promote to next semester</span>
     </button>
 
     <button class="flex items-center text-sm  btn-indigo" onclick="demote()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
         </svg>
         <span class="ml-2">Demote to previous semester</span>
     </button>
 </div>
 <div class="text-slate-600 text-sm mt-8">
-    <span id='chkCount' class="mr-1">0</span>records selected
+    <span id='chkCount' class="mr-1">0</span>classes selected
 </div>
 <table class="table-auto w-full mt-8">
     <thead>
@@ -71,7 +72,7 @@
     </thead>
     <tbody>
 
-        @foreach($clases as $clas)
+        @foreach($clases->where('status',1) as $clas)
         <tr class="tr border-b">
             <td class="py-2 text-slate-600 text-sm"><input type="checkbox" name='chk' value='{{$clas->id}}' onclick="updateChkCount()"></td>
             <td class="py-2 text-slate-600 text-sm">
@@ -203,7 +204,6 @@
                         },
                         success: function(response) {
                             //
-
                             Swal.fire({
                                 icon: 'success',
                                 title: response.msg,

@@ -35,7 +35,7 @@
                     <label for="" class="mt-3">Classes</label>
                     <select id="clas_id" name="clas_id" class="input-indigo p-2" onchange="loadSections(event)">
                         <option value="">Select a class</option>
-                        @foreach($clases as $clas)
+                        @foreach($clases->where('status',1) as $clas)
                         <option value="{{$clas->id}}">{{$clas->title()}}</option>
                         @endforeach
                     </select>

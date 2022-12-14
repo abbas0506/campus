@@ -1,11 +1,7 @@
 @extends('layouts.teacher')
 @section('page-content')
-<h1 class="mt-12">My Courses</h1>
-<div class="flex items-center justify-between flex-wrap">
-    <div class="bread-crumb">
-        <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">My Courses </a> / {{$course_allocation->course->name}} / {{$course_allocation->section->title()}}
-    </div>
-</div>
+<h1 class="mt-12"><a href="{{route('mycourses.index')}}">My Courses</a></h1>
+<div class="text-slate-600 text-sm italic">Here you can enroll fresh or reappearing students and feed / edit their results</div>
 
 <div class="container w-full mx-auto mt-8">
     <div class="flex items-center flex-wrap justify-between">
@@ -41,30 +37,22 @@
     <input type="text" id='course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
 
     <div class="flex items-center justify-between py-2 mt-8 space-x-5 ">
-        <div class="flex flex-col flex-1 text-sm text-green-800 py-3 pr-5">
+        <div class="flex flex-col flex-1 text-sm text-slate-800 py-3">
             <div class="font-bold">{{$course_allocation->course->name}}</div>
             <div>{{$course_allocation->section->title()}}</div>
-
         </div>
         <div class="flex items-center space-x-4">
             <a href="{{route('enroll.fa', $course_allocation)}}" class="px-5 py-2 btn-indigo" id='btnStartFeeding'>
                 Enroll New
             </a>
+            @if($course_allocation->strength()>0)
             <a href="{{route('fresh_formative.edit', $course_allocation)}}" class="px-5 py-2 btn-teal" id='btnStartFeeding'>
-                Start Feeding Result
+                Feed / Edit Result
             </a>
+            @endif
 
         </div>
 
-    </div>
-
-    <div class="flex items-end space-x-4 mt-4">
-        <!-- <select name="" id="choice" class="p-2 text-teal-700 border border-teal-700 outline-none" onchange="showOrHide()">
-            <option value="0">Currently enrolled</option>
-            <option value="1">Remaining from this section</option>
-        </select> -->
-
-        <!-- <a href="" class="text-blue-600 hover:underline">Register a New Re-Appear Case</a> -->
     </div>
 
     <div class="mt-4 text-slate-600">{{$course_allocation->strength()}} records found</div>

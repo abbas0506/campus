@@ -14,6 +14,7 @@ class Clas extends Model
         'semester_id',  //root semester
         'scheme_id',
         'semester_no',  //will be dynamic
+        'status',       //0, finished
     ];
 
     public function program()

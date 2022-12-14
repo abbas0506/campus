@@ -67,13 +67,22 @@ class ClasController extends Controller
         ]);
         DB::beginTransaction();
         try {
-            $clas = Clas::create($request->all());
-            Section::create([
-                'clas_id' => $clas->id,
-                'name' => 'A',
-            ]);
-            DB::commit();
-            return redirect('clases')->with('success', 'Successfully created');
+            $exists = Clas::where('program_id', $request->program_id)
+                ->where('shift_id', $request->shift_id)
+                ->where('semester_no', $request->semester_no)
+                ->where('semester_id', $request->semester_id)
+                ->first();
+            if ($exists)
+                return redirect('clases')->with('error', 'Already exists!');
+            else {
+                $clas = Clas::create($request->all());
+                Section::create([
+                    'clas_id' => $clas->id,
+                    'name' => 'A',
+                ]);
+                DB::commit();
+                return redirect('clases')->with('success', 'Successfully created');
+            }
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors($e->getMessage());
@@ -147,10 +156,15 @@ class ClasController extends Controller
         try {
             if ($ids) {
                 foreach ($ids as $id) {
-                    //create course enrollment entry
+                    //promote to next semester
                     $clas = Clas::find($id);
                     $clas->semester_no = $clas->semester_no + 1;
                     $clas->update();
+                    //if class duration is over, finish the class
+                    if ($clas->semester_no > $clas->program->max_duration * 2) {
+                        $clas->status = 0;
+                        $clas->update();
+                    }
                 }
             }
             DB::commit();
@@ -173,10 +187,12 @@ class ClasController extends Controller
         try {
             if ($ids) {
                 foreach ($ids as $id) {
-                    //create course enrollment entry
                     $clas = Clas::find($id);
-                    $clas->semester_no = $clas->semester_no - 1;
-                    $clas->update();
+                    //demoting below 1st semester is illegal
+                    if ($clas->semester_no > 1) {
+                        $clas->semester_no = $clas->semester_no - 1;
+                        $clas->update();
+                    }
                 }
             }
             DB::commit();
