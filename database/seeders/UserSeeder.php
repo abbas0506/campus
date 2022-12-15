@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'department_id' => 1,
 
         ]);
-        $user->assignRole('admin', 'controller');
+        $user->assignRole('teacher','admin', 'controller');
 
         // $user = User::create([
         //     'name' => 'Prof. Rashid Hussain',
