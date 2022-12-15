@@ -12,8 +12,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Styles -->
     <!-- @vite(['resources/js/app.js','resources/css/app.css']) -->
-    <link rel="stylesheet" href="{{ asset('/build/assets/app.36c6c834.css') }}">
-    <script src="{{ asset('/build/assets/app.d448e143.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('/build/assets/app.css') }}">
+    <script src="{{ asset('/build/assets/app.js') }}"></script>
 
     <style>
         body {
