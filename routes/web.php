@@ -1,31 +1,31 @@
 <?php
 
-use App\Http\Controllers\admin\ControllershipController;
+use App\Http\Controllers\Admin\ControllershipController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\AuthController; //my authcontroller
-use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\admin\DepartmentController;
-use App\Http\Controllers\admin\HeadshipController;
-use App\Http\Controllers\hod\EnrollmentController;
-use App\Http\Controllers\hod\CourseAllocationController;
-use App\Http\Controllers\Hod\ProgramController;
-use App\Http\Controllers\Hod\CourseController;
-use App\Http\Controllers\hod\teacherController;
-use App\Http\Controllers\hod\SchemeController;
-use App\Http\Controllers\hod\StudentController;
-use App\Http\Controllers\admin\SemesterController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\HeadshipController;
+use App\Http\Controllers\HOD\EnrollmentController;
+use App\Http\Controllers\HOD\CourseAllocationController;
+use App\Http\Controllers\HOD\ProgramController;
+use App\Http\Controllers\HOD\CourseController;
+use App\Http\Controllers\HOD\teacherController;
+use App\Http\Controllers\HOD\SchemeController;
+use App\Http\Controllers\HOD\StudentController;
+use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ce\TranscriptController;
-use App\Http\Controllers\hod\ClasController;
-use App\Http\Controllers\hod\CourseAllocationOptionController;
-use App\Http\Controllers\hod\ElectiveAllocationController;
-use App\Http\Controllers\hod\GazzetteController;
-use App\Http\Controllers\hod\ImportStudentsController;
-use App\Http\Controllers\hod\SchemeDetailController;
-use App\Http\Controllers\hod\SectionController;
+use App\Http\Controllers\HOD\ClasController;
+use App\Http\Controllers\HOD\CourseAllocationOptionController;
+use App\Http\Controllers\HOD\ElectiveAllocationController;
+use App\Http\Controllers\HOD\GazzetteController;
+use App\Http\Controllers\HOD\ImportStudentsController;
+use App\Http\Controllers\HOD\SchemeDetailController;
+use App\Http\Controllers\HOD\SectionController;
 use App\Http\Controllers\LoginOptionsController;
 use App\Http\Controllers\teacher\AssessmentSheetController;
 use App\Http\Controllers\teacher\FirstAttemptController;
