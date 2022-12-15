@@ -48,21 +48,22 @@ class HeadshipController extends Controller
     public function store(Request $request)
     {
         //
+        $request->merge(['department_id' => session('department_id')]);
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'cnic' => 'required|unique:teachers'
+            'cnic' => 'required|unique:users',
+            'department_id' => 'required|numeric',
         ]);
         DB::beginTransaction();
         try {
 
-            $department = session('selected_department');
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make('password'),
                 'cnic' => $request->cnic,
-                'department_id' => $department->id,
+                'department_id' => $request->department_id,
             ]);
 
             $user->save();
@@ -70,7 +71,7 @@ class HeadshipController extends Controller
 
             Headship::create([
                 'user_id' => $user->id,
-                'department_id' => $department->id,
+                'department_id' => $request->department_id,
             ]);
 
             DB::commit();

@@ -18,6 +18,6 @@ class DepartmentSeeder extends Seeder
         //
 
         Department::create(['name' => 'Department of Computer Science', 'title' => 'Department of Computer Science']);
-        Department::create(['name' => 'Department of Acqua Fisheries', 'title' => 'Department of Zoology']);
+        Department::create(['name' => 'Department of Fisheries', 'title' => 'Department of Zoology']);
     }
 }

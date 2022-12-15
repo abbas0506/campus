@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Designation;
-use App\Models\Teacher;
 use App\Models\User;
 use App\Models\UserDepartment;
 use Exception;

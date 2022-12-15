@@ -22,10 +22,10 @@ class Department extends Model
         return $this->hasMany(Course::class);
     }
 
-    public function hod()
-    {
-        return $this->hasOne(Hod::class);
-    }
+    // public function hod()
+    // {
+    //     return $this->hasOne(Hod::class);
+    // }
     public function headship()
     {
         return $this->hasOne(Headship::class);
