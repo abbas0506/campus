@@ -34,6 +34,10 @@
     .btn-indigo-rounded {
         @apply bg-indigo-600 hover:bg-indigo-500 text-white border-0 py-1 px-4 focus:outline-none rounded text-base;
     }
+
+    .btn-gray {
+        @apply bg-gray-500 hover:bg-gray-600 duration-200 px-4 py-1 rounded-sm text-slate-200;
+    }
     .btn-indigo {
         @apply bg-indigo-600 hover:bg-indigo-500 duration-200 px-4 py-1 rounded-sm text-slate-200;
     }
@@ -93,10 +97,10 @@
     }
     /* sidebar */
     aside {
-        @apply fixed top-16 z-10 hidden md:flex flex-col w-60 h-full px-4 overflow-auto bg-teal-800 text-slate-200 font-thin;
+        @apply fixed top-16 z-10 hidden md:flex flex-col w-60 h-full px-4 overflow-auto bg-teal-800 text-slate-300 font-thin;
     }
     aside li:hover {
-        @apply text-orange-400;
+        @apply text-orange-200;
     }
 
     .bread-crumb {

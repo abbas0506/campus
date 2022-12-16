@@ -48,9 +48,9 @@ class UserController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
-            'cnic' => 'required|unique:users',
+            'cnic' => 'required|unique:users|max:13|min:13',
             'department_id' => 'required|numeric'
 
         ]);

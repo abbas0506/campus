@@ -1,10 +1,10 @@
 @extends('layouts.basic')
 
 @section('content')
-<div class="flex flex-col-reverse md:flex-row items-center w-screen md:h-screen bg-teal-800">
+<div class="flex flex-col-reverse md:flex-row items-center w-screen md:h-screen bg-indigo-50">
     <div class="flex flex-col md:w-1/2 text-center md:text-left md:pl-36">
-        <h1 class="text-2xl md:text-4xl font-medium text-slate-50 mb-1">EXAMINATION SYSTEM</h1>
-        <p class="mb-6 leading-relaxed text-slate-300">University of Okara, Pakistan</p>
+        <h1 class="text-2xl md:text-4xl font-medium text-indigo-900 mb-1">EXAMINATION SYSTEM</h1>
+        <p class="mb-6 leading-relaxed text-slate-500">University of Okara, Pakistan</p>
 
         @if ($errors->any())
         <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full">

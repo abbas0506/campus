@@ -22,8 +22,7 @@ class HeadshipController extends Controller
     public function index()
     {
         //
-        $departments = Department::all();
-        return view('admin.headship.index', compact('departments'));
+
     }
 
     /**
@@ -50,9 +49,9 @@ class HeadshipController extends Controller
         //
         $request->merge(['department_id' => session('department_id')]);
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
-            'cnic' => 'required|unique:users',
+            'cnic' => 'required|unique:users|max:13|min:13',
             'department_id' => 'required|numeric',
         ]);
         DB::beginTransaction();

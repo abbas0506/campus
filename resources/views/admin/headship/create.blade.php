@@ -1,19 +1,15 @@
 @extends('layouts.admin')
 @section('page-content')
-<div class="container px-8">
-    <div class="flex items-center">
-
-        <h1 class="text-indigo-500 text-xl py-10">
-            <a href="{{url('hods')}}">
-                HODs
-            </a>
-            <span class="text-gray-300 mx-3">|</span><span class='text-gray-600 text-sm'>Create</span>
-        </h1>
+<h1 class="mt-12"><a href="{{route('departments.index')}}">Deptt & Headship</a></h1>
+<div class="flex items-center justify-between flex-wrap">
+    <div class="bread-crumb">
+        {{$selected_department->name}} / assign hod
     </div>
-    <div class="mb-4 text-lg">{{$selected_department->name}}</div>
+</div>
+<div class="container px-8 mt-12">
 
     @if ($errors->any())
-    <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
+    <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4 mx-auto">
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -23,19 +19,21 @@
 
     @endif
 
-    <form action="{{route('headship.store')}}" method='post' class="flex flex-col w-full md:w-3/4">
+    <form action="{{route('headship.store')}}" method='post' class="flex flex-col w-full md:w-3/4 mx-auto mt-8">
         @csrf
-        <label for="">Name</label>
+        <label for="">HOD Name</label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">
 
         <label for="" class='mt-3'>Email</label>
         <input type="text" id='email' name='email' class="input-indigo" placeholder="Enter email address">
 
-        <label for="" class='mt-3'>CNIC <span class="ml-1">( xxxxx-xxxxxxx-x )</span></label>
+        <label for="" class='mt-3'>CNIC <span class="ml-1 text-gray-500">( 3530112345671 )</span></label>
         <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Enter CNIC">
 
         <input type="text" name="department_id" value="{{$selected_department->id}}" hidden>
-        <button type="submit" class="btn-indigo mt-4">Save</button>
+        <div class="flex items-center justify-end mt-4 py-2">
+            <button type="submit" class="btn-indigo-rounded">Save</button>
+        </div>
     </form>
 
 </div>

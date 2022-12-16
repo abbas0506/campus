@@ -5,7 +5,7 @@
 
 <div class="flex relative top-16 w-screen">
     <aside aria-label="Sidebar" id='sidebar'>
-        <div class="mt-4 text-sm text-center">{{date('d/m/Y')}}</div>
+        <div class="mt-4 text-sm text-center text-gray-400">{{date('M d, Y')}}</div>
         <div class="mt-12">
             <ul class="space-y-2">
                 <li>

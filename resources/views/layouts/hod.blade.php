@@ -4,7 +4,7 @@
 <x-header></x-header>
 <div class="content-page">
     <aside aria-label="Sidebar" id='sidebar'>
-        <div class="mt-4 text-sm text-center">{{date('d/m/Y')}}</div>
+        <div class="mt-4 text-sm text-center">{{date('M d, Y')}}</div>
         <div class="mt-12">
             <ul class="space-y-2">
                 <!-- <li>

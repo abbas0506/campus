@@ -1,10 +1,8 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1 class="mt-12">Users</h1>
+<h1 class="mt-12"><a href="{{route('users.index')}}">Users</a></h1>
 <div class="flex items-center justify-between flex-wrap">
-    <div class="bread-crumb">
-        <a href="{{route('users.index')}}">Users</a> / {{$user->name}} / edit
-    </div>
+    <div class="bread-crumb">{{$user->name}} / edit</div>
 </div>
 
 <div class="container md:w-3/4 mx-auto px-5">
@@ -54,8 +52,7 @@
                 <input type="text" id='' name='phone' class="input-indigo" placeholder="Without dash" value="{{$user->phone}}">
             </div>
         </div>
-        <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
-            <a href="{{route('users.index')}}" class="btn-indigo-rounded">Cancel</a>
+        <div class="flex items-center justify-end mt-4 py-2">
             <button type="submit" class="btn-indigo-rounded">Update</button>
         </div>
     </form>

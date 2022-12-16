@@ -70,14 +70,13 @@ class ControllershipController extends Controller
     {
         //
         $controller = User::find($id); //existing controller exam
-
-        $users = User::whereHas(
-            'roles',
-            function ($q) {
-                $q->where('name', 'teacher');
-            }
-        )->get();
-
+        // $users = User::whereHas(
+        //     'roles',
+        //     function ($q) {
+        //         $q->where('name', 'teacher');
+        //     }
+        // )->get();
+        $users = User::whereNot('id', $id)->get();
         return view('admin.controllership.edit', compact('users', 'controller'));
     }
 

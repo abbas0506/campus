@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1 class="mt-12">Departments</h1>
+<h1 class="mt-12"><a href="{{route('departments.index')}}">Deptt & Headship</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{route('departments.index')}}">Departments</a> / {{$selected_department->name}} / assign hod
+        {{$selected_department->name}} / assign hod
     </div>
 </div>
 
@@ -23,11 +23,12 @@
                 @endforeach
             </select>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute -right-6 top-2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
             </svg>
+
         </div>
-        <a href="{{route('headship.create')}}" class="btn-indigo">
-            Teacher not in list, add new
+        <a href="{{route('headship.create')}}" class="btn-indigo text-sm">
+            Create & Assign New
         </a>
     </div>
     @if ($errors->any())
@@ -53,7 +54,7 @@
 <table class="table-auto w-full mt-8">
     <thead>
         <tr class="border-b border-slate-200">
-            <th>Teacher</th>
+            <th>User Name</th>
             <th>Department <span class="text-sm text-orange-700 font-thin">( basic )</span> </th>
             <th class="py-2 text-gray-600 text-center">Actions</th>
         </tr>

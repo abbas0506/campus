@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1 class="mt-12">Controllership</h1>
+<h1 class="mt-12"><a href="{{route('controllership.index')}}">Controllership</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{route('controllership.index')}}">Controllership</a> / {{$controller->name}} / edit
+        Controllership / edit
     </div>
 </div>
 
@@ -30,7 +30,6 @@
         </thead>
         <tbody>
             @foreach($users as $user)
-            @if($controller->id!=$user->id)
             <tr class="border-b tr">
                 <td class="py-2">
                     <div>{{$user->name}}</div>
@@ -54,7 +53,6 @@
                     </form>
                 </td>
             </tr>
-            @endif
             @endforeach
 
         </tbody>
