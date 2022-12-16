@@ -22,17 +22,13 @@ class Department extends Model
         return $this->hasMany(Course::class);
     }
 
-    // public function hod()
-    // {
-    //     return $this->hasOne(Hod::class);
-    // }
     public function headship()
     {
         return $this->hasOne(Headship::class);
     }
     public function teachers()
     {
-        // return $this->hasMany(Teacher::class);
+        //
         $teachers = User::whereHas(
             'roles',
             function ($q) {
