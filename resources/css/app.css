@@ -6,7 +6,7 @@
     tr th {
         @apply py-2 text-gray-600 text-left;
     }
-    
+
     .tr:nth-child(even) {
         @apply bg-slate-100;
     }
@@ -93,10 +93,10 @@
     }
     /* sidebar */
     aside {
-        @apply fixed top-16 z-10 hidden md:flex flex-col w-60 h-full px-4 overflow-auto bg-slate-50 text-slate-600 font-thin drop-shadow-2xl;
+        @apply fixed top-16 z-10 hidden md:flex flex-col w-60 h-full px-4 overflow-auto bg-teal-800 text-slate-200 font-thin;
     }
     aside li:hover {
-        @apply text-orange-500;
+        @apply text-orange-400;
     }
 
     .bread-crumb {

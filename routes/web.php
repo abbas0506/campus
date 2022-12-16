@@ -65,7 +65,10 @@ Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
 
 Route::group(['middleware' => ['role:admin']], function () {
-    Route::view('admin', 'admin.index');
+    // Route::view('admin', 'admin.index');
+    Route::get('admin', function () {
+        return redirect('departments');
+    });
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);

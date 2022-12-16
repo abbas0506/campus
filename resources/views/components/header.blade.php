@@ -5,7 +5,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center py-1">
                 <a href="{{url('hod')}}">
-                    <img alt="logo" src="{{asset('/images/logo/logo-light.png')}}" class="w-20 md:w-24">
+                    <img alt="logo" src="{{asset('/images/logo/logo.png')}}" class="w-20 md:w-24">
                 </a>
                 <div class="text-base md:text-xl font-semibold">Examination System</div>
                 <div class="px-4">|</div>
