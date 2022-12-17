@@ -1,7 +1,8 @@
 @extends('layouts.basic')
 
 @section('content')
-<div class="container w-screen bg-teal-800">
+
+<div class="container w-screen bg-cover bg-center" style="background-image: url({{asset('/images/bg/blue.jpg')}});">
     <div class="flex flex-col h-screen justify-center items-center mx-auto w-1/2">
 
         @if ($errors->any())
@@ -15,7 +16,7 @@
         @endif
 
 
-        <div class="flex flex-col md:flex-row items-center p-8 w-full bg-slate-100">
+        <div class="flex flex-col md:flex-row items-center p-8 w-full border border-gray-200">
             <div class="mr-8 text-teal-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-12 h-12">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
@@ -34,11 +35,11 @@
         <form action="{{route('login-options.store')}}" method='post' class="w-full mt-8">
             @csrf
 
-            <label for="" class="text-base text-gray-300 text-left">I want to proceed as a</label>
-            <select id="role" name="role" class="input-indigo text-slate-200 px-4 py-3 w-full mt-1" onchange="loadDepartments()">
+            <label for="" class="text-base text-left">I want to proceed as a</label>
+            <select id="role" name="role" class="input-indigo  px-4 py-3 w-full mt-1 bg-transparent" onchange="loadDepartments()">
                 <option value="" class="text-gray-600">Select a role</option>
                 @foreach(Auth::user()->roles as $role)
-                <option value="{{$role->name}}" class="text-gray-600">{{Str::upper($role->name)}}</option>
+                <option value="{{$role->name}}" class="">{{Str::upper($role->name)}}</option>
                 @endforeach
             </select>
             <div id='deptt_area' class="hidden">
