@@ -97,10 +97,14 @@
     }
     /* sidebar */
     aside {
-        @apply fixed top-16 z-10 hidden md:flex flex-col w-60 h-full px-4 overflow-auto bg-teal-800 text-slate-300 font-thin;
+        @apply fixed top-16 z-10 hidden md:flex flex-col w-60 h-full px-4 overflow-auto text-slate-300 font-thin;
     }
+    aside {
+        @apply bg-gradient-to-b from-cyan-800 to-cyan-500;
+    }
+
     aside li:hover {
-        @apply text-orange-200;
+        @apply text-orange-400;
     }
 
     .bread-crumb {
