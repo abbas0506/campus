@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\ControllershipController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,7 +73,6 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('headship', HeadshipController::class);
-    Route::resource('controllership', ControllershipController::class);
 });
 Route::group(['middleware' => ['role:controller']], function () {
     Route::view('controller', 'ce.index');

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('facebook_id')->nullable();
             $table->string('google_id')->nullable();
 
-            $table->unsignedBigInteger('department_id'); //parent department
+            $table->unsignedBigInteger('department_id')->nullable(); //parent department
             $table->rememberToken();
             $table->timestamps();
         });

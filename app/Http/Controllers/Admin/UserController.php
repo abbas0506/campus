@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        $users = User::all();
+        $users = User::whereNot('id', 1)->get();
         return view('admin.users.index', compact('users'));
     }
 

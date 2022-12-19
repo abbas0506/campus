@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@uo.edu.pk',
             'password' => Hash::make('password'),
-            'department_id' => 1,
+            // 'department_id' => 1,
 
         ]);
         $user->assignRole('admin', 'controller');

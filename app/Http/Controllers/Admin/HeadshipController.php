@@ -66,7 +66,7 @@ class HeadshipController extends Controller
             ]);
 
             $user->save();
-            $user->assignRole('hod');
+            $user->assignRole('hod', 'teacher');
 
             Headship::create([
                 'user_id' => $user->id,
@@ -101,7 +101,13 @@ class HeadshipController extends Controller
     public function edit($department_id)
     {
         //
-        $users = User::all();
+
+        $users = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'teacher');
+            }
+        )->get();
 
         $departments = Department::all();   //to filter by department
         session([
@@ -126,10 +132,14 @@ class HeadshipController extends Controller
         try {
             $department_id = session('department_id');
             $department = Department::find($department_id);
+
+
             if ($department->headship) {
                 //department hod exists, just update eixsting
                 $headship = $department->headship;
-                $headship->user->removeRole('hod');
+                //if user heads only this department, clear hod role
+                if ($headship->user->headships->count() == 1)
+                    $headship->user->removeRole('hod');
                 $headship->user_id = $user_id;
                 $headship->update();
 
@@ -166,7 +176,8 @@ class HeadshipController extends Controller
         //
         try {
             $department = Department::find($id);
-            $department->headship->user->removeRole('hod');
+            if ($department->headship->user->headships->count() == 1)
+                $department->headship->user->removeRole('hod');
             $department->headship->delete();
             return redirect('departments')->with('success', 'Successfully removed');
         } catch (Exception $ex) {
