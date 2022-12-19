@@ -1,14 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12">Schemes</h1>
-<div class="flex items-center justify-between flex-wrap">
-    <div class="bread-crumb">
-        <a href="{{route('schemes.index')}}" class="text-orange-700 mr-2">
-            Schemes
-        </a>
-        / {{$scheme->title()}}
-    </div>
-</div>
+<h1 class="mt-12"><a href="{{route('schemes.index')}}">Schemes</a></h1>
+<div class="bread-crumb">{{$scheme->title()}}</div>
 <div class="container mx-auto">
     @if(session('success'))
     <div class="flex alert-success items-center mt-5">
@@ -52,7 +45,7 @@
                     @endphp
 
                     <div class="flex items-center justify-between @if($alternate_row%2==0) bg-slate-100 @endif">
-                        <div class="text-sm">{{$scheme_detail->course->name}} <span class="text-sm text-slate-600 ml-3">{{$scheme_detail->course->credit_hrs_theory+$scheme_detail->course->credit_hrs_practical}}({{$scheme_detail->course->credit_hrs_theory}}-{{$scheme_detail->course->credit_hrs_practical}})</span></div>
+                        <div class="text-sm">{{$scheme_detail->course->name}} <span class="text-xs text-slate-400 ml-3">{{$scheme_detail->course->credit_hrs_theory+$scheme_detail->course->credit_hrs_practical}}({{$scheme_detail->course->credit_hrs_theory}}-{{$scheme_detail->course->credit_hrs_practical}})</span></div>
                         <form action="{{route('scheme-details.destroy',$scheme_detail)}}" method="POST" id='del_form{{$scheme_detail->id}}' class="mt-1">
                             @csrf
                             @method('DELETE')

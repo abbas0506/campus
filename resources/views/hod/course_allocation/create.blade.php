@@ -1,13 +1,9 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<h1 class="mt-12">Course Allocation</h1>
+<h1 class="mt-12"><a href="{{url('course-allocation-options')}}">Course Allocation</a></h1>
 <div class="flex items-center justify-between flex-wrap">
-    <div class="bread-crumb">
-        <a href="{{url('course-allocation-options')}}" class="text-orange-700 mr-1">Choose options</a>/
-        <a href="{{route('course-allocations.index')}}" class="text-orange-700 mr-1">course allocations</a> / add course
-        <span class="text-sm text-teal-700 ml-8 font-thin"> [ Step 2 / 3 ]</span>
-    </div>
+    <div class="bread-crumb">{{$section->title()}} / <span class="font-bold pl-1">Associate course</span> </div>
 </div>
 
 

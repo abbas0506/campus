@@ -9,7 +9,7 @@
                 </a>
                 <div class="text-base md:text-xl font-semibold">Examination System</div>
                 <div class="px-4">|</div>
-                <div class="text-sm">{{session('current_role')}} Panel</div>
+                <div class="text-sm">{{session('current_role')}}</div>
             </div>
             <!-- right sided current user info -->
             <div id="current-user-area" class="flex space-x-3 items-center justify-center relative mr-8">

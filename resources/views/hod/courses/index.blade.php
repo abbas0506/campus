@@ -5,7 +5,7 @@
 
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Courses / index
+        Courses / all
     </div>
     <div class="relative ml-0 md:ml-20">
         <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">

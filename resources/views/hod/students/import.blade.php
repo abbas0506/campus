@@ -1,9 +1,9 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12">Classes</h1>
+<h1 class="mt-12"><a href="{{url('clases')}}"> Classes</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{url('clases')}}"> Classes</a> / {{$section->title()}} / students / import
+        {{$section->title()}} / <span class="font-bold pl-1">Import students</span>
     </div>
 </div>
 
@@ -30,11 +30,13 @@
     <form action="{{url('import-students')}}" method="POST" enctype="multipart/form-data" class="flex flex-col w-full">
         @csrf
 
-        <label for="" class="mt-16">Please select an excel file</label>
-        <input type="file" name='file' class="mt-3">
+        <div class="flex flex-col border rounded-sm bg-gray-100 p-3 mt-12">
+            <label for="" class="">Please select an excel file</label>
+            <input type="file" name='file' class="mt-3">
 
-        <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
-            <a href="{{route('sections.show', $section)}}" class="btn-indigo-rounded">Cancel</a>
+        </div>
+
+        <div class="flex items-center justify-end mt-4 py-2">
             <button type="submit" class="btn-indigo-rounded">Import</button>
         </div>
     </form>

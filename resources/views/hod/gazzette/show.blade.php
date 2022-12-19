@@ -3,7 +3,7 @@
 <h1 class="mt-12">Gazzette</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{url('clases')}}"> Classes</a> / {{$section->title()}}
+        {{$section->title()}}
     </div>
 </div>
 

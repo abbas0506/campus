@@ -1,23 +1,18 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<h1 class="mt-12">Schemes</h1>
-<div class="flex items-center justify-between flex-wrap">
-    <div class="bread-crumb">
-        Schemes / create
-    </div>
-</div>
+<h1 class="mt-12"><a href="{{route('schemes.index')}}">Schemes</a></h1>
+<div class="bread-crumb">New scheme</div>
 
 <div class="flex flex-col md:w-3/5 m-auto text-center mt-12">
-
-    <div class="flex items-center flex-row mt-12">
+    <div class="flex items-center flex-row">
         <div class="h-16 w-16 sm:mr-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
                 <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
             </svg>
         </div>
         <div class="flex-grow sm:text-left text-center sm:mt-0">
-            <h2>Choose Program & Semester</h2>
+            <h2>Choose Program & Semester (w.e.f)</h2>
             <p class="text-sm">Before you proceed ahead to manipulate the classes, please tell us your target semester. If semesters' list is empty, please contact admin.</p>
         </div>
     </div>
@@ -39,7 +34,7 @@
             <option value="{{$program->id}}">{{$program->name}} </option>
             @endforeach
         </select>
-        <label for="" class="mt-3">Will be effective from</label>
+        <label for="" class="mt-3">This scheme will be effective from</label>
         <select id="" name="wef_semester_id" class="input-indigo p-2">
             @foreach($semesters as $semester)
             <option value="{{$semester->id}}">{{$semester->semester_type->name}} {{$semester->year}}</option>
@@ -47,8 +42,7 @@
         </select>
 
 
-        <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
-            <a href="{{route('schemes.index')}}" class="btn-indigo-rounded">Cancel</a>
+        <div class="flex items-center justify-end mt-4 py-2">
             <button type="submit" class="btn-indigo-rounded">Next</button>
         </div>
 

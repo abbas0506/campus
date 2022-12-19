@@ -1,13 +1,13 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12">Classes</h1>
+<h1 class="mt-12"><a href="{{url('clases')}}">Classes</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{url('clases')}}"> Classes</a> / {{$section->title()}}
+        {{$section->title()}}
     </div>
 </div>
 
-<div class="container w-full mx-auto mt-8">
+<div class="container w-full mx-auto mt-12">
     <div class="flex items-center flex-wrap justify-between">
         <div class="flex relative ">
             <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">

@@ -1,9 +1,9 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12">Students</h1>
+<h1 class="mt-12"><a href="{{route('sections.show',$section)}}"> Students</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Classes / <a href="{{url('class-options')}}" class="text-orange-700 mx-1"> choose semester </a> / {{$section->title()}} / students / create
+        {{$section->title()}} / <span class="font-bold pl-1">New student</span>
     </div>
 </div>
 
@@ -45,8 +45,7 @@
                 <input type="text" name="regno" class="input-indigo" placeholder="Registration No.">
             </div>
         </div>
-        <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
-            <a href="{{route('sections.show',$section)}}" class="btn-indigo-rounded">Cancel</a>
+        <div class="flex items-center justify-end mt-4 py-2">
             <button type="submit" class="btn-indigo-rounded">Save</button>
         </div>
     </form>

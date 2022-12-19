@@ -1,9 +1,9 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12">Students</h1>
+<h1 class="mt-12"><a href="{{url('clases')}}">Students</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{url('clases')}}"> Classes</a> / {{$student->section->clas->title()}} / {{$student->section->title()}} / {{$student->name}} / edit
+        {{$student->section->clas->title()}} / {{$student->section->title()}} / {{$student->name}} / edit
     </div>
 </div>
 
@@ -47,7 +47,7 @@
                 <input type="text" name="regno" class="input-indigo" placeholder="Registration No." value="{{$student->regno}}">
             </div>
         </div>
-        <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
+        <div class="flex items-center justify-end mt-4 py-2">
             <a href="{{route('sections.show',$student->section)}}" class="btn-indigo-rounded">Cancel</a>
             <button type="submit" class="btn-indigo-rounded">Save</button>
         </div>

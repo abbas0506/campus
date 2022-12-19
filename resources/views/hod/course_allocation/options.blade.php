@@ -3,9 +3,7 @@
 @section('page-content')
 
 <h1 class="mt-12">Course Allocation</h1>
-<div class="bread-crumb mb-3">
-    Course Allocation / choose section (Step 1 out of 4)
-</div>
+<div class="bread-crumb mb-3">Choose section & go next </div>
 
 @if ($errors->any())
 <div class="bg-red-100 text-red-700 text-sm p-5 mb-5 w-full">
@@ -21,9 +19,8 @@
     <div class="p-5 bg-slate-100">
         <h2>How to allocate courses?</h2>
         <ul class="list-disc text-sm text-slate-500 ml-8 leading-relaxed">
-            <li><u>Note </u>: Courses are allocated on section level. Pls follow following steps </li>
-            <li>Choose a class</li>
-            <li>Sections list will appear, choose one of them and proceed</li>
+            <li>Choose a section & go next</li>
+            <li>Follow the instructions on next page</li>
         </ul>
     </div>
     <div class="rounded md:mt-0 mt-12">
@@ -48,9 +45,13 @@
                 </div>
             </div>
             <span class="text-xs text-orange-700 pl-2">*Sections will appear only after you select a class</span>
-            <div class="flex space-x-4 justify-end">
-                <a href="{{url('hod')}}" class="flex justify-center btn-indigo mt-8">Cancel</a>
-                <button type="submit" class="flex justify-center btn-indigo mt-8">Next</button>
+            <div class="flex justify-end mt-4">
+                <button type="submit" class="flex items-center justify-center btn-indigo px-2">
+                    Next
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                </button>
             </div>
     </div>
     </form>

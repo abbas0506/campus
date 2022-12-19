@@ -1,15 +1,15 @@
 @extends('layouts.hod')
 @section('page-content')
 
+@php
+$roman=config('global.romans');
+@endphp
+
 <h1 class="mt-12">Schemes</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{route('schemes.index')}}" class="text-orange-700">
-            Schemes
-        </a>
-        / {{session('scheme')->semester->title()}}
-        / {{session('scheme')->program->short}}
-        / Semester {{session('semester_no')}}
+        {{session('scheme')->title()}}
+        --- Semester {{$roman[session('semester_no')-1]}}
     </div>
 </div>
 

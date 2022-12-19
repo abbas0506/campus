@@ -1,12 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12">Programs</h1>
-<div class="flex items-center justify-between flex-wrap">
-    <div class="bread-crumb">
-        Programs / edit
-    </div>
-</div>
-
+<h1 class="mt-12"><a href="{{route('programs.index')}}">Programs</a></h1>
+<div class="bread-crumb">{{$program->name}} / edit </div>
 <div class="container md:w-3/4 mx-auto px-5">
 
     @if ($errors->any())
@@ -56,8 +51,7 @@
         </div>
 
 
-        <div class="flex items-center justify-end space-x-4 mt-8 py-2 bg-indigo-50">
-            <a href="{{route('programs.index')}}" class="btn-indigo-rounded">Cancel</a>
+        <div class="flex items-center justify-end mt-4 py-2">
             <button type="submit" class="btn-indigo-rounded">Update</button>
         </div>
     </form>

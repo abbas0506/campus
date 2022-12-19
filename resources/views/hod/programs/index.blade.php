@@ -4,7 +4,7 @@
 <h1 class="mt-12">Programs</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Programs / index
+        Programs / all
     </div>
     <div class="relative ml-0 md:ml-20">
         <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
@@ -13,7 +13,7 @@
         </svg>
     </div>
     <a href="{{route('programs.create')}}" class="btn-indigo">
-        add new
+        Add New
     </a>
 </div>
 

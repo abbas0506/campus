@@ -4,7 +4,7 @@
 
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Teachers / index
+        Teachers / all
     </div>
     <div class="relative ml-0 md:ml-20">
         <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
@@ -13,7 +13,7 @@
         </svg>
     </div>
     <a href="{{route('teachers.create')}}" class="btn-indigo">
-        add new
+        Add New
     </a>
 </div>
 
@@ -30,6 +30,7 @@
     <thead>
         <tr class="border-b border-slate-200">
             <th>Teacher</th>
+            <th>Phone</th>
             <th class='text-center'>Actions</th>
         </tr>
     </thead>
@@ -41,6 +42,14 @@
                 <div>{{$teacher->name}}</div>
                 <div class="text-sm text-gray-500">{{$teacher->email}}</div>
                 <div class="text-sm text-gray-500">{{$teacher->cnic}}</div>
+            </td>
+            <td class="py-2">
+                <div class="flex items-center text-sm text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-3 h-3 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                    </svg>
+                    {{$teacher->phone}}
+                </div>
             </td>
             <td class="py-2 flex items-center justify-center">
                 <a href="{{route('teachers.edit', $teacher)}}">
