@@ -1,7 +1,7 @@
 @extends('layouts.teacher')
 @section('page-content')
 <h1 class="mt-12"><a href="{{route('mycourses.index')}}">My Courses</a></h1>
-<div class="text-slate-600 text-sm italic">Here you can enroll fresh or reappearing students and feed / edit their results</div>
+<div class="bread-crumb">Enroll fresh / reappearing students & feed / edit their results</div>
 
 <div class="container w-full mx-auto mt-8">
     <div class="flex items-center flex-wrap justify-between">
