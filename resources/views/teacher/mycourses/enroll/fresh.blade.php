@@ -1,14 +1,10 @@
 @extends('layouts.teacher')
 @section('page-content')
 <h1 class="mt-12"><a href="{{route('mycourses.index')}}">My Courses</a></h1>
-<div class="text-slate-600 text-sm italic">My courses / Enroll fresh students</div>
-
-
-
+<div class="bread-crumb">Enroll fresh students</div>
 <a href="{{route('mycourses.show',$course_allocation)}}" class="flex flex-col text-sm border text-slate-800 py-3 mt-8 px-3 hover:bg-slate-100">
     <div class="font-bold">{{$course_allocation->course->name}}</div>
     <div>{{$course_allocation->section->title()}}</div>
-
 </a>
 <div class="container w-full mx-auto mt-8">
 
