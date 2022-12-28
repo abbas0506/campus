@@ -12,7 +12,7 @@ use App\Http\Controllers\HOD\EnrollmentController;
 use App\Http\Controllers\HOD\CourseAllocationController;
 use App\Http\Controllers\HOD\ProgramController;
 use App\Http\Controllers\HOD\CourseController;
-use App\Http\Controllers\HOD\teacherController;
+use App\Http\Controllers\HOD\TeacherController;
 use App\Http\Controllers\HOD\SchemeController;
 use App\Http\Controllers\HOD\StudentController;
 use App\Http\Controllers\Admin\SemesterController;
@@ -94,7 +94,7 @@ Route::group(['middleware' => ['role:hod']], function () {
 
 
     Route::resource('courses', CourseController::class);
-    Route::resource('teachers', teacherController::class);
+    Route::resource('teachers', TeacherController::class);
     Route::resource('schemes', SchemeController::class);
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
