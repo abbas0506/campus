@@ -91,9 +91,5 @@
         document.getElementById('progress_chart'),
         config
     );
-    const myChart1 = new Chart(
-        document.getElementById('progress_chart1'),
-        config
-    );
 </script>
 @endsection

@@ -55,8 +55,6 @@ Route::get('/{url?}', function () {
         return view('index');
 })->where('url', ('login|signin|index'));
 
-Route::get('admin', [DashboardController::class, 'admin']);
-
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::resource('login-options', LoginOptionsController::class)->only('index', 'store');
@@ -64,8 +62,9 @@ Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->na
 Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
 
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
+
 Route::group(['middleware' => ['role:admin']], function () {
-    // Route::view('admin', 'admin.index');
+    Route::get('admin', [DashboardController::class, 'admin']);
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);
@@ -78,8 +77,8 @@ Route::group(['middleware' => ['role:controller']], function () {
     Route::get('transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
 });
 
-Route::group(['prefix' => 'hod', ' middleware' => ['role:hod']], function () {
-    Route::view('hod', 'hod.index');
+Route::group([' middleware' => ['role:hod']], function () {
+    Route::get('hod', [DashboardController::class, 'hod']);
     Route::resource('programs', ProgramController::class);
     Route::resource('clases', ClasController::class);
     Route::post('clases.promote', [ClasController::class, 'promote'])->name('clases.promote');
