@@ -7,7 +7,7 @@
     </div>
 </div>
 <div class="container px-8 mt-12">
-    <canvas id="progress_chart" height="300" width="200"></canvas>
+    <canvas id="progress_chart" height="360" width="200"></canvas>
 </div>
 @endsection
 @section('script')
@@ -16,33 +16,45 @@
     var programsCount = @json($programsCount);
     var coursesCount = @json($coursesCount);
     var teachersCount = @json($teachersCount);
+    var sectionsCount = @json($sectionsCount);;
 
     const dataset1 = {
         label: "Programs",
         data: programsCount,
         lineTension: 0.2,
         fill: false,
-        borderColor: 'red',
-        // backgroundColor: 'rgb(200, 99, 132)',
+        // borderWidth: 1,
+        borderColor: '#DE5FF9',
+        backgroundColor: '#F5D9FB',
     }
     const dataset2 = {
         label: "Courses",
         data: coursesCount,
         lineTension: 0.2,
         fill: false,
-        borderColor: 'blue'
+        borderColor: 'rgba(255, 99, 132, 0.8)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
     }
     const dataset3 = {
         label: "Teachers",
         data: teachersCount,
         lineTension: 0.2,
         fill: false,
-        borderColor: 'green'
+        borderColor: '#03C2D8',
+        backgroundColor: '#B9EFDB',
+    }
+    const dataset4 = {
+        label: "Sections",
+        data: sectionsCount,
+        lineTension: 0.2,
+        fill: false,
+        borderColor: 'rgba(54, 162, 235, 0.8)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
     }
 
     var chartDataset = {
         labels: labels,
-        datasets: [dataset1, dataset2, dataset3]
+        datasets: [dataset1, dataset2, dataset3, dataset4]
     };
 
     var chartOptions = {
@@ -69,18 +81,19 @@
 
 
     const config = {
-        type: 'line',
+        type: 'bar',
         data: chartDataset,
         options: {
             responsive: true,
             scales: {
                 x: {
                     ticks: {
-                        display: false
+                        display: true
                     }
                 }
             },
-            borderWidth: 2,
+            indexAxis: 'y',
+            borderWidth: 1,
             maintainAspectRatio: false,
 
         },

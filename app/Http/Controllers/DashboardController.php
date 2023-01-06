@@ -24,15 +24,17 @@ class DashboardController extends Controller
         //find teachers count by department
         $departments = Department::all()->sortBy('deparment_id');
         $teachersCount = collect();
+        $sectionsCount = collect();
 
         foreach ($departments as $department) {
             $teachersCount->add($department->teachers()->count());
+            $sectionsCount->add($department->sections()->count());
         }
 
         $labels = $dataset->pluck('name');
         $programsCount = $dataset->pluck('programsCount');
         $coursesCount = $dataset->pluck('coursesCount');
-        return view('admin.index', compact('labels', 'programsCount', 'coursesCount', 'teachersCount'));
+        return view('admin.index', compact('labels', 'programsCount', 'coursesCount', 'teachersCount', 'sectionsCount'));
     }
 
     public function hod()
