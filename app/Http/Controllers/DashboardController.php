@@ -51,15 +51,14 @@ class DashboardController extends Controller
         $labels->add('Teachers');
         $data->add($department->teachers()->count());
 
-        // $clasCount = Clas::whereHas(
-        //     'program',
-        //     function ($q) {
-        //         $q->where('department_id', session('department_id'));
-        //     }
-        // )->count();
 
         $labels->add('Classes');
         $data->add($department->clases()->count());
+
+        $labels->add('Sections');
+        $data->add($department->sections()->count());
+
+
 
         return view('hod.index', compact('labels', 'data'));
     }

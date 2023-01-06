@@ -4,6 +4,7 @@ namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clas;
+use App\Models\Department;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -18,13 +19,9 @@ class GazzetteController extends Controller
     public function index()
     {
         //
-        $clases = Clas::whereHas(
-            'program',
-            function ($q) {
-                $q->where('department_id', session('department_id'));
-            }
-        )->get();
-        // $clases = Clas::all();
+        $department = Department::find(session('department_id'));
+        $clases = $department->clases();
+
         return view('hod.gazzette.index', compact('clases'));
     }
 

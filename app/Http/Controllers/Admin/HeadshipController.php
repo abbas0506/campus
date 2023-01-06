@@ -100,14 +100,8 @@ class HeadshipController extends Controller
      */
     public function edit($department_id)
     {
-        //
-
-        $users = User::whereHas(
-            'roles',
-            function ($q) {
-                $q->where('name', 'teacher');
-            }
-        )->get();
+        //find teachers
+        $users = User::whereRelation('roles', 'name', 'teacher')->get();
 
         $departments = Department::all();   //to filter by department
         session([

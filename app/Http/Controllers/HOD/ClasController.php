@@ -25,14 +25,7 @@ class ClasController extends Controller
     {
         //
         $department = Department::find(session('department_id'));
-        $clases = $department->clases()->get();
-        // $clases = Clas::whereHas(
-        //     'program',
-        //     function ($q) {
-        //         $q->where('department_id', session('department_id'));
-        //     }
-        // )->get();
-        // $clases = Clas::all();
+        $clases = $department->clases();
         return view('hod.clases.index', compact('clases'));
     }
 

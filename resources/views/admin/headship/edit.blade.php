@@ -51,7 +51,9 @@
     </div>
     @endif
 </div>
-<table class="table-auto w-full mt-8">
+
+<div class="text-sm  text-gray-500 mt-8">{{$users->count()}} records found</div>
+<table class="table-auto w-full mt-3">
     <thead>
         <tr class="border-b border-slate-200">
             <th>User Name</th>

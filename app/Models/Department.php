@@ -28,21 +28,16 @@ class Department extends Model
     }
     public function teachers()
     {
-        return  User::whereHas(
-            'roles',
-            function ($q) {
-                $q->where('name', 'teacher');
-            }
-        )->where('department_id', $this->id);
+        return User::whereRelation('roles', 'name', 'teacher')->where('department_id', $this->id)->get();
     }
 
     public function clases()
     {
-        return Clas::whereHas(
-            'program',
-            function ($q) {
-                $q->where('department_id', $this->id);
-            }
-        );
+        return Clas::whereRelation('program', 'department_id', $this->id)->get();
+    }
+
+    public function sections()
+    {
+        return Section::whereRelation('clas.program', 'department_id', $this->id)->get();
     }
 }

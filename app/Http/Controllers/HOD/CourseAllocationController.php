@@ -155,12 +155,7 @@ class CourseAllocationController extends Controller
         session(['course_allocation_id' => $id,]);
 
         $course_allocation = CourseAllocation::find($id);
-        $teachers = User::whereHas(
-            'roles',
-            function ($q) {
-                $q->where('name', 'teacher');
-            }
-        )->get();
+        $teachers = User::whereRelation('roles', 'name', 'teacher')->get();
 
         return view('hod.course_allocation.assign.teacher', compact('course_allocation', 'teachers'));
     }
