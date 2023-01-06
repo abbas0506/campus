@@ -38,12 +38,12 @@
 
         <div class="flex flex-col md:flex-row md:space-x-4">
             <div class="flex flex-col flex-1 mt-3">
-                <label for="">CNIC <span class="text-xs">: 3530112345671</span></label>
-                <input type="text" id='' name='cnic' class="input-indigo" placeholder="Without dashes" value="{{$teacher->cnic}}">
+                <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
+                <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Without dashes" value="{{$teacher->cnic}}">
             </div>
             <div class="flex flex-col flex-1 mt-3">
-                <label for="">Phone <span class="text-xs">: 03001234567</span></label>
-                <input type="text" id='' name='phone' class="input-indigo" placeholder="Without dash" value="{{$teacher->phone}}">
+                <label for="">Phone <span id="phone_length" class="text-slate-500 text-xs ml-3">0/11</span></label>
+                <input type="text" id='phone' name='phone' class="input-indigo" placeholder="Without dash" value="{{$teacher->phone}}">
             </div>
         </div>
         <div class="flex items-center justify-end mt-4 py-2">
@@ -53,4 +53,18 @@
 
 </div>
 
+@endsection
+
+@section('script')
+<script>
+    $('#cnic').on('input', function() {
+        var cnic = $('#cnic').val()
+        $('#cnic_length').html(cnic.length + "/13");
+    });
+
+    $('#phone').on('input', function() {
+        var phone = $('#phone').val()
+        $('#phone_length').html(phone.length + "/11");
+    });
+</script>
 @endsection

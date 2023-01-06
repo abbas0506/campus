@@ -28,7 +28,7 @@
         {{session('success')}}
     </div>
     @endif
-
+    <div class="text-sm  text-gray-500 mt-8">{{$courses->count()}} records found</div>
     <table class="table-auto w-full">
         <thead>
             <tr class="border-b border-slate-200">

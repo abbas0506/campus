@@ -14,6 +14,7 @@
     <!-- @vite(['resources/js/app.js','resources/css/app.css']) -->
     <link rel="stylesheet" href="{{ asset('/build/assets/app.css') }}">
     <script src="{{ asset('/build/assets/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {

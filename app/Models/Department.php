@@ -29,12 +29,20 @@ class Department extends Model
     public function teachers()
     {
         //
-        $teachers = User::whereHas(
+        // $teachers = User::whereHas(
+        //     'roles',
+        //     function ($q) {
+        //         $q->where('name', 'teacher');
+        //     }
+        // )->where('department_id', session('department_id'))->get();
+
+        return  User::whereHas(
             'roles',
             function ($q) {
                 $q->where('name', 'teacher');
             }
-        )->where('department_id', session('department_id'))->get();
-        return $teachers;
+        )->where('department_id', $this->id);
+
+        // return $teachers;
     }
 }

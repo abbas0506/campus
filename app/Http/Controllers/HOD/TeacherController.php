@@ -19,13 +19,15 @@ class TeacherController extends Controller
     public function index()
     {
         //teachers from the same department as hod
-        $teachers = User::whereHas(
-            'roles',
-            function ($q) {
-                $q->where('name', 'teacher');
-            }
-        )->where('department_id', session('department_id'))->get();
+        // $teachers = User::whereHas(
+        //     'roles',
+        //     function ($q) {
+        //         $q->where('name', 'teacher');
+        //     }
+        // )->where('department_id', session('department_id'))->get();
 
+        $department = Department::find(session('department_id'));
+        $teachers = $department->teachers()->get();
         return view('hod.teachers.index', compact('teachers'));
     }
 

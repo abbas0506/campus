@@ -27,8 +27,8 @@
         <label for="" class='mt-3'>Email</label>
         <input type="text" id='email' name='email' class="input-indigo" placeholder="Enter email address">
 
-        <label for="" class='mt-3'>CNIC <span class="ml-1 text-gray-500">( 3530112345671 )</span></label>
-        <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Enter CNIC">
+        <label for="" class='mt-3'>CNIC <span id="cnic_length" class="text-slate-500 text-sm ml-3">0/13</span></label>
+        <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Without dashes">
 
         <input type="text" name="department_id" value="{{$selected_department->id}}" hidden>
         <div class="flex items-center justify-end mt-4 py-2">
@@ -38,4 +38,12 @@
 
 </div>
 
+@endsection
+@section('script')
+<script>
+    $('#cnic').on('input', function() {
+        var cnic = $('#cnic').val()
+        $('#cnic_length').html(cnic.length + "/13");
+    });
+</script>
 @endsection

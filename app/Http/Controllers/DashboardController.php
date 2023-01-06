@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Department;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+
+
+class DashboardController extends Controller
+{
+    //
+    public function admin()
+    {
+        if (Auth::check()) {
+            if (Auth::user()->hasRole('admin')) {
+
+                $dataset = Department::selectRaw('departments.name as name, ifnull(pro.count,0) as programsCount, ifnull(crs.count,0) as coursesCount')
+                    ->leftjoin(DB::raw('(select department_id, count(*) as count from courses group by department_id) AS crs'), 'crs.department_id', 'departments.id')
+                    ->leftjoin(DB::raw('(select department_id, count(*) as count from programs group by department_id) AS pro'), 'pro.department_id', 'departments.id')
+                    ->orderBy('departments.id', 'asc');
+
+                //find teachers count by department
+                $departments = Department::all()->sortBy('deparment_id');
+                $teachersCount = collect();
+
+                foreach ($departments as $department) {
+                    $teachersCount->add($department->teachers()->count());
+                }
+
+                $labels = $dataset->pluck('name');
+                $programsCount = $dataset->pluck('programsCount');
+                $coursesCount = $dataset->pluck('coursesCount');
+                return view('admin.index', compact('labels', 'programsCount', 'coursesCount', 'teachersCount'));
+            }
+        } else {
+            return redirect('/');
+        }
+    }
+}

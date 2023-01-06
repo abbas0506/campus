@@ -18,6 +18,8 @@ use App\Http\Controllers\HOD\StudentController;
 use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ce\TranscriptController;
+use App\Http\Controllers\ChartController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HOD\ClasController;
 use App\Http\Controllers\HOD\CourseAllocationOptionController;
 use App\Http\Controllers\HOD\ElectiveAllocationController;
@@ -46,14 +48,15 @@ use App\Http\Controllers\teacher\ReappearSummativeController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/{url?}', function () {
     if (Auth::check()) {
         return redirect('login-options');
     } else
         return view('index');
-});
+})->where('url', ('login|signin|index'));
 
-// Auth::routes();
+Route::get('admin', [DashboardController::class, 'admin']);
+
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::resource('login-options', LoginOptionsController::class)->only('index', 'store');
@@ -61,13 +64,8 @@ Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->na
 Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
 
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
-
-
 Route::group(['middleware' => ['role:admin']], function () {
     // Route::view('admin', 'admin.index');
-    Route::get('admin', function () {
-        return redirect('departments');
-    });
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);
@@ -80,7 +78,7 @@ Route::group(['middleware' => ['role:controller']], function () {
     Route::get('transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
 });
 
-Route::group(['middleware' => ['role:hod']], function () {
+Route::group(['prefix' => 'hod', ' middleware' => ['role:hod']], function () {
     Route::view('hod', 'hod.index');
     Route::resource('programs', ProgramController::class);
     Route::resource('clases', ClasController::class);
