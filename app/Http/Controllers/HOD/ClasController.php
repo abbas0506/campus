@@ -4,6 +4,7 @@ namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clas;
+use App\Models\Department;
 use App\Models\Program;
 use App\Models\Scheme;
 use App\Models\Section;
@@ -23,12 +24,14 @@ class ClasController extends Controller
     public function index()
     {
         //
-        $clases = Clas::whereHas(
-            'program',
-            function ($q) {
-                $q->where('department_id', session('department_id'));
-            }
-        )->get();
+        $department = Department::find(session('department_id'));
+        $clases = $department->clases()->get();
+        // $clases = Clas::whereHas(
+        //     'program',
+        //     function ($q) {
+        //         $q->where('department_id', session('department_id'));
+        //     }
+        // )->get();
         // $clases = Clas::all();
         return view('hod.clases.index', compact('clases'));
     }
