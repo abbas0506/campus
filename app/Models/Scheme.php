@@ -29,4 +29,8 @@ class Scheme extends Model
     {
         return $this->program->short . ' / ' . $this->semester->title();
     }
+    public function subtitle()
+    {
+        return $this->semester->title();
+    }
 }

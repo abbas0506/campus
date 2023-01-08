@@ -59,7 +59,7 @@
 
 
 <div class="text-sm  text-gray-500 mt-8 mb-1">{{$programs->count()}} programs found</div>
-<table class="table-auto w-full">
+<table class="table-fixed w-full">
     <thead>
         <tr>
             <th rowspan="2">Porgram</th>
@@ -74,13 +74,117 @@
         </tr>
     </thead>
     <tbody>
+        @foreach($programs as $program)
+        <tr>
+            <td rowspan=2>{{$program->name}}</td>
+            <td colspan=2 class="p-0 m-0">
+                <table class="table-fixed w-full border-none">
+                    <tbody>
+                        @foreach($program->morning_clases as $clas)
+                        <tr class="odd:bg-orange-50">
+                            <td colspan="5">{{$clas->subtitle()}}</td>
+                            <td>
+                                <form action="{{route('clases.destroy',$clas)}}" method="POST" id='del_form{{$clas->id}}' class="flex items-center justify-center border-r pr-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:zoom-sm hover:text-red-800 p-2" onclick="delme('{{$clas->id}}')" @disabled($clas->sections->count()>0)>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </td>
+                            <td colspan="6">
+                                <div class="flex flex-1 flex-wrap items-center p-2 space-x-1">
+                                    @foreach($clas->sections as $section)
+                                    <a href="{{route('sections.show',$section)}}" class='flex items-center px-1 rounded border hover:bg-indigo-500 hover:text-slate-200'>{{$section->name}} <span class="ml-1 text-slate-400 text-xs">({{$section->students->count()}})</span></a>
+                                    @endforeach
+                                    <form action="{{route('sections.store')}}" method="post">
+                                        @csrf
+                                        <input type="text" name="clas_id" value="{{$clas->id}}" hidden>
+                                        <button type='submit' class="flex items-center text-indigo-500 mt-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </td>
+            <!-- <td>Sections</td> -->
+            <td colspan=2 class="p-0 m-0">
+                <table class="table-fixed w-full border-none">
+                    <tbody>
+                        @foreach($program->selfsupport_clases as $clas)
+                        <tr class="odd:bg-orange-50">
+                            <td colspan="5">{{$clas->subtitle()}}</td>
+                            <td>
+                                <form action="{{route('clases.destroy',$clas)}}" method="POST" id='del_form{{$clas->id}}' class="flex items-center justify-center border-r pr-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:zoom-sm hover:text-red-800 p-2" onclick="delme('{{$clas->id}}')" @disabled($clas->sections->count()>0)>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </td>
+                            <td colspan="6">
+                                <div class="flex flex-1 flex-wrap items-center p-2 space-x-1">
+                                    @foreach($clas->sections as $section)
+                                    <a href="{{route('sections.show',$section)}}" class='flex items-center px-1 rounded border hover:bg-indigo-500 hover:text-slate-200'>{{$section->name}} <span class="ml-1 text-slate-400 text-xs">({{$section->students->count()}})</span></a>
+                                    @endforeach
+                                    <form action="{{route('sections.store')}}" method="post">
+                                        @csrf
+                                        <input type="text" name="clas_id" value="{{$clas->id}}" hidden>
+                                        <button type='submit' class="flex items-center text-indigo-500 mt-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <!-- add new morning class for current program  -->
+            <td colspan=2>
+                <div class="flex items-center justify-center p-2">
+                    <a href="{{route('clases.append',[$program->id,1])}}" class="btn-teal text-xs">
+                        New class
+                    </a>
+                </div>
+            </td>
+            <!-- add new morning class for current program  -->
+            <td colspan=2>
+                <div class="flex items-center justify-center p-2">
+                    <a href="{{route('clases.append',[$program->id,1])}}" class="btn-teal text-xs">
+                        New class
+                    </a>
+                </div>
+            </td>
+        </tr>
+
+        @endforeach
 
         @foreach($programs as $program)
         <tr class="tr">
-            <td>{{$program->name}}</td>
-            <td colspan='2' class="text-sm">
+            <td rowspan=2>{{$program->name}}</td>
+            <td class="text-sm">
                 @foreach($program->morning_clases as $clas)
-                <div class="flex border-b">
+                <div class="flex">
                     <div class="flex flex-1 items-center justify-between p-2">
                         <div class="flex items-center">{{$clas->subtitle()}}</div>
                         <form action="{{route('clases.destroy',$clas)}}" method="POST" id='del_form{{$clas->id}}' class="flex items-center justify-center">
@@ -93,31 +197,29 @@
                             </button>
                         </form>
                     </div>
-                    <!-- <div class="grid grid-cols-4 gap-2 p-2 border-l"> -->
-                    <div class="flex flex-1 flex-wrap items-center p-2 space-x-1 border-l">
-                        @foreach($clas->sections as $section)
-                        <a href="{{route('sections.show',$section)}}" class='flex items-center px-1 rounded border hover:bg-indigo-500 hover:text-slate-200'>{{$section->name}} <span class="ml-1 text-slate-400 text-xs">({{$section->students->count()}})</span></a>
-                        @endforeach
-                        <form action="{{route('sections.store')}}" method="post">
-                            @csrf
-                            <input type="text" name="clas_id" value="{{$clas->id}}" hidden>
-                            <button type='submit' class="flex items-center text-indigo-500 mt-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
-                                </svg>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                @endforeach
-                <!-- add new morning class for current program  -->
-                <div class="flex items-center justify-center p-2">
-                    <a href="{{route('clases.append',[$program->id,1])}}" class="btn-teal text-xs">
-                        New class
-                    </a>
                 </div>
             </td>
-            <td colspan='2' class="text-sm">
+            <td>
+                <!-- <div class="grid grid-cols-4 gap-2 p-2 border-l"> -->
+                <div class="flex flex-1 flex-wrap items-center p-2 space-x-1">
+                    @foreach($clas->sections as $section)
+                    <a href="{{route('sections.show',$section)}}" class='flex items-center px-1 rounded border hover:bg-indigo-500 hover:text-slate-200'>{{$section->name}} <span class="ml-1 text-slate-400 text-xs">({{$section->students->count()}})</span></a>
+                    @endforeach
+                    <form action="{{route('sections.store')}}" method="post">
+                        @csrf
+                        <input type="text" name="clas_id" value="{{$clas->id}}" hidden>
+                        <button type='submit' class="flex items-center text-indigo-500 mt-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                @endforeach
+
+            </td>
+            <td class="text-sm">
                 @foreach($program->selfsupport_clases as $clas)
                 <div class="flex border-b">
                     <div class="flex flex-1 items-center justify-between p-2">
@@ -149,14 +251,25 @@
                     </div>
                 </div>
                 @endforeach
-                <!-- add new morning class for current program  -->
+            </td>
+        </tr>
+        <tr>
+            <!-- add new morning class for current program  -->
+            <td colspan=2>
                 <div class="flex items-center justify-center p-2">
-                    <a href="{{route('clases.append',[$program->id,2])}}" class="btn-teal text-xs">
+                    <a href="{{route('clases.append',[$program->id,1])}}" class="btn-teal text-xs">
                         New class
                     </a>
                 </div>
             </td>
-
+            <!-- add new morning class for current program  -->
+            <td colspan=2>
+                <div class="flex items-center justify-center p-2">
+                    <a href="{{route('clases.append',[$program->id,1])}}" class="btn-teal text-xs">
+                        New class
+                    </a>
+                </div>
+            </td>
         </tr>
         @endforeach
 

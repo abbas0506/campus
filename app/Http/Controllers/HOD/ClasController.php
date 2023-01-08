@@ -25,8 +25,10 @@ class ClasController extends Controller
     {
         //
         $department = Department::find(session('department_id'));
-        $clases = $department->clases();
-        return view('hod.clases.index', compact('clases'));
+        $programs = $department->programs;
+        // $clases = $department->clases();
+
+        return view('hod.clases.index', compact('programs'));
     }
 
     /**
@@ -138,6 +140,14 @@ class ClasController extends Controller
             return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
             // something went wrong
         }
+    }
+    public function append($pid, $sid)
+    {
+        $program = Program::find($pid);
+        $shift = Shift::find($sid);
+        $schemes = Scheme::all();
+        $semesters = Semester::all();
+        return view('hod.clases.create', compact('program', 'shift', 'schemes', 'semesters'));
     }
 
     public function promote(Request $request)

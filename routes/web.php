@@ -81,11 +81,12 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::get('hod', [DashboardController::class, 'hod']);
     Route::resource('programs', ProgramController::class);
     Route::resource('clases', ClasController::class);
+    Route::get('clases/append/{pid}/{sid}', [ClasController::class, 'append'])->name('clases.append');
     Route::post('clases.promote', [ClasController::class, 'promote'])->name('clases.promote');
     Route::post('clases.demote', [ClasController::class, 'demote'])->name('clases.demote');
 
     Route::resource('sections', SectionController::class);
-    Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
+    // Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
     Route::post('fetchSectionsByClas', [SectionController::class, 'fetchSectionsByClas'])->name('fetchSectionsByClas'); //for ajax call
     Route::post('fetchSchemesByProgramId', [AjaxController::class, 'fetchSchemesByProgramId'])->name('fetchSchemesByProgramId'); //for ajax call
 
@@ -93,6 +94,7 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', TeacherController::class);
     Route::resource('schemes', SchemeController::class);
+    Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
 

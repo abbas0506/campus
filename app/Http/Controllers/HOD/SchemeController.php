@@ -23,13 +23,8 @@ class SchemeController extends Controller
         //
         // $schemes = Scheme::all();
         $department = Department::find(session('department_id'));
-        $program_ids = $department->programs->pluck('id')->toArray();
-
-        // echo count($program_ids);
-        $schemes = Scheme::whereIn('program_id', $program_ids)->get();
-
-
-        return view('hod.schemes.index', compact('schemes'));
+        $programs = $department->programs;
+        return view('hod.schemes.index', compact('programs'));
     }
 
     /**
@@ -116,9 +111,16 @@ class SchemeController extends Controller
     {
         try {
             $scheme->delete();
-            return redirect()->back()->with('success', 'Successfully deleted');
+            return redirect('schemes')->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }
+    }
+
+    public function append($id)
+    {
+        $program = Program::find($id);
+        $semesters = Semester::whereNotNull('edit_till')->get();
+        return view('hod.schemes.create', compact('semesters', 'program',));
     }
 }

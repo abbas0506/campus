@@ -55,4 +55,10 @@ class Clas extends Model
         $roman = config('global.romans');
         return $program . ' / ' . $shift . ' / ' . $semester . ' / ' .   'Semester - ' . $roman[$this->semester_no - 1];
     }
+    public function subtitle()
+    {
+        $semester = $this->semester->title();
+        $roman = config('global.romans');
+        return  $semester . ' / ' .   'Semester - ' . $roman[$this->semester_no - 1];
+    }
 }
