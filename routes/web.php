@@ -3,31 +3,36 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-use App\Http\Controllers\AuthController; //my authcontroller
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\Admin\DepartmentController;
-use App\Http\Controllers\Admin\HeadshipController;
-use App\Http\Controllers\HOD\EnrollmentController;
-use App\Http\Controllers\HOD\CourseAllocationController;
-use App\Http\Controllers\HOD\ProgramController;
-use App\Http\Controllers\HOD\CourseController;
-use App\Http\Controllers\HOD\TeacherController;
-use App\Http\Controllers\HOD\SchemeController;
-use App\Http\Controllers\HOD\StudentController;
-use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\AjaxController;
-use App\Http\Controllers\ce\TranscriptController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\LoginOptionsController;
+use App\Http\Controllers\AuthController; //my authcontroller
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HOD\ClasController;
-use App\Http\Controllers\HOD\CourseAllocationOptionController;
-use App\Http\Controllers\HOD\ElectiveAllocationController;
-use App\Http\Controllers\HOD\GazzetteController;
-use App\Http\Controllers\HOD\ImportStudentsController;
-use App\Http\Controllers\HOD\SchemeDetailController;
-use App\Http\Controllers\HOD\SectionController;
-use App\Http\Controllers\LoginOptionsController;
+
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\SemesterController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\HeadshipController;
+
+use App\Http\Controllers\ce\TranscriptController;
+
+use App\Http\Controllers\hod\EnrollmentController;
+use App\Http\Controllers\hod\CourseAllocationController;
+use App\Http\Controllers\hod\ProgramController;
+use App\Http\Controllers\hod\CourseController;
+use App\Http\Controllers\hod\TeacherController;
+use App\Http\Controllers\hod\SchemeController;
+use App\Http\Controllers\hod\StudentController;
+use App\Http\Controllers\hod\CourseAllocationOptionController;
+use App\Http\Controllers\hod\ElectiveAllocationController;
+use App\Http\Controllers\hod\GazzetteController;
+use App\Http\Controllers\hod\ImportStudentsController;
+use App\Http\Controllers\hod\SchemeDetailController;
+use App\Http\Controllers\hod\ClasController;
+use App\Http\Controllers\hod\MorningClasesController;
+use App\Http\Controllers\hod\SectionController;
+use App\Http\Controllers\hod\SelfsupportClasesController;
 use App\Http\Controllers\teacher\AssessmentSheetController;
 use App\Http\Controllers\teacher\FirstAttemptController;
 use App\Http\Controllers\teacher\FreshFormativeController;
@@ -80,7 +85,20 @@ Route::group(['middleware' => ['role:controller']], function () {
 Route::group([' middleware' => ['role:hod']], function () {
     Route::get('hod', [DashboardController::class, 'hod']);
     Route::resource('programs', ProgramController::class);
+
     Route::resource('clases', ClasController::class);
+
+    Route::resource('morningclases', MorningClasesController::class);
+    Route::get('morning/clases/promote', [MorningClasesController::class, 'promote'])->name('morningclases.promote');
+    Route::get('morningclases/append/{pid}', [MorningClasesController::class, 'append'])->name('morningclases.append');
+
+    Route::resource('selfsupportclases', SelfsupportClasesController::class);
+    Route::get('selfsupportclases/append/{pid}', [SelfsupportClasesController::class, 'append'])->name('selfsupportclases.append');
+    Route::get('selfsupport/clases/promote', [SelfsupportClasesController::class, 'promote'])->name('selfsupportclases.promote');
+
+
+    Route::post('clases.promote', [ClasController::class, 'promote'])->name('clases.promote');
+
     Route::get('clases/append/{pid}/{sid}', [ClasController::class, 'append'])->name('clases.append');
     Route::post('clases.promote', [ClasController::class, 'promote'])->name('clases.promote');
     Route::post('clases.demote', [ClasController::class, 'demote'])->name('clases.demote');

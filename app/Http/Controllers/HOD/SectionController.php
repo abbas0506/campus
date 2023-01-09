@@ -133,9 +133,13 @@ class SectionController extends Controller
     public function destroy(Section $section)
     {
         //
+        $shift_id = $section->clas->shift_id;
         try {
             $section->delete();
-            return redirect('clases')->with('success', 'Successfully deleted');
+            if ($shift_id == 1)
+                return redirect('morningclases')->with('success', 'Successfully deleted');
+            else
+                return redirect('selfsupportclases')->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }

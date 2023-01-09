@@ -4,8 +4,6 @@ namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Exception;
 
 use App\Models\Clas;
 use App\Models\Department;
@@ -13,10 +11,10 @@ use App\Models\Program;
 use App\Models\Scheme;
 use App\Models\Section;
 use App\Models\Semester;
-use App\Models\Shift;
+use Exception;
+use Illuminate\Http\Request;
 
-
-class ClasController extends Controller
+class MorningClasesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,9 +26,8 @@ class ClasController extends Controller
         //
         $department = Department::find(session('department_id'));
         $programs = $department->programs;
-        // $clases = $department->clases();
 
-        return view('hod.clases.index', compact('programs'));
+        return view('hod.clases.morning.index', compact('programs'));
     }
 
     /**
@@ -41,11 +38,7 @@ class ClasController extends Controller
     public function create()
     {
         //
-        $programs = Program::where('department_id', session('department_id'))->get();
-        $shifts = Shift::all();
-        $schemes = Scheme::all();
-        $semesters = Semester::all();
-        return view('hod.clases.create', compact('programs', 'shifts', 'schemes', 'semesters'));
+        echo "create";
     }
 
     /**
@@ -56,8 +49,11 @@ class ClasController extends Controller
      */
     public function store(Request $request)
     {
-        //append current semester to request
-        $request->merge(['semester_id' => session('semester_id')]);
+        //
+        $request->merge([
+            'semester_id' => session('semester_id'),
+            'shift_id' => 1,
+        ]);
         $request->validate([
             'program_id' => 'required|numeric',
             'shift_id' => 'required|numeric',
@@ -72,17 +68,16 @@ class ClasController extends Controller
                 ->where('semester_no', $request->semester_no)
                 ->where('semester_id', $request->semester_id)
                 ->first();
-            if ($exists) {
-                return redirect()->back()->with('error', 'Already exists!');
-            } else {
+            if ($exists)
+                return redirect('morningclases')->with('error', 'Already exists!');
+            else {
                 $clas = Clas::create($request->all());
                 Section::create([
                     'clas_id' => $clas->id,
                     'name' => 'A',
                 ]);
                 DB::commit();
-
-                return redirect('clases')->with('success', 'Successfully created');
+                return redirect('morningclases')->with('success', 'Successfully created');
             }
         } catch (Exception $e) {
             DB::rollBack();
@@ -123,7 +118,6 @@ class ClasController extends Controller
     public function update(Request $request, $id)
     {
         //
-
     }
 
     /**
@@ -135,68 +129,28 @@ class ClasController extends Controller
     public function destroy($id)
     {
         //
-
-    }
-    public function append($pid, $sid)
-    {
-    }
-
-    public function promote(Request $request)
-    {
-        $request->validate([
-            'ids_array' => 'required',
-        ]);
-
-        $ids = array();
-        $ids = $request->ids_array;
-        DB::beginTransaction();
+        $clas = Clas::findOrFail($id);
         try {
-            if ($ids) {
-                foreach ($ids as $id) {
-                    //promote to next semester
-                    $clas = Clas::find($id);
-                    $clas->semester_no = $clas->semester_no + 1;
-                    $clas->update();
-                    //if class duration is over, finish the class
-                    if ($clas->semester_no > $clas->program->max_duration * 2) {
-                        $clas->status = 0;
-                        $clas->update();
-                    }
-                }
-            }
-            DB::commit();
-            return response()->json(['msg' => "Successful"]);
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return response()->json(['msg' => $ex->getMessage()]);
+            $clas->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
+            // something went wrong
         }
     }
 
-    public function demote(Request $request)
+    public function append($pid)
     {
-        $request->validate([
-            'ids_array' => 'required',
-        ]);
+        $program = Program::find($pid);
+        $schemes = Scheme::all();
+        $semesters = Semester::all();
+        return view('hod.clases.morning.create', compact('program', 'schemes', 'semesters'));
+    }
 
-        $ids = array();
-        $ids = $request->ids_array;
-        DB::beginTransaction();
-        try {
-            if ($ids) {
-                foreach ($ids as $id) {
-                    $clas = Clas::find($id);
-                    //demoting below 1st semester is illegal
-                    if ($clas->semester_no > 1) {
-                        $clas->semester_no = $clas->semester_no - 1;
-                        $clas->update();
-                    }
-                }
-            }
-            DB::commit();
-            return response()->json(['msg' => "Successful"]);
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return response()->json(['msg' => $ex->getMessage()]);
-        }
+    public function promote()
+    {
+        $department = Department::find(session('department_id'));
+        $programs = $department->programs;
+        return view('hod.clases.morning.promote', compact('programs'));
     }
 }

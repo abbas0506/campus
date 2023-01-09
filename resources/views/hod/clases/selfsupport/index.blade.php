@@ -1,21 +1,45 @@
 @extends('layouts.hod')
 @section('page-content')
 <h1 class="mt-12">Classes</h1>
+<div class="bread-crumb">Self Support Classes / all</div>
 
-<div class="flex items-center justify-between flex-wrap">
-    <div class="bread-crumb">
-        Classes / all
-    </div>
-    <div class="relative ml-0 md:ml-20">
+<div class="flex items-center space-x-2 mt-8">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+    </svg>
+    <ul class="text-xs">
+        <li>Class will be deleted only if it has no section (i.e. empty class)</li>
+        <li>Section delete option is not available on this page. It is available on section page itself. (click on section)</li>
+    </ul>
+</div>
+
+<!-- search bar -->
+<div class="flex items-center justify-between mt-8">
+    <div class="relative">
         <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
         </svg>
     </div>
-    <a href="{{route('clases.create')}}" class="btn-teal">
-        + Add Class
-    </a>
+
+    <div class="flex items-center space-x-4">
+        <a href="{{route('morningclases.promote')}}" class="flex items-center text-sm btn-teal px-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
+            </svg>
+            <span class="ml-1">Promote</span>
+        </a>
+        <button class="flex items-center text-sm btn-red px-2" onclick="revert()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
+            </svg>
+            <span class="ml-1">Revert</span>
+        </button>
+    </div>
+
+
 </div>
+
 @if ($errors->any())
 <div class="alert-danger mt-8">
     <ul>
@@ -42,74 +66,85 @@
 </div>
 @endif
 
-<div class="flex item-center space-x-4 border border-teal-100 bg-teal-50 p-3 mt-8 rounded">
-    <button class="flex items-center text-sm btn-teal" onclick="promote()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
-        </svg>
 
-        <span class="ml-2">Promote to next semester</span>
-    </button>
-
-    <button class="flex items-center text-sm  btn-indigo" onclick="demote()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
-        </svg>
-        <span class="ml-2">Demote to previous semester</span>
-    </button>
-</div>
-<div class="text-slate-600 text-sm mt-8">
-    <span id='chkCount' class="mr-1">0</span>classes selected
-</div>
-<table class="table-auto w-full mt-8">
+<div class="text-sm  text-gray-500 mt-8 mb-1">{{$programs->count()}} programs found</div>
+<table class="table-auto w-full">
     <thead>
-        <tr class="border-b border-slate-200">
-            <th><input type="checkbox" id='chkAll' onclick="chkAll()"></th>
-            <th>Class</th>
+        <tr>
+            <th rowspan="2">Porgram</th>
+            <th colspan="2">Self Support <span class="text-xs font-thin">(Classes & Sections)</span>
+                <br>
+                <a href="{{route('morningclases.index')}}" class="relative text-blue-500 hover:underline font-thin">
+                    <div class="absolute flex items-center justify-center h-3 w-3 top-1 -left-4 rounded-full">
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-400"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-600 opacity-75"></span>
+                    </div> Switch to Morning
+                </a>
+            </th>
+        </tr>
+        <tr>
+            <th>Classes</th>
             <th>Sections</th>
-            <th class="text-center">Actions</th>
         </tr>
     </thead>
     <tbody>
-
-        @foreach($clases->where('status',1) as $clas)
-        <tr class="tr border-b">
-            <td class="py-2 text-slate-600 text-sm"><input type="checkbox" name='chk' value='{{$clas->id}}' onclick="updateChkCount()"></td>
-            <td class="py-2 text-slate-600 text-sm">
-                <div>{{$clas->title()}}</div>
-            </td>
-
-            <td class="flex items-center text-sm py-2">
-                @foreach($clas->sections as $section)
-                <a href="{{route('sections.show',$section)}}" class='px-1 rounded hover:bg-indigo-500 hover:text-slate-200'>{{$section->name}}</a>
-                @endforeach
-                <form action="{{route('sections.store')}}" method="post">
-                    @csrf
-                    <input type="text" name="clas_id" value="{{$clas->id}}" hidden>
-                    <button type='submit' class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-indigo-500">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
-                        </svg>
-                    </button>
-                </form>
+        @foreach($programs as $program)
+        <tr>
+            <td rowspan='{{$program->selfsupport_clases->count()+2}}'>{{$program->name}}</td>
+        </tr>
+        @foreach($program->selfsupport_clases as $clas)
+        <tr class="tr">
+            <td>
+                <div class="flex items-center justify-between">
+                    {{$clas->subtitle()}}
+                    <form action="{{route('selfsupportclases.destroy',$clas)}}" method="POST" id='del_form{{$clas->id}}'>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-500 hover:zoom-sm hover:text-red-800 p-2" onclick="delme('{{$clas->id}}')" @disabled($clas->sections->count()>0)>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
             </td>
             <td>
-                <form action="{{route('clases.destroy',$clas)}}" method="POST" id='del_form{{$clas->id}}' class="flex items-center justify-center">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn-red" onclick="delme('{{$clas->id}}')">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                        </svg>
-                    </button>
-                </form>
-
+                <div class="grid grid-cols-6 gap-2">
+                    @foreach($clas->sections as $section)
+                    <a href="{{route('sections.show',$section)}}" class='flex justify-center items-center rounded border hover:bg-indigo-500 hover:text-slate-200'>
+                        {{$section->name}} <span class="ml-1 text-slate-400 text-xs">({{$section->students->count()}})</span>
+                    </a>
+                    @endforeach
+                    <form action="{{route('sections.store')}}" method="post" class='flex justify-center items-center rounded border border-dashed text-indigo-500 hover:bg-indigo-200'>
+                        @csrf
+                        <input type="text" name="clas_id" value="{{$clas->id}}" hidden>
+                        <button type='submit'>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
             </td>
 
         </tr>
 
         @endforeach
 
+        <!-- add new morning class for current program  -->
+        <tr>
+            <td>
+                <a href="{{route('selfsupportclases.append',$program->id)}}" class="flex items-center text-blue-300 hover:text-blue-600 hover:underline text-xs">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+                    </svg>
+                    Add Another Class
+                </a>
+
+            </td>
+            <td></td>
+        </tr>
+        @endforeach
 
     </tbody>
 </table>
@@ -224,7 +259,7 @@
     }
 
 
-    function demote() {
+    function revert() {
 
         var token = $("meta[name='csrf-token']").attr("content");
         var ids_array = [];
@@ -236,13 +271,13 @@
         if (ids_array.length == 0) {
             Swal.fire({
                 icon: 'warning',
-                title: "Nothing to demote",
+                title: "Nothing to revert",
             });
         } else {
             //show sweet alert and confirm submission
             Swal.fire({
                 title: 'Are you sure?',
-                text: "Selected classes will be demoted to previous semester!",
+                text: "Selected classes will be reverted to previous semester!",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
