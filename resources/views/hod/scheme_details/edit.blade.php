@@ -37,20 +37,20 @@ $roman=config('global.romans');
 
     <table class="table-auto w-full mt-8">
         <thead>
-            <tr class="border-b border-slate-200">
+            <tr>
                 <th>Course Name</th>
-                <th class="text-center">Actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach($courses as $course)
-            <tr class="border-b tr">
-                <td class="py-2">
+            <tr class="tr">
+                <td>
                     <div>{{$course->name}} ({{$course->credit_hrs_theory}}-{{$course->credit_hrs_practical}})</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$course->short}} | {{$course->code}}</div>
+                    <div class="text-slate-400 font-thin">{{$course->short}} | {{$course->code}}</div>
                 </td>
-                <td class="py-2 flex items-center justify-center">
-                    <form action="{{route('scheme-details.store')}}" method="POST" id='assign_form{{$course->id}}' class="mt-2 text-sm">
+                <td>
+                    <form action="{{route('scheme-details.store')}}" method="POST" id='assign_form{{$course->id}}' class="flex justify-center items-center ">
                         @csrf
                         <input type="text" name='course_id' value="{{$course->id}}" hidden>
                         <button type="submit" class="flex justify-center items-center btn-indigo" onclick="assign('{{$course->id}}')">

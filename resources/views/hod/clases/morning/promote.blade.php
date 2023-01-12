@@ -73,6 +73,7 @@
     </thead>
     <tbody>
         @foreach($programs as $program)
+
         <tr class="tr">
             <td rowspan='{{$program->morning_clases->count()+1}}'>{{$program->name}}</td>
         </tr>

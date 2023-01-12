@@ -27,15 +27,25 @@
         </ul>
     </div>
     @endif
-    <form action="{{route('clases.store')}}" method='post' class="flex flex-col w-full mt-12" onsubmit="return validate(event)">
+
+    @if(session('error'))
+    <div class="flex items-center alert-danger mt-8">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+        </svg>
+        {{session('error')}}
+    </div>
+    @endif
+
+    <form action="{{route('clases.store')}}" method='post' class="flex flex-col w-full mt-8" onsubmit="return validate(event)">
         @csrf
 
-        <label for="" class='mt-8 text-xl text-red-600 font-thin'>{{$program->name}} | {{$shift->name}}</label>
+        <label for="" class='mt-8 text-md text-red-600 font-thin'>{{$program->name}} | {{$shift->name}}</label>
         <input type="text" name="program_id" value="{{$program->id}}" hidden>
         <input type="text" name="shift_id" value="{{$shift->id}}" hidden>
 
         <div class="flex items-center space-x-4">
-            <div class="flex flex-col flex-1">
+            <div class="flex flex-col">
                 <label for="" class="mt-5">Semester No.</label>
                 <select id='semester_no' name="semester_no" class="input-indigo p-2">
                     @foreach($program->series_of_all_semesters() as $sr)

@@ -136,10 +136,7 @@ class SectionController extends Controller
         $shift_id = $section->clas->shift_id;
         try {
             $section->delete();
-            if ($shift_id == 1)
-                return redirect('morningclases')->with('success', 'Successfully deleted');
-            else
-                return redirect('selfsupportclases')->with('success', 'Successfully deleted');
+            return redirect('clases')->with(['shift_id' => $shift_id, 'success' => 'Successfully removed']);
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }

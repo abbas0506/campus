@@ -57,7 +57,7 @@ class SchemeController extends Controller
 
         try {
             Scheme::create($request->all());
-            return redirect()->route('schemes.index')->with('success', 'Successfully created');
+            return redirect()->route('programs.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -111,7 +111,7 @@ class SchemeController extends Controller
     {
         try {
             $scheme->delete();
-            return redirect('schemes')->with('success', 'Successfully deleted');
+            return redirect('programs')->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }

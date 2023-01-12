@@ -89,11 +89,11 @@
     </thead>
     <tbody>
         @foreach($programs as $program)
-        <tr>
+        <tr class="tr{{$program->id}} tr">
             <td rowspan='{{$program->morning_clases->count()+2}}'>{{$program->name}}</td>
         </tr>
         @foreach($program->morning_clases as $clas)
-        <tr class="tr">
+        <tr class="tr{{$program->id}}">
             <td>
                 <div class="flex items-center justify-between">
                     {{$clas->subtitle()}}
@@ -132,15 +132,24 @@
         @endforeach
 
         <!-- add new morning class for current program  -->
-        <tr>
+        <tr class="tr{{$program->id}}">
             <td>
+
+                @if($program->schemes->count()>0)
                 <a href="{{route('morningclases.append',$program->id)}}" class="flex items-center text-blue-300 hover:text-blue-600 hover:underline text-xs">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
                     </svg>
-                    Add Another Class
+                    Add Class
                 </a>
-
+                @else
+                <a href="{{route('schemes.append',$program)}}" class="flex items-center text-blue-300 hover:text-blue-600 hover:underline text-xs">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+                    </svg>
+                    Define Scheme
+                </a>
+                @endif
             </td>
             <td></td>
         </tr>
@@ -172,16 +181,37 @@
 
     function search(event) {
         var searchtext = event.target.value.toLowerCase();
-        var str = 0;
+
+        var classesToShow = [];
         $('.tr').each(function() {
-            if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
-                )) {
-                $(this).addClass('hidden');
-            } else {
-                $(this).removeClass('hidden');
+            if ($(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)) {
+                var matched = $(this).attr('class').split(' ');
+                classesToShow.push(matched[0]);
             }
         });
+        var toShow = classesToShow;
+        var rowid;
+        $('tbody tr').each(function() {
+            rowid = $(this).attr('class').split(' ')
+
+            if ($.inArray(rowid[0], toShow) >= 0) {
+                $(this).removeClass('hidden')
+
+            } else
+                $(this).addClass('hidden')
+        });
+
+    }
+
+    function findClassesToShow(searchtext) {
+        var classesToShow = [];
+        $('.tr').each(function() {
+            if ($(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)) {
+                var matched = $(this).attr('class').split(' ');
+                classesToShow.push(matched[0]);
+            }
+        });
+        return classesToShow;
     }
 
     function chkAll() {

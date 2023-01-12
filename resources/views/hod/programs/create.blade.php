@@ -27,7 +27,7 @@
                 <input type="text" id='' name='short' class="input-indigo" placeholder="For example: BSCS">
             </div>
             <div class="flex flex-col">
-                <label for="" class='mt-3'>Total Credits</label>
+                <label for="" class='mt-3'>Credit Hrs. <span class="text-xs font-thin">(required)</span></label>
                 <input type="text" id='' name='credit_hrs' class="input-indigo" placeholder="Credit hrs">
             </div>
         </div>

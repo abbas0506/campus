@@ -28,7 +28,6 @@ class ClasController extends Controller
         //
         $department = Department::find(session('department_id'));
         $programs = $department->programs;
-        // $clases = $department->clases();
 
         return view('hod.clases.index', compact('programs'));
     }
@@ -63,8 +62,10 @@ class ClasController extends Controller
             'shift_id' => 'required|numeric',
             'semester_no' => 'required|numeric',
             'semester_id' => 'required|numeric',
+            'scheme_id' => 'required|numeric',
 
         ]);
+
         DB::beginTransaction();
         try {
             $exists = Clas::where('program_id', $request->program_id)
@@ -82,7 +83,8 @@ class ClasController extends Controller
                 ]);
                 DB::commit();
 
-                return redirect('clases')->with('success', 'Successfully created');
+                // return redirect('clases')->with('success', 'Successfully created');
+                return redirect('clases')->with(['shift_id' => $clas->shift_id, 'success' => 'Successfully created']);
             }
         } catch (Exception $e) {
             DB::rollBack();
@@ -135,10 +137,23 @@ class ClasController extends Controller
     public function destroy($id)
     {
         //
-
+        $clas = Clas::findOrFail($id);
+        $shift_id = $clas->shift_id;
+        try {
+            $clas->delete();
+            return redirect('clases')->with(['shift_id' => $shift_id, 'success' => 'Successfully removed']);
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
     public function append($pid, $sid)
     {
+        $program = Program::find($pid);
+        $shift = Shift::find($sid);
+        $schemes = Scheme::all();
+        $semesters = Semester::all();
+        return view('hod.clases.create', compact('program', 'shift', 'schemes', 'semesters'));
     }
 
     public function promote(Request $request)

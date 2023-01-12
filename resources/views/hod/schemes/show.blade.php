@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12"><a href="{{route('schemes.index')}}">Schemes</a></h1>
-<div class="bread-crumb">{{$scheme->program->name}} / {{$scheme->subtitle()}}</div>
+<h1 class="mt-12"><a href="{{route('programs.index')}}">Programs</a></h1>
+<div class="bread-crumb">{{$scheme->program->name}} / schemes / {{$scheme->subtitle()}}</div>
 <div class="container mx-auto">
     @if(session('success'))
     <div class="flex alert-success items-center my-5">

@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<h1 class="mt-12"><a href="{{route('schemes.index')}}">Schemes</a></h1>
+<h1 class="mt-12"><a href="{{route('programs.index')}}">Programs</a></h1>
 <div class="bread-crumb">{{$program->name}} / New scheme</div>
 
 <div class="flex flex-col md:w-3/5 m-auto text-center mt-12">
