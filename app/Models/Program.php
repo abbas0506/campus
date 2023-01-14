@@ -64,4 +64,11 @@ class Program extends Model
             ->orderBy('shift_id')
             ->orderBy('semester_no'); //currently active;
     }
+    public function revertible_clases()
+    {
+        return $this->hasMany(Clas::class)
+            ->whereBetween('semester_no', [2, $this->min_duration * 2 + 1])
+            ->orderBy('shift_id')
+            ->orderBy('semester_no'); //currently active;
+    }
 }

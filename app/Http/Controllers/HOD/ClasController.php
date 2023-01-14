@@ -70,11 +70,11 @@ class ClasController extends Controller
         try {
             $exists = Clas::where('program_id', $request->program_id)
                 ->where('shift_id', $request->shift_id)
-                ->where('semester_no', $request->semester_no)
+                // ->where('semester_no', $request->semester_no)
                 ->where('semester_id', $request->semester_id)
                 ->first();
             if ($exists) {
-                return redirect()->back()->with('error', 'Already exists!');
+                return redirect()->back()->with('error', 'Class duplication not allowed! [' . $exists->semester->title() . ', Semester no ' . $exists->semester_no . ' already exists]');
             } else {
                 $clas = Clas::create($request->all());
                 Section::create([
@@ -154,39 +154,6 @@ class ClasController extends Controller
         $schemes = Scheme::all();
         $semesters = Semester::all();
         return view('hod.clases.create', compact('program', 'shift', 'schemes', 'semesters'));
-    }
-
-    public function view()
-    {
-        $department = Department::find(session('department_id'));
-        $programs = $department->programs;
-        return view('hod.clases.promote', compact('programs'));
-    }
-
-    public function promote(Request $request)
-    {
-        $request->validate([
-            'ids_array' => 'required',
-        ]);
-
-        $ids = array();
-        $ids = $request->ids_array;
-        $clases = Clas::whereIn('id', $ids)->orderBy('program_id')->orderByDesc('semester_no', 'desc')->get();
-        DB::beginTransaction();
-        try {
-
-            foreach ($clases as $clas) {
-                //promote to next semester
-                $clas->semester_no = $clas->semester_no + 1;
-                $clas->update();
-            }
-
-            DB::commit();
-            return response()->json(['msg' => "Successfull"]);
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return response()->json(['msg' => $ex->getMessage()]);
-        }
     }
 
     public function revert(Request $request)

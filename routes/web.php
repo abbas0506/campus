@@ -30,6 +30,8 @@ use App\Http\Controllers\hod\GazzetteController;
 use App\Http\Controllers\hod\ImportStudentsController;
 use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\ClasController;
+use App\Http\Controllers\hod\ClassPromotionController;
+use App\Http\Controllers\hod\ClassReversionController;
 use App\Http\Controllers\hod\MorningClasesController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SelfsupportClasesController;
@@ -88,9 +90,8 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::resource('clases', ClasController::class);
     Route::get('clases/append/{pid}/{sid}', [ClasController::class, 'append'])->name('clases.append');
 
-    Route::get('clases.view', [ClasController::class, 'view'])->name('clases.view');
-    Route::post('clases.promote', [ClasController::class, 'promote'])->name('clases.promote');
-    Route::post('clases.revert', [ClasController::class, 'revert'])->name('clases.revert');
+    Route::resource('promotions', ClassPromotionController::class)->only('index', 'store');
+    Route::resource('reversions', ClassReversionController::class)->only('index', 'store');
 
     Route::resource('sections', SectionController::class);
     // Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);

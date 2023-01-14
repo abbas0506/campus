@@ -48,7 +48,21 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
         </svg>
     </div>
-    <a href="{{route('clases.view')}}" class="btn-teal text-sm">Promote / Revert</a>
+    <div class="flex items-center space-x-3">
+        <a href="{{route('promotions.index')}}" class="flex items-center text-sm btn-teal px-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
+            </svg>
+            <span class="ml-1">Promote</span>
+        </a>
+        <a href="{{route('reversions.index')}}" class="flex items-center text-sm btn-red px-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
+            </svg>
+            <span class="ml-1">Revert</span>
+        </a>
+    </div>
+
 </div>
 <!-- records found -->
 <div class="text-xs font-thin text-slate-600 mt-4 mb-1">{{$programs->count()}} programs found</div>
@@ -289,148 +303,6 @@
                 $(this).addClass('hidden')
         });
 
-    }
-
-    function findClassesToShow(searchtext) {
-        var classesToShow = [];
-        $('.tr').each(function() {
-            if ($(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)) {
-                var matched = $(this).attr('class').split(' ');
-                classesToShow.push(matched[0]);
-            }
-        });
-        return classesToShow;
-    }
-
-    function chkAll() {
-        $('.tr').each(function() {
-            if (!$(this).hasClass('hidden'))
-                $(this).children().find('input[type=checkbox]').prop('checked', $('#chkAll').is(':checked'));
-
-        });
-        updateChkCount()
-    }
-
-    function updateChkCount() {
-
-        var chkArray = [];
-        var chks = document.getElementsByName('chk');
-        chks.forEach((chk) => {
-            if (chk.checked) chkArray.push(chk.value);
-        })
-        document.getElementById("chkCount").innerHTML = chkArray.length;
-    }
-
-    function promote() {
-
-        var token = $("meta[name='csrf-token']").attr("content");
-        var ids_array = [];
-        var chks = document.getElementsByName('chk');
-        chks.forEach((chk) => {
-            if (chk.checked) ids_array.push(chk.value);
-        })
-
-        if (ids_array.length == 0) {
-            Swal.fire({
-                icon: 'warning',
-                title: "Nothing to promote",
-            });
-        } else {
-            //show sweet alert and confirm submission
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Selected classes will be promoted to next semester!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, promote now'
-            }).then((result) => { //if confirmed    
-                if (result.value) {
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{route('clases.promote')}}",
-                        data: {
-                            "ids_array": ids_array,
-                            "_token": token,
-
-                        },
-                        success: function(response) {
-                            //
-                            Swal.fire({
-                                icon: 'success',
-                                title: response.msg,
-                            });
-                            //refresh content after deletion
-                            location.reload();
-                        },
-                        error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: errorThrown
-                            });
-                        }
-                    }); //ajax end
-                }
-            })
-        }
-    }
-
-
-    function revert() {
-
-        var token = $("meta[name='csrf-token']").attr("content");
-        var ids_array = [];
-        var chks = document.getElementsByName('chk');
-        chks.forEach((chk) => {
-            if (chk.checked) ids_array.push(chk.value);
-        })
-
-        if (ids_array.length == 0) {
-            Swal.fire({
-                icon: 'warning',
-                title: "Nothing to revert",
-            });
-        } else {
-            //show sweet alert and confirm submission
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Selected classes will be reverted to previous semester!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, demote now'
-            }).then((result) => { //if confirmed    
-                if (result.value) {
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{route('clases.promote')}}",
-                        data: {
-                            "ids_array": ids_array,
-                            "_token": token,
-
-                        },
-                        success: function(response) {
-                            //
-
-                            Swal.fire({
-                                icon: 'success',
-                                title: response.msg,
-                            });
-                            //refresh content after deletion
-                            location.reload();
-                        },
-                        error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: errorThrown
-                            });
-                        }
-                    }); //ajax end
-                }
-            })
-        }
     }
 
     function switchTo(opt) {

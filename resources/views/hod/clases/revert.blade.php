@@ -1,15 +1,15 @@
 @extends('layouts.hod')
 @section('page-content')
 <h1 class="mt-12"><a href="{{route('clases.index')}}">Classes</a></h1>
-<div class="bread-crumb">Classes / promote</div>
+<div class="bread-crumb">Classes / revert</div>
 
 <div class="flex items-center space-x-2 mt-8">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
     </svg>
     <ul class="text-xs">
-        <li>You may promote single or multiple classes at a time</li>
-        <li>Check the classes and press on promote button. (if some class accidently promoted, you may undo it by its reversion)</li>
+        <li>You may revert single or multiple classes at a time</li>
+        <li>Check the classes and press on revert button. (if some class accidently reverted, you may undo it by its promotion) </li>
     </ul>
 </div>
 
@@ -24,11 +24,11 @@
 
     <div class="flex items-center space-x-3">
         <div id="chkCount" class="flex justify-center items-center w-8 h-8 rounded-full bg-orange-100 text-slate-600">0</div>
-        <button class="flex items-center text-sm btn-teal px-2" onclick="promote()">
+        <button class="flex items-center text-sm btn-red px-2" onclick="revert()">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
             </svg>
-            <span class="ml-1">Promote</span>
+            <span class="ml-1">Revert</span>
         </button>
     </div>
 
@@ -73,9 +73,9 @@
     <tbody>
         @foreach($programs as $program)
         <tr class="tr{{$program->id}} tr">
-            <td rowspan='{{$program->promotable_clases->count()+1}}'>{{$program->name}}</td>
+            <td rowspan='{{$program->revertible_clases->count()+1}}'>{{$program->name}}</td>
         </tr>
-        @foreach($program->promotable_clases as $clas)
+        @foreach($program->revertible_clases as $clas)
         <tr class="tr{{$program->id}} chk">
             <td>{{$clas->shift->name}}</td>
             <td>{{$clas->subtitle()}}</td>
@@ -135,7 +135,7 @@
         document.getElementById("chkCount").innerHTML = chkArray.length;
     }
 
-    function promote() {
+    function revert() {
 
         var token = $("meta[name='csrf-token']").attr("content");
         var ids_array = [];
@@ -147,23 +147,23 @@
         if (ids_array.length == 0) {
             Swal.fire({
                 icon: 'warning',
-                title: "Nothing to promote",
+                title: "Nothing to revert",
             });
         } else {
             //show sweet alert and confirm submission
             Swal.fire({
                 title: 'Are you sure?',
-                text: "Selected classes will be promoted to next semester!",
+                text: "Selected classes will be reverted to previous semester!",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, promote now'
+                confirmButtonText: 'Yes, demote now'
             }).then((result) => { //if confirmed    
                 if (result.value) {
                     $.ajax({
                         type: 'POST',
-                        url: "{{route('promotions.store')}}",
+                        url: "{{route('reversions.store')}}",
                         data: {
                             "ids_array": ids_array,
                             "_token": token,
@@ -171,6 +171,7 @@
                         },
                         success: function(response) {
                             //
+
                             Swal.fire({
                                 icon: 'success',
                                 title: response.msg,
