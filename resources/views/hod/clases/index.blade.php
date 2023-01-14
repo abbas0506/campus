@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 <h1 class="mt-12">Classes</h1>
-<div class="bread-crumb">Morning Classes / all</div>
+<div class="bread-crumb">Classes & Sections / all</div>
 
 <div class="flex items-center space-x-2 mt-8">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -13,32 +13,6 @@
     </ul>
 </div>
 
-<!-- search bar -->
-<div class="flex items-center justify-between mt-8">
-    <div class="relative">
-        <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-        </svg>
-    </div>
-
-    <div class="flex items-center space-x-4">
-        <a href="{{route('morningclases.promote')}}" class="flex items-center text-sm btn-teal px-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
-            </svg>
-            <span class="ml-1">Promote</span>
-        </a>
-        <button class="flex items-center text-sm btn-red px-2" onclick="revert()">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
-            </svg>
-            <span class="ml-1">Revert</span>
-        </button>
-    </div>
-
-
-</div>
 
 @if ($errors->any())
 <div class="alert-danger mt-8">
@@ -66,16 +40,27 @@
 </div>
 @endif
 
-@php $selected_shift=(session()->has('shift_id')? session('shift_id'):1); @endphp
+<!-- search bar -->
+<div class="flex items-center justify-between mt-8">
+    <div class="relative">
+        <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        </svg>
+    </div>
+    <a href="{{route('clases.view')}}" class="btn-teal text-sm">Promote / Revert</a>
+</div>
+<!-- records found -->
+<div class="text-xs font-thin text-slate-600 mt-4 mb-1">{{$programs->count()}} programs found</div>
 
-<div class="text-sm  text-gray-500 mt-8 mb-1">{{$programs->count()}} programs found</div>
+@php $selected_shift=(session()->has('shift_id')? session('shift_id'):1); @endphp
 
 <!-- morning classes -->
 <section id='morning' @if($selected_shift==2) hidden @endif>
     <table class="table-auto w-full">
         <thead>
             <tr>
-                <th rowspan="2">Porgram</th>
+                <th rowspan="2">Programs</th>
                 <th colspan="2">
                     <div class="">
                         <div>Morning <span class="text-xs font-thin">(Classes & Sections)</span></div>
@@ -237,14 +222,14 @@
                 <td>
 
                     @if($program->schemes->count()>0)
-                    <a href="{{route('clases.append',[$program,2])}}" class="flex items-center text-blue-300 hover:text-blue-600 hover:underline text-xs">
+                    <a href="{{route('clases.append',[$program,2])}}" class="flex items-center text-blue-600 hover:text-blue-800 hover:underline text-xs">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
                         </svg>
                         Add Class
                     </a>
                     @else
-                    <a href="{{route('schemes.append',$program)}}" class="flex items-center text-blue-300 hover:text-blue-600 hover:underline text-xs">
+                    <a href="{{route('schemes.append',$program)}}" class="flex items-center text-blue-600 hover:text-blue-600 hover:underline text-xs">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
                         </svg>
@@ -420,7 +405,7 @@
                 if (result.value) {
                     $.ajax({
                         type: 'POST',
-                        url: "{{route('clases.demote')}}",
+                        url: "{{route('clases.promote')}}",
                         data: {
                             "ids_array": ids_array,
                             "_token": token,

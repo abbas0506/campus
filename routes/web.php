@@ -85,23 +85,12 @@ Route::group(['middleware' => ['role:controller']], function () {
 Route::group([' middleware' => ['role:hod']], function () {
     Route::get('hod', [DashboardController::class, 'hod']);
     Route::resource('programs', ProgramController::class);
-
     Route::resource('clases', ClasController::class);
-
-    Route::resource('morningclases', MorningClasesController::class);
-    Route::get('morning/clases/promote', [MorningClasesController::class, 'promote'])->name('morningclases.promote');
-    Route::get('morningclases/append/{pid}', [MorningClasesController::class, 'append'])->name('morningclases.append');
-
-    Route::resource('selfsupportclases', SelfsupportClasesController::class);
-    Route::get('selfsupportclases/append/{pid}', [SelfsupportClasesController::class, 'append'])->name('selfsupportclases.append');
-    Route::get('selfsupport/clases/promote', [SelfsupportClasesController::class, 'promote'])->name('selfsupportclases.promote');
-
-
-    Route::post('clases.promote', [ClasController::class, 'promote'])->name('clases.promote');
-
     Route::get('clases/append/{pid}/{sid}', [ClasController::class, 'append'])->name('clases.append');
+
+    Route::get('clases.view', [ClasController::class, 'view'])->name('clases.view');
     Route::post('clases.promote', [ClasController::class, 'promote'])->name('clases.promote');
-    Route::post('clases.demote', [ClasController::class, 'demote'])->name('clases.demote');
+    Route::post('clases.revert', [ClasController::class, 'revert'])->name('clases.revert');
 
     Route::resource('sections', SectionController::class);
     // Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);

@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12"><a href="{{route('morningclases.index')}}">Classes</a></h1>
-<div class="bread-crumb">Morning Classes / promote</div>
+<h1 class="mt-12"><a href="{{route('clases.index')}}">Classes</a></h1>
+<div class="bread-crumb">Classes / promote or revert</div>
 
 <div class="flex items-center space-x-2 mt-8">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -9,7 +9,7 @@
     </svg>
     <ul class="text-xs">
         <li>You may promote single or multiple classes at a time</li>
-        <li>Before promoting any class, make sure, promoted class will not duplicate any other exising class within the same program</li>
+        <li>While promoting any class, make sure, senior classes will be promoted first. (duplication will be rejected, if any)</li>
     </ul>
 </div>
 
@@ -29,6 +29,13 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
             </svg>
             <span class="ml-1">Promote</span>
+        </button>
+        <button class="flex items-center text-sm btn-red px-2" onclick="revert()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
+            </svg>
+
+            <span class="ml-1">Revert</span>
         </button>
     </div>
 
@@ -60,73 +67,64 @@
     {{session('error')}}
 </div>
 @endif
-
-
-<div class="text-sm  text-gray-500 mt-8 mb-1">{{$programs->count()}} programs found</div>
+<div class="text-xs  text-slate-600 mt-4 mb-1">{{$programs->count()}} programs found</div>
 <table class="table-auto w-full">
     <thead>
         <tr>
             <th>Porgram</th>
+            <th>Shift</th>
+            <th>Classes</th>
             <th><input type="checkbox" id='chkAll' onclick="chkAll()"></th>
-            <th>Morning Classes</th>
         </tr>
     </thead>
     <tbody>
         @foreach($programs as $program)
-
-        <tr class="tr">
-            <td rowspan='{{$program->morning_clases->count()+1}}'>{{$program->name}}</td>
+        <tr class="tr{{$program->id}} tr">
+            <td rowspan='{{$program->promotable_clases->count()+1}}'>{{$program->name}}</td>
         </tr>
-        @foreach($program->morning_clases as $clas)
-        <tr>
-            <td class="text-center"><input type="checkbox" name='chk' value="{{$clas->id}}" onclick="updateChkCount()"></td>
+        @foreach($program->promotable_clases as $clas)
+        <tr class="tr{{$program->id}} chk">
+            <td>{{$clas->shift->name}}</td>
             <td>{{$clas->subtitle()}}</td>
+            <td class="text-center"><input type="checkbox" name='chk' value="{{$clas->id}}" onclick="updateChkCount()"></td>
         </tr>
-
         @endforeach
-
         @endforeach
 
     </tbody>
 </table>
+</section>
 
+@endsection
+
+@section('script')
 <script type="text/javascript">
-    function delme(formid) {
-
-        event.preventDefault();
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "It will be highly destructive!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.value) {
-                //submit corresponding form
-                $('#del_form' + formid).submit();
-            }
-        });
-    }
-
     function search(event) {
         var searchtext = event.target.value.toLowerCase();
-        var str = 0;
+
+        var classesToShow = [];
         $('.tr').each(function() {
-            if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
-                )) {
-                $(this).addClass('hidden');
-            } else {
-                $(this).removeClass('hidden');
+            if ($(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)) {
+                var matched = $(this).attr('class').split(' ');
+                classesToShow.push(matched[0]);
             }
         });
+        var toShow = classesToShow;
+        var rowid;
+        $('tbody tr').each(function() {
+            rowid = $(this).attr('class').split(' ')
+
+            if ($.inArray(rowid[0], toShow) >= 0) {
+                $(this).removeClass('hidden')
+
+            } else
+                $(this).addClass('hidden')
+        });
+
     }
 
     function chkAll() {
-        $('.tr').each(function() {
+        $('.chk').each(function() {
             if (!$(this).hasClass('hidden'))
                 $(this).children().find('input[type=checkbox]').prop('checked', $('#chkAll').is(':checked'));
 
@@ -180,18 +178,20 @@
                         },
                         success: function(response) {
                             //
-                            Swal.fire({
-                                icon: 'success',
-                                title: response.msg,
-                            });
-                            //refresh content after deletion
-                            location.reload();
+                            alert(response.msg)
+                            // Swal.fire({
+                            //     icon: 'success',
+                            //     title: response.msg,
+                            // });
+                            // //refresh content after deletion
+                            // location.reload();
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: errorThrown
-                            });
+                            alert(errorThrown)
+                            // Swal.fire({
+                            //     icon: 'warning',
+                            //     title: errorThrown
+                            // });
                         }
                     }); //ajax end
                 }
@@ -228,7 +228,7 @@
                 if (result.value) {
                     $.ajax({
                         type: 'POST',
-                        url: "{{route('clases.demote')}}",
+                        url: "{{route('clases.revert')}}",
                         data: {
                             "ids_array": ids_array,
                             "_token": token,
@@ -253,6 +253,17 @@
                     }); //ajax end
                 }
             })
+        }
+    }
+
+    function switchTo(opt) {
+        if (opt == 'morning') {
+            $('#morning').show()
+            $('#selfsupport').hide()
+
+        } else {
+            $('#morning').hide()
+            $('#selfsupport').show()
         }
     }
 </script>

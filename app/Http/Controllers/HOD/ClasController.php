@@ -56,7 +56,7 @@ class ClasController extends Controller
     public function store(Request $request)
     {
         //append current semester to request
-        $request->merge(['semester_id' => session('semester_id')]);
+        // $request->merge(['semester_id' => session('semester_id')]);
         $request->validate([
             'program_id' => 'required|numeric',
             'shift_id' => 'required|numeric',
@@ -156,6 +156,13 @@ class ClasController extends Controller
         return view('hod.clases.create', compact('program', 'shift', 'schemes', 'semesters'));
     }
 
+    public function view()
+    {
+        $department = Department::find(session('department_id'));
+        $programs = $department->programs;
+        return view('hod.clases.promote', compact('programs'));
+    }
+
     public function promote(Request $request)
     {
         $request->validate([
@@ -164,30 +171,25 @@ class ClasController extends Controller
 
         $ids = array();
         $ids = $request->ids_array;
+        $clases = Clas::whereIn('id', $ids)->orderBy('program_id')->orderByDesc('semester_no', 'desc')->get();
         DB::beginTransaction();
         try {
-            if ($ids) {
-                foreach ($ids as $id) {
-                    //promote to next semester
-                    $clas = Clas::find($id);
-                    $clas->semester_no = $clas->semester_no + 1;
-                    $clas->update();
-                    //if class duration is over, finish the class
-                    if ($clas->semester_no > $clas->program->max_duration * 2) {
-                        $clas->status = 0;
-                        $clas->update();
-                    }
-                }
+
+            foreach ($clases as $clas) {
+                //promote to next semester
+                $clas->semester_no = $clas->semester_no + 1;
+                $clas->update();
             }
+
             DB::commit();
-            return response()->json(['msg' => "Successful"]);
+            return response()->json(['msg' => "Successfull"]);
         } catch (Exception $ex) {
             DB::rollBack();
             return response()->json(['msg' => $ex->getMessage()]);
         }
     }
 
-    public function demote(Request $request)
+    public function revert(Request $request)
     {
         $request->validate([
             'ids_array' => 'required',

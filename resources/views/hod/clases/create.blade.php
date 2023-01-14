@@ -40,12 +40,20 @@
     <form action="{{route('clases.store')}}" method='post' class="flex flex-col w-full mt-8" onsubmit="return validate(event)">
         @csrf
 
-        <label for="" class='mt-8 text-md text-red-600 font-thin'>{{$program->name}} | {{$shift->name}}</label>
+        <label for="" class='mt-4 text-md text-red-600 font-thin'>{{$program->name}} | {{$shift->name}}</label>
         <input type="text" name="program_id" value="{{$program->id}}" hidden>
         <input type="text" name="shift_id" value="{{$shift->id}}" hidden>
 
         <div class="flex items-center space-x-4">
-            <div class="flex flex-col">
+            <div class="flex flex-col w-2/3">
+                <label for="" class="mt-5">Semester</label>
+                <select id='semester_id' name="semester_id" class="input-indigo p-2">
+                    @foreach($semesters as $semester)
+                    <option value="{{$semester->id}}" @selected($semester->id==session('semester_id'))>{{$semester->title()}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="flex flex-col w-1/3">
                 <label for="" class="mt-5">Semester No.</label>
                 <select id='semester_no' name="semester_no" class="input-indigo p-2">
                     @foreach($program->series_of_all_semesters() as $sr)
@@ -53,18 +61,18 @@
                     @endforeach
                 </select>
             </div>
-            <div class="flex flex-col flex-1">
-                <label for="" class="mt-5">Scheme to apply</label>
-                <select id='scheme_id' name="scheme_id" class="input-indigo p-2">
-                    @foreach($program->schemes as $scheme)
-                    <option value="{{$scheme->id}}">{{$scheme->subtitle()}}</option>
-                    @endforeach
-                </select>
-            </div>
+        </div>
+        <div class="flex flex-col mt-3">
+            <label for="" class="">Scheme to apply</label>
+            <select id='scheme_id' name="scheme_id" class="input-indigo p-2">
+                @foreach($program->schemes as $scheme)
+                <option value="{{$scheme->id}}">{{$scheme->subtitle()}}</option>
+                @endforeach
+            </select>
         </div>
         </select>
 
-        <div class="flex items-center justify-end mt-4 py-2">
+        <div class="flex items-center justify-end mt-4">
             <button type="submit" class="btn-indigo-rounded">Save</button>
         </div>
     </form>

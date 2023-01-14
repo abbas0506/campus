@@ -31,17 +31,14 @@ class Program extends Model
     public function morning_clases()
     {
         return $this->hasMany(Clas::class)
-            ->where('shift_id', 1)
-            ->where('semester_id', session('semester_id'))
-            ->where('status', 1); //currently active
+            ->where('shift_id', 1);
     }
 
     public function selfsupport_clases()
     {
         return $this->hasMany(Clas::class)
-            ->where('shift_id', 2)
-            ->where('semester_id', session('semester_id'))
-            ->where('status', 1); //currently active;
+            ->where('shift_id', 2);
+        // ->where('status', 1); //currently active;
     }
 
     public function sections()
@@ -59,5 +56,12 @@ class Program extends Model
             $series->add($i);
         }
         return $series;
+    }
+    public function promotable_clases()
+    {
+        return $this->hasMany(Clas::class)
+            ->where('semester_no', '<=', $this->min_duration * 2)
+            ->orderBy('shift_id')
+            ->orderBy('semester_no'); //currently active;
     }
 }
