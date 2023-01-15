@@ -49,7 +49,7 @@ class Program extends Model
     {
         return $this->hasMany(Student::class);
     }
-    public function series_of_all_semesters()
+    public function semester_nos()
     {
         $series = collect();
         for ($i = 1; $i <= $this->min_duration * 2; $i++) {

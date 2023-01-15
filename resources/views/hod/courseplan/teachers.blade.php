@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12"><a href="{{url('course-allocation-options')}}">Course Allocation</a></h1>
+<h1 class="mt-12"><a href="{{url('courseplan')}}">Course Plan</a></h1>
 <div class="bread-crumb">
     <span class="text-slate-400">{{$course_allocation->section->title()}}</span>
     -- {{$course_allocation->course->name}} / Assign teacher
@@ -27,31 +27,33 @@
     </div>
     @endif
 
-    <table class="table-auto w-full mt-8">
+    <!-- records found -->
+    <div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$teachers->count()}} records found</div>
+
+    <table class="table-auto w-full">
         <thead>
-            <tr class="border-b border-slate-200">
-                <th>Teacher <span class="text-sm text-slate-600 font-thin">({{$teachers->count()}} rows found)</span></th>
-                <th class="py-2 flex text-gray-600 justify-center">Actions</th>
+            <tr>
+                <th>Teachers</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach($teachers as $teacher)
-            <tr class="border-b tr">
-                <td class="py-2">
+            <tr class="tr">
+                <td>
                     <div>{{$teacher->name}}</div>
                     <div class="text-sm text-gray-500 font-medium">{{$teacher->cnic}}</div>
                     <div class="text-sm text-gray-500 font-medium">{{$teacher->email}}</div>
                 </td>
-                <td class="py-2 flex items-center justify-center">
-                    <form action="{{url('course-allocations/assign/teacher')}}" method="POST" id='assign_form{{$teacher->id}}' class="mt-2 text-sm">
+                <td>
+                    <form action="{{route('courseplan.update', $course_allocation->id)}}" method="POST" id='assign_form{{$teacher->id}}' class="flex items-center justify-center">
                         @csrf
                         @method('PATCH')
                         <input type="text" name='teacher_id' value="{{$teacher->id}}" hidden>
-                        <button type="submit" class="flex flex-col items-center justify-center btn-indigo" onclick="assign('{{$teacher->id}}')">
+                        <button type="submit" class="text-indigo-600" onclick="assign('{{$teacher->id}}')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                             </svg>
-                            assign
                         </button>
                     </form>
                 </td>

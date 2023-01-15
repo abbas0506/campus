@@ -32,6 +32,7 @@ use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\ClasController;
 use App\Http\Controllers\hod\ClassPromotionController;
 use App\Http\Controllers\hod\ClassReversionController;
+use App\Http\Controllers\hod\CoursePlanController;
 use App\Http\Controllers\hod\MorningClasesController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SelfsupportClasesController;
@@ -104,10 +105,16 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::resource('schemes', SchemeController::class);
     Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
     Route::resource('scheme-details', SchemeDetailController::class);
-    Route::resource('course-allocations', CourseAllocationController::class);
+    // Route::resource('course-allocations', CourseAllocationController::class);
+    Route::resource('course_allocations', CourseAllocationController::class);
+    Route::resource('courseplan', CoursePlanController::class);
 
-    Route::get('course_allocations/assign/teacher/{id}', [CourseAllocationController::class, 'assignTeacher']);
-    Route::patch('course-allocations/assign/teacher', [CourseAllocationController::class, 'postAssignTeacher']);
+    Route::get('courseplan/{section}/courses', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
+    Route::get('courseplan/{courseallocation}/teachers', [CoursePlanController::class, 'teachers'])->name('courseplan.teachers');
+    Route::get('courseplan/{section}/optional/{schemedetail}', [CoursePlanController::class, 'optional'])->name('courseplan.optional');
+
+    // Route::get('course_allocations/assign/teacher/{id}', [CourseAllocationController::class, 'assignTeacher']);
+    // Route::patch('course-allocations/assign/teacher', [CourseAllocationController::class, 'postAssignTeacher']);
     Route::get('course_allocations/add/optional/{id}', [CourseAllocationController::class, 'addOptional']);
     Route::patch('course_allocations/add/optional', [CourseAllocationController::class, 'postAddOptional']);
 

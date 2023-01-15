@@ -56,7 +56,7 @@
             <div class="flex flex-col w-1/3">
                 <label for="" class="mt-5">Semester No.</label>
                 <select id='semester_no' name="semester_no" class="input-indigo p-2">
-                    @foreach($program->series_of_all_semesters() as $sr)
+                    @foreach($program->semester_nos() as $sr)
                     <option value="{{$sr}}">{{$sr}}</option>
                     @endforeach
                 </select>

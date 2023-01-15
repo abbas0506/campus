@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12"><a href="{{url('course-allocation-options')}}">Course Allocation</a></h1>
+<h1 class="mt-12"><a href="{{url('courseplan')}}">Course Plan</a></h1>
 
 <div class="bread-crumb">
     <span class="text-slate-400">{{$section->title()}}</span>
@@ -41,27 +41,30 @@
 
     <table class="table-auto w-full mt-8">
         <thead>
-            <tr class="border-b border-slate-200">
-                <th>Course <span class="text-sm text-slate-600 font-thin">({{$courses->count()}} rows found)</span></th>
-                <th class="py-2 flex text-gray-600 justify-center">Actions</th>
+            <tr>
+                <th>Course</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach($courses as $course)
-            <tr class="border-b tr">
-                <td class="py-2">
+            <tr class="tr">
+                <td>
                     <div>{{$course->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$course->short}} | {{$course->code}}</div>
+                    <div class="text-gray-500">{{$course->short}} | {{$course->code}}</div>
                 </td>
 
-                <td class="py-2 flex items-center justify-center">
+                <td class="">
                     @if($section->has_course($course->id))
                     <!-- dont show link btn -->
                     @else
-                    <form action="{{route('course-allocations.store')}}" method="POST" id='del_form{{$scheme_detail->id}}' class="mt-1">
+                    <form action="{{route('courseplan.store')}}" method="POST" id='del_form{{$scheme_detail->id}}' class="py-2 flex items-center justify-center">
                         @csrf
+                        <input type="text" name='section_id' value="{{$section->id}}" hidden>
                         <input type="text" name='course_id' value="{{$course->id}}" hidden>
                         <input type="text" name='scheme_detail_id' value="{{$scheme_detail->id}}" hidden>
+                        <input type="text" name='semester_no' value="{{$section->clas->semester_no}}" hidden>
+
                         <button type="submit" class="bg-transparent p-0 border-0 text-indigo-600" onclick="delme('{{$scheme_detail->id}}')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />

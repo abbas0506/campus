@@ -40,7 +40,7 @@
             $roman=config('global.romans');
             }
             @endphp
-            @foreach($scheme->program->series_of_all_semesters() as $semester_no)
+            @foreach($scheme->program->semester_nos() as $semester_no)
             <tr class="tr">
                 <td>Semester {{$roman[$semester_no-1]}}</td>
                 <td>
