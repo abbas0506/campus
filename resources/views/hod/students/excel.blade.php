@@ -3,7 +3,7 @@
 <h1 class="mt-12"><a href="{{url('clases')}}"> Classes</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        {{$section->title()}} / <span class="font-bold pl-1">Import students</span>
+        {{$section->title()}} / import
     </div>
 </div>
 
@@ -27,7 +27,7 @@
         {{session('success')}}
     </div>
     @endif
-    <form action="{{url('import-students')}}" method="POST" enctype="multipart/form-data" class="flex flex-col w-full">
+    <form action="{{route('students.import')}}" method="POST" enctype="multipart/form-data" class="flex flex-col w-full">
         @csrf
 
         <div class="flex flex-col border rounded-sm bg-gray-100 p-3 mt-12">

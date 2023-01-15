@@ -3,7 +3,7 @@
 <h1 class="mt-12"><a href="{{url('clases')}}">Students</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        {{$student->section->clas->title()}} / {{$student->section->title()}} / {{$student->name}} / edit
+        {{$student->section->title()}} / {{$student->name}} / edit
     </div>
 </div>
 
@@ -47,8 +47,7 @@
                 <input type="text" name="regno" class="input-indigo" placeholder="Registration No." value="{{$student->regno}}">
             </div>
         </div>
-        <div class="flex items-center justify-end mt-4 py-2">
-            <a href="{{route('sections.show',$student->section)}}" class="btn-indigo-rounded">Cancel</a>
+        <div class="flex items-center justify-end mt-4">
             <button type="submit" class="btn-indigo-rounded">Save</button>
         </div>
 

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+use App\Imports\ImportStudent;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
 use App\Models\Student;
 use Illuminate\Http\Request;
+
 
 use Exception;
 
@@ -32,8 +36,8 @@ class StudentController extends Controller
     public function create()
     {
         //
-        $section = Section::find(session('section_id'));
-        return view('hod.students.create', compact('section'));
+        // $section = Section::find(session('section_id'));
+        // return view('hod.students.create', compact('section'));
     }
 
     /**
@@ -52,36 +56,13 @@ class StudentController extends Controller
             'gender' => 'required|string|max:1',
             'rollno' => 'required|string|unique:students|max:20',
             'regno' => 'nullable|string|unique:students|max:20',
-
+            'section_id' => 'required|numeric',
         ]);
 
         try {
-            //should be HOD department id
-            // $user = User::create([
-            //     'name' => $request->name,
-            //     'email' => $request->email,
-            //     'password' => Hash::make('password'),
-            // ]);
-
-            // $user->save();
-            // $user->assignRole('student');
-
-            Student::create(
-                [
-                    // 'user_id' => $user->id,
-                    'name' => $request->name,
-                    'father' => $request->father,
-                    'gender' => $request->gender,
-                    'rollno' => $request->rollno,
-                    'regno' => $request->regno,
-
-                    'section_id' => session('section_id'),
-
-                ]
-            );
-
+            $student = Student::create($request->all());
             DB::commit();
-            return redirect()->route('sections.show', session('section_id'))->with('success', 'Successfully created');
+            return redirect()->route('sections.show', $student->section)->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -131,13 +112,7 @@ class StudentController extends Controller
 
         try {
 
-            // $student->name = $request->name;
-            // $student->father = $request->father;
-            // $student->gender = $request->gender;
-
             $student->update($request->all());
-
-
             return redirect()->route('sections.show', $student->section)->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
@@ -162,6 +137,34 @@ class StudentController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
             // something went wrong
+        }
+    }
+    public function add($id)
+    {
+        //
+        $section = Section::find($id);
+        return view('hod.students.add', compact('section'));
+    }
+
+    public function excel($id)
+    {
+        $section = Section::find($id);
+        session(['section_id' => $section->id]);
+        return view('hod.students.excel', compact('section'));
+    }
+
+    public function import(Request $request)
+    {
+        try {
+            Excel::import(
+                new ImportStudent,
+                $request->file('file')
+
+            );
+
+            return redirect()->route('sections.show', session('section_id'))->with('success', 'Student imported successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
         }
     }
 }

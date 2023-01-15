@@ -102,7 +102,7 @@
             <tr class="tr{{$program->id}}">
                 <td>
                     <div class="flex items-center justify-between">
-                        {{$clas->subtitle()}}
+                        {{$clas->subtitle()}} : {{$clas->strength()}}
                         <form action="{{route('clases.destroy',$clas)}}" method="POST" id='del_form{{$clas->id}}'>
                             @csrf
                             @method('DELETE')
@@ -115,13 +115,13 @@
                     </div>
                 </td>
                 <td>
-                    <div class="grid grid-cols-6 gap-2">
+                    <div class="grid grid-cols-4 md:grid-col-6  gap-2">
                         @foreach($clas->sections as $section)
-                        <a href="{{route('sections.show',$section)}}" class='flex justify-center items-center rounded border hover:bg-indigo-500 hover:text-slate-200'>
-                            {{$section->name}} <span class="ml-1 text-slate-400 text-xs">({{$section->students->count()}})</span>
+                        <a href="{{route('sections.show',$section)}}" class='flex justify-center items-center bg-teal-100 hover:bg-teal-600 hover:text-slate-100'>
+                            {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                         </a>
                         @endforeach
-                        <form action="{{route('sections.store')}}" method="post" class='flex justify-center items-center rounded border border-dashed text-indigo-500 hover:bg-indigo-200'>
+                        <form action="{{route('sections.store')}}" method="post" class='flex justify-center items-center border-dashed text-teal-800 hover:bg-teal-100'>
                             @csrf
                             <input type="text" name="clas_id" value="{{$clas->id}}" hidden>
                             <button type='submit'>
@@ -209,13 +209,14 @@
                     </div>
                 </td>
                 <td>
-                    <div class="grid grid-cols-6 gap-2">
+                    <div class="grid grid-cols-4 md:grid-cols-6 gap-2">
                         @foreach($clas->sections as $section)
-                        <a href="{{route('sections.show',$section)}}" class='flex justify-center items-center rounded border hover:bg-indigo-500 hover:text-slate-200'>
-                            {{$section->name}} <span class="ml-1 text-slate-400 text-xs">({{$section->students->count()}})</span>
+                        <a href="{{route('sections.show',$section)}}" class='flex justify-center items-center bg-teal-100 hover:bg-teal-600 hover:text-slate-100'>
+                            {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                         </a>
                         @endforeach
-                        <form action="{{route('sections.store')}}" method="post" class='flex justify-center items-center rounded border border-dashed text-indigo-500 hover:bg-indigo-200'>
+                        <!-- append section -->
+                        <form action="{{route('sections.store')}}" method="post" class='flex justify-center items-center border-dashed text-teal-800 hover:bg-teal-100'>
                             @csrf
                             <input type="text" name="clas_id" value="{{$clas->id}}" hidden>
                             <button type='submit'>
@@ -231,7 +232,7 @@
 
             @endforeach
 
-            <!-- add new morning class for current program  -->
+            <!-- add new self support class for current program  -->
             <tr class="tr{{$program->id}}">
                 <td>
 

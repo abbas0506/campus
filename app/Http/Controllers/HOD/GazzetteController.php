@@ -20,9 +20,9 @@ class GazzetteController extends Controller
     {
         //
         $department = Department::find(session('department_id'));
-        $clases = $department->clases();
+        $programs = $department->programs;
 
-        return view('hod.gazzette.index', compact('clases'));
+        return view('hod.gazzette.index', compact('programs'));
     }
 
     /**

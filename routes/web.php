@@ -95,36 +95,25 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::resource('reversions', ClassReversionController::class)->only('index', 'store');
 
     Route::resource('sections', SectionController::class);
-    // Route::get('sections/append/{pid}/{sid}', [SectionController::class, 'append']);
-    Route::post('fetchSectionsByClas', [SectionController::class, 'fetchSectionsByClas'])->name('fetchSectionsByClas'); //for ajax call
-    Route::post('fetchSchemesByProgramId', [AjaxController::class, 'fetchSchemesByProgramId'])->name('fetchSchemesByProgramId'); //for ajax call
-
-
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', TeacherController::class);
     Route::resource('schemes', SchemeController::class);
     Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
     Route::resource('scheme-details', SchemeDetailController::class);
-    // Route::resource('course-allocations', CourseAllocationController::class);
-    Route::resource('course_allocations', CourseAllocationController::class);
     Route::resource('courseplan', CoursePlanController::class);
 
     Route::get('courseplan/{section}/courses', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
     Route::get('courseplan/{courseallocation}/teachers', [CoursePlanController::class, 'teachers'])->name('courseplan.teachers');
     Route::get('courseplan/{section}/optional/{schemedetail}', [CoursePlanController::class, 'optional'])->name('courseplan.optional');
 
-    // Route::get('course_allocations/assign/teacher/{id}', [CourseAllocationController::class, 'assignTeacher']);
-    // Route::patch('course-allocations/assign/teacher', [CourseAllocationController::class, 'postAssignTeacher']);
-    Route::get('course_allocations/add/optional/{id}', [CourseAllocationController::class, 'addOptional']);
-    Route::patch('course_allocations/add/optional', [CourseAllocationController::class, 'postAddOptional']);
-
-    Route::resource('course-allocation-options', CourseAllocationOptionController::class)->only('index', 'store');
-    Route::resource('elective-allocations', ElectiveAllocationController::class)->only('edit');
-
     Route::resource('students', StudentController::class);
+    Route::get('students/{section}/add', [StudentController::class, 'add'])->name('students.add');
+    Route::get('students/{section}/excel', [StudentController::class, 'excel'])->name('students.excel');
+    Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
+
+    //?? to verify the reason of presence
     Route::resource('enrollments', EnrollmentController::class);
-    Route::get('import-students/view/{id}', [ImportStudentsController::class, 'view']);
-    Route::post('import-students', [ImportStudentsController::class, 'import']);
+
     Route::resource('gazzette', GazzetteController::class);
     Route::get('gazzette/pdf/{id}', [GazzetteController::class, 'pdf']);
 });

@@ -34,10 +34,6 @@ class Clas extends Model
         return $this->belongsTo(Scheme::class);
     }
 
-    public  function students()
-    {
-        return $this->hasMany(Student::class);
-    }
     public  function sections()
     {
         return $this->hasMany(Section::class);
@@ -60,5 +56,12 @@ class Clas extends Model
         $semester = $this->semester->title();
         $roman = config('global.romans');
         return  $semester . ' / ' .   'Semester - ' . $roman[$this->semester_no - 1];
+    }
+
+    public function strength()
+    {
+        return $this->sections->sum(function ($query) {
+            return $query->students->count();
+        });
     }
 }

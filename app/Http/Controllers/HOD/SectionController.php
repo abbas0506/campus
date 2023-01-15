@@ -72,11 +72,7 @@ class SectionController extends Controller
                 ]);
             }
 
-
-
-
-
-            return redirect('clases')->with('success', 'Successfully created');
+            return redirect('clases')->with(['shift_id' => $clas->shift_id, 'success' => 'Successfully created']);
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -94,9 +90,9 @@ class SectionController extends Controller
         //
 
         $section = Section::find($id);
-        session([
-            'section_id' => $id,
-        ]);
+        // session([
+        //     'section_id' => $id,
+        // ]);
         $students = $section->students;
         return view('hod.sections.show', compact('section', 'students'));
     }
@@ -142,31 +138,31 @@ class SectionController extends Controller
         }
     }
 
-    public function append($program_id, $shift_id)
-    {
-        if (session('semester_id')) {
-            $semester = Semester::find(session('semester_id'));
-            return view('hod.sections.append', compact('semester', 'program_id', 'shift_id'));
-        } else {
-            echo 'session or program variable not set... probably you have tried direct access to this page';
-            //send to error page showing direct access
-        }
-    }
+    // public function append($program_id, $shift_id)
+    // {
+    //     if (session('semester_id')) {
+    //         $semester = Semester::find(session('semester_id'));
+    //         return view('hod.sections.append', compact('semester', 'program_id', 'shift_id'));
+    //     } else {
+    //         echo 'session or program variable not set... probably you have tried direct access to this page';
+    //         //send to error page showing direct access
+    //     }
+    // }
 
-    public function fetchSectionsByClas(Request $request)
-    {
-        $clas = Clas::find($request->clas_id);
-        $sections = $clas->sections;
+    // public function fetchSectionsByClas(Request $request)
+    // {
+    //     $clas = Clas::find($request->clas_id);
+    //     $sections = $clas->sections;
 
 
-        //prepare courses list
-        $section_options = "";
-        foreach ($sections as $section) {
-            $section_options .= "<option value='" . $section->id . "'>" . $section->name . "</option>";
-        }
+    //     //prepare courses list
+    //     $section_options = "";
+    //     foreach ($sections as $section) {
+    //         $section_options .= "<option value='" . $section->id . "'>" . $section->name . "</option>";
+    //     }
 
-        return response()->json([
-            'section_options' => $section_options,
-        ]);
-    }
+    //     return response()->json([
+    //         'section_options' => $section_options,
+    //     ]);
+    // }
 }

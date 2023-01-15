@@ -20,7 +20,7 @@
     @endif
     <form action="{{route('students.store')}}" method='post' class="flex flex-col w-full">
         @csrf
-
+        <input type="text" name="section_id" value="{{$section->id}}" hidden>
         <div class="flex item-cetner mt-12">
             <input type="radio" name='gender' value="M" checked>
             <label for="" class="ml-3">Male</label>
