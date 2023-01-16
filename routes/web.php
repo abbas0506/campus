@@ -106,7 +106,7 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
 
     //?? to verify the reason of presence
-    Route::resource('enrollments', EnrollmentController::class);
+    // Route::resource('enrollments', EnrollmentController::class);
 
     Route::resource('gazzette', GazzetteController::class);
     Route::get('gazzette/pdf/{id}', [GazzetteController::class, 'pdf']);
