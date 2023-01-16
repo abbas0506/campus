@@ -40,11 +40,11 @@ class ClasController extends Controller
     public function create()
     {
         //
-        $programs = Program::where('department_id', session('department_id'))->get();
-        $shifts = Shift::all();
-        $schemes = Scheme::all();
-        $semesters = Semester::all();
-        return view('hod.clases.create', compact('programs', 'shifts', 'schemes', 'semesters'));
+        // $programs = Program::where('department_id', session('department_id'))->get();
+        // $shifts = Shift::all();
+        // $schemes = Scheme::all();
+        // $semesters = Semester::all();
+        // return view('hod.clases.create', compact('programs', 'shifts', 'schemes', 'semesters'));
     }
 
     /**
@@ -153,7 +153,7 @@ class ClasController extends Controller
         $shift = Shift::find($sid);
         $schemes = Scheme::all();
         $semesters = Semester::all();
-        return view('hod.clases.create', compact('program', 'shift', 'schemes', 'semesters'));
+        return view('hod.clases.append', compact('program', 'shift', 'schemes', 'semesters'));
     }
 
     public function revert(Request $request)
