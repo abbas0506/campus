@@ -29,15 +29,14 @@ class AjaxController extends Controller
                 $options .= "<option value='" . $headship->department->id . "'>" . $headship->department->name . "</option>";
             }
         } elseif ($request->role == 'teacher') {
-            $department_ids = Course::where('teacher_id', $user->id)
-                ->join('course_allocations', 'courses.id', '=', 'course_allocations.course_id')
-                ->join('departments', 'courses.department_id', '=', 'departments.id')
-                ->pluck('departments.id')->toArray();
-
-            $departments = Department::whereIn('id', $department_ids)->get();
-            foreach ($departments as $department) {
-                $options .= "<option value='" . $department->id . "'>" . $department->name . "</option>";
-            }
+            // 
+            $departments = $user->teaching_departments();
+            if ($departments->count() > 0)
+                foreach ($departments as $department) {
+                    $options .= "<option value='" . $department->id . "'>" . $department->name . "</option>";
+                }
+            else
+                $options .= "<option value=''> Sorry, no course allocation!</option>";
         }
 
         return response()->json([

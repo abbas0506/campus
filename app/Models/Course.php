@@ -28,6 +28,13 @@ class Course extends Model
     {
         return $this->belongsTo(Department::class);
     }
+
+    // related allocations
+    public function course_allocations()
+    {
+        return $this->hasMany(CourseAllocation::class);
+    }
+
     public function creditHrs()
     {
         return $this->credit_hrs_theory + $this->credit_hrs_practical;

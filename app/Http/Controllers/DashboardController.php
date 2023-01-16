@@ -60,8 +60,6 @@ class DashboardController extends Controller
         $labels->add('Sections');
         $data->add($department->sections()->count());
 
-
-
         return view('hod.index', compact('labels', 'data'));
     }
 }
