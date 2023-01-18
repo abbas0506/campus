@@ -38,6 +38,7 @@ use App\Http\Controllers\teacher\MyCoursesController;
 use App\Http\Controllers\teacher\ReappearController;
 use App\Http\Controllers\teacher\ReappearFormativeController;
 use App\Http\Controllers\teacher\ReappearSummativeController;
+use App\Http\Controllers\tester\DebugController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,8 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('headship', HeadshipController::class);
+    //
+    Route::resource('debug', DebugController::class);
 });
 Route::group(['middleware' => ['role:controller']], function () {
     Route::view('controller', 'ce.index');
