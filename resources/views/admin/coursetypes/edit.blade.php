@@ -3,7 +3,7 @@
 <h1 class="mt-12"><a href="{{route('coursetypes.index')}}">Course Types</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Course types / {{$coursetype->name}} / edit 1
+        Course types / {{$coursetype->name}} / edit
     </div>
 </div>
 

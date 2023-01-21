@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CourseTypeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -73,6 +74,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('headship', HeadshipController::class);
+    Route::resource('coursetypes', CourseTypeController::class);
     //
     Route::resource('debug', DebugController::class);
 });
