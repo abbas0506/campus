@@ -8,8 +8,7 @@ $roman=config('global.romans');
 <h1 class="mt-12">Schemes</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        {{session('scheme')->title()}}
-        --- Semester {{$roman[session('semester_no')-1]}}
+        {{session('scheme')->title()}}-Semester {{$roman[session('semester_no')-1]}}
     </div>
 </div>
 
@@ -65,7 +64,7 @@ $roman=config('global.romans');
                     <div>{{$course->name}} ({{$course->credit_hrs_theory}}-{{$course->credit_hrs_practical}})</div>
                     <div class="text-slate-400 font-thin">{{$course->short}} | {{$course->code}}</div>
                 </td>
-                <td>-</td>
+                <td class="text-center">-</td>
                 <td>
                     <form action="{{route('scheme-details.store')}}" method="POST" id='assign_form{{$course->id}}' class="flex justify-center items-center ">
                         @csrf
@@ -84,7 +83,7 @@ $roman=config('global.romans');
                     <div>{{$course->name}} ({{$course->credit_hrs_theory}}-{{$course->credit_hrs_practical}})</div>
                     <div class="text-slate-400 font-thin">{{$course->short}} | {{$course->code}}</div>
                 </td>
-                <td class="text-slate-400 text-xs">{{$course->department->name}}</td>
+                <td class="text-slate-400 text-xs text-center">{{$course->department->name}}</td>
                 <td>
                     <form action="{{route('scheme-details.store')}}" method="POST" id='assign_form{{$course->id}}' class="flex justify-center items-center ">
                         @csrf
@@ -106,13 +105,18 @@ $roman=config('global.romans');
 <script type="text/javascript">
     function search(event) {
         var searchtext = event.target.value.toLowerCase();
+        var checked = $('#chkOtherCourses').is(':checked');
+
         $('.tr').each(function() {
             if (!(
                     $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
                 )) {
                 $(this).addClass('hidden');
             } else {
-                $(this).removeClass('hidden');
+                if ($(this).hasClass('other') && !checked) {
+                    //do nothing
+                } else
+                    $(this).removeClass('hidden');
             }
         });
     }
@@ -169,12 +173,8 @@ $roman=config('global.romans');
                 $('#eyeOpen').show()
                 $('#eyeClosed').hide()
 
-                if ($(this).hasClass('other')) {
-                    $(this).removeClass('hidden');
-                } else {
-                    $(this).addClass('hidden');
+                $(this).removeClass('hidden');
 
-                }
             }
         });
     }
