@@ -13,14 +13,16 @@
 @section('script')
 <script type="text/javascript">
     var labels = @json($labels);
-    var programsCount = @json($programsCount);
-    var coursesCount = @json($coursesCount);
-    var teachersCount = @json($teachersCount);
-    var sectionsCount = @json($sectionsCount);;
+    var programs = @json($programs);
+    var courses = @json($courses);
+    var teachers = @json($teachers);
+    var clases = @json($clases);
+    var sections = @json($sections);
+    var students = @json($students);
 
     const dataset1 = {
         label: "Programs",
-        data: programsCount,
+        data: programs,
         lineTension: 0.2,
         fill: false,
         // borderWidth: 1,
@@ -29,7 +31,7 @@
     }
     const dataset2 = {
         label: "Courses",
-        data: coursesCount,
+        data: courses,
         lineTension: 0.2,
         fill: false,
         borderColor: 'rgba(255, 99, 132, 0.8)',
@@ -37,24 +39,32 @@
     }
     const dataset3 = {
         label: "Teachers",
-        data: teachersCount,
+        data: teachers,
         lineTension: 0.2,
         fill: false,
-        borderColor: '#03C2D8',
-        backgroundColor: '#B9EFDB',
+        borderColor: 'rgba(213, 176, 59, 0.8)',
+        backgroundColor: 'rgba(213, 176, 59, 0.2)',
     }
     const dataset4 = {
         label: "Sections",
-        data: sectionsCount,
+        data: sections,
         lineTension: 0.2,
         fill: false,
         borderColor: 'rgba(54, 162, 235, 0.8)',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
     }
+    const dataset5 = {
+        label: "Students",
+        data: students,
+        lineTension: 0.2,
+        fill: false,
+        borderColor: 'rgba(58, 199, 176, 0.8)',
+        backgroundColor: 'rgba(58, 199, 176, 0.2)',
+    }
 
     var chartDataset = {
         labels: labels,
-        datasets: [dataset1, dataset2, dataset3, dataset4]
+        datasets: [dataset1, dataset2, dataset3, dataset4, dataset5]
     };
 
     var chartOptions = {

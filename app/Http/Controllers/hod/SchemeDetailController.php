@@ -84,8 +84,9 @@ class SchemeDetailController extends Controller
         session(['semester_no' => $semester_no]);
 
         $course_ids = SchemeDetail::where('scheme_id', session('scheme')->id)->distinct()->get('course_id')->toArray();
-        $courses = Course::where('department_id', session('department_id'))
-            ->whereNotIn('id', $course_ids)->get();
+        $courses = Course::whereNotIn('id', $course_ids)
+            // ->where('department_id', session('department_id'))
+            ->get();
         return view('hod.scheme_details.edit', compact('courses'));
     }
 

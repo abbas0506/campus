@@ -15,7 +15,7 @@
     var labels = @json($labels);
     var data = @json($data);
     const dataset1 = {
-        label: "Department Statistics",
+        label: "Count",
         data: data,
         lineTension: 0,
         fill: false,
@@ -38,7 +38,7 @@
 
     var chartOptions = {
         legend: {
-            display: true,
+            display: false,
             position: 'top',
             labels: {
                 boxWidth: 80,
@@ -46,18 +46,6 @@
             }
         }
     };
-
-    // const data = {
-    //     labels: labels,
-    //     datasets: [{
-    //         label: 'Programs',
-    //         backgroundColor: 'rgb(200, 99, 132)',
-    //         borderColor: 'rgb(255, 99, 132)',
-    //         data: programsCount,
-    //     }]
-    // };
-
-
 
     const config = {
         type: 'bar',

@@ -40,4 +40,8 @@ class Department extends Model
     {
         return Section::whereRelation('clas.program', 'department_id', $this->id)->get();
     }
+    public function students()
+    {
+        return Student::whereRelation('section.clas.program', 'department_id', $this->id)->get();
+    }
 }
