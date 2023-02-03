@@ -29,6 +29,12 @@ class Clas extends Model
     {
         return $this->belongsTo(Semester::class);
     }
+    public function session()
+    {
+        $start = $this->semester->year - 2000;
+        $end = $start + $this->program->min_duration;
+        return $this->semester->semester_type->name . ' ' . $start . '-' . $end;
+    }
     public function scheme()
     {
         return $this->belongsTo(Scheme::class);

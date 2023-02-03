@@ -22,7 +22,7 @@ $roman = config('global.romans');
 
         <div class="w-1/2 mx-auto">
             <div class="relative">
-                <div class="absolute"><img alt="logo" src="{{public_path('/images/logo/logo-light.png')}}" class="w-32"></div>
+                <div class="absolute"><img alt="logo" src="{{public_path('/images/logo/logo-light.png')}}" class="w-48"></div>
             </div>
             <table class="w-full">
                 <tbody>
@@ -40,12 +40,18 @@ $roman = config('global.romans');
         <table class="mt-16 w-full">
             <tbody>
                 <tr>
+                    <td class="font-bold">Department Name:</td>
+                    <td>{{$course_allocation->section->clas->program->department->name}}</td>
+                    <td class="font-bold">Section:</td>
+                    <td>{{$course_allocation->section->name}}</td>
+                </tr>
+                <tr>
                     <td class="font-bold">Program Name:</td>
                     <td>{{$course_allocation->scheme_detail->scheme->program->name}}</td>
                     <td class="font-bold">Semester:</td>
                     <td>{{$roman[$course_allocation->semester_no]}}</td>
                     <td class="font-bold">Session:</td>
-                    <td></td>
+                    <td>{{$course_allocation->section->clas->session()}}</td>
                 </tr>
                 <tr>
                     <td class="font-bold">Course Title:</td>
