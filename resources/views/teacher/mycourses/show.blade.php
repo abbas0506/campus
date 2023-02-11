@@ -64,7 +64,7 @@
                     <th>Name</th>
                     <th>Father</th>
                     <th>Status</th>
-                    <th class='text-center'>Actions</th>
+                    <th class='text-center'>Remove</th>
                 </tr>
             </thead>
             <tbody>

@@ -9,7 +9,7 @@
     <link href="{{public_path('css/pdf_tw.css')}}" rel="stylesheet">
     <style>
         @page {
-            margin: 50px 50px;
+            margin: 50px 50px 50px 80px;
         }
     </style>
 </head>
@@ -22,76 +22,78 @@ $roman = config('global.romans');
 
         <div class="w-1/2 mx-auto">
             <div class="relative">
-                <div class="absolute"><img alt="logo" src="{{public_path('/images/logo/logo-light.png')}}" class="w-48"></div>
+                <div class="absolute"><img alt="logo" src="{{public_path('/images/logo/logo-light.png')}}" class="w-32"></div>
             </div>
             <table class="w-full">
                 <tbody>
                     <tr>
-                        <td class="text-center text-3xl font-bold">UNIVERSITY OF OKARA</td>
+                        <td class="text-center text-xl font-bold">UNIVERSITY OF OKARA</td>
                     </tr>
                     <tr>
-                        <td class="text-center text-xl font-bold">Assessment / Result Sheet</td>
+                        <td class="text-center text-m font-bold">Assessment Sheet</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
 
-        <table class="mt-16 w-full">
+        <table class="mt-8 w-full">
             <tbody>
                 <tr>
-                    <td class="font-bold">Department Name:</td>
-                    <td>{{$course_allocation->section->clas->program->department->name}}</td>
-                    <td class="font-bold">Section:</td>
-                    <td>{{$course_allocation->section->name}}</td>
+                    <td class="font-bold text-xs">Department:</td>
+                    <td class="text-xs">{{$course_allocation->section->clas->program->department->name}}</td>
+                    <td class="font-bold text-xs">Program:</td>
+                    <td class="text-xs">{{$course_allocation->scheme_detail->scheme->program->name}}</td>
+
+
                 </tr>
                 <tr>
-                    <td class="font-bold">Program Name:</td>
-                    <td>{{$course_allocation->scheme_detail->scheme->program->name}}</td>
-                    <td class="font-bold">Semester:</td>
-                    <td>{{$roman[$course_allocation->semester_no]}}</td>
-                    <td class="font-bold">Session:</td>
-                    <td>{{$course_allocation->section->clas->session()}}</td>
+                    <td class="font-bold text-xs">Session:</td>
+                    <td class="text-xs">{{$course_allocation->section->clas->session()}}</td>
+                    <td class="font-bold text-xs">Semester:</td>
+                    <td class="text-xs">{{$roman[$course_allocation->semester_no]}}</td>
+                    <td class="font-bold text-xs">Section:</td>
+                    <td class="text-xs">{{$course_allocation->section->name}}</td>
                 </tr>
                 <tr>
-                    <td class="font-bold">Course Title:</td>
-                    <td>{{$course_allocation->course->name}}</td>
-                    <td class="font-bold">Course Code:</td>
-                    <td>{{$course_allocation->course->code}}</td>
-                    <td class="font-bold">Credit Hours:</td>
-                    <td>{{$course_allocation->course->creditHrs()}}</td>
+                    <td class="font-bold text-xs">Course:</td>
+                    <td class="text-xs">{{$course_allocation->course->name}}</td>
+                    <td class="font-bold text-xs">Code:</td>
+                    <td class="text-xs">{{$course_allocation->course->code}}</td>
+                    <td class="font-bold text-xs">Cr. Hrs:</td>
+                    <td class="text-xs">{{$course_allocation->course->creditHrs()}}({{$course_allocation->course->credit_hrs_theory}}-{{$course_allocation->course->credit_hrs_practical}})</td>
                 </tr>
             </tbody>
         </table>
 
         <table class="w-full mt-2">
             <thead>
-                <tr class="border-b text-sm">
-                    <th class="text-center border">Roll No.</th>
-                    <th class="border">Student Name</th>
-                    <th class="text-center border">Assignment <br> 10%</th>
-                    <th class="text-center border">Presentation <br> 10%</th>
+                <tr class="border-b text-xs" style="background-color: #bbb;">
+                    <th class="text-center border xs w-36">Roll No.</th>
+                    <th class="border w-36">Student Name</th>
+                    <th class="text-center border w-8">Assign <br>10%</th>
+                    <th class="text-center border w-8">Pres<br>10%</th>
                     <!-- <th class='text-center border'>Attendance<br> 2%</th> -->
-                    <th class='text-center border'>Midterm<br> 30%</th>
-                    <th class='text-center border'>Formative<br>50%</th>
-                    <th class='text-center border'>Summative<br>50%</th>
-                    <th class='text-center border'>Marks <br> Obtained</th>
-                    <th class='text-center border'>Grade <br>Point</th>
-                    <th class='text-center border'>Grade<br> Letter</th>
-                    <th class='text-center border'>Remarks</th>
+                    <th class='text-center border w-8'>Mid<br> 30%</th>
+                    <th class='text-center border w-12'>Fmt.<br>50%</th>
+                    <th class='text-center border w-12'>Smt.<br>50%</th>
+                    <th class='text-center border w-12'>Total</th>
+                    <th class='text-center border w-8'>GP</th>
+                    <th class='text-center border w-8'>Grade</th>
+                    <th class='text-center border w-8'>Rem.</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($course_allocation->first_attempts as $first_attempt)
-                <tr class="tr border-b text-sm">
+                <tr class="tr border-b text-xs">
                     <td class="text-center border">{{$first_attempt->student->rollno}}</td>
-                    <td class="border pl-1">{{$first_attempt->student->name}}</td>
+                    <td class="pl-1 border">{{$first_attempt->student->name}}</td>
                     <td class='text-center border'>{{$first_attempt->assignment}}</td>
                     <td class='text-center border'>{{$first_attempt->presentation}}</td>
                     <td class='text-center border'>{{$first_attempt->midterm}}</td>
                     <td class='text-center border'>{{$first_attempt->formative()}}</td>
                     <td class='text-center border'>{{$first_attempt->summative}}</td>
-                    <td class='text-center border'>{{$first_attempt->summative()}}</td>
+                    <td class='text-center border' style="background-color: #ddd;">{{$first_attempt->summative()}}</td>
                     <td class='text-center border'>{{$first_attempt->gpa()}}</td>
                     <td class='text-center border'>{{$first_attempt->grade()}}</td>
                     <td class='text-center border'>{{$first_attempt->status()}}</td>
@@ -115,33 +117,22 @@ $roman = config('global.romans');
             </tbody>
         </table>
 
-        <table class="mt-4 w-full">
+        <table class="mt-8 w-full">
             <tbody>
-                <tr>
-                    <td class="font-bold py-4">Teacher Name:</td>
-                    <td>{{Auth::user()->name}}</td>
-                    <td class="font-bold">Signature:</td>
-                    <td>________________________</td>
-                    <td class="font-bold">Date:</td>
-                    <td>________________________</td>
+                <tr class="text-xs text-center">
+                    <td>__________________</td>
+                    <td>__________________</td>
+                    <td>__________________</td>
                 </tr>
-
-                <tr>
-                    <td class="font-bold py-4">Incharge Internal Examination:</td>
-                    <td>________________________</td>
-                    <td class="font-bold">Signature:</td>
-                    <td>________________________</td>
-                    <td class="font-bold">Date:</td>
-                    <td>________________________</td>
+                <tr class="text-xs text-center">
+                    <td class="font-bold ">{{Auth::user()->name}}</td>
+                    <td class="font-bold ">Mr. .....</td>
+                    <td class="font-bold ">{{$course_allocation->course->department->headship->user->name}}</td>
                 </tr>
-
-                <tr>
-                    <td class="font-bold py-4">HoD / Chairperson:</td>
-                    <td>{{$course_allocation->course->department->headship->user->name}}</td>
-                    <td class="font-bold">Signature:</td>
-                    <td>________________________</td>
-                    <td class="font-bold">Date:</td>
-                    <td>________________________</td>
+                <tr class="text-xs text-center">
+                    <td>Teacher</td>
+                    <td>Incharge Internal Exam</td>
+                    <td>HoD / Chairperson</td>
                 </tr>
 
             </tbody>

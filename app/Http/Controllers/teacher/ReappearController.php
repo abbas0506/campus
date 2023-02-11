@@ -45,7 +45,7 @@ class ReappearController extends Controller
 
         $request->validate([
             'course_allocation_id' => 'required|numeric',
-            'rollno' => 'required|numeric',
+            'rollno' => 'required',
         ]);
         $course_allocation = CourseAllocation::find($request->course_allocation_id);
         $student = Student::where('rollno', $request->rollno)->first();

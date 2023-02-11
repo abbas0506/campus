@@ -26,7 +26,7 @@
                 <h1>Welcome, {{Auth::user()->name}}!</h1>
                 <ul class="list-disc text-slate-700 leading-relaxed">
                     <li>You have successfully logged into the system</li>
-                    <li>Now let the system know, <u><strong><span class="text-teal-700 ">how would you like to proceed as?</span></strong></u></li>
+                    <li>Now let the system know, how would you like to proceed as?</li>
                 </ul>
             </div>
         </div>
@@ -35,7 +35,7 @@
         <form action="{{route('login-options.store')}}" method='post' class="w-full mt-8">
             @csrf
 
-            <label for="" class="text-base text-left">I want to proceed as a</label>
+            <label for="" class="text-base text-left">I would like to proceed as</label>
             <select id="role" name="role" class="input-indigo  px-4 py-3 w-full mt-1 bg-transparent" onchange="loadDepartments()">
                 <option value="" class="text-gray-600">Select a role</option>
                 @foreach(Auth::user()->roles as $role)
