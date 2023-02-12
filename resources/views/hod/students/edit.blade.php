@@ -19,7 +19,7 @@
     </div>
     @endif
 
-    <form action="{{route('students.update',$student)}}" method='post' class="flex flex-col w-full md:w-3/4">
+    <form action="{{route('students.update',$student)}}" method='post' class="flex flex-col w-full">
         @csrf
         @method('PATCH')
 
@@ -33,14 +33,14 @@
         </div>
 
         <label for="" class='mt-8'>Full Name</label>
-        <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad" value="{{$student->name}}">
+        <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad" value="{{$student->name}}" required>
 
         <label for="" class='mt-3'>Father</label>
-        <input type="text" id='' name='father' class="input-indigo" placeholder="father name" value="{{$student->father}}">
+        <input type="text" id='' name='father' class="input-indigo" placeholder="father name" value="{{$student->father}}" required>
         <div class="flex md:space-x-8">
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Roll No</label>
-                <input type="text" name="rollno" class="input-indigo" placeholder="Roll No." value="{{$student->rollno}}">
+                <input type="text" name="rollno" class="input-indigo" placeholder="Roll No." value="{{$student->rollno}}" required>
             </div>
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Reg. No</label>

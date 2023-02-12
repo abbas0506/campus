@@ -20,30 +20,30 @@
         <div class="flex flex-col md:flex-row">
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Teacher Name</label>
-                <input type="text" id='' name='name' class="input-indigo" placeholder="Dr. Sajjad Ahmad">
+                <input type="text" id='' name='name' class="input-indigo" placeholder="Dr. Sajjad Ahmad" required>
             </div>
         </div>
         <div class="flex flex-col md:flex-row md:space-x-4">
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Department</label>
-                <select name="department_id" id='' class="input-indigo p-2">
+                <select name="department_id" id='' class="input-indigo p-2" required>
                     <option value="{{session('department_id')}}">{{session('department')->name}}</option>
                 </select>
             </div>
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Email</label>
-                <input type="text" id='' name='email' class="input-indigo" placeholder="abc@uo.edu.pk">
+                <input type="text" id='' name='email' class="input-indigo" placeholder="abc@uo.edu.pk" required>
             </div>
         </div>
 
         <div class="flex flex-col md:flex-row md:space-x-4">
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
-                <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Without dashes">
+                <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Without dashes" required>
             </div>
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Phone <span id="phone_length" class="text-slate-500 text-xs ml-3">0/11</span></label>
-                <input type="text" id='phone' name='phone' class="input-indigo" placeholder="Without dash">
+                <input type="text" id='phone' name='phone' class="input-indigo" placeholder="Without dash" required>
             </div>
         </div>
         <div class="flex items-center justify-end mt-4 py-2">

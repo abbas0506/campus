@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
@@ -145,6 +146,28 @@ class UserController extends Controller
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
+        }
+    }
+    public function changepw(Request $request)
+    {
+        $request->validate([
+            'oldpw' => 'required',
+            'newpw' => 'required',
+        ]);
+
+        try {
+            $user = Auth::user();
+
+            if (Hash::check($request->oldpw, $user->password)) {
+                //passowrd matched
+                $user->password = Hash::make($request->newpw);
+                $user->save();
+            } else {
+                return redirect()->back()->withErrors("Password incorrect!");
+            }
+            return redirect()->back()->with('success', 'Successfully updated');;
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 }

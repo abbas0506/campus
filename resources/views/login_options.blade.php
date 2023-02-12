@@ -32,7 +32,7 @@
         </div>
 
 
-        <form action="{{route('login-options.store')}}" method='post' class="w-full mt-8">
+        <form action="{{route('login-options.store')}}" method='post' class="w-full mt-8" onsubmit="return validate(event)">
             @csrf
 
             <label for="" class="text-base text-left">I would like to proceed as</label>
@@ -42,24 +42,23 @@
                 <option value="{{$role->name}}" class="">{{Str::upper($role->name)}}</option>
                 @endforeach
             </select>
-            <div id='deptt_area' class="hidden">
+            <div id='deptt_container' class="hidden">
                 <div class="mt-3">
                     <label for="" class="text-base text-gray-700 text-left">Department</label>
                     <select id="department_id" name="department_id" class="input-indigo px-4 py-3 w-full">
 
                     </select>
                 </div>
-
-                <div class="mt-3">
-                    <label for="" class="text-base text-gray-700 text-left w-full">Semester</label>
-                    <select id="" name="semester_id" class="input-indigo px-4 py-3 w-full">
-                        @foreach($semesters as $semester)
-                        <option value="{{$semester->id}}">{{$semester->title()}}</option>
-                        @endforeach
-                    </select>
-                </div>
             </div>
-
+            <div id='semester_container' class="mt-3 hidden">
+                <label for="" class="text-base text-gray-700 text-left w-full">Semester</label>
+                <select id="semester_id" name="semester_id" class="input-indigo px-4 py-3 w-full">
+                    <option value="">Select a semester</option>
+                    @foreach($semesters as $semester)
+                    <option value="{{$semester->id}}">{{$semester->title()}}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <div class="flex space-x-4 mt-8 justify-center md:justify-end items-center">
                 <a href="{{url('signout')}}" class="flex justify-center btn-gray py-2 px-8">Singout</a>
@@ -81,12 +80,10 @@
 
     function loadDepartments() {
         //token for ajax call
-
         var token = $("meta[name='csrf-token']").attr("content");
         var role = $('#role').val();
-
-        if (role === 'hod' || role === 'teacher') {
-            $('#deptt_area').slideDown()
+        if (role == 'hod') {
+            //fetch concerned department by role
             $.ajax({
                 type: 'POST',
                 url: "fetchDepttByRole",
@@ -106,8 +103,62 @@
                     });
                 }
             }); //ajax end
+
+            $('#deptt_container').slideDown()
+            $('#semester_container').slideDown()
+        } else if (role == 'teacher') {
+            $('#semester_container').slideDown();
+            $('#deptt_container').slideUp()
         } else {
-            $('#deptt_area').slideUp()
+            $('#deptt_container').slideUp()
+            $('#semester_container').slideUp()
+        }
+
+    }
+
+    function validate(event) {
+        var validated = true;
+        var role = $('#role').val()
+        var department = $('#department_id').val()
+        var semester = $('#semester_id').val()
+
+        if (role == '') {
+            validated = false;
+            event.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Please select a role',
+                showConfirmButton: false,
+                timer: 1500,
+            })
+
+        } else if (role == 'hod' || role == 'teacher') {
+            //semester required for both
+            if (semester == '') {
+                validated = false;
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Please select a semester',
+                    showConfirmButton: false,
+                    timer: 1500,
+                })
+            }
+            //department required for only hod
+            if (role == 'hod' && department == '') {
+                validated = false;
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Please select a department',
+                    showConfirmButton: false,
+                    timer: 1500,
+                })
+            }
+
+            return validated;
+            // return false;
+
         }
     }
 </script>

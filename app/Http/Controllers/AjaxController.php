@@ -20,7 +20,7 @@ class AjaxController extends Controller
         $request->validate([
             'role' => 'required',
         ]);
-        $options = "";
+        $options = "<option value=''>Select a department</option>";
         $user = Auth::user();
         if ($request->role == 'hod') {
             // return departments headed by the user

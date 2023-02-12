@@ -97,7 +97,7 @@
                     </td>
                     <td hidden><input type="text" name='id[]' value="{{$first_attempt->id}}" @if($first_attempt->formative()<17) disabled @endif>
                     </td>
-                    @if($first_attempt->formative() < 17) <!-- midterm failed -->
+                    @if($first_attempt->formative() < 25) <!-- midterm failed -->
                         <td class="py-3 text-center text-red-600">{{$first_attempt->formative()}}</td>
                         <td class="py-3 text-center">
                             <input type="text" name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value='' disabled>

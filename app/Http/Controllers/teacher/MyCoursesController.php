@@ -19,7 +19,8 @@ class MyCoursesController extends Controller
     {
         //
         $teacher = Auth::user();
-        return view('teacher.mycourses.index', compact('teacher'));
+        $course_allocations = $teacher->course_allocations;
+        return view('teacher.mycourses.index', compact('course_allocations'));
     }
 
     /**

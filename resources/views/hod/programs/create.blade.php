@@ -19,7 +19,7 @@
     <form action="{{route('programs.store')}}" method='post' class="flex flex-col w-full mt-16">
         @csrf
         <label for="">Full Name <span class="text-red-600"> *(as per scheme of study)</span></label>
-        <input type="text" id='' name='name' class="input-indigo" placeholder="Bachelor of Science in Computer Science ">
+        <input type="text" id='' name='name' class="input-indigo" placeholder="Bachelor of Science in Computer Science" required>
 
         <div class="flex items-center space-x-4 ">
             <div class="flex flex-col grow">
@@ -28,14 +28,14 @@
             </div>
             <div class="flex flex-col">
                 <label for="" class='mt-3'>Credit Hrs. <span class="text-xs font-thin">(required)</span></label>
-                <input type="text" id='' name='credit_hrs' class="input-indigo" placeholder="Credit hrs">
+                <input type="number" id='' name='credit_hrs' class="input-indigo" placeholder="Credit hrs" required>
             </div>
         </div>
 
         <div class="flex space-x-4">
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Min Duration <span class="text-sm">(Years)</span></label>
-                <select id="" name="min_duration" class="input-indigo p-2">
+                <select id="" name="min_duration" class="input-indigo p-2" required>
                     @foreach($durations as $duration)
                     <option value="{{$duration}}">{{$duration}}</option>
                     @endforeach
@@ -43,7 +43,7 @@
             </div>
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Max Duration <span class="text-sm">(Years)</span></label>
-                <select id="" name="max_duration" class="input-indigo p-2">
+                <select id="" name="max_duration" class="input-indigo p-2" required>
                     @foreach($durations as $duration)
                     <option value="{{$duration}}">{{$duration}}</option>
                     @endforeach

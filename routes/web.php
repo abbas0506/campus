@@ -59,6 +59,9 @@ Route::get('/{url?}', function () {
         return view('index');
 })->where('url', ('login|signin|index'));
 
+Route::view('changepw', 'changepw');
+Route::post('changepw', [UserController::class, 'changepw']);
+
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::resource('login-options', LoginOptionsController::class)->only('index', 'store');
@@ -118,7 +121,7 @@ Route::group([' middleware' => ['role:hod']], function () {
 });
 
 Route::group(['middleware' => ['role:teacher']], function () {
-    Route::view('teacher', 'teacher.index');
+    Route::get('teacher', [MyCoursesController::class, 'index']);
     Route::resource('mycourses', MyCoursesController::class);
 
     Route::resource('fresh_formative', FreshFormativeController::class);

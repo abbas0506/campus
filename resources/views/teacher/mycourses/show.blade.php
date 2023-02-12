@@ -97,8 +97,8 @@
                         {{$first_attempt->student->father}}
                     </td>
                     <td>Fresh</td>
-                    <td class="py-2 flex items-center justify-center">
-                        <form action="{{route('first_attempts.destroy',$first_attempt)}}" method="POST" id='del_fresh{{$first_attempt->student->id}}' class="mt-1">
+                    <td>
+                        <form action="{{route('first_attempts.destroy',$first_attempt)}}" method="POST" id='del_fresh{{$first_attempt->student->id}}' class="flex items-center justify-center">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="delFresh('{{$first_attempt->student->id}}')">

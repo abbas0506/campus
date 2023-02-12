@@ -31,14 +31,14 @@
         </div>
 
         <label for="" class='mt-8'>Full Name</label>
-        <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad">
+        <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad" required>
 
         <label for="" class='mt-3'>Father</label>
-        <input type="text" id='' name='father' class="input-indigo" placeholder="father name">
+        <input type="text" id='' name='father' class="input-indigo" placeholder="father name" required>
         <div class="flex md:space-x-8">
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Roll No</label>
-                <input type="text" name="rollno" class="input-indigo" placeholder="Roll No.">
+                <input type="text" name="rollno" class="input-indigo" placeholder="Roll No." required>
             </div>
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Reg. No</label>
