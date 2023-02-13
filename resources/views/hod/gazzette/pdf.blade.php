@@ -9,7 +9,7 @@
     <link href="{{public_path('css/pdf_tw.css')}}" rel="stylesheet">
     <style>
         @page {
-            margin: 50px 50px;
+            margin: 80px 50px;
         }
     </style>
 </head>
@@ -93,15 +93,16 @@ $roman = config('global.romans');
         <div class="text-xs">*Errors and omissions accepted</div>
         <table class="mt-16 w-full">
             <tbody>
-                <tr>
-                    <td class="text-xs">Prepared by:</td>
-                    <td>____________</td>
-                    <td class="text-xs">Admin Officer Exams</td>
-                    <td>____________</td>
-                    <td class="text-xs">Addl Controller of Examination</td>
-                    <td>_______________</td>
+                <tr class="text-center">
+                    <td>____________________</td>
+                    <td>____________________</td>
+                    <td>____________________</td>
                 </tr>
-
+                <tr class="text-center">
+                    <td class="text-xs">Prepared by:</td>
+                    <td class="text-xs">Admin Officer Exams</td>
+                    <td class="text-xs">Addl Controller of Examination</td>
+                </tr>
             </tbody>
         </table>
 
