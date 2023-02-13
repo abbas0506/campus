@@ -66,7 +66,7 @@ class Student extends Model
     {
         //exclude the marks of subjects that have been failed
         $sum = $this->first_attempts->sum(function ($attempt) {
-            $bestscore = $attempt->best_attempt()->summative();
+            $bestscore = $attempt->best_attempt()->total();
             if ($bestscore < 50) return 0;
             else return $bestscore;
         });
@@ -113,11 +113,11 @@ class Student extends Model
         $subjects = '';
         $failed = false;
         foreach ($this->first_attempts as $attempt) {
-            if ($attempt->summative() < 50) {
+            if ($attempt->total() < 50) {
                 $failed = true;
                 //now check re-attempts, skip if passed
                 foreach ($attempt->reappears as $reappear) {
-                    if ($reappear->summative() >= 50) {
+                    if ($reappear->total() >= 50) {
                         $failed = false;
                         break;
                     }

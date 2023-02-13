@@ -108,7 +108,7 @@
                             <input type="text" name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$reappear->summative}}" placeholder="absent" onchange="validate(event,50)">
                         </td>
                         <td class="py-3 text-center">
-                            {{$reappear->summative()}}
+                            {{$reappear->total()}}
                         </td>
                         @endif
                 </tr>

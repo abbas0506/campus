@@ -37,21 +37,24 @@ class Reappear extends Model
     {
         return $this->assignment + $this->presentation + $this->midterm;
     }
-    public function summative()
+    public function total()
     {
-        return $this->assignment + $this->presentation + $this->midterm + $this->summative;
+        if ($this->status() == 'Pass')
+            return $this->assignment + $this->presentation + $this->midterm + $this->summative;
+        else
+            return 0;
     }
 
     public function status()
     {
-        if ($this->formative() > 16 && $this->summative() > 49)
+        if ($this->formative() > 24 && $this->summative > 24)
             return "Pass";
         else
             return "Fail";
     }
     public function gpa()
     {
-        $marks = $this->summative();
+        $marks = $this->total();
         $gp = 0;
         if ($marks > 90) $gp = 4;
         elseif ($marks > 50) $gp = ($marks - 10) * 0.05;

@@ -111,7 +111,7 @@ class FirstAttempt extends Model
         $best = $this;
         if ($this->reappears->count() > 0) {
             foreach ($this->reappears as $reappear) {
-                if ($reappear->summative() > $best->summative())
+                if ($reappear->total() > $best->total())
                     $best = $reappear;
             }
         }
@@ -126,10 +126,10 @@ class FirstAttempt extends Model
         if ($this->reappears->count() > 0) {
             foreach ($this->reappears as $reappear) {
                 $attempt_no++;
-                if ($reappear->summative() > $best->summative())
+                if ($reappear->total() > $best->total())
                     $best = $reappear;
             }
-            if ($best->summative() >= 50) {
+            if ($best->total() >= 50) {
                 for ($i = 1; $i <= $attempt_no; $i++) {
                     $stars .= '*';
                 }

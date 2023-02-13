@@ -101,7 +101,7 @@ class AjaxController extends Controller
                     $result .= '<tr>' .
                         '<td>' . $reappear->semester->title() . '</td>' .
                         '<td>' . $roman[$first_attempt->semester_no] . '</td>' .
-                        '<td>' . $reappear->summative() . '/100' . '</td>' .
+                        '<td>' . $reappear->total() . '/100' . '</td>' .
                         '<td>' . $reappear->gpa() . '</td>' .
                         '<td>' . $reappear->grade() . '</td>' .
                         '</tr>';
