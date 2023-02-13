@@ -58,24 +58,20 @@ class FirstAttempt extends Model
     {
         return $this->assignment + $this->presentation + $this->midterm;
     }
-    public function summative()
-    {
-        return $this->assignment + $this->presentation + $this->midterm + $this->summative;
-    }
 
-    // public function failed()
-    // {
-    //     if ($this->formative() < 17)
-    //         return true;
-    //     else
-    //         return false;
-    // }
     public function status()
     {
-        if ($this->formative() > 25 && $this->summative() > 49)
+        if ($this->formative() > 24 && $this->summative > 24)
             return "Pass";
         else
             return "Fail";
+    }
+    public function total()
+    {
+        //if pass, then return total else zero
+        if ($this->status() == 'Pass')
+            return $this->assignment + $this->presentation + $this->midterm + $this->summative;
+        else return 0;
     }
 
     public function credit_hrs()
@@ -83,7 +79,7 @@ class FirstAttempt extends Model
     }
     public function gpa()
     {
-        $marks = $this->summative();
+        $marks = $this->total();
         $gp = 0;
         if ($marks >= 90) $gp = 4;
         elseif ($marks >= 50) $gp = ($marks - 10) * 0.05;

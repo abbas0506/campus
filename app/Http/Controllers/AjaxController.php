@@ -92,7 +92,7 @@ class AjaxController extends Controller
                 $result .= '<tr>' .
                     '<td>' . $first_attempt->semester->title() . '</td>' .
                     '<td>' . $roman[$first_attempt->semester_no] . '</td>' .
-                    '<td>' . $first_attempt->summative() . '/100' . '</td>' .
+                    '<td>' . $first_attempt->total() . '/100' . '</td>' .
                     '<td>' . $first_attempt->gpa() . '</td>' .
                     '<td>' . $first_attempt->grade() . '</td>' .
                     '</tr>';

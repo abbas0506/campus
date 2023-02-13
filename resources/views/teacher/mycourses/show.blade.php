@@ -96,7 +96,7 @@
                     <td class="py-2 text-slate-600 text-sm">
                         {{$first_attempt->student->father}}
                     </td>
-                    <td>Fresh</td>
+                    <td class="text-center">Fresh</td>
                     <td>
                         <form action="{{route('first_attempts.destroy',$first_attempt)}}" method="POST" id='del_fresh{{$first_attempt->student->id}}' class="flex items-center justify-center">
                             @csrf
@@ -139,7 +139,7 @@
                     <td class="py-2 text-slate-600 text-sm">
                         {{$reappear->first_attempt->student->father}}
                     </td>
-                    <td>Reappear</td>
+                    <td class="text-center">Reappear</td>
                     <td class="py-2 flex items-center justify-center">
                         <form action="{{route('reappears.destroy',$reappear)}}" method="POST" id='del_reappear{{$reappear->first_attempt->student->id}}' class="mt-1">
                             @csrf

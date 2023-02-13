@@ -96,7 +96,7 @@
                     <td hidden><input type="text" name='id[]' value="{{$reappear->id}}" @if($reappear->formative() < 17) disabled @endif>
                     </td>
 
-                    @if($reappear->formative() < 17) <!-- midterm failed -->
+                    @if($reappear->formative() < 25) <!-- midterm failed -->
                         <td class="py-3 text-center text-red-600">{{$reappear->formative()}}</td>
                         <td class="py-3 text-center">
                             <input type="text" name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value='' disabled>

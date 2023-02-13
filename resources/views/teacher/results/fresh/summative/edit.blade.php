@@ -95,7 +95,7 @@
                     <td class="py-2 text-slate-600 text-sm">
                         {{$first_attempt->student->father}}
                     </td>
-                    <td hidden><input type="text" name='id[]' value="{{$first_attempt->id}}" @if($first_attempt->formative()<17) disabled @endif>
+                    <td hidden><input type="text" name='id[]' value="{{$first_attempt->id}}" @if($first_attempt->formative()<25) disabled @endif>
                     </td>
                     @if($first_attempt->formative() < 25) <!-- midterm failed -->
                         <td class="py-3 text-center text-red-600">{{$first_attempt->formative()}}</td>
@@ -103,13 +103,12 @@
                             <input type="text" name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value='' disabled>
                         </td>
                         @else
-
                         <td class="py-3 text-center">{{$first_attempt->formative()}}</td>
                         <td class="py-3 text-center">
                             <input type="text" name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-24 marks" value="{{$first_attempt->summative}}" placeholder="absent" onchange="validate(event,50)">
                         </td>
                         <td class="py-3 text-center">
-                            {{$first_attempt->summative()}}
+                            {{$first_attempt->total()}}
                         </td>
 
                         @endif

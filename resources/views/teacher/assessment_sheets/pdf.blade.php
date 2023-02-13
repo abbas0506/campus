@@ -93,7 +93,7 @@ $roman = config('global.romans');
                     <td class='text-center border'>{{$first_attempt->midterm}}</td>
                     <td class='text-center border'>{{$first_attempt->formative()}}</td>
                     <td class='text-center border'>{{$first_attempt->summative}}</td>
-                    <td class='text-center border' style="background-color: #ddd;">{{$first_attempt->summative()}}</td>
+                    <td class='text-center border' style="background-color: #ddd;">{{$first_attempt->total()}}</td>
                     <td class='text-center border'>{{$first_attempt->gpa()}}</td>
                     <td class='text-center border'>{{$first_attempt->grade()}}</td>
                     <td class='text-center border'>{{$first_attempt->status()}}</td>
@@ -108,7 +108,7 @@ $roman = config('global.romans');
                     <td class='text-center border'>{{$reappear->first_attempt->midterm}}</td>
                     <td class='text-center border'>{{$reappear->first_attempt->formative()}}</td>
                     <td class='text-center border'>{{$reappear->first_attempt->summative}}</td>
-                    <td class='text-center border'>{{$reappear->first_attempt->summative()}}</td>
+                    <td class='text-center border'>{{$reappear->first_attempt->total()}}</td>
                     <td class='text-center border'>{{$reappear->first_attempt->gpa()}}</td>
                     <td class='text-center border'>{{$reappear->first_attempt->grade()}}</td>
                     <td class='text-center border'>{{$reappear->first_attempt->status()}}</td>
