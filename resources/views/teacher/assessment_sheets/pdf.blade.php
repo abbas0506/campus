@@ -52,8 +52,8 @@ $roman = config('global.romans');
                 </tr>
                 <tr class="text-xs text-center">
                     <td>Teacher</td>
-                    <td>Incharge Internal Exam.</td>
-                    <td>Head</td>
+                    <td>Incharge, Internal Exams</td>
+                    <td>Chairperson/HoD/Incharge </td>
                 </tr>
                 <tr>
                     <td colspan=3 class="pt-4" style="border-bottom:1px solid #888;border-bottom-style:dashed"></td>
