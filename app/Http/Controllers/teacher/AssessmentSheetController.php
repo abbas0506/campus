@@ -92,8 +92,10 @@ class AssessmentSheetController extends Controller
     }
     public function pdf($id)
     {
+
         $course_allocation = CourseAllocation::find($id);
         $pdf = PDF::loadView('teacher.assessment_sheets.pdf', compact('course_allocation'))->setPaper('a4', 'portrait');
+        $pdf->set_option("isPhpEnabled", true);
 
         return $pdf->stream();
     }
