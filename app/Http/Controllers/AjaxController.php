@@ -91,7 +91,7 @@ class AjaxController extends Controller
             if ($first_attempt) {
                 $result .= '<tr>' .
                     '<td>' . $first_attempt->semester->title() . '</td>' .
-                    '<td>' . $roman[$first_attempt->semester_no] . '</td>' .
+                    '<td>' . $roman[$first_attempt->semester_no - 1] . '</td>' .
                     '<td>' . $first_attempt->total() . '/100' . '</td>' .
                     '<td>' . $first_attempt->gpa() . '</td>' .
                     '<td>' . $first_attempt->grade() . '</td>' .
@@ -100,7 +100,7 @@ class AjaxController extends Controller
                 foreach ($first_attempt->reappears->where('semester_id', '<', $course_allocation->semester_id) as $reappear)
                     $result .= '<tr>' .
                         '<td>' . $reappear->semester->title() . '</td>' .
-                        '<td>' . $roman[$first_attempt->semester_no] . '</td>' .
+                        '<td>' . $roman[$first_attempt->semester_no - 1] . '</td>' .
                         '<td>' . $reappear->total() . '/100' . '</td>' .
                         '<td>' . $reappear->gpa() . '</td>' .
                         '<td>' . $reappear->grade() . '</td>' .

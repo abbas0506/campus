@@ -69,7 +69,7 @@ $roman = config('global.romans');
                     <td class="font-bold text-xs">Session:</td>
                     <td class="text-xs">{{$course_allocation->section->clas->session()}}</td>
                     <td class="font-bold text-xs">Semester:</td>
-                    <td class="text-xs">{{$roman[$course_allocation->semester_no]}}</td>
+                    <td class="text-xs">{{$roman[$course_allocation->semester_no-1]}}</td>
                     <td class="font-bold text-xs">Section:</td>
                     <td class="text-xs">{{$course_allocation->section->name}}</td>
                 </tr>

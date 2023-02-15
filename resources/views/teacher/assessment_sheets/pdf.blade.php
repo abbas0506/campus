@@ -31,9 +31,9 @@ $roman = config('global.romans');
         <table class="mt-8 w-full">
             <tbody>
                 <tr class="text-xs text-center">
-                    <td style="color:#777; font-size:10px">Sign & Stamp</td>
-                    <td style="color:#777; font-size:10px">Sign & Stamp</td>
-                    <td style="color:#777; font-size:10px">Sign & Stamp</td>
+                    <td style="color:#777; font-size:10px">Sign & stamp with date</td>
+                    <td style="color:#777; font-size:10px">Sign & stamp with date</td>
+                    <td style="color:#777; font-size:10px">Sign & stamp with date</td>
                 </tr>
                 <tr class="text-xs text-center">
                     <td>__________________</td>
@@ -55,10 +55,11 @@ $roman = config('global.romans');
                     <td>Incharge Internal Exam.</td>
                     <td>Head</td>
                 </tr>
-                <tr class="text-xs ">
-                    <td colspan="2" class="pt-4" style="color:#222;font-size:10px">{{$course_allocation->section->title()}}<br>{{$course_allocation->course->name}} ({{$course_allocation->course->code}})</td>
-
-                    <td class="pt-4 text-right">Dated: ______________ </td>
+                <tr>
+                    <td colspan=3 class="pt-4" style="border-bottom:1px solid #888;border-bottom-style:dashed"></td>
+                </tr>
+                <tr class="text-xs text-center ">
+                    <td colspan="3" style="color:#222;font-size:10px">{{$course_allocation->section->title()}}, {{$course_allocation->course->name}} ({{$course_allocation->course->code}})</td>
                 </tr>
             </tbody>
         </table>
@@ -96,7 +97,7 @@ $roman = config('global.romans');
                         <td class="font-bold text-xs">Session:</td>
                         <td class="text-xs">{{$course_allocation->section->clas->session()}}</td>
                         <td class="font-bold text-xs">Semester:</td>
-                        <td class="text-xs">{{$roman[$course_allocation->semester_no]}}</td>
+                        <td class="text-xs">{{$roman[$course_allocation->semester_no-1]}}</td>
                         <td class="font-bold text-xs">Section:</td>
                         <td class="text-xs">{{$course_allocation->section->name}}</td>
                     </tr>
@@ -166,7 +167,7 @@ $roman = config('global.romans');
     <script type="text/php">
         if (isset($pdf) ) {
             $x = 310;
-            $y = 800;
+            $y = 20;
             $text = "{PAGE_NUM} of {PAGE_COUNT}";
             $font = $fontMetrics->get_font("helvetica", "bold");
             $size = 6;
