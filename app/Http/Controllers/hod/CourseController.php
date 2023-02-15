@@ -50,7 +50,7 @@ class CourseController extends Controller
         //append id of hod's current department
         $request->merge(['department_id' => session('department_id')]);
         $request->validate([
-            'name' => 'required|unique:courses',
+            'name' => 'required',
             'short' => 'required',
             'code' => 'nullable|required_if:course_type_id,1|unique:courses',
             'course_type_id' => 'required|numeric',
@@ -106,7 +106,7 @@ class CourseController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|unique:courses,name,' . $id, 'id',
+            'name' => 'required',
             'short' => 'required',
             'code' => 'nullable|required_if:course_type_id,1|unique:courses,code,' . $id, 'id',
             'course_type_id' => 'required|numeric',

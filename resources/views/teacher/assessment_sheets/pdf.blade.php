@@ -126,7 +126,12 @@ $roman = config('global.romans');
                 </tr>
                 <tr class="text-xs text-center">
                     <td class="font-bold ">{{Auth::user()->name}}</td>
-                    <td class="font-bold ">Mr. .....</td>
+                    <td class="font-bold ">@if($course_allocation->section->clas->program->internal_id!='')
+                        {{$course_allocation->section->clas->program->internal->name}}
+                        @else
+                        ...
+                        @endif
+                    </td>
                     <td class="font-bold ">{{$course_allocation->course->department->headship->user->name}}</td>
                 </tr>
                 <tr class="text-xs text-center">

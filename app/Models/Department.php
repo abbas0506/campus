@@ -22,7 +22,6 @@ class Department extends Model
     {
         return $this->hasMany(Course::class);
     }
-
     public function headship()
     {
         return $this->hasOne(Headship::class);
@@ -31,12 +30,10 @@ class Department extends Model
     {
         return User::whereRelation('roles', 'name', 'teacher')->where('department_id', $this->id)->get();
     }
-
     public function clases()
     {
         return Clas::whereRelation('program', 'department_id', $this->id)->get();
     }
-
     public function sections()
     {
         return Section::whereRelation('clas.program', 'department_id', $this->id)->get();

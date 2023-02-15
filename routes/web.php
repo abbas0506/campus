@@ -30,6 +30,7 @@ use App\Http\Controllers\hod\ClasController;
 use App\Http\Controllers\hod\ClassPromotionController;
 use App\Http\Controllers\hod\ClassReversionController;
 use App\Http\Controllers\hod\CoursePlanController;
+use App\Http\Controllers\hod\InternalController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\teacher\AssessmentSheetController;
 use App\Http\Controllers\teacher\FirstAttemptController;
@@ -99,6 +100,8 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::resource('sections', SectionController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', TeacherController::class);
+    Route::resource('internals', InternalController::class)->only('edit', 'update');
+
     Route::resource('schemes', SchemeController::class);
     Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
     Route::resource('scheme-details', SchemeDetailController::class);

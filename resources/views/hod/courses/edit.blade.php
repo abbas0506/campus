@@ -22,6 +22,7 @@
             {{$course->course_type->name}}
         </div>
 
+        <input type="hidden" name='course_type_id' value='{{$course->course_type_id}}'>
         <label for="" class="mt-3">Full Name</label>
         <input type="text" id='full_name' name='name' class="input-indigo" placeholder="Software Engineering" value="{{$course->name}}">
 

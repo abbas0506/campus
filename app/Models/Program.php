@@ -15,10 +15,15 @@ class Program extends Model
         'min_duration',
         'max_duration',
         'department_id',
+        'internal_id',  //any teacher working as internal examiner
     ];
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+    public function internal()
+    {
+        return $this->belongsTo(User::class);
     }
     public function schemes()
     {
