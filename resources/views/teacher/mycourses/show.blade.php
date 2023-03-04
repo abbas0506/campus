@@ -140,16 +140,18 @@
                         {{$reappear->first_attempt->student->father}}
                     </td>
                     <td class="text-center">Reappear</td>
-                    <td class="py-2 flex items-center justify-center">
-                        <form action="{{route('reappears.destroy',$reappear)}}" method="POST" id='del_reappear{{$reappear->first_attempt->student->id}}' class="mt-1">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="delReappear('{{$reappear->first_attempt->student->id}}')">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-                                </svg>
-                            </button>
-                        </form>
+                    <td>
+                        <div class="flex justify-center items-center py-2">
+                            <form action="{{route('reappears.destroy',$reappear)}}" method="POST" id='del_reappear{{$reappear->first_attempt->student->id}}' class="mt-1">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="delReappear('{{$reappear->first_attempt->student->id}}')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach

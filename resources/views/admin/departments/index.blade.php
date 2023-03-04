@@ -83,38 +83,39 @@
                     </div>
                     @endif
                 </td>
-                <td class="py-2 flex flex-col justify-center items-center">
-                    @if($department->headship)
+                <td>
+                    <div class="flex flex-col justify-center items-center py-2">
+                        @if($department->headship)
 
-                    <a href="{{route('headship.edit',$department)}}" class="flex items-center p-1 rounded bg-blue-100  hover:bg-blue-300 text-blue-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
-                        </svg>
-                    </a>
-
-                    <form action="{{route('headship.destroy',$department)}}" method="POST" id='del_form{{$department->id}}' class="mt-1 flex justify-center">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="flex items-center p-1 rounded bg-red-100 hover:bg-red-200 text-red-900" onclick="delme('{{$department->id}}')">
+                        <a href="{{route('headship.edit',$department)}}" class="flex items-center p-1 rounded bg-blue-100  hover:bg-blue-300 text-blue-900">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
                             </svg>
-                        </button>
-                    </form>
-                    @else
-                    <form action="{{route('departments.destroy',$department)}}" method="POST" id='del_form{{$department->id}}' class="mt-1">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-transparent p-2 border-0 text-red-600" onclick="delme('{{$department->id}}')">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 13.5H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
-                            </svg>
+                        </a>
 
-                        </button>
-                    </form>
-                    @endif
+                        <form action="{{route('headship.destroy',$department)}}" method="POST" id='del_form{{$department->id}}' class="mt-1 flex justify-center">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="flex items-center p-1 rounded bg-red-100 hover:bg-red-200 text-red-900" onclick="delme('{{$department->id}}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </form>
+                        @else
+                        <form action="{{route('departments.destroy',$department)}}" method="POST" id='del_form{{$department->id}}' class="mt-1">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-transparent p-2 border-0 text-red-600" onclick="delme('{{$department->id}}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 13.5H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+                                </svg>
+
+                            </button>
+                        </form>
+                        @endif
+                    </div>
                 </td>
-
             </tr>
             @endforeach
 

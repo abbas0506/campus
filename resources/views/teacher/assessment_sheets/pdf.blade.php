@@ -48,7 +48,7 @@ $roman = config('global.romans');
                         -
                         @endif
                     </td>
-                    <td class="font-bold ">{{$course_allocation->course->department->headship->user->name}}</td>
+                    <td class="font-bold ">{{$course_allocation->section->clas->program->department->headship->user->name}}</td>
                 </tr>
                 <tr class="text-xs text-center">
                     <td>Teacher</td>
@@ -83,7 +83,7 @@ $roman = config('global.romans');
                     </tbody>
                 </table>
             </div>
-
+            <!-- table header -->
             <table class="mt-8 w-full">
                 <tbody>
                     <tr>
@@ -146,18 +146,18 @@ $roman = config('global.romans');
                     </tr>
                     @endforeach
                     @foreach($course_allocation->reappears as $reappear)
-                    <tr class="tr border-b text-sm">
+                    <tr class="tr border-b text-xs">
                         <td class="text-center border">{{$reappear->first_attempt->student->rollno}}</td>
                         <td class="border pl-1">{{$reappear->first_attempt->student->name}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->assignment}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->presentation}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->midterm}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->formative()}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->summative}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->total()}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->gpa()}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->grade()}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->status()}}</td>
+                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->assignment}}</td>
+                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->presentation}}</td>
+                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->midterm}}</td>
+                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->formative()}}</td>
+                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->summative}}</td>
+                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->total()}}</td>
+                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->gpa()}}</td>
+                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->grade()}}</td>
+                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->status()}}</td>
                     </tr>
                     @endforeach
                 </tbody>
