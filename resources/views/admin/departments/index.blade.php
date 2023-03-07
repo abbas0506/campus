@@ -53,25 +53,28 @@
             <tr class="tr border-b ">
                 <td class="py-2">
                     <div class="flex items-center">
-                        {{$department->name}}
-                        <a href="{{route('departments.edit', $department)}}" class="ml-3 text-green-700 hover:text-green-900">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+
+
+
+                        <a href="{{route('departments.show', $department)}}" class="flex items-center text-sm ml-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+                            </svg>
+                            {{$department->title}}
+                            <!-- (...
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                             </svg>
+                            ) -->
                         </a>
                     </div>
-                    <div class="flex items-center text-gray-600 font-medium text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
-                        </svg>
-                        {{$department->title}}
-                    </div>
+
                 </td>
                 <td class="py-2">
                     @if($department->headship)
                     <div class="">{{$department->headship->user->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$department->headship->department->name}}</div>
-                    <div class="text-sm text-gray-500 font-medium">{{$department->headship->user->email}}</div>
+                    <div class="text-xs text-gray-500">{{$department->headship->department->name}}</div>
+                    <div class="text-xs text-gray-500">{{$department->headship->user->email}}</div>
                     @else
                     <div class="flex items-center py-2">
                         <a href="{{route('headship.edit', $department->id)}}">
@@ -103,6 +106,7 @@
                             </button>
                         </form>
                         @else
+                        @if($department->users->count()==0)
                         <form action="{{route('departments.destroy',$department)}}" method="POST" id='del_form{{$department->id}}' class="mt-1">
                             @csrf
                             @method('DELETE')
@@ -113,6 +117,7 @@
 
                             </button>
                         </form>
+                        @endif
                         @endif
                     </div>
                 </td>

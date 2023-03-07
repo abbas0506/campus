@@ -42,6 +42,10 @@ class Department extends Model
     {
         return Student::whereRelation('section.clas.program', 'department_id', $this->id)->get();
     }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 
     public function teacher_course_allocations()
     {
