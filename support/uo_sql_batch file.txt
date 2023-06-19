@@ -1,0 +1,93 @@
+insert into cms_v1.departments
+select * from cms.departments where id>1
+
+ 
+insert into cms_v1.users
+select * from cms.users where id>1
+
+//clean model_has roles
+
+insert into cms_v1.headships
+select * from cms.headships
+
+insert into cms_v1.model_has_roles
+select * from cms.model_has_roles
+
+insert into cms_v1.course_types
+select * from cms.course_types
+
+insert into cms_v1.programs(id,name,short,credit_hrs,min_duration,max_duration,department_id,internal_id, created_at) 
+select id,name,short,credit_hrs,min_duration,max_duration,department_id,internal_id, created_at from cms.programs;
+
+insert into cms_v1.courses
+select * from cms.courses
+
+insert into cms_v1.schemes
+select * from cms.schemes
+
+insert into cms_v1.scheme_details
+select * from cms.scheme_details
+
+insert into cms_v1.clas
+select * from cms.clas
+
+insert into cms_v1.sections
+select * from cms.sections
+
+insert into cms_v1.students(id,name,father,email,address,gender,regno,rollno,section_id,created_at)
+select id,name,father,email,address,gender,regno,rollno,section_id,created_at from cms.students;
+
+insert into cms_v1.course_allocations
+select * from cms.course_allocations;
+
+insert into cms_v1.first_attempts
+select * from cms.first_attempts;
+
+insert into cms_v1.reappears
+select * from cms.reappears;
+
+//fall 2022
+
+update clas set semester_id=13 where semester_id=2
+update course_allocations set semester_id=13 where semester_id=2
+update first_attempts set semester_id=13 where semester_id=2
+update reappears set semester_id=13 where semester_id=2
+
+//spring 2022
+update clas set semester_id=12 where semester_id=1
+update course_allocations set semester_id=12 where semester_id=1
+update first_attempts set semester_id=12 where semester_id=1
+update reappears set semester_id=12 where semester_id=1
+
+//fall 2021
+update clas set semester_id=11 where semester_id=3
+update course_allocations set semester_id=11 where semester_id=3
+update first_attempts set semester_id=11 where semester_id=3
+update reappears set semester_id=11 where semester_id=3
+
+update programs set level=16 where name like 'B%';
+update programs set level=18 where name like 'M%';
+update programs set level=21 where name like 'D%';
+
+
+update clas set semester_id=6 where semester_id=4
+update course_allocations set semester_id=6 where semester_id=4
+update first_attempts set semester_id=6 where semester_id=4
+update reappears set semester_id=6 where semester_id=4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

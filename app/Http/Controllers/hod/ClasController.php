@@ -1,0 +1,208 @@
+<?php
+
+namespace App\Http\Controllers\hod;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Exception;
+
+use App\Models\Clas;
+use App\Models\Department;
+use App\Models\Program;
+use App\Models\Scheme;
+use App\Models\Section;
+use App\Models\Semester;
+use App\Models\Shift;
+
+
+class ClasController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        $department = Department::find(session('department_id'));
+        $programs = $department->programs;
+
+        return view('hod.clases.index', compact('programs'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //append current semester to request
+        $request->merge(['semester_no' => 1]);
+        $request->validate([
+            'program_id' => 'required|numeric',
+            'shift_id' => 'required|numeric',
+            'semester_no' => 'required|numeric',
+            'semester_id' => 'required|numeric',
+            'scheme_id' => 'required|numeric',
+
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $exists = Clas::where('program_id', $request->program_id)
+                ->where('shift_id', $request->shift_id)
+                ->where('semester_id', $request->semester_id)
+                ->first();
+            if ($exists) {
+                return redirect()->back()->with('error', 'Class ' . $exists->short() . ' already exists! You may promote/demote it.');
+            } else {
+                $clas = Clas::create($request->all());
+                Section::create([
+                    'clas_id' => $clas->id,
+                    'name' => 'A',
+                ]);
+                DB::commit();
+
+                return redirect('clases')->with('success', 'Successfully created');
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+        $clas = Clas::find($id);
+        $semesters = Semester::all();
+        return view('hod.clases.edit', compact('clas', 'semesters'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+        $request->validate([
+            'semester_id' => 'required',
+        ]);
+
+        $clas = Clas::find($id);
+        try {
+
+            if ($clas->semester_id == $request->semester_id)
+                return redirect()->back()->with('error', 'Nothing to change');
+            else {
+                $exists = Clas::where('program_id', $clas->program_id)
+                    ->where('shift_id', $clas->shift_id)
+                    ->where('semester_id', $request->semester_id)
+                    ->first();
+                if ($exists) {
+                    return redirect()->back()->with('error', 'Class ' . $exists->short() . ' already exists! You may promote/demote it.');
+                } else {
+                    $clas = Clas::findOrFail($id);
+                    $clas->update($request->all());
+                    return redirect()->route('clases.index')->with('success', 'Successfully updated');;
+                }
+            }
+        } catch (Exception $ex) {
+            return redirect()->back()
+                ->withErrors($ex->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+        $clas = Clas::findOrFail($id);
+        $shift_id = $clas->shift_id;
+        try {
+            $clas->delete();
+            return redirect('clases')->with(['shift_id' => $shift_id, 'success' => 'Successfully removed']);
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
+    }
+    public function append($pid)
+    {
+        $program = Program::find($pid);
+        $shifts = Shift::all();
+        $schemes = Scheme::all();
+        $semesters = Semester::all();
+        return view('hod.clases.append', compact('program', 'shifts', 'schemes', 'semesters'));
+    }
+
+    public function revert(Request $request)
+    {
+        $request->validate([
+            'ids_array' => 'required',
+        ]);
+
+        $ids = array();
+        $ids = $request->ids_array;
+        DB::beginTransaction();
+        try {
+            if ($ids) {
+                foreach ($ids as $id) {
+                    $clas = Clas::find($id);
+                    //demoting below 1st semester is illegal
+                    if ($clas->semester_no > 1) {
+                        $clas->semester_no = $clas->semester_no - 1;
+                        $clas->update();
+                    }
+                }
+            }
+            DB::commit();
+            return response()->json(['msg' => "Successful"]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return response()->json(['msg' => $ex->getMessage()]);
+        }
+    }
+}

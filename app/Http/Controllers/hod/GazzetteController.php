@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Controllers\hod;
+
+use App\Http\Controllers\Controller;
+use App\Models\Clas;
+use App\Models\Department;
+use App\Models\Section;
+use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+
+class GazzetteController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function step1()
+    {
+        $department = Department::find(session('department_id'));
+        $programs = $department->programs;
+
+        return view('hod.printable.gazzette.step1', compact('programs'));
+    }
+    public function preview($id)
+    {
+        $section = Section::find($id);
+        return view('hod.printable.gazzette.preview', compact('section'));
+    }
+
+    public function pdf($id)
+    {
+        $section = Section::find($id);
+        $pdf = PDF::loadView('hod.printable.gazzette.pdf', compact('section'))->setPaper('a4', 'landscape');
+
+        return $pdf->stream();
+    }
+}

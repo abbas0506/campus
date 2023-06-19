@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Mea+Culpa&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    tr th {
+        @apply py-2 px-3 text-sm text-gray-600  bg-blue-50 text-center border;
+    }
+    tr td {
+        @apply py-2 px-3 text-sm text-gray-600 border;
+    }
+    td table tbody tr td {
+        @apply p-2 text-sm text-gray-600 border-none;
+    }
+
+    .tr:nth-child(even) {
+        @apply bg-slate-100;
+    }
+    h1 {
+        @apply font-medium text-lg text-indigo-600 mb-1;
+    }
+    h2 {
+        @apply font-medium text-slate-600 mb-1;
+    }
+    p {
+        @apply leading-relaxed;
+    }
+    label {
+        @apply text-sm text-slate-800;
+    }
+}
+
+@layer components {
+    .input-indigo {
+        @apply bg-gray-100 rounded border bg-opacity-50 border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out;
+    }
+    .search-indigo {
+        @apply bg-opacity-50 border-b border-gray-300 focus:border-b focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out;
+    }
+    .btn-indigo-rounded {
+        @apply bg-indigo-600 hover:bg-indigo-500 text-white border-0 py-1 px-4 focus:outline-none rounded text-base;
+    }
+
+    .btn-gray {
+        @apply bg-gray-500 hover:bg-gray-600 duration-200 px-4 py-1 rounded-sm text-slate-200;
+    }
+    .btn-indigo {
+        @apply bg-indigo-600 hover:bg-indigo-500 duration-200 px-3 py-1 text-slate-200;
+    }
+    .btn-red {
+        @apply bg-red-500 hover:bg-red-800 duration-200 px-3 py-1 text-slate-50;
+    }
+    .btn-blue {
+        @apply bg-blue-500 hover:bg-blue-800 duration-200 px-3 py-1 text-slate-50;
+    }
+    .btn-green {
+        @apply bg-green-500 hover:bg-green-800 duration-200 px-3 py-1 text-slate-50;
+    }
+    .btn-sky {
+        @apply bg-sky-500 hover:bg-sky-800 duration-200 px-3 py-1 text-slate-50;
+    }
+    .btn-teal {
+        @apply bg-teal-600 hover:bg-teal-800 duration-200 px-3 py-1 text-slate-50;
+    }
+    .btn-violet {
+        @apply bg-violet-500 hover:bg-violet-800 duration-200 px-3 py-1 rounded text-slate-50;
+    }
+    .btn-orange {
+        @apply bg-orange-200 hover:bg-orange-300 duration-200 px-3 py-1 text-slate-600;
+    }
+    .icon-gray {
+        @apply text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white;
+    }
+    .alert-success {
+        @apply flex items-center bg-green-100 text-green-700 px-4 py-3;
+    }
+    .alert-danger {
+        @apply bg-red-100 text-red-700 px-4 py-3;
+    }
+
+    .tab {
+        @apply px-2 text-slate-400 hover:text-slate-700 font-thin;
+    }
+    .tab.active {
+        @apply font-bold text-teal-800 relative;
+    }
+    .tab.active .bullet {
+        @apply absolute -top-1 left-0 bg-red-600 w-2 h-2 rounded-full;
+    }
+    .bullet-indigo-sm {
+        @apply flex-shrink-0 w-2 h-2 rounded-full bg-indigo-500;
+    }
+
+    /* header */
+    header {
+        @apply w-full fixed top-0 z-20 bg-white text-slate-700 shadow;
+    }
+    header .current-user-dropdown {
+        @apply flex flex-col absolute w-48 top-12 right-8 z-20 bg-white font-thin drop-shadow-xl hidden;
+    }
+    header .current-user-dropdown a:hover {
+        @apply text-orange-700;
+    }
+    aside {
+        @apply fixed top-16 z-10 hidden md:flex flex-col w-56 h-full px-4 overflow-auto text-slate-300;
+    }
+    aside {
+        @apply bg-gradient-to-b from-cyan-800 to-cyan-500;
+    }
+
+    aside li:hover {
+        @apply text-orange-400;
+    }
+
+    .content-page {
+        @apply flex w-screen min-h-screen top-16;
+    }
+    .content-page .offset-header {
+        @apply h-16;
+    }
+    .content-page .offset-sidebar {
+        @apply w-0 md:w-56;
+    }
+
+    .bread-crumb {
+        @apply flex items-center space-x-4 text-sm italic;
+    }
+    .bread-crumb a {
+        @apply text-orange-700 mr-1;
+    }
+    button:disabled {
+        @apply cursor-not-allowed opacity-25;
+    }
+    .zoom-sm {
+        @apply scale-110 transition-all duration-500 ease-in-out;
+    }
+
+    .filterable .tick {
+        @apply opacity-0 text-green-600 text-2xl absolute right-2;
+    }
+    .filterable:hover .tick {
+        @apply opacity-40 transition-all duration-500 ease-in-out;
+    }
+
+    .filterable input[type="checkbox"]:checked ~ label .tick {
+        @apply opacity-100;
+    }
+    .filterable input[type="checkbox"]:not(:checked) ~ label:hover {
+        @apply bg-green-50;
+    }
+    .filterable input[type="checkbox"]:checked ~ label {
+        @apply bg-green-100;
+    }
+
+    .collapsible-group {
+    }
+    .collapsible {
+        @apply flex flex-col mb-4;
+    }
+    .collapsible .head {
+        @apply flex items-center justify-between bg-slate-100 p-2 hover:cursor-pointer;
+    }
+    .collapsible .head h2 {
+        @apply text-slate-900 font-normal;
+    }
+    .collapsible .body {
+        @apply hidden;
+    }
+    .collapsible .head.active i {
+        @apply rotate-180 transition-all duration-500 ease-in-out;
+    }
+    .collapsible .head.active ~ .body {
+        @apply flex flex-col items-center w-full p-2 border border-slate-300 border-dashed text-sm;
+    }
+    .checked-label {
+        @apply flex items-center px-2 py-1 bg-orange-100 hover:bg-orange-200 hover:cursor-pointer transition-all duration-500 ease-in-out;
+    }
+    .checked-label.active {
+        @apply flex items-center px-2 py-1 bg-teal-100 hover:bg-teal-200 hover:cursor-pointer transition-all duration-500 ease-in-out;
+    }
+    .checked-label ~ .bullet {
+        @apply hidden;
+    }
+    .checked-label.active ~ .bullet {
+        @apply flex w-3 h-3 rounded-full bg-teal-600 border-2 border-white absolute -right-1 -top-1;
+    }
+}
