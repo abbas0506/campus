@@ -39,7 +39,11 @@ class CumulativeController extends Controller
 
         $students = $section->students;
         foreach ($students->sortBy('rollno') as $student) {
-            echo $student->rollno . "__" . $student->name . "<br>";
+            foreach ($course_allocations as $course_allocation) {
+
+                echo $student->rollno . "__" . $student->name . "__" . "cgpa";
+            }
+            echo "<br>";
         }
         // $course1=FirstAttempt::where('course_allocation_id', 1)
 
