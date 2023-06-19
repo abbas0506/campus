@@ -175,4 +175,9 @@ class FirstAttempt extends Model
     {
         return $query->where('section_id', $id);
     }
+
+    public function scopeCourses($query, $id)
+    {
+        return $query->where('course_allocation_id', $id);
+    }
 }

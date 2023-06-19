@@ -35,13 +35,16 @@ class CumulativeController extends Controller
     public function preview($id, $semester_no)
     {
         $section = Section::find($id);
-        $course_allocations = $section->course_allocations;
+        $course_allocations = $section->course_allocations()->allocated($semester_no)->get();
 
         $students = $section->students;
         foreach ($students->sortBy('rollno') as $student) {
+            echo $student->rollno . "__" . $student->name;
             foreach ($course_allocations as $course_allocation) {
-
-                echo $student->rollno . "__" . $student->name . "__" . "cgpa";
+                $attempt = $student->first_attempts()->courses($course_allocation->id)->first();
+                if ($attempt)
+                    // echo  "__" . $attempt->toJson();
+                    echo  "__" . $attempt->gpa() . "__" . $attempt->grade();
             }
             echo "<br>";
         }
