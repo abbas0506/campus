@@ -40,10 +40,10 @@ $roman = config('global.romans');
         <div class="body">
             @foreach($section->course_allocations->where('semester_no',$semester_no) as $course_allocation)
             <div class="flex items-center justify-between w-full mb-1">
-
                 <div class="w-1/6">{{$course_allocation->course->code}}</div>
                 <div class="w-1/3">{{$course_allocation->course->name}}</div>
-                <div class="w-1/2 text-xs text-slate-400"><i class="bx bx-user"></i> ({{$course_allocation->teacher->name}})</div>
+                <div class="w-1/3 text-slate-600 font-thin">{{$course_allocation->course->course_type->name}}</div>
+                <div class="w-1/3 text-slate-600 font-thin"><i class="bx bx-user"></i> ({{$course_allocation->teacher->name}})</div>
             </div>
 
             @endforeach

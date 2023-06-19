@@ -52,27 +52,30 @@
         Print
     </a>
 </div>
-
-
-<table class="table-auto mt-2">
-    <thead>
-        <tr class="border-b text-[8px]">
-            <th class="text-center">Roll No.</th>
-            <th class="text-center ">Reg No.</th>
-            <th class="border ">Student Name</th>
-            <th class="border ">Father Name</th>
-
-            <th class="text-center "></th>
-            <th class="text-center ">Pres <br> 10%</th>
-            <th class='text-center '>Mid<br> 30%</th>
-            <th class='text-center '>Fmt<br>50%</th>
-            <th class='text-center '>Smt<br>50%</th>
-            <th class='text-center '>Total</th>
-            <th class='text-center '>GP</th>
-            <th class='text-center '>Grade</th>
-            <th class='text-center '>Rem.</th>
-        </tr>
-    </thead>
+<div class="overflow-auto">
+    <div class="flex items-center font-semibold border-b text-[10px]">
+        <div class="text-center w-32">Roll No</div>
+        <div class="text-center w-24">Reg No</div>
+        <div class="w-32">Student Name</div>
+        <div class="w-32">Father</div>
+        @foreach ($course_allocations as $course_allocation)
+        <div class="flex flex-col justify-center items-center">
+            <div>{{$course_allocation->course->name}}</div>
+            <div>{{$course_allocation->course->code}}</div>
+            <div class="flex w-24">
+                <div class="text-center w-8 border-l">
+                    Marks
+                </div>
+                <div class="text-center w-8">
+                    GP
+                </div>
+                <div class="text-center w-8">
+                    Grade
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
     <div>
         @foreach($section->students->sortBy('rollno') as $student)
         <div class="tr flex items-center border-b text-[10px]">
@@ -99,13 +102,28 @@
                 @endif
             </div>
             @endforeach
+            <!-- course total ends -->
+            <div class="text-center w-8 border-l">
+                @if($attempt)
+                {{$student->overall_obtained()}}
+                @endif
+            </div>
+            <div class="text-center w-8">
+                @if($attempt)
+                {{$attempt->cgpa()}}
+                @endif
+            </div>
+            <div class="text-center w-8">
+                @if($attempt)
+                {{$attempt->grade()}}
+                @endif
+            </div>
         </div>
         @endforeach
 
 
     </div>
-</table>
-
+</div>
 @endsection
 @section('script')
 <script type="text/javascript">
