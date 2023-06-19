@@ -38,43 +38,44 @@ class CumulativeController extends Controller
         $course_allocations = $section->course_allocations()->allocated($semester_no)->get();
 
         $students = $section->students;
-        foreach ($students->sortBy('rollno') as $student) {
-            echo $student->rollno . "__" . $student->name;
-            foreach ($course_allocations as $course_allocation) {
-                $attempt = $student->first_attempts()->courses($course_allocation->id)->first();
-                if ($attempt)
-                    // echo  "__" . $attempt->toJson();
-                    echo  "__" . $attempt->gpa() . "__" . $attempt->grade();
-            }
-            echo "<br>";
-        }
+        // foreach ($students->sortBy('rollno') as $student) {
+        //     echo $student->rollno . "__" . $student->name;
+        //     foreach ($course_allocations as $course_allocation) {
+        //         $attempt = $student->first_attempts()->courses($course_allocation->id)->first();
+        //         if ($attempt)
+        //             // echo  "__" . $attempt->toJson();
+        //             echo  "__" . $attempt->gpa() . "__" . $attempt->grade();
+        //     }
+        //     echo "<br>";
+        // }
+        return view('hod.printable.cumulative.preview', compact('course_allocations', 'section'));
         // $course1=FirstAttempt::where('course_allocation_id', 1)
 
         // echo typeOf($course_allocations);
         // $array = $course_allocations->toJson();
         // echo $array['id'][0];
-        $course_array = [];
-        foreach ($course_allocations as $course_allocation) {
-            array_push($course_array, $course_allocation->id);
-        }
-        // for
+        // $course_array = [];
+        // foreach ($course_allocations as $course_allocation) {
+        //     array_push($course_array, $course_allocation->id);
+        // }
+        // // for
 
-        $sub1 = FirstAttempt::where('course_allocation_id', $course_array[0])->where('semester_no', $semester_no);
-        $sub2 = FirstAttempt::where('course_allocation_id', $course_array[1])->where('semester_no', $semester_no);
+        // $sub1 = FirstAttempt::where('course_allocation_id', $course_array[0])->where('semester_no', $semester_no);
+        // $sub2 = FirstAttempt::where('course_allocation_id', $course_array[1])->where('semester_no', $semester_no);
 
 
-        $result = Student::select('students.id', 'students.name', 'sub1.assignment as as1', 'sub2.assignment as as2')
-            ->where('section_id', $id)
-            ->joinSub($sub1, 'sub1', function ($join) {
-                $join->on('sub1.student_id', '=', 'students.id');
-            })
-            ->joinSub($sub2, 'sub2', function ($join) {
-                $join->on('sub2.student_id', '=', 'students.id');
-            })->get();
+        // $result = Student::select('students.id', 'students.name', 'sub1.assignment as as1', 'sub2.assignment as as2')
+        //     ->where('section_id', $id)
+        //     ->joinSub($sub1, 'sub1', function ($join) {
+        //         $join->on('sub1.student_id', '=', 'students.id');
+        //     })
+        //     ->joinSub($sub2, 'sub2', function ($join) {
+        //         $join->on('sub2.student_id', '=', 'students.id');
+        //     })->get();
 
-        echo $result->toJson();
+        // echo $result->toJson();
 
-        // $countries = Country::select('countries.id', 'countries.name', 'essential')
+        // // $countries = Country::select('countries.id', 'countries.name', 'essential')
         //         ->joinSub($studycosts, 'studycosts', function ($join) {
         //             $join->on('studycosts.country_id', '=', 'countries.id');
         //         })->joinSub($livingcosts, 'livingcosts', function ($join) {
