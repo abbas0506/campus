@@ -69,7 +69,7 @@
                 <td class="hidden">{{$course->course_type->id}}</td>
                 <td class="text-center">{{$course->course_type->name}}</td>
 
-                <td class="text-center">{{$course->credit_hrs_theory+$course->credit_hrs_practical}}({{$course->credit_hrs_theory}}-{{$course->credit_hrs_practical}})</td>
+                <td class="text-center">{{$course->creditHrsLabel()}}</td>
                 <td class="text-center">
                     {{$course->max_marks_theory}} + {{$course->max_marks_practical}}
                 </td>

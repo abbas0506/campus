@@ -27,7 +27,7 @@
 
 <div class="flex flex-col accordion">
 
-    @foreach($programs as $program)
+    @foreach($programs->sortBy('level') as $program)
     <div class="collapsible">
         <div class="head">
             <h2 class="">{{$program->short}} <span class="text-xs ml-4 font-thin">({{$program->sections()->count()}} sections)</span></h2>

@@ -43,6 +43,10 @@ class Course extends Model
     {
         return $this->max_marks_theory + $this->max_marks_practical;
     }
+    public function creditHrsLabel()
+    {
+        return $this->credit_hrs_theory + $this->credit_hrs_practical . "(" . $this->credit_hrs_theory . "-" . $this->credit_hrs_practical . ")";
+    }
     public function scopeType($query, $type)
     {
         return $query->where('course_type_id', $type);

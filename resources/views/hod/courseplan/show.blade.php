@@ -44,7 +44,7 @@
 
                 @foreach($section->course_allocations()->allocated($semester_no)->get() as $course_allocation)
                 <div class="flex items-center justify-between w-full even:bg-slate-100 py-1">
-                    <div class="flex flex-1 text-sm">{{$course_allocation->course->name}}</div>
+                    <div class="flex flex-1 text-sm">{{$course_allocation->course->name}} <span class="ml-3 text-slate-400">{{$course_allocation->course->creditHrsLabel()}}</span></div>
                     <div class="flex flex-1 text-sm">
                         <!-- if teacher name given, show name ... else show link icon -->
                         @if($course_allocation->teacher)

@@ -51,7 +51,7 @@ class Section extends Model
     }
     public function total_marks() //w.r.t course allocations
     {
-        $sum = $this->course_allocations->sum(function ($course_allocation) {
+        $sum = $this->course_allocations->where('semester_id', '<=', session('semester_id'))->sum(function ($course_allocation) {
             return $course_allocation->course->max_marks_theory + $course_allocation->course->max_marks_practical;
         });
         return $sum;
