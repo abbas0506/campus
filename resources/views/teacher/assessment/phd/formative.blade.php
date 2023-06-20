@@ -1,6 +1,6 @@
 @extends('layouts.teacher')
 @section('page-content')
-<h1 class="mt-12 mb-5"><a href="{{route('mycourses.index')}}">My Courses</a><span class="font-thin text-slate-600 text-sm"> &#x23F5; Formative Assessment</span></h1>
+<h1><a href="{{route('mycourses.index')}}">My Courses</a><span class="font-thin text-slate-600 text-sm"> &#x23F5; Formative Assessment</span></h1>
 <a href="{{route('mycourses.show',$course_allocation)}}" class="text-sm text-sky-800 py-3 hover:text-blue-800">
     <div class="font-bold">{{$course_allocation->course->name}}</div>
     <div>{{$course_allocation->section->title()}}</div>

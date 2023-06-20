@@ -1,10 +1,14 @@
 @extends('layouts.teacher')
 @section('page-content')
-<h1 class="mt-12 mb-5"><a href="{{route('mycourses.index')}}">My Courses</a><span class="font-thin text-slate-600 text-sm"> &#x23F5; Summative Assessment</span></h1>
-<a href="{{route('mycourses.show',$course_allocation)}}" class="text-sm text-sky-800 py-3 hover:text-blue-800">
-    <div class="font-bold">{{$course_allocation->course->name}}</div>
-    <div>{{$course_allocation->section->title()}}</div>
-</a>
+<div class="flex">
+    <a href="{{route('mycourses.index')}}" class="text-xs text-blue-600"> <i class="bx bx-chevron-left mr-2"></i>My Courses</a>
+</div>
+
+<div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-4">
+    <div class="font-semibold text-slate-700 text-lg leading-relaxed">Summative Assessment</div>
+    <div class="text-sm">{{$course_allocation->course->name}}</div>
+    <div class="text-sm">{{$course_allocation->section->title()}}</div>
+</div>
 
 <div class="container w-full mx-auto mt-4">
     <div class="flex items-center flex-wrap justify-between">
@@ -38,7 +42,14 @@
         @csrf
         @method('PATCH')
         <div class="flex items-end justify-between">
-            <div class="text-teal-800">Fresh Students <span class="text-xs ml-3 text-slate-600">({{$course_allocation->first_attempts->count()}} records found)</span></div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center justify-center rounded-full bg-orange-100 w-8 h-8">
+                    <span class="bx bx-group rounded-full"></span>
+                </div>
+                <div class="tab active">Fresh : {{$course_allocation->first_attempts->count()}}</div>
+                <div class="mx-1 text-xs font-thin">|</div>
+                <div class="tab">Re-Appear : ?</div>
+            </div>
             <div class="flex space-x-4">
                 <a href="{{route('assessment.show', $course_allocation->id)}}" target="_blank" class="flex items-center btn-teal">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-orange-200">
@@ -113,7 +124,7 @@
         </table>
     </form>
 
-    @if($course_allocation->reappears->count()>0)
+    @if($course_allocation->reappears->count()>=0)
     <!-- Reappear cases -->
     <form action="{{route('reappear_summative.update', $course_allocation)}}" method="POST" class="mt-4 border-t border-dashed pt-2" onsubmit="return validateBeforeSubmit(event)">
         @csrf

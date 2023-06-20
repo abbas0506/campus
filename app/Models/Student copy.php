@@ -71,7 +71,7 @@ class Student extends Model
     public function overall_obtained()
     {
         //exclude the marks of subjects that have been failed
-        $sum = $this->first_attempts->sum(function ($attempt) {
+        $sum = $this->first_attempts->where('semester_id', '<=', session('semester_id'))->sum(function ($attempt) {
             $bestscore = $attempt->best_attempt()->total();
             if ($bestscore < 50) return 0;
             else return $bestscore;
@@ -80,7 +80,7 @@ class Student extends Model
     }
     public function overall_total_marks()
     {
-        $sum = $this->first_attempts->sum(function ($attempt) {
+        $sum = $this->first_attempts->where('semester_id', '<=', session('semester_id'))->sum(function ($attempt) {
             return $attempt->course->marks();
         });
         return $sum;
@@ -92,7 +92,7 @@ class Student extends Model
     }
     public function cgpa()
     {
-        $sum = $this->first_attempts->sum(function ($attempt) {
+        $sum = $this->first_attempts->where('semester_id', '<=', session('semester_id'))->sum(function ($attempt) {
             return $attempt->course->creditHrs() * $attempt->best_attempt()->gpa();
         });
         if ($this->credits_attempted() == 0) $cgpa = 0;
@@ -118,7 +118,7 @@ class Student extends Model
     {
         $subjects = '';
         $failed = false;
-        foreach ($this->first_attempts as $attempt) {
+        foreach ($this->first_attempts->where('semester_id', '<=', session('semester_id')) as $attempt) {
             if ($attempt->total() < 50) {
                 $failed = true;
                 //now check re-attempts, skip if passed

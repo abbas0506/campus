@@ -52,10 +52,10 @@
         Print
     </a>
 </div>
-<div class="overflow-auto">
+<div class="">
     <div class="flex items-center font-semibold border-b text-[10px]">
-        <div class="text-center w-32">Roll No</div>
-        <div class="text-center w-24">Reg No</div>
+        <div class="text-center w-24">Roll No</div>
+        <div class="text-center w-20">Reg No</div>
         <div class="w-32">Student Name</div>
         <div class="w-32">Father</div>
         @foreach ($course_allocations as $course_allocation)
@@ -79,8 +79,8 @@
     <div>
         @foreach($section->students->sortBy('rollno') as $student)
         <div class="tr flex items-center border-b text-[10px]">
-            <div class="text-center w-32">{{$student->rollno}}</div>
-            <div class="text-center w-24">{{$student->regno}}</div>
+            <div class="text-center w-24">{{$student->rollno}}</div>
+            <div class="text-center w-20">{{$student->regno}}</div>
             <div class="w-32">{{$student->name}}</div>
             <div class="w-32">{{$student->father}}</div>
             @foreach ($course_allocations as $course_allocation)
@@ -110,12 +110,12 @@
             </div>
             <div class="text-center w-8">
                 @if($attempt)
-                {{$attempt->cgpa()}}
+                {{$student->cgpa()}}
                 @endif
             </div>
             <div class="text-center w-8">
                 @if($attempt)
-                {{$attempt->grade()}}
+                grade
                 @endif
             </div>
         </div>
