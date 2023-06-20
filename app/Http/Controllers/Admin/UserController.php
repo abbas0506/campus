@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
-use App\Models\Designation;
 use App\Models\User;
-use App\Models\UserDepartment;
 use Exception;
 use Illuminate\Http\Request;
 

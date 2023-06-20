@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Department;
-use App\Models\Designation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Exception;
@@ -32,9 +31,7 @@ class TeacherController extends Controller
     {
         //
         $departments = Department::all();
-        $designations = Designation::all();
-
-        return view('hod.teachers.create', compact('departments', 'designations'));
+        return view('hod.teachers.create', compact('departments'));
     }
 
     /**

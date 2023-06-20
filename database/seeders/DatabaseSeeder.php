@@ -33,10 +33,6 @@ class DatabaseSeeder extends Seeder
             ShiftSeeder::class,
             StatusSeeder::class,
             DepartmentSeeder::class,
-            //ProgramSeeder::class,
-            //CourseSeeder::class,
-            //DesginationSeeder::class,
-
             UserSeeder::class,
 
         ]);

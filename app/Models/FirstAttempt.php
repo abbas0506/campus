@@ -11,8 +11,6 @@ class FirstAttempt extends Model
 
     protected $fillable = [
         'student_id',
-        'program_id',
-        'course_id',
         'semester_no',
         'semester_id',
 
@@ -21,13 +19,7 @@ class FirstAttempt extends Model
         'midterm',
         'summative',
 
-        'course_allocation_id', //2 year old course allocations will be purged
-        // 'internal_id',
-        // 'hod_id',
-        // 'forwarded_at',
-        // 'kpo_id',
-        // 'controller_id',
-        // 'approved_at',  //make it blank to allow editing
+        'course_allocation_id',
 
     ];
     public function student()

@@ -24,9 +24,6 @@ return new class extends Migration
             $table->unsignedInteger('midterm')->nullable()->default(0);
             $table->unsignedInteger('summative')->nullable()->default(0);
 
-            //2 year old course allocations will be purged
-            $table->unsignedBigInteger('course_allocation_id')->nullable();
-
             $table->foreign('first_attempt_id')
                 ->references('id')
                 ->on('first_attempts')
@@ -36,13 +33,14 @@ return new class extends Migration
             $table->foreign('semester_id')
                 ->references('id')
                 ->on('semesters')
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->foreign('course_allocation_id')
                 ->references('id')
                 ->on('course_allocations')
                 ->onUpdate('cascade')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

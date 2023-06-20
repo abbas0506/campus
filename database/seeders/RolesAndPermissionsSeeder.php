@@ -16,6 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run()
     {
         //
+        Role::create(['name' => 'super']);
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'controller']);
         Role::create(['name' => 'kpo']);
