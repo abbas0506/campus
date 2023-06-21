@@ -99,52 +99,61 @@ class AjaxController extends Controller
         ]);
 
         $student = Student::where('rollno', $request->rollno)->first();
-        $course_allocation = CourseAllocation::find($request->course_allocation_id);
+        $current_course_allocation = CourseAllocation::find($request->course_allocation_id);
 
         $result = '';
         $roman = config('global.romans');
+        //if student found, fetch student history and check whether he/she has ever failed in the same course
         if ($student) {
-            $first_attempt = $student->first_attempts
-                // ->where('course_allocation_id', $request->course_allocation_id)
-                ->where('student_id', $student->id)
-                ->where('semester_id', '<', $course_allocation->semester_id)
-                ->first();
-            if ($first_attempt) {
-                $result .= '<tr>' .
-                    '<td>' . $first_attempt->semester->short() . '</td>' .
-                    '<td>' . $roman[$first_attempt->semester_no - 1] . '</td>' .
-                    '<td>' . $first_attempt->total() . '/100' . '</td>' .
-                    '<td>' . $first_attempt->gpa() . '</td>' .
-                    '<td>' . $first_attempt->grade() . '</td>' .
-                    '</tr>';
+            //get previous semesters data
+            $first_attempts = $student->first_attempts->where('semester_id', '<', $current_course_allocation->semester_id);
 
-                foreach ($first_attempt->reappears->where('semester_id', '<', $course_allocation->semester_id) as $reappear)
-                    $result .= '<tr>' .
-                        '<td>' . $reappear->semester->short() . '</td>' .
-                        '<td>' . $roman[$first_attempt->semester_no - 1] . '</td>' .
-                        '<td>' . $reappear->total() . '/100' . '</td>' .
-                        '<td>' . $reappear->gpa() . '</td>' .
-                        '<td>' . $reappear->grade() . '</td>' .
+            foreach ($first_attempts as $first_attempt) {
+                //look for only same course
+                if ($current_course_allocation->course->id == $first_attempt->course_allocation->course->id) {
+                    //if student failed, then look into reappear attempts
+                    $result .= "<tr>" .
+                        "<td class='text-center'>" . $first_attempt->semester->short() . "</td>" .
+                        "<td class='text-center'>" . $roman[$first_attempt->semester_no - 1] . "</td>" .
+                        "<td class='text-center'>" . $first_attempt->total() . "/100" . "</td>" .
+                        "<td class='text-center'>" . $first_attempt->gpa() . "</td>" .
+                        "<td class='text-center'>" . $first_attempt->grade() . "</td>" .
                         '</tr>';
 
-                //get the last attempt
-                //if last attempt failed
-                return response()->json([
-                    'result' => $result,
-                    'student_info' => $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father,
-                ]);
-            } else {
-                //student exists but has never made any attempt
-                return response()->json([
-                    'result' => '',
-                    'student_info' => $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father,
-                ]);
+                    foreach ($first_attempt->reappears->where('semester_id', '<', $current_course_allocation->semester_id) as $reappear) {
+                        $result .= "<tr>" .
+                            '<td>' . $reappear->semester->short() . '</td>' .
+                            '<td>' . $roman[$first_attempt->semester_no - 1] . '</td>' .
+                            '<td>' . $reappear->total() . '/100' . '</td>' .
+                            '<td>' . $reappear->gpa() . '</td>' .
+                            '<td>' . $reappear->grade() . '</td>' .
+                            '</tr>';
+                    }
+
+                    //student data found
+                    return response()->json([
+                        'eligible' => 1,
+                        'result' => $result,
+                        'student_info' => $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father,
+                    ]);
+                } else {
+                    //student has made no attempt
+                    $result .= "<tr>" .
+                        "<td class='text-center' colspan='5'>Student has naver any attempt for this course</td>" .
+                        "</tr>";
+                    return response()->json([
+                        'eligible' => 0,
+                        'result' => $result,
+                        'student_info' => $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father,
+                    ]);
+                }
             }
         } else {
-            //student not found
+            //student exists but has never made any attempt
             return response()->json([
-                'result' => '',
-                'student_info' => "Record not found",
+                'eligible' => 0,
+                'result' => $result,
+                'student_info' => "Student not found",
             ]);
         }
     }

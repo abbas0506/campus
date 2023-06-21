@@ -21,37 +21,8 @@ class ReappearController extends Controller
     {
         //
 
-        $student = Student::where('rollno', 'S22-MPHIL-ZOOL-1033')->first();
-        $course_allocation = CourseAllocation::find(145);
 
-        echo $course_allocation->semester_id;
-        $result = '' . $student->id;
-        $roman = config('global.romans');
-        if ($student) {
-            $first_attempt = FirstAttempt::where('student_id', 3319)
-                // ->where('course_allocation_id', 145)
-                ->where('semester_id', '<', $course_allocation->semester_id)
-                ->first();
 
-            echo $first_attempt->toJson();
-            // if ($first_attempt) {
-            //     $result .=  $first_attempt->semester->title() .
-            //         ',' . $roman[$first_attempt->semester_no - 1] . '<,>' .
-            //         '<,>' . $first_attempt->total() . '/100' . '</,>' .
-            //         '<,>' . $first_attempt->gpa() . '' .
-            //         '<,>' . $first_attempt->grade();
-
-            //     foreach ($first_attempt->reappears->where('semester_id', '<', $course_allocation->semester_id) as $reappear)
-            //         $result .= '<tr>' .
-            //             '<td>' . $reappear->semester->title() . '</td>' .
-            //             '<td>' . $roman[$first_attempt->semester_no - 1] . '</td>' .
-            //             '<td>' . $reappear->total() . '/100' . '</td>' .
-            //             '<td>' . $reappear->gpa() . '</td>' .
-            //             '<td>' . $reappear->grade() . '</td>' .
-            //             '</tr>';
-            // }
-        }
-        echo "result" . $result;
     }
 
     /**
@@ -73,18 +44,24 @@ class ReappearController extends Controller
     public function store(Request $request)
     {
         //
-
         $request->validate([
             'course_allocation_id' => 'required|numeric',
             'rollno' => 'required',
         ]);
         $course_allocation = CourseAllocation::find($request->course_allocation_id);
         $student = Student::where('rollno', $request->rollno)->first();
-        $first_attempt = FirstAttempt::where('student_id', $student->id)
-            ->where('program_id', $course_allocation->section->clas->program_id)
-            ->where('course_id', $course_allocation->course_id)
-            ->first();
 
+        // echo $first_attempt->toJson();
+        // echo $student->first_attempts->first()->toJson();
+        $first_attempt = $student->first_attempts->first();
+        // $first_attempt = FirstAttempt::where('student_id', $student->id)
+        //     ->where('course_allocation_id', $request->course_allocation_id)
+        //     ->first();
+
+        // echo $first_attempt->toJson();
+
+
+        // stop if already registered in the same semester
         if ($first_attempt) {
             $exists = Reappear::where('first_attempt_id', $first_attempt->id)
                 ->where('course_allocation_id', $course_allocation->id)

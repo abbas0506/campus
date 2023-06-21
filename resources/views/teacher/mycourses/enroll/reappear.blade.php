@@ -14,82 +14,48 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 mt-16">
     <div class="p-5 border relative">
         <div class="absolute top-0 left-0 bg-orange-100 text-xs px-2">Step 1</div>
-        <!-- search for reappearer, if exists ....save it -->
+        <!-- search for student record, if exists ....display it it -->
         <div class="flex justify-center items-center w-full h-full">
             <div class="flex flex-col w-full">
-                <input type="text" id='course_allocation_id' name='course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
                 <label for="">Roll No.</label>
-                <input type="text" id='rollno' name='rollno' class="flex-1 input-indigo py-1 px-4" placeholder="Enter student's roll no.">
+                <input type="text" id='rollno' class="flex-1 input-indigo py-1 px-4" placeholder="Enter student's roll no.">
                 <button type='button' class="btn-teal mt-3" onclick="searchReappearer()">Fetch Record</button>
-                <!-- <a href="{{route('reappears.index')}}">Click</a> -->
             </div>
         </div>
-
-        <!-- <div class="flex flex-col">
-
-                <div id='search_output' class="flex items-center bg-green-100 relative mt-8 p-2">
-                    <div class="w-12 h-12 absolute -left-2 rounded-full flex items-center justify-center bg-teal-500 text-yellow-400 ring-4 ring-slate-50">
-                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
-                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
-                    <div class="flex flex-col ml-12">
-                        <div class="font-bold" id='student_info'></div>
-                    </div>
-                </div>
-                <div class="ml-8 hidden" id='last_attempt'>
-                    <div class="font-bold" id='student_info'></div>
-                    <table class="table-auto w-full mt-8">
-                        <thead>
-                            <tr class="border-b border-slate-200">
-                                <th>Semester</th>
-                                <th>#</th>
-                                <th>Marks</th>
-                                <th>GP</th>
-                                <th>Grade</th>
-                            </tr>
-                        </thead>
-                        <tbody id='tbody'>
-                        </tbody>
-                    </table>
-                    <div class="flex justify-end">
-                        <button type='submit' class="btn-red rounded mt-4">Enroll</button>
-                    </div>
-                </div>
-
-            </div>
-    </div> -->
-        <!-- </form> -->
-
     </div>
-    <div class="border p-5 relative">
+    <div class="border p-5 relative ">
         <div class="absolute top-0 left-0 bg-orange-100 text-xs px-2">Step 2</div>
         <!-- display query output -->
-        <form action="{{route('reappears.store')}}" method="post" class="flex flex-col justify-center items-center w-full" onsubmit="return validate(event)">
-            @csrf
-            <i class="bx bx-user bx-md"></i>
-            <div class="" id='last_attempt'>
-                <div class="text-sm font-semibold" id='student_info'></div>
-                <table class="table-auto w-full mt-8">
-                    <thead>
-                        <tr class="border-b border-slate-200 w-full">
-                            <th>Semester</th>
-                            <th>#</th>
-                            <th>Marks</th>
-                            <th>GP</th>
-                            <th>Grade</th>
-                        </tr>
-                    </thead>
-                    <tbody id='tbody'>
-                    </tbody>
-                </table>
-                <div class="flex justify-end">
-                    <button type='submit' class="btn-red rounded mt-4">Enroll</button>
-                </div>
-            </div>
+        <div class="flex flex-col items-center">
+            <i class="bx bx-user bx-sm mt-3"></i>
+            <div class="text-sm font-semibold mt-3" id='student_info'></div>
 
-        </form>
+            <table class="table-auto w-full mt-3">
+                <thead>
+                    <tr class="border-b border-slate-200 w-full">
+                        <th class="text-sm font-medium">Semester</th>
+                        <th class="text-sm font-medium">No.</th>
+                        <th class="text-sm font-medium">Marks</th>
+                        <th class="text-sm font-medium">GP</th>
+                        <th class="text-sm font-medium">Grade</th>
+                    </tr>
+                </thead>
+                <tbody id='tbody'>
+                </tbody>
+            </table>
+
+            <!-- on submit, allow student to reappear in current semester  -->
+            <form id='action_form' action="{{route('reappears.store')}}" method="post" class="flex flex-col justify-center items-center w-full hidden" onsubmit="return validate(event)">
+                @csrf
+                <div class="flex justify-end">
+                    <input type="text" id='course_allocation_id' name='course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
+                    <input type="text" name="rollno" class="hidden">
+                    <button type='submit' class="btn-red rounded mt-4">Enroll Now</button>
+                </div>
+            </form>
+
+        </div>
+
     </div>
 </div>
 
@@ -126,7 +92,6 @@
     </div>
     @endif
 
-
 </div>
 
 <script type="text/javascript">
@@ -135,7 +100,6 @@
 
         var course_allocation_id = $('#course_allocation_id').val();
         var rollno = $('#rollno').val();
-
         if (rollno == '') {
             Swal.fire({
                 icon: 'warning',
@@ -154,16 +118,14 @@
 
                 },
                 success: function(response) {
-                    // alert(rollno)
-                    //
-                    // $('#search_output').show();
                     $('#student_info').html(response.student_info)
                     $('#tbody').html(response.result)
 
-                    // if (response.result == '')
-                    //     $('#last_attempt').hide()
-                    // else
-                    //     $('#last_attempt').show()
+                    if (response.eligible == 1) {
+                        $('#action_form').slideDown()
+                        $("[name='rollno']").val(rollno)
+                    } else
+                        $('#action_form').slideUp()
 
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -173,8 +135,6 @@
                     });
                 }
             }); //ajax end
-
-
         }
 
     }

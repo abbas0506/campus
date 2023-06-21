@@ -49,17 +49,16 @@ class FirstAttemptController extends Controller
         $ids = array();
         $ids = $request->ids_array;
         DB::beginTransaction();
+        //stop if already registered
         try {
             if ($ids) {
                 foreach ($ids as $id) {
                     //create course enrollment entry
                     FirstAttempt::create([
                         'student_id' => $id,
-                        'program_id' => $course_allocation->section->clas->program_id,
-                        'course_id' => $course_allocation->course_id,
                         'semester_no' => $course_allocation->section->clas->semester_no,
-                        'semester_id' => session('semester_id'),
-                        'course_allocation_id' => $course_allocation->id,
+                        'semester_id' => $course_allocation->semester_id,
+                        'course_allocation_id' => $request->course_allocation_id,
                     ]);
                 }
             }
