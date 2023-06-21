@@ -1,11 +1,98 @@
 @extends('layouts.teacher')
 @section('page-content')
 
-<h1 class="mt-12 mb-5"><a href="{{route('mycourses.index')}}">My Courses </a><span class="font-thin text-slate-600 text-sm"> &#x23F5; Enroll Re-appear</span></h1>
-<a href="{{route('mycourses.show',$course_allocation)}}" class="text-sm text-slate-800 hover:text-blue-800">
-    <div class="font-bold">{{$course_allocation->course->name}}</div>
-    <div>{{$course_allocation->section->title()}}</div>
-</a>
+<div class="flex">
+    <a href="{{route('mycourses.index')}}" class="text-xs text-blue-600"> <i class="bx bx-chevron-left mr-2"></i>My Courses</a>
+</div>
+
+<div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-2">
+    <div class="font-semibold text-slate-700 text-lg leading-relaxed">Enroll Re-Appearing Students</div>
+    <div class="text-sm">{{$course_allocation->course->name}}</div>
+    <div class="text-sm">{{$course_allocation->section->title()}}</div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 mt-16">
+    <div class="p-5 border relative">
+        <div class="absolute top-0 left-0 bg-orange-100 text-xs px-2">Step 1</div>
+        <!-- search for reappearer, if exists ....save it -->
+        <div class="flex justify-center items-center w-full h-full">
+            <div class="flex flex-col w-full">
+                <input type="text" id='course_allocation_id' name='course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
+                <label for="">Roll No.</label>
+                <input type="text" id='rollno' name='rollno' class="flex-1 input-indigo py-1 px-4" placeholder="Enter student's roll no.">
+                <button type='button' class="btn-teal mt-3" onclick="searchReappearer()">Fetch Record</button>
+                <!-- <a href="{{route('reappears.index')}}">Click</a> -->
+            </div>
+        </div>
+
+        <!-- <div class="flex flex-col">
+
+                <div id='search_output' class="flex items-center bg-green-100 relative mt-8 p-2">
+                    <div class="w-12 h-12 absolute -left-2 rounded-full flex items-center justify-center bg-teal-500 text-yellow-400 ring-4 ring-slate-50">
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col ml-12">
+                        <div class="font-bold" id='student_info'></div>
+                    </div>
+                </div>
+                <div class="ml-8 hidden" id='last_attempt'>
+                    <div class="font-bold" id='student_info'></div>
+                    <table class="table-auto w-full mt-8">
+                        <thead>
+                            <tr class="border-b border-slate-200">
+                                <th>Semester</th>
+                                <th>#</th>
+                                <th>Marks</th>
+                                <th>GP</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody id='tbody'>
+                        </tbody>
+                    </table>
+                    <div class="flex justify-end">
+                        <button type='submit' class="btn-red rounded mt-4">Enroll</button>
+                    </div>
+                </div>
+
+            </div>
+    </div> -->
+        <!-- </form> -->
+
+    </div>
+    <div class="border p-5 relative">
+        <div class="absolute top-0 left-0 bg-orange-100 text-xs px-2">Step 2</div>
+        <!-- display query output -->
+        <form action="{{route('reappears.store')}}" method="post" class="flex flex-col justify-center items-center w-full" onsubmit="return validate(event)">
+            @csrf
+            <i class="bx bx-user bx-md"></i>
+            <div class="" id='last_attempt'>
+                <div class="text-sm font-semibold" id='student_info'></div>
+                <table class="table-auto w-full mt-8">
+                    <thead>
+                        <tr class="border-b border-slate-200 w-full">
+                            <th>Semester</th>
+                            <th>#</th>
+                            <th>Marks</th>
+                            <th>GP</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody id='tbody'>
+                    </tbody>
+                </table>
+                <div class="flex justify-end">
+                    <button type='submit' class="btn-red rounded mt-4">Enroll</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
 
 <div class="container w-full mx-auto mt-8">
 
@@ -39,51 +126,6 @@
     </div>
     @endif
 
-    <!-- search for reappearer, if exists ....save it -->
-    <form action="{{route('reappears.store')}}" method="post" onsubmit="return validate(event)" class="mt-24">
-        @csrf
-        <div class="flex flex-col justify-center items-center mt-12">
-            <div class="flex flex-col w-3/4">
-                <input type="text" id='course_allocation_id' name='course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
-                <label for="">Roll No.</label>
-                <div class="flex items-center space-x-4">
-                    <input type="text" id='rollno' name='rollno' class="flex-1 input-indigo py-1 px-4" placeholder="Enter Roll No.">
-                    <button type='button' class="btn-teal p-2" onclick="searchReappearer()">Fetch Record</button>
-                </div>
-                <div id='search_output' class="flex items-center bg-green-100 relative mt-8 p-2">
-                    <div class="w-12 h-12 absolute -left-2 rounded-full flex items-center justify-center bg-teal-500 text-yellow-400 ring-4 ring-slate-50">
-                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
-                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
-                    <div class="flex flex-col ml-12">
-                        <div class="font-bold" id='student_info'></div>
-                    </div>
-                </div>
-                <div class="ml-8 hidden" id='last_attempt'>
-                    <div class="font-bold" id='student_info'></div>
-                    <table class="table-auto w-full mt-8">
-                        <thead>
-                            <tr class="border-b border-slate-200">
-                                <th>Semester</th>
-                                <th>#</th>
-                                <th>Marks</th>
-                                <th>GP</th>
-                                <th>Grade</th>
-                            </tr>
-                        </thead>
-                        <tbody id='tbody'>
-                        </tbody>
-                    </table>
-                    <div class="flex justify-end">
-                        <button type='submit' class="btn-red rounded mt-4">Enroll</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </form>
 
 </div>
 
@@ -112,15 +154,16 @@
 
                 },
                 success: function(response) {
+                    // alert(rollno)
                     //
-                    $('#search_output').show();
+                    // $('#search_output').show();
                     $('#student_info').html(response.student_info)
                     $('#tbody').html(response.result)
 
-                    if (response.result == '')
-                        $('#last_attempt').hide()
-                    else
-                        $('#last_attempt').show()
+                    // if (response.result == '')
+                    //     $('#last_attempt').hide()
+                    // else
+                    //     $('#last_attempt').show()
 
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {

@@ -21,6 +21,37 @@ class ReappearController extends Controller
     {
         //
 
+        $student = Student::where('rollno', 'S22-MPHIL-ZOOL-1033')->first();
+        $course_allocation = CourseAllocation::find(145);
+
+        echo $course_allocation->semester_id;
+        $result = '' . $student->id;
+        $roman = config('global.romans');
+        if ($student) {
+            $first_attempt = FirstAttempt::where('student_id', 3319)
+                // ->where('course_allocation_id', 145)
+                ->where('semester_id', '<', $course_allocation->semester_id)
+                ->first();
+
+            echo $first_attempt->toJson();
+            // if ($first_attempt) {
+            //     $result .=  $first_attempt->semester->title() .
+            //         ',' . $roman[$first_attempt->semester_no - 1] . '<,>' .
+            //         '<,>' . $first_attempt->total() . '/100' . '</,>' .
+            //         '<,>' . $first_attempt->gpa() . '' .
+            //         '<,>' . $first_attempt->grade();
+
+            //     foreach ($first_attempt->reappears->where('semester_id', '<', $course_allocation->semester_id) as $reappear)
+            //         $result .= '<tr>' .
+            //             '<td>' . $reappear->semester->title() . '</td>' .
+            //             '<td>' . $roman[$first_attempt->semester_no - 1] . '</td>' .
+            //             '<td>' . $reappear->total() . '/100' . '</td>' .
+            //             '<td>' . $reappear->gpa() . '</td>' .
+            //             '<td>' . $reappear->grade() . '</td>' .
+            //             '</tr>';
+            // }
+        }
+        echo "result" . $result;
     }
 
     /**

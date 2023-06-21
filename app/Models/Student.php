@@ -64,7 +64,7 @@ class Student extends Model
     public function credits_attempted()
     {
         $sum = $this->first_attempts->where('semester_id', '<=', session('semester_id'))->sum(function ($attempt) {
-            return $attempt->course->creditHrs();
+            return $attempt->course_allocation->course->creditHrs();
         });
         return $sum;
     }
@@ -81,7 +81,7 @@ class Student extends Model
     public function overall_total_marks()
     {
         $sum = $this->first_attempts->sum(function ($attempt) {
-            return $attempt->course->marks();
+            return $attempt->course_allocation->course->marks();
         });
         return $sum;
     }
@@ -93,7 +93,7 @@ class Student extends Model
     public function cgpa()
     {
         $sum = $this->first_attempts->sum(function ($attempt) {
-            return $attempt->course->creditHrs() * $attempt->best_attempt()->gpa();
+            return $attempt->course_allocation->course->creditHrs() * $attempt->best_attempt()->gpa();
         });
         if ($this->credits_attempted() == 0) $cgpa = 0;
         else $cgpa = round($sum / $this->credits_attempted(), 2);
@@ -131,9 +131,9 @@ class Student extends Model
                 //if has never passed, add to overall failing subjects list
                 if ($failed) {
                     if ($subjects == '')
-                        $subjects = $subjects . $attempt->course->code;
+                        $subjects = $subjects . $attempt->course_allocation->course->code;
                     else
-                        $subjects = $subjects . ', ' . $attempt->course->code;
+                        $subjects = $subjects . ', ' . $attempt->course_allocation->course->code;
                 }
             }
         }

@@ -1,10 +1,15 @@
 @extends('layouts.teacher')
 @section('page-content')
-<h1 class="mt-12 mb-5"><a href="{{route('mycourses.index')}}">My Courses</a><span class="font-thin text-slate-600 text-sm"> &#x23F5; Formative Assessment</span></h1>
-<a href="{{route('mycourses.show',$course_allocation)}}" class="text-sm text-sky-800 py-3 hover:text-blue-800">
-    <div class="font-bold">{{$course_allocation->course->name}}</div>
-    <div>{{$course_allocation->section->title()}}</div>
-</a>
+<div class="flex">
+    <a href="{{route('mycourses.index')}}" class="text-xs text-blue-600"> <i class="bx bx-chevron-left mr-2"></i>My Courses</a>
+</div>
+
+<div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-2">
+    <div class="font-semibold text-slate-700 text-lg leading-relaxed">Formative Assessment</div>
+    <div class="text-sm">{{$course_allocation->course->name}}</div>
+    <div class="text-sm">{{$course_allocation->section->title()}}</div>
+</div>
+
 
 <div class="container w-full mx-auto mt-8">
     <div class="flex items-center flex-wrap justify-between">
@@ -35,23 +40,22 @@
     @endif
 
     <!-- fresh students -->
-    <form action="{{route('fresh_formative.update', $course_allocation)}}" method="POST" class='mt-4' onsubmit="return validateBeforeSubmit(event)">
+    <form id='tab_fresh' action="{{route('fresh_formative.update', $course_allocation)}}" method="POST" class='mt-8' onsubmit="return validateBeforeSubmit(event)">
         @csrf
         @method('PATCH')
         <!-- submit button -->
         <div class="flex items-end justify-between">
-            <div class="text-teal-800">Fresh Students <span class="text-xs ml-3 text-slate-600">({{$course_allocation->first_attempts->count()}} records found)</span></div>
-            <div class="flex space-x-4">
-                <!-- <a href="{{url('assessment_sheets/pdf', $course_allocation->id)}}" target="_blank" class="flex items-center btn-teal"> -->
-                <a href="{{route('assessment.show', $course_allocation)}}" target="_blank" class="flex items-center btn-teal">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-orange-200">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
-                    </svg>
-                </a>
-                <button type="submit" class="px-8 py-2 bg-teal-600 text-slate-100 rounded-sm hover:bg-teal-500">
-                    Save Result
-                </button>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center justify-center rounded-full bg-orange-100 w-8 h-8">
+                    <span class="bx bx-group rounded-full"></span>
+                </div>
+                <div class="tab active">Fresh : {{$course_allocation->first_attempts->count()}}</div>
+                <div class="mx-1 text-xs font-thin">|</div>
+                <div class="tab" @if($course_allocation->reappears->count()>0) onclick="toggle('f')" @endif>Re-Appear : {{$course_allocation->reappears->count()}}</div>
             </div>
+            @if($course_allocation->first_attempts->count()>0)
+            <button type="submit" class="btn-teal">Save Result</button>
+            @endif
         </div>
 
         <table class="table-auto w-full mt-4">
@@ -110,16 +114,23 @@
         </table>
     </form>
 
-    @if($course_allocation->reappears->count()>0)
+
     <!-- Reappear cases -->
-    <form action="{{route('reappear_formative.update', $course_allocation)}}" method="POST" class="mt-8 border-t border-dashed pt-2" onsubmit="return validateBeforeSubmit(event)">
+    <form id='tab_reappear' action="{{route('reappear_formative.update', $course_allocation)}}" method="POST" class="mt-8 hidden" onsubmit="return validateBeforeSubmit(event)">
         @csrf
         @method('PATCH')
         <div class="flex items-end justify-between py-2 space-x-5 ">
-            <div class="text-md text-red-800">*Reappearing Cases <span class="text-xs ml-3 text-slate-600">({{$course_allocation->reappears->count()}} records found)</span></div>
-            <button type="submit" class="px-8 py-2 bg-teal-600 text-slate-100 rounded-sm hover:bg-teal-500">
-                Save Result
-            </button>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center justify-center rounded-full bg-orange-100 w-8 h-8">
+                    <span class="bx bx-group rounded-full"></span>
+                </div>
+                <div class="tab active">Re-Appear : {{$course_allocation->reappears->count()}}</div>
+                <div class="mx-1 text-xs font-thin">|</div>
+                <div class="tab" @if($course_allocation->first_attempts->count()>0) onclick="toggle('r')" @endif>Fresh : {{$course_allocation->first_attempts->count()}}</div>
+            </div>
+            @if($course_allocation->reappears->count()>0)
+            <button type="submit" class="btn-teal">Save Result</button>
+            @endif
         </div>
 
         <table class="table-auto w-full mt-2">
@@ -180,7 +191,7 @@
             </tbody>
         </table>
     </form>
-    @endif
+
 </div>
 
 <script type="text/javascript">
@@ -235,6 +246,17 @@
             }
             return validated;
         });
+    }
+
+    function toggle(opt) {
+        if (opt == 'f') {
+            $('#tab_fresh').slideUp();
+            $('#tab_reappear').slideDown();
+        }
+        if (opt == 'r') {
+            $('#tab_fresh').slideDown();
+            $('#tab_reappear').slideUp();
+        }
     }
 </script>
 @endsection

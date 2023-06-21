@@ -1,9 +1,13 @@
 @extends('layouts.teacher')
 @section('page-content')
-<h1><a href="{{route('mycourses.index')}}">My Courses</a></h1>
-<div class="flex flex-col flex-1 text-sm text-slate-800 py-3">
-    <div class="font-bold">{{$course_allocation->course->name}}</div>
-    <div>{{$course_allocation->section->title()}}</div>
+<div class="flex">
+    <a href="{{route('mycourses.index')}}" class="text-xs text-blue-600"> <i class="bx bx-chevron-left mr-2"></i>My Courses</a>
+</div>
+
+<div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-2">
+    <div class="font-semibold text-slate-700 text-lg leading-relaxed">Enroll New Students</div>
+    <div class="text-sm">{{$course_allocation->course->name}}</div>
+    <div class="text-sm">{{$course_allocation->section->title()}}</div>
 </div>
 
 <div class="container w-full mx-auto mt-8">
@@ -13,22 +17,6 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
-        </div>
-        <div class="flex items-center text-sm space-x-4">
-            @if($course_allocation->strength()>0)
-            <a href="{{route('formative.edit', $course_allocation)}}" class="flex items-center px-4 py-2 btn-teal" id='btnStartFeeding'>
-                Formative
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                </svg>
-            </a>
-            <a href="{{route('summative.edit', $course_allocation)}}" class="flex items-center px-3 py-2 btn-indigo" id='btnStartFeeding'>
-                Summative
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-1">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                </svg>
-            </a>
-            @endif
         </div>
     </div>
     @if ($errors->any())
@@ -51,23 +39,23 @@
     </div>
     @endif
 
-    <input type="text" id='course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
-
     <!-- Fresh students -->
-    <section id='sxnEnrolled' class="mt-4">
-        <div class="flex items-center py-2">
-            <div>Fresh Students</div>
-            <div class="text-xs ml-3 text-slate-600">({{$course_allocation->first_attempts->count()}} records found)</div>
-            <!-- enroll fresh -->
-            <a href="{{route('enroll.fa', $course_allocation)}}" class="ml-8 btn-red">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
-                </svg>
+    <section id="tab_fresh" class="mt-8">
+        <div class="flex items-end justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center justify-center rounded-full bg-orange-100 w-8 h-8">
+                    <span class="bx bx-group rounded-full"></span>
+                </div>
+                <div class="tab active">Fresh : {{$course_allocation->first_attempts->count()}}</div>
+                <div class="mx-1 text-xs font-thin">|</div>
+                <div class="tab" onclick="toggle('f')">Re-Appear : {{$course_allocation->reappears->count()}}</div>
+            </div>
+            <a href="{{route('enroll.fa', $course_allocation)}}" class="btn-teal">
+                <i class="bx bx-user-plus"></i>
             </a>
-            <div class="text-slate-600 text-xs ml-1">(Enroll Fresh Student)</div>
         </div>
 
-        <table class="table-auto w-full">
+        <table class="table-auto w-full mt-4">
             <thead>
                 <tr class="border-b border-slate-200">
                     <th>Name</th>
@@ -83,9 +71,9 @@
                         <div class="flex items-center space-x-4">
                             <div>
                                 @if($first_attempt->student->gender=='M')
-                                <div class="bg-indigo-500 w-2 h-2 rounded-full"></div>
+                                <i class="bx bx-male text-teal-600 text-lg"></i>
                                 @else
-                                <div class="bg-green-500 w-2 h-2 rounded-full"></div>
+                                <i class="bx bx-female text-indigo-400 text-lg"></i>
                                 @endif
                             </div>
                             <div>
@@ -116,32 +104,45 @@
                     </td>
                 </tr>
                 @endforeach
+            </tbody>
+        </table>
+    </section>
 
-                <!-- Re-appear cases -->
-                <tr>
-                    <td class="text-red-800 text-sm py-3 border-0" colspan="8">
-                        <div class="flex items-center">
-                            <div>*Re-appearing Students</div>
-                            <div class="text-xs ml-3 text-slate-600">({{$course_allocation->reappears->count()}} records found)</div>
-                            <!-- add new reappear -->
-                            <a href="{{route('enroll.ra', $course_allocation)}}" class="ml-8 btn-red">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
-                                </svg>
-                            </a>
-                            <div class="text-slate-600 text-xs ml-1">(Enroll Old Student)</div>
-                        </div>
-                    </td>
+    <!-- Reappearig students -->
+    <section id='tab_reappear' class="mt-8 hidden">
+        <div class="flex items-end justify-between py-2 space-x-5 ">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center justify-center rounded-full bg-orange-100 w-8 h-8">
+                    <span class="bx bx-group rounded-full"></span>
+                </div>
+                <div class="tab active">Re-Appear : {{$course_allocation->reappears->count()}}</div>
+                <div class="mx-1 text-xs font-thin">|</div>
+                <div class="tab" onclick="toggle('r')">Fresh : {{$course_allocation->first_attempts->count()}}</div>
+            </div>
+            <a href="{{route('enroll.ra', $course_allocation)}}" class="btn-teal">
+                <i class="bx bx-user-plus"></i>
+            </a>
+        </div>
+
+        <table class="table-auto w-full mt-4">
+            <thead>
+                <tr class="border-b border-slate-200">
+                    <th>Name</th>
+                    <th>Father</th>
+                    <th>Status</th>
+                    <th class='text-center'>Remove</th>
                 </tr>
+            </thead>
+            <tbody>
                 @foreach($course_allocation->reappears_sorted() as $reappear)
                 <tr class="tr border-b ">
                     <td class="py-2">
                         <div class="flex items-center space-x-4">
                             <div>
                                 @if($reappear->first_attempt->student->gender=='M')
-                                <div class="bg-indigo-500 w-2 h-2 rounded-full"></div>
+                                <i class="bx bx-male text-teal-600 text-lg"></i>
                                 @else
-                                <div class="bg-green-500 w-2 h-2 rounded-full"></div>
+                                <i class="bx bx-female text-indigo-400 text-lg"></i>
                                 @endif
                             </div>
                             <div>
@@ -180,9 +181,9 @@
             </tbody>
         </table>
     </section>
-
 </div>
-
+@endsection
+@section('script')
 <script type="text/javascript">
     function del(formid) {
 
@@ -216,6 +217,17 @@
                 $(this).removeClass('hidden');
             }
         });
+    }
+
+    function toggle(opt) {
+        if (opt == "f") {
+            $("#tab_fresh").slideUp();
+            $("#tab_reappear").slideDown();
+        }
+        if (opt == "r") {
+            $("#tab_fresh").slideDown();
+            $("#tab_reappear").slideUp();
+        }
     }
 </script>
 

@@ -74,7 +74,7 @@ class FirstAttempt extends Model
         $marks = $this->total();
         $gp = 0;
         //for MS/Mphil education
-        if ($this->program->level == 18) {
+        if ($this->student->section->clas->program->level == 18) {
             if ($marks >= 85) $gp = 4;
             elseif ($marks >= 80) $gp = 3.66;
             elseif ($marks >= 75)  $gp = 3.33;
@@ -97,7 +97,7 @@ class FirstAttempt extends Model
         $gp = $this->gpa();
         $grade = '';
         // for MS/Mphil
-        if ($this->program->level == 18) {
+        if ($this->student->section->clas->program->level == 18) {
             if ($gp == 4) $grade = 'A';
             elseif ($gp == 3.66) $grade = 'A-';
             elseif ($gp == 3.33) $grade = 'B+';

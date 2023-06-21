@@ -18,12 +18,30 @@ class UserSeeder extends Seeder
         //
 
         $user = User::create([
+            'name' => 'Super',
+            'email' => 'super@uo.edu.pk',
+            'password' => Hash::make('password'),
+            'department_id' => 1,
+
+        ]);
+        $user->assignRole('super');
+
+        $user = User::create([
             'name' => 'Admin',
             'email' => 'admin@uo.edu.pk',
             'password' => Hash::make('password'),
             'department_id' => 1,
 
         ]);
-        $user->assignRole('admin', 'controller');
+        $user->assignRole('admin');
+
+        $user = User::create([
+            'name' => 'Controller',
+            'email' => 'controller@uo.edu.pk',
+            'password' => Hash::make('password'),
+            'department_id' => 1,
+
+        ]);
+        $user->assignRole('controller');
     }
 }

@@ -57,7 +57,7 @@ class Reappear extends Model
         $marks = $this->total();
         $gp = 0;
         //for MS/Mphil education
-        if ($this->first_attempt->program->level == 18) {
+        if ($this->first_attempt->student->section->clas->program->level == 18) {
             if ($marks >= 85) $gp = 4;
             elseif ($marks >= 80) $gp = 3.66;
             elseif ($marks >= 75)  $gp = 3.33;
@@ -79,7 +79,7 @@ class Reappear extends Model
         $gp = $this->gpa();
         $grade = '';
         // for MS/Mphil
-        if ($this->first_attempt->program->level == 18) {
+        if ($this->first_attempt->student->section->clas->program->level == 18) {
             if ($gp == 4) $grade = 'A';
             elseif ($gp == 3.66) $grade = 'A-';
             elseif ($gp == 3.33) $grade = 'B+';

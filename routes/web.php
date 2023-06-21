@@ -133,16 +133,6 @@ Route::group([' middleware' => ['role:hod']], function () {
     //?? to verify the reason of presence
     // Route::resource('enrollments', EnrollmentController::class);
 
-    Route::resource('gazzette', GazzetteController::class);
-    Route::resource('hod-award', HodAwardController::class);
-    Route::resource('hod-cumulative', HodCumulativeController::class);
-});
-
-Route::group([' middleware' => ['role:admin|controller|hod']], function () {
-    Route::get('gazzette/pdf/{id}', [GazzetteController::class, 'pdf']);
-    Route::get('pdf/award/{id}', [PdfController::class, 'award']);
-    Route::get('preview/cumulative/{section}/{semester}', [PdfController::class, 'previewCumulative']);
-
     Route::view('hod/printable', 'hod.printable.index');
     Route::get('hod/gazzette/step1', [GazzetteController::class, 'step1']);
     Route::get('hod/gazzette/{section}/preview', [GazzetteController::class, 'preview'])->name('hod.gazzette.preview');
@@ -155,6 +145,16 @@ Route::group([' middleware' => ['role:admin|controller|hod']], function () {
     Route::get('hod/cum/step1', [CumulativeController::class, 'step1']);
     Route::get('hod/cum/{section}/step2', [CumulativeController::class, 'step2'])->name('hod.cum.step2');
     Route::get('hod/cum/{allocation}/{semester}/preview', [CumulativeController::class, 'preview'])->name('hod.cum.preview');
+
+    // Route::resource('gazzette', GazzetteController::class);
+    // Route::resource('hod-award', HodAwardController::class);
+    // Route::resource('hod-cumulative', HodCumulativeController::class);
+});
+
+Route::group([' middleware' => ['role:admin|controller|hod']], function () {
+    Route::get('gazzette/pdf/{id}', [GazzetteController::class, 'pdf']);
+    Route::get('pdf/award/{id}', [PdfController::class, 'award']);
+    Route::get('preview/cumulative/{section}/{semester}', [PdfController::class, 'previewCumulative']);
 });
 
 Route::group(['middleware' => ['role:teacher']], function () {

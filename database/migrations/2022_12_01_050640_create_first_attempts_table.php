@@ -16,31 +16,20 @@ return new class extends Migration
         Schema::create('first_attempts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('program_id');
-            $table->unsignedBigInteger('course_id');
             $table->unsignedInteger('semester_no');
-            $table->unsignedBigInteger('semester_id');
 
             $table->unsignedInteger('assignment')->nullable()->default(0);
             $table->unsignedInteger('presentation')->nullable()->default(0);
             $table->unsignedInteger('midterm')->nullable()->default(0);
             $table->unsignedInteger('summative')->nullable()->default(0);
 
+            $table->unsignedBigInteger('semester_id');
+            $table->unsignedBigInteger('course_allocation_id');
+
             $table->foreign('student_id')
                 ->references('id')
                 ->on('students')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('program_id')
-                ->references('id')
-                ->on('programs')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('course_id')
-                ->references('id')
-                ->on('courses')
                 ->onDelete('cascade');
 
             $table->foreign('semester_id')

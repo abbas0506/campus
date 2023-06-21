@@ -1,81 +1,84 @@
-insert into cms_v1.departments
-select * from cms.departments where id>1
+insert into cms_v2.departments
+select * from cms.departments
+where cms.departments.id>1
 
- 
-insert into cms_v1.users
+update cms.users
+set id=id+2
+where id>1
+order by id desc
+
+insert into cms_v2.users
 select * from cms.users where id>1
 
 //clean model_has roles
 
-insert into cms_v1.headships
-select * from cms.headships
+insert into cms_v2.headships
+select * from cms.headships 
 
-insert into cms_v1.model_has_roles
+update cms.model_has_roles
+set role_id=role_id+1
+where role_id>2
+order by role_id desc
+
+update cms.model_has_roles
+set model_id=model_id+2
+where model_id>1
+order by model_id desc
+
+insert into cms_v2.model_has_roles
 select * from cms.model_has_roles
+where model_id>3
 
-insert into cms_v1.course_types
+insert into cms_v2.course_types
 select * from cms.course_types
 
-insert into cms_v1.programs(id,name,short,credit_hrs,min_duration,max_duration,department_id,internal_id, created_at) 
-select id,name,short,credit_hrs,min_duration,max_duration,department_id,internal_id, created_at from cms.programs;
+//insert into cms_v1.programs(id,name,short,credit_hrs,min_duration,max_duration,department_id,internal_id, created_at) 
+//select id,name,short,credit_hrs,min_duration,max_duration,department_id,internal_id, created_at from cms.programs;
 
-insert into cms_v1.courses
+insert into cms_v2.programs
+select * from cms.programs
+
+insert into cms_v2.courses
 select * from cms.courses
 
-insert into cms_v1.schemes
+insert into cms_v2.semesters
+select * from cms.semesters
+where id>13
+
+insert into cms_v2.schemes
 select * from cms.schemes
 
 insert into cms_v1.scheme_details
 select * from cms.scheme_details
 
-insert into cms_v1.clas
+insert into cms_v2.clas
 select * from cms.clas
 
-insert into cms_v1.sections
+insert into cms_v2.sections
 select * from cms.sections
 
-insert into cms_v1.students(id,name,father,email,address,gender,regno,rollno,section_id,created_at)
-select id,name,father,email,address,gender,regno,rollno,section_id,created_at from cms.students;
+insert into cms_v2.students
+select * from cms.students
+
+//insert into cms_v1.students(id,name,father,email,address,gender,regno,rollno,section_id,created_at)
+//select id,name,father,email,address,gender,regno,rollno,section_id,created_at from cms.students;
 
 insert into cms_v1.course_allocations
 select * from cms.course_allocations;
 
-insert into cms_v1.first_attempts
-select * from cms.first_attempts;
+delete from course_allocations where course_id=706;
+delete from course_allocations where isnull(course_allocation_id);
 
-insert into cms_v1.reappears
+//insert into cms_v2.first_attempts
+//select * from cms.first_attempts;
+
+insert into cms_v2.first_attempts(id,student_id,semester_no,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at)
+select id,student_id,semester_no,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at from cms.first_attempts;
+
+insert into cms_v2.reappears
 select * from cms.reappears;
 
-//fall 2022
-
-update clas set semester_id=13 where semester_id=2
-update course_allocations set semester_id=13 where semester_id=2
-update first_attempts set semester_id=13 where semester_id=2
-update reappears set semester_id=13 where semester_id=2
-
-//spring 2022
-update clas set semester_id=12 where semester_id=1
-update course_allocations set semester_id=12 where semester_id=1
-update first_attempts set semester_id=12 where semester_id=1
-update reappears set semester_id=12 where semester_id=1
-
-//fall 2021
-update clas set semester_id=11 where semester_id=3
-update course_allocations set semester_id=11 where semester_id=3
-update first_attempts set semester_id=11 where semester_id=3
-update reappears set semester_id=11 where semester_id=3
-
-update programs set level=16 where name like 'B%';
-update programs set level=18 where name like 'M%';
-update programs set level=21 where name like 'D%';
-
-
-update clas set semester_id=6 where semester_id=4
-update course_allocations set semester_id=6 where semester_id=4
-update first_attempts set semester_id=6 where semester_id=4
-update reappears set semester_id=6 where semester_id=4
-
-
+delete from course_allocations where isnull(teacher_id)
 
 
 

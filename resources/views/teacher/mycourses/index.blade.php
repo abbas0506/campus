@@ -21,7 +21,7 @@
     <!-- sort courses section wise -->
     @foreach($course_allocations as $course_allocation)
     <div class="card relative flex flex-col justify-between items-center border p-4 bg-slate-50">
-        <div class="absolute right-0 top-0 bg-teal-300 px-2 py-0 text-sm">
+        <div class="absolute right-0 top-0 bg-teal-200 px-2 py-0 text-sm">
             <i class="bx bx-group"></i>
             {{$course_allocation->first_attempts->count()+$course_allocation->reappears->count()}}
         </div>

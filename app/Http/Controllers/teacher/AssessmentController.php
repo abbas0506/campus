@@ -92,5 +92,13 @@ class AssessmentController extends Controller
 
     public function pdf($id)
     {
+        $course_allocation = CourseAllocation::find($id);
+        if ($course_allocation->section->clas->program->level == 21)
+            $pdf = PDF::loadView('teacher.assessment.phd.pdf', compact('course_allocation'))->setPaper('a4', 'portrait');
+        else
+            $pdf = PDF::loadView('teacher.assessment.bsms.pdf', compact('course_allocation'))->setPaper('a4', 'portrait');
+        $pdf->set_option("isPhpEnabled", true);
+
+        return $pdf->stream();
     }
 }

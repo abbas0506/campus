@@ -105,13 +105,13 @@ class AjaxController extends Controller
         $roman = config('global.romans');
         if ($student) {
             $first_attempt = $student->first_attempts
-                ->where('course_id', $course_allocation->course_id)
-                ->where('program_id', $course_allocation->scheme_detail->scheme->program_id)
+                // ->where('course_allocation_id', $request->course_allocation_id)
+                ->where('student_id', $student->id)
                 ->where('semester_id', '<', $course_allocation->semester_id)
                 ->first();
             if ($first_attempt) {
                 $result .= '<tr>' .
-                    '<td>' . $first_attempt->semester->title() . '</td>' .
+                    '<td>' . $first_attempt->semester->short() . '</td>' .
                     '<td>' . $roman[$first_attempt->semester_no - 1] . '</td>' .
                     '<td>' . $first_attempt->total() . '/100' . '</td>' .
                     '<td>' . $first_attempt->gpa() . '</td>' .
@@ -120,7 +120,7 @@ class AjaxController extends Controller
 
                 foreach ($first_attempt->reappears->where('semester_id', '<', $course_allocation->semester_id) as $reappear)
                     $result .= '<tr>' .
-                        '<td>' . $reappear->semester->title() . '</td>' .
+                        '<td>' . $reappear->semester->short() . '</td>' .
                         '<td>' . $roman[$first_attempt->semester_no - 1] . '</td>' .
                         '<td>' . $reappear->total() . '/100' . '</td>' .
                         '<td>' . $reappear->gpa() . '</td>' .
