@@ -112,6 +112,8 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::resource('teachers', TeacherController::class);
     Route::resource('internals', InternalController::class)->only('edit', 'update');
 
+
+
     Route::resource('schemes', SchemeController::class);
     Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
     Route::resource('scheme-details', SchemeDetailController::class);
@@ -124,6 +126,8 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::post('courseplan/replace', [CoursePlanController::class, 'replaceTeacher'])->name('courseplan.replace.teacher');
 
     Route::resource('students', StudentController::class);
+    Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
+
     Route::get('students/{section}/add', [StudentController::class, 'add'])->name('students.add');
     Route::get('students/{section}/excel', [StudentController::class, 'excel'])->name('students.excel');
     Route::post('students/import', [StudentController::class, 'import'])->name('students.import');

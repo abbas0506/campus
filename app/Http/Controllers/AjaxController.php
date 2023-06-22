@@ -157,4 +157,35 @@ class AjaxController extends Controller
             ]);
         }
     }
+    public function searchByRollNoOrName(Request $request)
+    {
+        $request->validate([
+            'searchby' => 'required',
+        ]);
+
+        // $students = Student::where('rollno', $request->searchby)->get();
+        $students = Student::where('name', 'like', '%' . $request->searchby . '%')->get();
+
+        $result = '';
+        $roman = config('global.romans');
+        //if student found, fetch student history and check whether he/she has ever failed in the same course
+
+        foreach ($students as $student) {
+            //look for only same course
+
+            //if student failed, then look into reappear attempts
+            $result .=
+
+                "<div class='flex flex-row w-full py-1'>" .
+                "<a href='/students/" . $student->id . "' class='link w-1/6'>" . $student->rollno . "</a>" .
+                "<div class='w-1/3'>" . $student->name . "</div>" .
+                "<div class='w-1/3'>" . $student->father . "</div>" .
+                "<div>" . $student->section->clas->name . "</div>" .
+                "</div>";
+        }
+        //student data found
+        return response()->json([
+            'result' => $result,
+        ]);
+    }
 }

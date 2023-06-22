@@ -5,59 +5,56 @@
 <div class="text-sm">{{session('department')->name}}</div>
 
 <div class="flex items-center mt-12">
-    <input type="text" placeholder="Search by name or roll no." class="search-indigo w-1/3" oninput="search(event)">
-    <div class="flex justify-center items-center btn-teal w-8 h-8 rounded-full"><i class="bx bx-search"></i></div>
+    <input type="text" id='searchby' placeholder="Search by name or roll no." class="search-indigo w-1/3">
+    <div class="flex justify-center items-center btn-teal w-8 h-8 rounded-full" onclick='search()'><i class="bx bx-search"></i></div>
 </div>
 
 
-<div class="flex flex-row w-full mt-8 font-semibold py-1">
+<div class="flex flex-row w-full mt-8 font-semibold bg-slate-100 py-1">
     <div class="w-1/6">Roll No</div>
     <div class="w-1/3">Name</div>
     <div class="w-1/3">Father</div>
     <div>Class</div>
 </div>
-
-<div class="flex flex-row w-full even:bg-slate-100 py-1">
-    <a href="" class="w-1/5">Roll NO</a>
-    <div class="w-2/5">Name s/o father</div>
-    <div>Class</div>
+<div id='tbody' class="text-sm text-slate-600">
+    <div>Search result will be displayed here</div>
 </div>
 
-
+@endsection
+@section('script')
 <script type="text/javascript">
-    function delme(formid) {
+    function search() {
+        var token = $("meta[name='csrf-token']").attr("content");
 
-        event.preventDefault();
+        var searchby = $('#searchby').val();
+        if (searchby == '') {
+            Swal.fire({
+                icon: 'warning',
+                title: "Nothing to search",
+            });
+        } else {
+            //show sweet alert and confirm submission
 
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.value) {
-                //submit corresponding form
-                $('#del_form' + formid).submit();
-            }
-        });
-    }
+            $.ajax({
+                type: 'POST',
+                url: "{{url('searchByRollNoOrName')}}",
+                data: {
+                    "searchby": searchby,
+                    "_token": token,
 
-    function search(event) {
-        var searchtext = event.target.value.toLowerCase();
-        var str = 0;
-        $('.tr').each(function() {
-            if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) ||
-                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
-                )) {
-                $(this).addClass('hidden');
-            } else {
-                $(this).removeClass('hidden');
-            }
-        });
+                },
+                success: function(response) {
+                    $('#tbody').html(response.result)
+
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: errorThrown
+                    });
+                }
+            }); //ajax end
+        }
     }
 </script>
 
