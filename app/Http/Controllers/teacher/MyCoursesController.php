@@ -127,25 +127,4 @@ class MyCoursesController extends Controller
         //
 
     }
-    public function enrollFresh($id)
-    {
-        $course_allocation = CourseAllocation::find($id);
-
-        $first_attempts = $course_allocation->first_attempts();
-        $student_ids = $first_attempts->pluck('student_id')->toArray();
-
-        $registered = Student::whereIn('id', $student_ids)
-            ->where('section_id', $course_allocation->course_id)->get();
-
-        //get not registered students
-        $unregistered = Student::whereNotIn('id', $student_ids)
-            ->where('section_id', $course_allocation->section_id)->get();
-
-        return view('teacher.mycourses.enroll.fresh', compact('course_allocation', 'unregistered'));
-    }
-    public function enrollReappear($id)
-    {
-        $course_allocation = CourseAllocation::find($id);
-        return view('teacher.mycourses.enroll.reappear', compact('course_allocation'));
-    }
 }

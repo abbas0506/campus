@@ -53,7 +53,7 @@ class FirstAttemptController extends Controller
         try {
             if ($ids) {
                 foreach ($ids as $id) {
-                    //create course enrollment entry
+                    //register students for this course
                     FirstAttempt::create([
                         'student_id' => $id,
                         'semester_no' => $course_allocation->section->clas->semester_no,
@@ -63,7 +63,7 @@ class FirstAttemptController extends Controller
                 }
             }
             DB::commit();
-            return response()->json(['msg' => "Successful"]);
+            return response()->json(['msg' => "Successfully saved"]);
         } catch (Exception $ex) {
             DB::rollBack();
             return response()->json(['msg' => $ex->getMessage()]);

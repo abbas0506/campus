@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedInteger('summative')->nullable()->default(0);
 
             $table->unsignedBigInteger('course_allocation_id');
+            $table->unique(['first_attempt_id', 'semester_id'], 'first_attempt_semester_unique');
 
             $table->foreign('first_attempt_id')
                 ->references('id')

@@ -17,32 +17,25 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('father', 100)->nullable();
-            $table->string('cnic', 15)->nullable()->unique();
-            $table->string('phone', 12)->nullable();
-            $table->string('email', 12)->nullable();
+            $table->string('cnic', 20)->nullable()->unique();
+            $table->string('phone', 20)->nullable();
+            $table->string('email', 50)->nullable();
             $table->string('password', 30)->nullable();
-            $table->string('address', 100)->nullable();
+            $table->string('address', 150)->nullable();
             $table->string('pic', 100)->default('default.png');
             $table->date('dob')->nullable();
             $table->enum('gender', ['M', 'F', 'T']);
-            $table->string('regno', 20)->unique()->nullable();
-            $table->string('rollno', 20)->unique();
+            $table->string('regno', 40)->unique()->nullable();
+            $table->string('rollno', 40)->unique();
 
             $table->unsignedBigInteger('section_id');
             $table->unsignedBigInteger('status_id')->default(1);
-            // $table->unsignedBigInteger('department_id');
 
             $table->foreign('section_id')
                 ->references('id')
                 ->on('sections')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
-            // $table->foreign('department_id')
-            //     ->references('id')
-            //     ->on('departments')
-            //     ->onUpdate('cascade')
-            //     ->onDelete('cascade');
 
             $table->timestamps();
         });

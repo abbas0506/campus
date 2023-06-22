@@ -50,10 +50,10 @@
         </thead>
         <tbody>
 
-            @foreach($semesters->sortByDesc('year') as $semester)
+            @foreach($semesters as $semester)
             <tr class="tr border-b text-center ">
                 <td class="py-2 text-slate-600">
-                    <div>{{$semester->semester_type->name}}, {{$semester->year}}</div>
+                    <div class="text-left">{{$semester->semester_type->name}}, {{$semester->year}}</div>
                 </td>
                 <td class="py-2 text-slate-600">{{$semester->short()}}</td>
                 <td>

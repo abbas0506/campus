@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('program_id');
             $table->unsignedBigInteger('wef_semester_id'); //with effect form
-            $table->unique(['wef_semester_id', 'program_id']); //composite pk
+            $table->unique(['wef_semester_id', 'program_id'], 'semester_program_unique'); //composite pk
             $table->timestamps();
 
             $table->foreign('program_id')

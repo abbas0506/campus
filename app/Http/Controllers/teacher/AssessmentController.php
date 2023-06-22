@@ -5,7 +5,6 @@ namespace App\Http\Controllers\teacher;
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class AssessmentController extends Controller
 {
@@ -88,17 +87,5 @@ class AssessmentController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function pdf($id)
-    {
-        $course_allocation = CourseAllocation::find($id);
-        if ($course_allocation->section->clas->program->level == 21)
-            $pdf = PDF::loadView('teacher.assessment.phd.pdf', compact('course_allocation'))->setPaper('a4', 'portrait');
-        else
-            $pdf = PDF::loadView('teacher.assessment.bsms.pdf', compact('course_allocation'))->setPaper('a4', 'portrait');
-        $pdf->set_option("isPhpEnabled", true);
-
-        return $pdf->stream();
     }
 }

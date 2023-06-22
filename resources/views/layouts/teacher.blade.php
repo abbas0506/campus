@@ -86,7 +86,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('mycourses.index')}}" class="flex items-center p-2 ">
+                <a href="{{url('teacher/award')}}" class="flex items-center p-2 ">
                     <i class="bx bx-printer"></i>
                     <span class="ml-3">Award Lists</span>
                 </a>

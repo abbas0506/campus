@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
 
         $user = User::create([
             'name' => 'Super',
-            'email' => 'super@uo.edu.pk',
+            'email' => 'superadmin@uo.edu.pk',
             'password' => Hash::make('password'),
             'department_id' => 1,
 

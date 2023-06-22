@@ -25,6 +25,8 @@ return new class extends Migration
 
             $table->unsignedBigInteger('semester_id');
             $table->unsignedBigInteger('course_allocation_id');
+            //disallow re-registration of same student within same semester
+            $table->unique(['student_id', 'course_allocation_id', 'semester_id'], 'student_allocation_semester_unique');
 
             $table->foreign('student_id')
                 ->references('id')

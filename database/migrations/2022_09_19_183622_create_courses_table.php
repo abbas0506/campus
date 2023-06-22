@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('short');
-            $table->string('code')->unique()->nullable();
+            $table->string('code')->nullable();
             $table->unsignedBigInteger('course_type_id')->default(1);
             $table->unsignedInteger('credit_hrs_theory');
             $table->unsignedInteger('max_marks_theory');
             $table->unsignedInteger('credit_hrs_practical');
             $table->unsignedInteger('max_marks_practical');
             $table->unsignedBigInteger('department_id');
+            $table->unique(['code', 'department_id']);
             $table->timestamps();
 
             $table->foreign('department_id')

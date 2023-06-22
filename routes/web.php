@@ -20,7 +20,6 @@ use App\Http\Controllers\ce\FinalGazzetteController;
 use App\Http\Controllers\ce\NotifiedGazzetteController;
 use App\Http\Controllers\ce\TranscriptController;
 use App\Http\Controllers\hod\AwardController;
-use App\Http\Controllers\hod\EnrollmentController;
 use App\Http\Controllers\hod\ProgramController;
 use App\Http\Controllers\hod\CourseController;
 use App\Http\Controllers\hod\TeacherController;
@@ -33,13 +32,11 @@ use App\Http\Controllers\hod\ClassPromotionController;
 use App\Http\Controllers\hod\ClassReversionController;
 use App\Http\Controllers\hod\CoursePlanController;
 use App\Http\Controllers\hod\CumulativeController;
-use App\Http\Controllers\hod\HodAwardController;
-use App\Http\Controllers\hod\HodCumulativeController;
 use App\Http\Controllers\hod\InternalController;
-use App\Http\Controllers\hod\PrintableController as HodPrintableController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\teacher\AssessmentController;
+use App\Http\Controllers\teacher\AwardController as TeacherAwardController;
 use App\Http\Controllers\teacher\FirstAttemptController;
 use App\Http\Controllers\teacher\FormativeController;
 use App\Http\Controllers\teacher\FreshFormativeController;
@@ -49,6 +46,7 @@ use App\Http\Controllers\teacher\ReappearController;
 use App\Http\Controllers\teacher\ReappearFormativeController;
 use App\Http\Controllers\teacher\ReappearSummativeController;
 use App\Http\Controllers\teacher\SummativeController;
+use App\Http\Controllers\teacher\EnrollmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -170,8 +168,13 @@ Route::group(['middleware' => ['role:teacher']], function () {
 
     Route::resource('first_attempts', FirstAttemptController::class);
     Route::resource('reappears', ReappearController::class);
-    Route::get('enroll.fa/{id}', [MyCoursesController::class, 'enrollFresh'])->name('enroll.fa');
-    Route::get('enroll.ra/{id}', [MyCoursesController::class, 'enrollReappear'])->name('enroll.ra');
+
+    Route::get('enroll/f/{id}', [EnrollmentController::class, 'fresh'])->name('enroll.fa');
+    Route::get('enroll/r/{id}', [EnrollmentController::class, 'reappear'])->name('enroll.ra');
+
     Route::resource('assessment', AssessmentController::class);
     Route::get('assessment/pdf/{id}', [AssessmentController::class, 'pdf']);
+
+    Route::get('teacher/award', [TeacherAwardController::class, 'index']);
+    Route::get('teacher/award/{course}/pdf', [TeacherAwardController::class, 'pdf'])->name('teacher.award');
 });

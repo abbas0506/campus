@@ -17,7 +17,7 @@
 </div>
 @endif
 
-<div class="grid grid-cols-2 gap-4 mt-12 md:w-4/5 mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-8 mt-12 md:w-4/5 mx-auto">
     <!-- sort courses section wise -->
     @foreach($course_allocations as $course_allocation)
     <div class="card relative flex flex-col justify-between items-center border p-4 bg-slate-50">
@@ -33,17 +33,17 @@
             <div class="text-xs mt-2 mb-6">{{$course_allocation->section->title()}}</div>
         </a>
         <div class="slide-up">
-            <a href="{{route('mycourses.show',$course_allocation->id)}}" class="flex items-center justify-center bg-green-100 hover:bg-green-200 rounded-full px-1">
+            <a href="{{route('mycourses.show',$course_allocation->id)}}" class="flex flex-1 items-center justify-center bg-teal-200 hover:bg-teal-300 rounded-t-lg">
                 Enroll
-                <i class="bx bx-user-plus bx-xs ml-1"></i>
+                <i class="bx bx-user-plus text-[14px] ml-1"></i>
             </a>
-            <a href="{{route('formative.edit', $course_allocation)}}" class="flex items-center justify-center bg-orange-100 hover:bg-orange-200 rounded-full px-1">
+            <a href="{{route('formative.edit', $course_allocation)}}" class="flex flex-1 items-center justify-center bg-blue-200 hover:bg-blue-300 rounded-t-lg">
                 Formative
-                <i class="bx bx-pencil bx-xs ml-1"></i>
+                <i class="bx bx-pencil text-[12px] ml-1"></i>
             </a>
-            <a href="{{route('summative.edit', $course_allocation)}}" class="flex items-center justify-center bg-pink-100 hover:bg-pink-200 rounded-full px-1">
+            <a href="{{route('summative.edit', $course_allocation)}}" class="flex flex-1 items-center justify-center bg-red-200 hover:bg-red-300 px-2 rounded-t-lg">
                 Summative
-                <i class="bx bx-pencil bx-xs ml-1"></i>
+                <i class="bx bx-pencil text-[12px] ml-1"></i>
             </a>
         </div>
     </div>

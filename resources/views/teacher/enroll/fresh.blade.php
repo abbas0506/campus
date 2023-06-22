@@ -41,7 +41,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
         </div>
-        <button class="px-4 py-2 bg-teal-600 text-slate-100 rounded-sm hover:bg-teal-500" id='btnRegisterNow' onclick="enrollFirstAttempt()">
+        <button class="btn-teal" id='btnRegisterNow' onclick="enrollFirstAttempt()">
             Enroll Fresh <span class="ml-2">(</span><span id='chkCount' class="">0</span>/{{$unregistered->count()}})
         </button>
     </div>

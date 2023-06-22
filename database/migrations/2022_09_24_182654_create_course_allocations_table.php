@@ -21,6 +21,8 @@ return new class extends Migration
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('teacher_id')->nullable(); //will be initialized at step 2 of course allocation
             $table->unsignedBigInteger('semester_id');
+            $table->unique(['section_id', 'course_id'], 'section_course_unique');
+
             $table->timestamps();
 
             $table->foreign('section_id')

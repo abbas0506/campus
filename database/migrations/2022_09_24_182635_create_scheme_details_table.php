@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedInteger('semester_no');
             $table->unsignedBigInteger('course_id');
 
+            $table->unique(['scheme_id', 'course_id'], 'scheme_course_unique');
+
             $table->timestamps();
             $table->foreign('scheme_id')
                 ->references('id')
