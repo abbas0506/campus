@@ -15,10 +15,10 @@ select * from cms.users where id>1
 insert into cms_v2.headships
 select * from cms.headships 
 
-update cms.model_has_roles
-set role_id=role_id+1
-where role_id>2
-order by role_id desc
+//update cms.model_has_roles
+//set role_id=role_id+1
+//where role_id>2
+//order by role_id desc
 
 update cms.model_has_roles
 set model_id=model_id+2
@@ -41,14 +41,14 @@ select * from cms.programs
 insert into cms_v2.courses
 select * from cms.courses
 
-insert into cms_v2.semesters
-select * from cms.semesters
-where id>13
+//insert into cms_v2.semesters
+//select * from cms.semesters
+//where id>13
 
 insert into cms_v2.schemes
 select * from cms.schemes
 
-insert into cms_v1.scheme_details
+insert into cms_v2.scheme_details
 select * from cms.scheme_details
 
 insert into cms_v2.clas
@@ -63,11 +63,12 @@ select * from cms.students
 //insert into cms_v1.students(id,name,father,email,address,gender,regno,rollno,section_id,created_at)
 //select id,name,father,email,address,gender,regno,rollno,section_id,created_at from cms.students;
 
-insert into cms_v1.course_allocations
+delete from cms.course_allocations where course_id=706;
+
+insert into cms_v2.course_allocations
 select * from cms.course_allocations;
 
-delete from course_allocations where course_id=706;
-delete from course_allocations where isnull(course_allocation_id);
+delete from cms.first_attempts where isnull(course_allocation_id);
 
 //insert into cms_v2.first_attempts
 //select * from cms.first_attempts;
