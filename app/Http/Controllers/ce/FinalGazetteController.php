@@ -11,7 +11,7 @@ use App\Models\Shift;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
-class FinalgazetteController extends Controller
+class FinalGazetteController extends Controller
 {
     /**
      * Display a listing of the resource.

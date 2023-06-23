@@ -9,7 +9,7 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
-class gazetteController extends Controller
+class GazetteController extends Controller
 {
     /**
      * Display a listing of the resource.
