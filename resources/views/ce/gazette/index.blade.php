@@ -1,6 +1,6 @@
 @extends('layouts.controller')
 @section('page-content')
-<h1 class="mt-12">Gazzette | Step 1</h1>
+<h1 class="mt-12">gazette | Step 1</h1>
 
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">Choose Department</div>
@@ -30,7 +30,7 @@
 
 <div class="flex flex-row space-x-8">
     <div class="flex flex-column">
-        <form method='post' action="{{url('ce-gazzette')}}" class="mt-3">
+        <form method='post' action="{{url('ce-gazette')}}" class="mt-3">
             @csrf
             @method('POST')
 

@@ -11,7 +11,7 @@ use App\Models\Shift;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
-class FinalGazzetteController extends Controller
+class FinalgazetteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class FinalGazzetteController extends Controller
         //
         $semesters = Semester::all();
         $departments = Department::all();
-        return view('ce.gazzette.index', compact('semesters', 'departments'));
+        return view('ce.gazette.index', compact('semesters', 'departments'));
     }
 
     /**
@@ -56,7 +56,7 @@ class FinalGazzetteController extends Controller
         ]);
         $department = Department::find($request->department_id);
         $programs = $department->programs;
-        return view('ce.gazzette.sections', compact('programs', 'department'));
+        return view('ce.gazette.sections', compact('programs', 'department'));
     }
 
     /**
@@ -69,7 +69,7 @@ class FinalGazzetteController extends Controller
     {
         //
         $section = Section::find($id);
-        return view('ce.gazzette.show', compact('section'));
+        return view('ce.gazette.show', compact('section'));
     }
 
     /**

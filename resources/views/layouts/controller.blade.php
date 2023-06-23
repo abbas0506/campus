@@ -21,9 +21,9 @@
                 </li>
 
                 <li>
-                    <a href="{{url('ce-gazzette')}}" class="flex items-center p-2">
+                    <a href="{{url('ce-gazette')}}" class="flex items-center p-2">
                         <i class="bx bx-badge-check text-lg"></i>
-                        <span class="ml-3">Gazzette</span>
+                        <span class="ml-3">gazette</span>
                     </a>
                 </li>
 
