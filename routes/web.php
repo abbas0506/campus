@@ -16,8 +16,8 @@ use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\HeadshipController;
 use App\Http\Controllers\ce\AwardController as ControllerAwardController;
-use App\Http\Controllers\ce\FinalgazetteController;
-use App\Http\Controllers\ce\NotifiedgazetteController;
+use App\Http\Controllers\ce\FinalGazetteController;
+use App\Http\Controllers\ce\NotifiedGazetteController;
 use App\Http\Controllers\ce\TranscriptController;
 use App\Http\Controllers\hod\AwardController;
 use App\Http\Controllers\hod\ProgramController;
@@ -25,7 +25,7 @@ use App\Http\Controllers\hod\CourseController;
 use App\Http\Controllers\hod\TeacherController;
 use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
-use App\Http\Controllers\hod\gazetteController;
+use App\Http\Controllers\hod\GazetteController;
 use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\ClasController;
 use App\Http\Controllers\hod\ClassPromotionController;
@@ -136,9 +136,9 @@ Route::group([' middleware' => ['role:hod']], function () {
     // Route::resource('enrollments', EnrollmentController::class);
 
     Route::view('hod/printable', 'hod.printable.index');
-    Route::get('hod/gazette/step1', [gazetteController::class, 'step1']);
-    Route::get('hod/gazette/{section}/preview', [gazetteController::class, 'preview'])->name('hod.gazette.preview');
-    Route::get('hod/gazette/{section}/pdf', [gazetteController::class, 'pdf'])->name('hod.gazette.pdf');
+    Route::get('hod/gazette/step1', [GazetteController::class, 'step1']);
+    Route::get('hod/gazette/{section}/preview', [GazetteController::class, 'preview'])->name('hod.gazette.preview');
+    Route::get('hod/gazette/{section}/pdf', [GazetteController::class, 'pdf'])->name('hod.gazette.pdf');
 
     Route::get('hod/award/step1', [AwardController::class, 'step1']);
     Route::get('hod/award/{section}/step2', [AwardController::class, 'step2'])->name('hod.award.step2');
@@ -154,7 +154,7 @@ Route::group([' middleware' => ['role:hod']], function () {
 });
 
 Route::group([' middleware' => ['role:admin|controller|hod']], function () {
-    Route::get('gazette/pdf/{id}', [gazetteController::class, 'pdf']);
+    Route::get('gazette/pdf/{id}', [GazetteController::class, 'pdf']);
     Route::get('pdf/award/{id}', [PdfController::class, 'award']);
     Route::get('preview/cumulative/{section}/{semester}', [PdfController::class, 'previewCumulative']);
 });
