@@ -84,7 +84,7 @@ class AjaxController extends Controller
         $programs = $department->programs;
         $text = "";
         foreach ($programs as $program) {
-            $text .= "<li><a href='" . url("gazette/final/preview/" . $program->id) . "'>" . $program->name . "</a></li>";
+            $text .= "<li><a href='" . url("gazette/final/preview/" . $program->id) . "'>" . $program->short . "</a></li>";
         }
         return response()->json([
             'text' => $text,

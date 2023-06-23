@@ -50,7 +50,7 @@
     <div class="collapsible">
         <div class="head">
             <h2 class="flex items-center space-x-4">
-                {{$program->name}}
+                {{$program->short}}
                 <span class="text-xs ml-4 font-thin">Classes:{{$program->clases()->count()}}</span>
                 <span class="text-xs ml-4 font-thin">Sections:{{$program->sections()->count()}}</span>
                 <div class="flex items-center space-x-1">

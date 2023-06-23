@@ -32,7 +32,7 @@
     @foreach($programs as $program)
     <div class="collapsible">
         <div class="head">
-            <h2>{{$program->name}} <span class="text-xs ml-4 font-thin">({{$program->sections()->count()}} sections)</span></h2>
+            <h2>{{$program->short}} <span class="text-xs ml-4 font-thin">({{$program->sections()->count()}} sections)</span></h2>
 
             <i class="bx bx-chevron-down text-lg"></i>
         </div>

@@ -31,7 +31,7 @@
     @foreach($programs->sortBy('level') as $program)
     <div class="collapsible">
         <div class="head">
-            <h2 class="">{{$program->name}} <span class="text-xs ml-4 font-thin">({{$program->sections()->count()}} sections)</span></h2>
+            <h2 class="">{{$program->short}} <span class="text-xs ml-4 font-thin">({{$program->sections()->count()}} sections)</span></h2>
 
             <i class="bx bx-chevron-down text-lg"></i>
         </div>

@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 <h1><a href="{{route('programs.index')}}">Programs</a></h1>
-<div class="bread-crumb">{{$program->name}} / edit </div>
+<div class="bread-crumb">{{$program->short}} / edit </div>
 <div class="container md:w-3/4 mx-auto px-5">
 
     @if ($errors->any())

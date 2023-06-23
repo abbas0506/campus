@@ -2,7 +2,7 @@
 @section('page-content')
 
 <h1><a href="{{route('programs.index')}}">Programs</a></h1>
-<div class="bread-crumb">{{$program->name}} / New scheme</div>
+<div class="bread-crumb">{{$program->short}} / New scheme</div>
 
 <div class="flex flex-col md:w-3/5 m-auto text-center mt-12">
     <div class="flex items-center flex-row">
@@ -31,7 +31,7 @@
     @endif
     <form action="{{route('schemes.store')}}" method='post' class="flex flex-col w-full text-left mt-12">
         @csrf
-        <label for="" class="text-md font-bold">{{$program->name}}<span class="text-sm text-red-700 ml-2 font-thin">(program for which scheme is being defined)</span></label>
+        <label for="" class="text-md font-bold">{{$program->short}}<span class="text-sm text-red-700 ml-2 font-thin">(program for which scheme is being defined)</span></label>
         <input id="" name="program_id" value="{{$program->id}}" class="hidden">
 
         <label for="" class="mt-3">This scheme will be effective from <span class='text-xs text-slate-600'>(S=Spring, F=Fall)</span></label>

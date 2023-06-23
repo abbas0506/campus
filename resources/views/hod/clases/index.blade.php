@@ -41,7 +41,7 @@
 @endif
 
 <!-- search bar -->
-<div class="flex items-center justify-end mt-8">
+<!-- <div class="flex items-center justify-end mt-8">
     <div class="flex items-center space-x-3">
         <a href="{{route('promotions.index')}}" class="flex items-center text-sm btn-teal px-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -57,9 +57,9 @@
         </a>
     </div>
 
-</div>
+</div> -->
 <!-- records found -->
-<div class="text-xs font-thin text-slate-600 mt-4 mb-1">{{$programs->count()}} programs found</div>
+<div class="text-xs font-thin text-slate-600 mt-8 mb-1">{{$programs->count()}} programs found</div>
 
 <!-- classes & section detail -->
 <section>
@@ -68,7 +68,7 @@
         <div class="collapsible">
             <div class="head">
                 <h2 class="flex items-center space-x-4">
-                    {{$program->name}}
+                    {{$program->short}}
                     <span class="text-xs ml-4 font-thin">Classes:{{$program->clases()->count()}}</span>
                     <span class="text-xs ml-4 font-thin">Sections:{{$program->sections()->count()}}</span>
                     <div class="flex items-center space-x-1">

@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 <h1 class="mt-12"><a href="{{route('clases.index')}}"> Classes</a></h1>
-<div class="bread-crumb">{{$program->name}} / New class</div>
+<div class="bread-crumb">{{$program->short}} / New class</div>
 
 <div class="container md:w-3/4 mx-auto px-5">
 

@@ -42,7 +42,7 @@
 
         @foreach($programs->sortBy('level') as $program)
         <tr class="tr">
-            <td>{{$program->name}}</td>
+            <td>{{$program->short}}</td>
             <td class="text-center">{{$program->level}}</td>
             <td class="text-center">{{$program->min_duration}}-{{$program->max_duration}}</td>
             <td class="text-center">{{$program->credit_hrs}}</td>

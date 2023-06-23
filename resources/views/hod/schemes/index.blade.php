@@ -37,7 +37,7 @@
 
         @foreach($programs->sortBy('level') as $program)
         <tr class="tr">
-            <td>{{$program->name}}</td>
+            <td>{{$program->short}}</td>
             <td>
                 <div class="flex items-center space-x-2">
                     @foreach($program->schemes as $scheme)

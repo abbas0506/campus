@@ -2,7 +2,7 @@
 @section('page-content')
 <h1><a href="{{url('programs')}}">Programs</a></h1>
 <div class="bread-crumb">
-    <span class="text-slate-400">{{$program->name}}</span>
+    <span class="text-slate-400">{{$program->short}}</span>
     / Assign Internal
 </div>
 
