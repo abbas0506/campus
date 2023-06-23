@@ -43,21 +43,16 @@
             <div class="body">
 
                 @foreach($section->course_allocations()->allocated($semester_no)->get() as $course_allocation)
-                <div class="flex items-center justify-between w-full even:bg-slate-100 py-1">
+                <div class="flex items-center w-full even:bg-slate-100 py-1">
                     <div class="flex flex-1 text-sm">{{$course_allocation->course->name}} <span class="ml-3 text-slate-400">{{$course_allocation->course->creditHrsLabel()}}</span></div>
                     <div class="flex flex-1 text-sm">
                         <!-- if teacher name given, show name ... else show link icon -->
                         @if($course_allocation->teacher)
                         {{$course_allocation->teacher->name}}
-                        @if($section->currentSemester()==$semester_no)
-                        <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue ml-3 text-xs py-0 px-2 rounded-full">Replace</a>
-                        @endif
                         @elseif($section->clas->semester_no==$semester_no)
                         <div class="flex items-center py-2">
                             <a href="{{route('courseplan.teachers',$course_allocation)}}">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-indigo-600">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
-                                </svg>
+                                <i class="bx bx-paperclip text-indigo-600"></i>
                             </a>
                             <div class="text-xs text-slate-400 text-thin ml-2">(Assign Teacher)</div>
                         </div>
@@ -65,11 +60,13 @@
                         @endif
                     </div>
                     <!-- show remove icon for each allocation -->
-                    @if($section->clas->semester_no==$semester_no)
+                    @if($course_allocation->teacher)
+                    <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
+                    @elseif($section->clas->semester_no==$semester_no)
                     <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_elective_form{{$course_allocation->id}}'>
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn-red py-0 px-2 text-xs" onclick="delElective('{{$course_allocation->id}}')">
+                        <button type="submit" class="btn-red pb-1 px-2 text-xs" onclick="delElective('{{$course_allocation->id}}')">
                             Remove
                         </button>
                     </form>
