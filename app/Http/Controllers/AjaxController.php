@@ -164,8 +164,13 @@ class AjaxController extends Controller
         ]);
 
         // $students = Student::where('rollno', $request->searchby)->get();
-        $students = Student::where('name', 'like', '%' . $request->searchby . '%')
-            ->whereRelation('section.clas.program', 'department_id', session('department')->id)->get();
+
+        $studentsByRollNo = Student::where('rollno', 'like', '%' . $request->searchby . '%')
+            ->whereRelation('section.clas.program', 'department_id', session('department')->id);
+
+        $studentsByName = Student::where('name', 'like', '%' . $request->searchby . '%')
+            ->whereRelation('section.clas.program', 'department_id', session('department')->id);
+        $students = $studentsByRollNo->union($studentsByName)->get();
 
         $result = '';
         $roman = config('global.romans');
