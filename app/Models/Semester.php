@@ -23,7 +23,7 @@ class Semester extends Model
     }
     public function title()
     {
-        return $this->semester_type->name . '' . $this->year - 2000;
+        return $this->semester_type->name . ' ' . $this->year - 2000;
     }
     public function short()
     {

@@ -79,7 +79,7 @@ class StudentController extends Controller
     {
         //
         $student = Student::find($id);
-        echo $student->name;
+        return view('hod.students.show', compact('student'));
     }
 
     /**

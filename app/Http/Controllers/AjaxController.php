@@ -164,7 +164,8 @@ class AjaxController extends Controller
         ]);
 
         // $students = Student::where('rollno', $request->searchby)->get();
-        $students = Student::where('name', 'like', '%' . $request->searchby . '%')->get();
+        $students = Student::where('name', 'like', '%' . $request->searchby . '%')
+            ->whereRelation('section.clas.program', 'department_id', session('department')->id)->get();
 
         $result = '';
         $roman = config('global.romans');
@@ -177,10 +178,10 @@ class AjaxController extends Controller
             $result .=
 
                 "<div class='flex flex-row w-full py-1'>" .
-                "<a href='/students/" . $student->id . "' class='link w-1/6'>" . $student->rollno . "</a>" .
-                "<div class='w-1/3'>" . $student->name . "</div>" .
-                "<div class='w-1/3'>" . $student->father . "</div>" .
-                "<div>" . $student->section->clas->name . "</div>" .
+                "<a href='/students/" . $student->id . "' class='link w-1/4'>" . $student->rollno . "</a>" .
+                "<div class='w-1/4'>" . $student->name . "</div>" .
+                "<div class='w-1/4'>" . $student->father . "</div>" .
+                "<div class='w-1/4'>" . $student->section->clas->title() . "</div>" .
                 "</div>";
         }
         //student data found
