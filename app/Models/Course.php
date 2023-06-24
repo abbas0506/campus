@@ -55,4 +55,14 @@ class Course extends Model
     {
         return $query->where('department_id', $id);
     }
+
+    //new style for cr hr, will replace the older
+    public function lblCr()
+    {
+        return $this->credit_hrs_theory + $this->credit_hrs_practical . "(" . $this->credit_hrs_theory . "-" . $this->credit_hrs_practical . ")";
+    }
+    public function cr()
+    {
+        return $this->credit_hrs_theory + $this->credit_hrs_practical;
+    }
 }

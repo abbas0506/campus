@@ -58,6 +58,12 @@ class FirstAttempt extends Model
         else
             return "Fail";
     }
+    public function obtained()
+    {
+        if ($this->status() == 'Pass')
+            return $this->assignment + $this->presentation + $this->midterm + $this->summative;
+        else return 0;
+    }
     public function total()
     {
         //if pass, then return total else zero
@@ -159,17 +165,13 @@ class FirstAttempt extends Model
         }
         return $stars;
     }
-    public function scopeFilterByCourse($query, $id)
-    {
-        return $query->where('course_id', $id);
-    }
-    public function scopeFilterByStudent($query, $id)
-    {
-        return $query->where('section_id', $id);
-    }
 
-    public function scopeCourses($query, $id)
+    public function scopeDuring($query, $semester_id)
     {
-        return $query->where('course_allocation_id', $id);
+        return $query->where('semester_id', $semester_id);
+    }
+    public function scopeTill($query, $semester_id)
+    {
+        return $query->where('semester_id', '<=', $semester_id);
     }
 }

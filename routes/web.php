@@ -143,6 +143,8 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::get('hod/award/step1', [AwardController::class, 'step1']);
     Route::get('hod/award/{section}/step2', [AwardController::class, 'step2'])->name('hod.award.step2');
     Route::get('hod/award/{allocation}/pdf', [AwardController::class, 'pdf'])->name('hod.award.pdf');
+    Route::get('hod/award/{allocation}/export', [AwardController::class, 'export'])->name('hod.award.export');
+
 
     Route::get('hod/cum/step1', [CumulativeController::class, 'step1']);
     Route::get('hod/cum/{section}/step2', [CumulativeController::class, 'step2'])->name('hod.cum.step2');

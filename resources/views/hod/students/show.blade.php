@@ -54,11 +54,32 @@
             <div>{{$student->section->title()}}</div>
         </div>
         <div class="font-semibold underline underline-offset-4 mt-4 mb-2">Academic History</div>
-        <div class="flex items-center">
-            <div class="font-semibold w-24">Admission:</div>
-            <div>{{$student->section->clas->semester->title()}}</div>
-        </div>
+        <table class="table table-auto">
+            <thead>
+                <tr>
+                    <th class="text-xs">Course</th>
+                    <th class="text-xs">Cr</th>
+                    <th class="text-xs">Semester</th>
+                    <th class="text-xs">Obtained</th>
+                    <th class="text-xs">GPA</th>
+                    <th class="text-xs">Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($student->first_attempts()->till(session('semester_id'))->get() as $attempt)
+                <tr>
+                    <td class="text-xs">{{$attempt->course_allocation->course->name}}</td>
+                    <td class="text-xs text-center">{{$attempt->course_allocation->course->cr()}}</td>
+                    <td class="text-xs text-center">{{$attempt->semester->short()}}</td>
+                    <td class="text-xs text-center">{{$attempt->obtained()}}/100</td>
+                    <td class="text-xs text-center">{{$attempt->gpa()}}</td>
+                    <td class="text-xs text-center">{{$attempt->grade()}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+
 </div>
 
 

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\hod;
 
+use App\Exports\ExportAward;
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
 use App\Models\Department;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AwardController extends Controller
 {
@@ -41,5 +43,10 @@ class AwardController extends Controller
         $pdf->set_option("isPhpEnabled", true);
 
         return $pdf->stream();
+    }
+    public function export($id)
+    {
+        $course_allocation = CourseAllocation::find($id);
+        return Excel::download(new ExportAward($course_allocation), 'award_' . ($course_allocation->course->code == '' ? $course_allocation->id : $course_allocation->course->code) . '.xlsx');
     }
 }

@@ -42,8 +42,12 @@ $roman = config('global.romans');
                 <div class="w-1/3">{{$course_allocation->course->name}}</div>
                 <div class="w-1/3 text-xs text-slate-400"><i class="bx bx-user"></i> ({{$course_allocation->teacher->name}})</div>
                 @if($course_allocation->teacher)
-                <a href="{{route('hod.award.pdf', $course_allocation)}}" target="_blank" class="flex items-center btn-teal py-1">
-                    <i class="bx bx-printer"></i>
+
+                <a href="{{route('hod.award.export', $course_allocation)}}" target="_blank" class="flex items-center">
+                    <i class="bi-file-earmark-excel text-teal-600"></i>
+                </a>
+                <a href="{{route('hod.award.pdf', $course_allocation)}}" target="_blank" class="flex items-center">
+                    <i class="bi-file-earmark-pdf text-red-600"></i>
                 </a>
                 @endif
             </div>
