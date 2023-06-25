@@ -14,26 +14,21 @@ class PdfController extends Controller
     public function award($id)
     {
 
-        // $course_allocation = CourseAllocation::find($id);
-        // if ($course_allocation->section->clas->program->level == 21)
-        //     $pdf = PDF::loadView('teacher.assessment.phd.pdf', compact('course_allocation'))->setPaper('a4', 'portrait');
-        // else
-        //     $pdf = PDF::loadView('teacher.assessment.bsms.pdf', compact('course_allocation'))->setPaper('a4', 'portrait');
-        // $pdf->set_option("isPhpEnabled", true);
+        $course_allocation = CourseAllocation::find($id);
+        $pdf = PDF::loadView('pdf.award', compact('course_allocation'))->setPaper('a4', 'portrait');
+        $pdf->set_option("isPhpEnabled", true);
 
-        // return $pdf->stream();
-
-
-
-        // $course_allocation = CourseAllocation::find($id);
-        // if ($course_allocation->section->clas->program->level == 21)
-        //     $pdf = PDF::loadView('teacher.assessment.phd.pdf', compact('course_allocation'))->setPaper('a4', 'portrait');
-        // else
-        //     $pdf = PDF::loadView('teacher.assessment.bsms.pdf', compact('course_allocation'))->setPaper('a4', 'portrait');
-        // $pdf->set_option("isPhpEnabled", true);
-
-        // return $pdf->stream();
+        return $pdf->stream();
     }
+
+    public function gazette($id)
+    {
+        $section = Section::find($id);
+        $pdf = PDF::loadView('pdf.gazette', compact('section'))->setPaper('a4', 'landscape');
+
+        return $pdf->stream();
+    }
+
     public function previewCumulative($section_id, $semester_no)
     {
         $section = Section::find($section_id);
@@ -53,7 +48,6 @@ class PdfController extends Controller
 
         $sub1 = FirstAttempt::where('course_allocation_id', $course_array[0])->where('semester_no', $semester_no);
         $sub2 = FirstAttempt::where('course_allocation_id', $course_array[1])->where('semester_no', $semester_no);
-
 
         $result = Student::select('students.id', 'students.name', 'sub1.assignment as as1', 'sub2.assignment as as2')
             ->where('section_id', $section_id)

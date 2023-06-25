@@ -117,9 +117,13 @@ $roman = config('global.romans');
                     <tr class="border-b text-xs" style="background-color: #bbb;">
                         <th class="text-center border xs w-36">Roll No.</th>
                         <th class="border w-36">Student Name</th>
+
+                        @if($course_allocation->section->clas->program->level==21)
+                        <th class="text-center border w-12">Asgn etc. <br>20%</th>
+                        @else
                         <th class="text-center border w-8">Assign <br>10%</th>
                         <th class="text-center border w-8">Pres<br>10%</th>
-                        <!-- <th class='text-center border'>Attendance<br> 2%</th> -->
+                        @endif
                         <th class='text-center border w-8'>Mid<br> 30%</th>
                         <th class='text-center border w-12'>Fmt.<br>50%</th>
                         <th class='text-center border w-12'>Smt.<br>50%</th>
@@ -135,7 +139,10 @@ $roman = config('global.romans');
                         <td class="text-center border">{{$first_attempt->student->rollno}}</td>
                         <td class="pl-1 border">{{$first_attempt->student->name}}</td>
                         <td class='text-center border'>{{$first_attempt->assignment}}</td>
+                        <!-- dont show for phd -->
+                        @if($course_allocation->section->clas->program->level!=21)
                         <td class='text-center border'>{{$first_attempt->presentation}}</td>
+                        @endif
                         <td class='text-center border'>{{$first_attempt->midterm}}</td>
                         <td class='text-center border'>{{$first_attempt->formative()}}</td>
                         <td class='text-center border'>{{$first_attempt->summative}}</td>
@@ -156,7 +163,10 @@ $roman = config('global.romans');
                         <td class="text-center border">{{$reappear->first_attempt->student->rollno}}</td>
                         <td class="border pl-1">{{$reappear->first_attempt->student->name}}</td>
                         <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->assignment}}</td>
+                        <!-- dont show for phd -->
+                        @if($course_allocation->section->clas->program->level!=21)
                         <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->presentation}}</td>
+                        @endif
                         <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->midterm}}</td>
                         <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->formative()}}</td>
                         <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->summative}}</td>

@@ -43,40 +43,34 @@
     @endif
 
     <!-- section students -->
-    <table class="table-auto w-full mt-8 text-xs">
+    <table class="table-auto w-full mt-8">
         <thead class="border bg-gray-100">
             <tr class="border-slate-600">
-                <th rowspan="3" class="text-center">Sr No</th>
-                <th rowspan="3" class="text-center">Roll No</th>
-                <th rowspan="3" class="text-center">Reg. No</th>
-                <th rowspan="3" class="text-center">Student Name</th>
-                <th rowspan="3" class="text-center">Father Name</th>
-                <th colspan="2" class="text-center">Total</th>
-                <th rowspan="3" class="text-center">Status</th>
-                <th rowspan="3" class="text-center">Failing Subject</th>
+                <th rowspan="3" class="text-center text-xs">Sr No</th>
+                <th rowspan="3" class="text-center text-xs">Roll No</th>
+                <th rowspan="3" class="text-center text-xs">Reg. No</th>
+                <th rowspan="3" class="text-center text-xs">Student Name</th>
+                <th rowspan="3" class="text-center text-xs">Father Name</th>
+                <th colspan="2" class="text-center text-xs">Total</th>
+                <th rowspan="3" class="text-center text-xs">Status</th>
+                <th rowspan="3" class="text-center text-xs">Failing Subject</th>
             </tr>
-            <tr>
-                <th colspan=2 class="border text-center">Cr. Hrs {{$section->credit_hrs()}}</th>
-            </tr>
-            <tr>
-                <th class="text-center">Percentage of marks <br>obtained / {{$section->total_marks()}}</th>
-                <th class="text-center">CGPA</th>
-            </tr>
+
 
         </thead>
         <tbody>
             @php $sr=0;@endphp
             @foreach($section->students as $student)
-            <tr class="tr ">
-                <td class="text-center">{{++$sr}}</td>
-                <td class="text-center">{{$student->rollno}}</td>
-                <td class="text-center">{{$student->regno}}</td>
-                <td class="">{{$student->name}}</td>
-                <td class="">{{$student->father}}</td>
-                <td class="text-center">{{$student->overall_percentage()}} %</td>
-                <td class="text-center">{{$student->cgpa()}}</td>
-                <td class="text-center">{{$student->promotion_status()}}</td>
-                <td class="">{{$student->failed_courses()}}</td>
+            <tr class="tr">
+                <td class="text-center text-xs">{{++$sr}}</td>
+                <td class="text-center text-xs">{{$student->rollno}}</td>
+                <td class="text-center text-xs">{{$student->regno}}</td>
+                <td class="text-xs">{{$student->name}}</td>
+                <td class="text-xs">{{$student->father}}</td>
+                <td class="text-center text-xs">{{$student->overall_percentage()}} %</td>
+                <td class="text-center tex-xs">{{$student->cgpa()}}</td>
+                <td class="text-center text-xs">{{$student->promotion_status()}}</td>
+                <td class="text-xs">{{$student->failed_courses()}}</td>
 
             </tr>
             @endforeach

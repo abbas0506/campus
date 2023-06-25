@@ -7,8 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
 use App\Models\Department;
 use App\Models\Section;
-use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AwardController extends Controller
@@ -33,17 +31,6 @@ class AwardController extends Controller
         return view('hod.printable.award.step2', compact('section', 'semester_nos'));
     }
 
-    public function pdf($id)
-    {
-        $course_allocation = CourseAllocation::find($id);
-        if ($course_allocation->section->clas->program->level == 21)
-            $pdf = PDF::loadView('hod.printable.award.pdf_phd', compact('course_allocation'))->setPaper('a4', 'portrait');
-        else
-            $pdf = PDF::loadView('hod.printable.award.pdf', compact('course_allocation'))->setPaper('a4', 'portrait');
-        $pdf->set_option("isPhpEnabled", true);
-
-        return $pdf->stream();
-    }
     public function export($id)
     {
         $course_allocation = CourseAllocation::find($id);

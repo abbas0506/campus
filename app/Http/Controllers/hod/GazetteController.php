@@ -28,12 +28,4 @@ class GazetteController extends Controller
         $section = Section::find($id);
         return view('hod.printable.gazette.preview', compact('section'));
     }
-
-    public function pdf($id)
-    {
-        $section = Section::find($id);
-        $pdf = PDF::loadView('hod.printable.gazette.pdf', compact('section'))->setPaper('a4', 'landscape');
-
-        return $pdf->stream();
-    }
 }

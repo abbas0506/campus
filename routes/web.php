@@ -138,11 +138,11 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::view('hod/printable', 'hod.printable.index');
     Route::get('hod/gazette/step1', [GazetteController::class, 'step1']);
     Route::get('hod/gazette/{section}/preview', [GazetteController::class, 'preview'])->name('hod.gazette.preview');
-    Route::get('hod/gazette/{section}/pdf', [GazetteController::class, 'pdf'])->name('hod.gazette.pdf');
+    Route::get('hod/gazette/{section}/pdf', [PdfController::class, 'gazette'])->name('hod.gazette.pdf');
 
     Route::get('hod/award/step1', [AwardController::class, 'step1']);
     Route::get('hod/award/{section}/step2', [AwardController::class, 'step2'])->name('hod.award.step2');
-    Route::get('hod/award/{allocation}/pdf', [AwardController::class, 'pdf'])->name('hod.award.pdf');
+    Route::get('hod/award/{allocation}/pdf', [PdfController::class, 'award'])->name('hod.award.pdf');
     Route::get('hod/award/{allocation}/export', [AwardController::class, 'export'])->name('hod.award.export');
 
 
@@ -182,5 +182,5 @@ Route::group(['middleware' => ['role:teacher']], function () {
     Route::get('assessment/pdf/{id}', [AssessmentController::class, 'pdf']);
 
     Route::get('teacher/award', [TeacherAwardController::class, 'index']);
-    Route::get('teacher/award/{course}/pdf', [TeacherAwardController::class, 'pdf'])->name('teacher.award');
+    Route::get('teacher/award/{course}/pdf', [PdfController::class, 'award'])->name('teacher.award');
 });
