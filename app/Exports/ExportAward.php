@@ -22,10 +22,50 @@ class ExportAward implements FromCollection
     public function collection()
     {
         //
+        $roman = config('global.romans');
         $award = new Collection();
 
+        $award->push((object)[
+            '', '',
+            'University of Okara',
+            '',
+            'Award Sheet'
+        ]);
+
+        $award->push((object)[
+            'Department',
+            $this->course_allocation->section->clas->program->department->name,
+            '', '', '', '',
+            'Session',
+            $this->course_allocation->section->clas->session(),
+        ]);
+        $award->push((object)[
+            'Porgram',
+            $this->course_allocation->scheme_detail->scheme->program->name,
+            '', '',
+            'Semester',
+            $roman[$this->course_allocation->semester_no - 1],
+            'Section',
+            $this->course_allocation->section->name,
+
+        ]);
+
+        $award->push((object)[
+            'Course',
+            $this->course_allocation->course->name,
+            '', '',
+            'Code',
+            $this->course_allocation->course->code,
+            'Cr. Hr',
+            $this->course_allocation->course->lblCr(),
+
+        ]);
+
+        $award->push((object)[
+            '',
+        ]);
+        //if PhD course
         if ($this->course_allocation->section->clas->program->level == 21) {
-            //phd case row header
             $award->push((object)[
                 'rollno' => 'Roll No',
                 'name' => 'Name',
