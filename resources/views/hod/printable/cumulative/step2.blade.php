@@ -48,7 +48,8 @@ $roman = config('global.romans');
 
             @endforeach
             <div class="w-full mt-2">
-                <a href="{{route('hod.cum.preview', [$section->id,$semester_no])}}" class="flex items-center btn-teal text-sm float-left">
+                <!-- <a href="{{route('hod.cum.preview', [$section->id,$semester_no])}}" class="flex items-center btn-teal text-sm float-left"> -->
+                <a href="#" class="flex items-center btn-teal text-sm float-left">
                     Print Cumulative Sheet
                     <i class="bx bx-printer ml-2"></i>
                 </a>

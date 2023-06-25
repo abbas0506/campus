@@ -17,9 +17,7 @@
                 <div class="mt-2">Gazette</div>
                 <div class="text-sm font-thin text-slate-600 hidden">10</div>
             </a>
-            <!-- <a href="{{url('hod/cum/step1')}}" class="flex flex-col justify-center items-center h-32 w-40 rounded-lg bg-sky-200"> -->
-            <a href="#" class="flex flex-col justify-center items-center h-32 w-40 rounded-lg bg-sky-200">
-                <i class="bx bx-map-pin text-2xl"></i>
+            <a href="{{url('hod/cum/step1')}}" class="flex flex-col justify-center items-center h-32 w-40 rounded-lg bg-sky-200">
                 <i class="bx bx-map-pin text-2xl"></i>
                 <div class="mt-2">Cumulative</div>
                 <div class="text-sm font-thin text-slate-600 hidden">10</div>
