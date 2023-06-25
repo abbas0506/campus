@@ -19,7 +19,6 @@
             @endif
 
             <h3 class="text-xs">Not a user? Please, contact system admin!</h3>
-            <i class="bi bi-archive"></i>
             <form action="{{url('login')}}" method="post" class="w-full mt-1">
                 @csrf
                 <div class="flex flex-col w-full items-start">
