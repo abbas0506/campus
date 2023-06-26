@@ -49,6 +49,7 @@ use App\Http\Controllers\teacher\ReappearSummativeController;
 use App\Http\Controllers\teacher\SummativeController;
 use App\Http\Controllers\teacher\EnrollmentController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -119,7 +120,11 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
 
     Route::get('schemes/meta/create/{scheme}/{semester}', [SchemeMetaController::class, 'create'])->name('schemes.meta.create');
-    Route::post('schemes/meta/store', [SchemeMetaController::class, 'store'])->name('schemes.meta.store');
+
+    Route::resource('scheme-meta', SchemeMetaController::class)->except('create');
+
+    // Route::post('schemes/meta/store', [SchemeMetaController::class, 'store'])->name('schemes.meta.store');
+    // Route::delete('schemes/meta/destroy', [SchemeMetaController::class, 'destroy'])->name('schemes.meta.destroy');
 
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('courseplan', CoursePlanController::class);

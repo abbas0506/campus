@@ -94,7 +94,7 @@ class SchemeDetailController extends Controller
             ->distinct()->get('course_id')->toArray();
 
         $courses = Course::whereIn('id', $course_ids)
-            ->where('course_type_id', $course_type_id)
+            // ->where('course_type_id', $course_type_id)
             ->get();
 
         return view('hod.scheme_details.edit_meta', compact('courses', 'scheme_meta'));

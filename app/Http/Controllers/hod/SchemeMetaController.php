@@ -5,6 +5,7 @@ namespace App\Http\Controllers\hod;
 use App\Http\Controllers\Controller;
 use App\Models\CourseType;
 use App\Models\Scheme;
+use App\Models\SchemeDetail;
 use App\Models\SchemeMeta;
 use Exception;
 use Illuminate\Http\Request;
@@ -114,8 +115,34 @@ class SchemeMetaController extends Controller
      * @param  \App\Models\SchemeMeta  $schemeMeta
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SchemeMeta $schemeMeta)
+    public function destroy($id)
     {
         //
+        $scheme_meta = SchemeMeta::find($id);
+        // dd($id);
+        DB::beginTransaction();
+        try {
+            $scheme_id = $scheme_meta->scheme_id;
+            $semester_no = $scheme_meta->semester_no;
+            $slot = $scheme_meta->slot;
+
+            $scheme_details = SchemeDetail::where('scheme_id', $scheme_id)
+                ->where('semester_no', $semester_no)
+                ->where('slot', $slot);
+
+            foreach ($scheme_details as $scheme_detail) {
+                $scheme_detail->slot = 0;
+                $scheme_detail->update();
+            }
+
+            $scheme_meta->delete();
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
+            // something went wrong
+        }
     }
 }

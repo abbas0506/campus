@@ -29,7 +29,7 @@
         </ul>
     </div>
     @endif
-    <form action="{{route('schemes.meta.store')}}" method='post' class="flex flex-col w-full text-left mt-12">
+    <form action="{{route('scheme-meta.store')}}" method='post' class="flex flex-col w-full text-left mt-12">
         @csrf
         <input type="hidden" name="scheme_id" value="{{$scheme->id}}">
         <input type="hidden" name="semester_no" value="{{$semester_no}}">
