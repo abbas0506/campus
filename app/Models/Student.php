@@ -88,7 +88,7 @@ class Student extends Model
     public function overall_percentage()
     {
         if ($this->overall_total_marks() == 0) return '-';
-        else return round($this->overall_obtained() / $this->overall_total_marks() * 100, 0);
+        else return round($this->overall_obtained() / $this->overall_total_marks() * 100, 2);
     }
     public function cgpa()
     {

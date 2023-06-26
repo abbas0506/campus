@@ -48,8 +48,11 @@ select * from cms.courses
 insert into cms_v2.schemes
 select * from cms.schemes
 
-insert into cms_v2.scheme_details
-select * from cms.scheme_details
+//insert into cms_v2.scheme_details
+//select * from cms.scheme_details
+
+insert into cms_v2.scheme_details(id, scheme_id, semester_no, course_id, created_at,updated_at)
+select id, scheme_id, semester_no, course_id, created_at,updated_at from cms.scheme_details
 
 insert into cms_v2.clas
 select * from cms.clas
@@ -73,7 +76,7 @@ delete from cms.first_attempts where isnull(course_allocation_id);
 //insert into cms_v2.first_attempts
 //select * from cms.first_attempts;
 
-delete from first_attempts where course_allocation_id=710;
+delete from cms.first_attempts where course_allocation_id=710;
 
 insert into cms_v2.first_attempts(id,student_id,semester_no,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at)
 select id,student_id,semester_no,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at from cms.first_attempts;

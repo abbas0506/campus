@@ -14,7 +14,8 @@
 
     <div class="flex justify-between items-center mt-8">
         <div class="flex items-center text-sm bg-teal-100 text-teal-600 font-semibold py-1 px-2">Cr Hrs: <span class="p-1 ml-2 mr-5 text-slate-600">{{$scheme->creditHrsDefined()}} / {{$scheme->creditHrsMax()}}</span> Courses: <span class="px-2 py-1 text-slate-600">{{$scheme->scheme_details->count()}}</span> <span class="bx bx-check-double ml-2"></span></div>
-        <form action="{{route('schemes.destroy',$scheme)}}" method="POST" id='del_form{{$scheme->id}}'>
+        <!-- <form action="{{route('schemes.destroy',$scheme)}}" method="POST" id='del_form{{$scheme->id}}'> -->
+        <form action="#" method="POST" id='del_form{{$scheme->id}}'>
             @csrf
             @method('DELETE')
             <button type="submit" class="btn-red flex items-center justify-center" onclick="delme('{{$scheme->id}}')">
@@ -78,7 +79,7 @@
 
                 <div class=" w-full mt-2">
                     <a href="{{route('schemes.meta.create', [$scheme->id, $semester_no])}}" class="flex items-center btn-orange text-sm float-left">
-                        Creat Slot
+                        Create Slot
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
                         </svg>
