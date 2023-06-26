@@ -43,7 +43,7 @@ $roman = config('global.romans');
                         <td class="text-center text-sm font-bold">{{$section->clas->program->name}}</td>
                     </tr>
                     <tr>
-                        <td class="text-center text-sm font-bold">{{$section->clas->title()}}</td>
+                        <td class="text-center text-sm font-bold">{{$section->title()}}</td>
                     </tr>
                 </tbody>
             </table>
