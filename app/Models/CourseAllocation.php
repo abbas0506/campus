@@ -80,4 +80,8 @@ class CourseAllocation extends Model
             return $allocation->course->creditHrs();
         });
     }
+    public function scopeDuring($query, $semester_id)
+    {
+        return $query->where('semester_id', $semester_id);
+    }
 }

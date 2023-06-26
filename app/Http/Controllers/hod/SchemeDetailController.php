@@ -5,6 +5,7 @@ namespace App\Http\Controllers\hod;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\SchemeDetail;
+use App\Models\SchemeMeta;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -78,17 +79,38 @@ class SchemeDetailController extends Controller
      * @param  \App\Models\SchemeDetail  $schemeDetail
      * @return \Illuminate\Http\Response
      */
-    public function edit($semester_no)
-    {
-        //skip those course which have already been added to this scheme in any semester
-        session(['semester_no' => $semester_no]);
 
-        $course_ids = SchemeDetail::where('scheme_id', session('scheme')->id)->distinct()->get('course_id')->toArray();
-        $courses = Course::whereNotIn('id', $course_ids)
-            // ->where('department_id', session('department_id'))
+    public function edit($id)
+    {
+        $scheme_meta = SchemeMeta::find($id);
+        $scheme_id = $scheme_meta->scheme_id;
+        $semester_no = $scheme_meta->semester_no;
+        $slot = $scheme_meta->slot;
+        $course_type_id = $scheme_meta->course_type_id;
+
+        $course_ids = SchemeDetail::where('scheme_id', $scheme_id)
+            ->where('semester_no', $semester_no)
+            ->where('slot', 0)
+            ->distinct()->get('course_id')->toArray();
+
+        $courses = Course::whereIn('id', $course_ids)
+            ->where('course_type_id', $course_type_id)
             ->get();
-        return view('hod.scheme_details.edit', compact('courses'));
+
+        return view('hod.scheme_details.edit_meta', compact('courses', 'scheme_meta'));
     }
+
+    // public function edit($semester_no)
+    // {
+    //     //skip those course which have already been added to this scheme in any semester
+    //     session(['semester_no' => $semester_no]);
+
+    //     $course_ids = SchemeDetail::where('scheme_id', session('scheme')->id)->distinct()->get('course_id')->toArray();
+    //     $courses = Course::whereNotIn('id', $course_ids)
+    //         // ->where('department_id', session('department_id'))
+    //         ->get();
+    //     return view('hod.scheme_details.edit', compact('courses'));
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -97,11 +119,35 @@ class SchemeDetailController extends Controller
      * @param  \App\Models\SchemeDetail  $schemeDetail
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SchemeDetail $schemeDetail)
+    public function update(Request $request, $id)
     {
         //
 
+        $request->validate([
+            'course_id' => 'required|numeric',
+        ]);
 
+        $scheme_meta = SchemeMeta::find($id);
+        $scheme_id = $scheme_meta->scheme_id;
+        $semester_no = $scheme_meta->semester_no;
+        $slot = $scheme_meta->slot;
+        $course_type_id = $scheme_meta->course_type_id;
+
+        try {
+            $scheme_detail = SchemeDetail::where('scheme_id', $scheme_id)
+                ->where('semester_no', $semester_no)
+                ->where('course_id', $request->course_id)
+                ->first();
+
+            $scheme_detail->slot = $slot;
+            $scheme_detail->update();
+
+            // echo $scheme_detail->toJson();
+            return redirect()->route('schemes.show', session('scheme'))->with('success', 'Successfully added');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**

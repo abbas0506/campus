@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\FirstAttempt;
 use App\Models\Section;
+use App\Models\Semester;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Database\Seeders\SemesterSeeder;
 
 class CumulativeController extends Controller
 {
@@ -24,15 +26,12 @@ class CumulativeController extends Controller
     public function step2($id)
     {
         $section = Section::find($id);
+        $semesters = Semester::whereBetween('id', [$section->clas->semester_id, session('semester_id')])->get();
 
-        $semester_nos = collect();
-        for ($i = 1; $i <= $section->clas->semester_no; $i++) {
-            $semester_nos->add($i);
-        }
-        return view('hod.printable.cumulative.step2', compact('section', 'semester_nos'));
+        return view('hod.printable.cumulative.step2', compact('section', 'semesters'));
     }
 
-    public function preview($id, $semester_no)
+    public function preview1($id, $semester_no)
     {
         $section = Section::find($id);
         $course_allocations = $section->course_allocations()->allocated($semester_no)->get();
@@ -101,5 +100,19 @@ class CumulativeController extends Controller
         // echo "<br>";
         // echo $result2->toJson();
 
+    }
+    public function preview($section_id, $semester_id)
+    {
+        $section = Section::find($section_id);
+        $course_allocations = $section->course_allocations()->during($semester_id)->get();
+
+        $students = $section->students;
+        $ids_1 = $section->students->pluck('id')->toArray();
+        $ids_2 = $section->students->where('id', '>', 7140)->pluck('id')->toArray();
+        $ids_3 = $section->students->where('id', '<', 7148)->pluck('id')->toArray();
+
+
+        $ids_4 = array_intersect($ids_1, $ids_2, $ids_3);
+        dd($ids_4);
     }
 }

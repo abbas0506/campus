@@ -33,6 +33,7 @@ use App\Http\Controllers\hod\ClassReversionController;
 use App\Http\Controllers\hod\CoursePlanController;
 use App\Http\Controllers\hod\CumulativeController;
 use App\Http\Controllers\hod\InternalController;
+use App\Http\Controllers\hod\SchemeMetaController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\teacher\AssessmentController;
@@ -116,6 +117,10 @@ Route::group([' middleware' => ['role:hod']], function () {
 
     Route::resource('schemes', SchemeController::class);
     Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
+
+    Route::get('schemes/meta/create/{scheme}/{semester}', [SchemeMetaController::class, 'create'])->name('schemes.meta.create');
+    Route::post('schemes/meta/store', [SchemeMetaController::class, 'store'])->name('schemes.meta.store');
+
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('courseplan', CoursePlanController::class);
 
@@ -148,7 +153,7 @@ Route::group([' middleware' => ['role:hod']], function () {
 
     Route::get('hod/cum/step1', [CumulativeController::class, 'step1']);
     Route::get('hod/cum/{section}/step2', [CumulativeController::class, 'step2'])->name('hod.cum.step2');
-    Route::get('hod/cum/{allocation}/{semester}/preview', [CumulativeController::class, 'preview'])->name('hod.cum.preview');
+    Route::get('hod/cum/{section}/{semester}/preview', [CumulativeController::class, 'preview'])->name('hod.cum.preview');
 
     // Route::resource('gazette', gazetteController::class);
     // Route::resource('hod-award', HodAwardController::class);

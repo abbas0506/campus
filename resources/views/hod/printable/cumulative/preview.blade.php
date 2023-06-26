@@ -60,7 +60,7 @@
         <div class="w-32">Father</div>
         @foreach ($course_allocations as $course_allocation)
         <div class="flex flex-col justify-center items-center">
-            <div>{{$course_allocation->course->name}}</div>
+            <div>{{$course_allocation->course->short}}</div>
             <div>{{$course_allocation->course->code}}</div>
             <div class="flex w-24">
                 <div class="text-center w-8 border-l">
@@ -84,11 +84,10 @@
             <div class="w-32">{{$student->name}}</div>
             <div class="w-32">{{$student->father}}</div>
             @foreach ($course_allocations as $course_allocation)
-            @php $attempt=$student->first_attempts()->courses($course_allocation->id)->first(); @endphp
-
+            @php $attempt=$student->first_attempts()->during(session('semester_id'))->where('course_allocation_id', $course_allocation->id)->first(); @endphp
             <div class="text-center w-8 border-l">
                 @if($attempt)
-                {{$attempt->total()}}
+                {{$attempt->obtained()}}
                 @endif
             </div>
             <div class="text-center w-8">

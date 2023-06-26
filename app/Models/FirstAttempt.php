@@ -174,4 +174,8 @@ class FirstAttempt extends Model
     {
         return $query->where('semester_id', '<=', $semester_id);
     }
+    public function scopeBy($query, $student_id)
+    {
+        return $query->where('student_id', '<=', $student_id);
+    }
 }
