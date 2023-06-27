@@ -33,7 +33,7 @@ class Program extends Model
     public function clases()
     {
         return $this->hasMany(Clas::class)
-            ->where('semester_id', "<=", session('semester_id'));
+            ->where('semester_id', "<=", session('semester')->id);
     }
     public function sections()
     {
