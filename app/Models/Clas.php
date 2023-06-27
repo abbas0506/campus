@@ -73,4 +73,8 @@ class Clas extends Model
             return $query->students->count();
         });
     }
+    public function scopeTill($query, $semester_id)
+    {
+        return $query->where('semester_id', '<=', $semester_id);
+    }
 }

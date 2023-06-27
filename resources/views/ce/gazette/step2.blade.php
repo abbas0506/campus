@@ -1,6 +1,6 @@
 @extends('layouts.controller')
 @section('page-content')
-<h1 class="mt-12">Award Lists | Step 2</h1>
+<h1 class="mt-12">Gazette | Step 2</h1>
 <h2 class="">{{$department->name}}</h2>
 
 <div class="flex items-center space-x-2 mt-8">
@@ -25,11 +25,11 @@
 @endif
 
 <!-- records found -->
-<div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$programs->count()}} programs found</div>
+<div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$department->programs->count()}} programs found</div>
 
 <div class="flex flex-col accordion">
 
-    @foreach($programs as $program)
+    @foreach($department->programs as $program)
     <div class="collapsible">
         <div class="head">
             <h2>{{$program->short}} <span class="text-xs ml-4 font-thin">({{$program->sections()->count()}} sections)</span></h2>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="grid grid-cols-10 gap-2">
                     @foreach($clas->sections as $section)
-                    <a href="{{url('ce-award/courses',$section)}}" class='flex justify-center items-center bg-teal-100 hover:bg-teal-600 hover:text-slate-100 px-2'>
+                    <a href="{{route('ce.gazette.step3',$section)}}" class='flex justify-center items-center bg-teal-100 hover:bg-teal-600 hover:text-slate-100 px-2'>
                         {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                     </a>
                     @endforeach

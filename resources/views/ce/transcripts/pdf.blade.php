@@ -74,9 +74,9 @@
                 @foreach($first_attempts->where('semester_no',$semester_no) as $first_attempt)
 
                 <tr class="text-xs">
-                    <td class="py-1 pl-2 border border-solid border-gray-600 w-12">{{$first_attempt->course->code}}</td>
-                    <td class="py-1 pl-2 border border-solid border-gray-600 w-64">{{$first_attempt->course->name}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->course->creditHrs()}}</td>
+                    <td class="py-1 pl-2 border border-solid border-gray-600 w-12">{{$first_attempt->course_allocation->course->code}}</td>
+                    <td class="py-1 pl-2 border border-solid border-gray-600 w-64">{{$first_attempt->course_allocation->course->name}}</td>
+                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->course_allocation->course->creditHrs()}}</td>
                     <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$first_attempt->best_attempt()->total()}}</td>
                     <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->gpa()}}</td>
                     <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->grade()}}</td>

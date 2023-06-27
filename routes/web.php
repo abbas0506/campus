@@ -15,8 +15,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\HeadshipController;
-use App\Http\Controllers\ce\AwardController as ControllerAwardController;
+use App\Http\Controllers\ce\AwardController as CeAwardController;
 use App\Http\Controllers\ce\FinalGazetteController;
+use App\Http\Controllers\ce\GazetteController as CeGazetteController;
 use App\Http\Controllers\ce\NotifiedGazetteController;
 use App\Http\Controllers\ce\TranscriptController;
 use App\Http\Controllers\hod\AwardController;
@@ -95,16 +96,27 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('coursetypes', CourseTypeController::class);
     //
 });
+
 Route::group(['middleware' => ['role:controller']], function () {
     // Route::view('controller', 'ce.index');
     Route::redirect('controller', 'transcripts');
     Route::resource('transcripts', TranscriptController::class);
     Route::get('transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
-    Route::resource('ce-gazette', FinalgazetteController::class)->only('index', 'show', 'store');
-    Route::resource('ce-award', AwardController::class)->only('index', 'show', 'store');
-    Route::get('ce-award/courses/{section}', [AwardController::class, 'courses']);
-});
+    Route::post('searchAllByRollNoOrName', [AjaxController::class, 'searchAllByRollNoOrName']);
 
+    Route::get('ce/award/step1', [CeAwardController::class, 'step1']);
+    Route::post('ce/award/step1', [CeAwardController::class, 'store'])->name('ce.award.step1.store');
+    Route::get('ce/award/step2', [CeAwardController::class, 'step2'])->name('ce.award.step2');
+    Route::get('ce/award/{section}/step3', [CeAwardController::class, 'step3'])->name('ce.award.step3');
+    Route::get('ce/award/{allocation}/pdf', [PdfController::class, 'award'])->name('ce.award.pdf');
+    Route::get('ce/award/{allocation}/export', [CeAwardController::class, 'export'])->name('ce.award.export');
+
+    Route::get('ce/gazette/step1', [CeGazetteController::class, 'step1']);
+    Route::post('ce/gazette/step1', [CeGazetteController::class, 'store'])->name('ce.gazette.step1.store');
+    Route::get('ce/gazette/step2', [CeGazetteController::class, 'step2'])->name('ce.gazette.step2');
+    Route::get('ce/gazette/{section}/step3', [CeGazetteController::class, 'step3'])->name('ce.gazette.step3');
+    Route::get('ce/gazette/{allocation}/pdf', [PdfController::class, 'gazette'])->name('ce.gazette.pdf');
+});
 
 Route::group([' middleware' => ['role:hod']], function () {
     Route::get('hod', [DashboardController::class, 'hod']);

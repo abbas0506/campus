@@ -194,4 +194,42 @@ class AjaxController extends Controller
             'result' => $result,
         ]);
     }
+
+    public function searchAllByRollNoOrName(Request $request)
+    {
+        $request->validate([
+            'searchby' => 'required',
+        ]);
+
+        // $students = Student::where('rollno', $request->searchby)->get();
+
+        $studentsByRollNo = Student::where('rollno', 'like', '%' . $request->searchby . '%');
+
+        $studentsByName = Student::where('name', 'like', '%' . $request->searchby . '%');
+
+        $students = $studentsByRollNo->union($studentsByName)->get();
+
+        $result = '';
+        $roman = config('global.romans');
+        //if student found, fetch student history and check whether he/she has ever failed in the same course
+
+        foreach ($students as $student) {
+            //if student failed, then look into reappear attempts
+            $result .=
+
+                "<div class='flex flex-row w-full py-1'>" .
+                "<a href='/transcripts/pdf/" . $student->id . "' class='link w-1/4' target='_blank'>" . $student->rollno . "</a>" .
+                "<div class='w-1/4'>" . $student->name . "</div>" .
+                "<div class='w-1/4'>" . $student->father . "</div>" .
+                "<div class='w-1/4'>" . $student->section->clas->title() . "</div>" .
+                "</div>";
+        }
+        //student data found
+        if ($result == '') {
+            $result = "<div class='flex flex-row flex-1 py-1 text-center'>No record found!</div>";
+        }
+        return response()->json([
+            'result' => $result,
+        ]);
+    }
 }

@@ -4,35 +4,36 @@
 <x-header></x-header>
 <div class="flex relative top-16 w-screen">
     <aside aria-label="Sidebar" id='sidebar'>
-        <div class="mt-4 text-sm text-center text-gray-400">{{date('M d, Y')}}</div>
+        <div class="mt-6 font-bold text-center text-orange-300 uppercase tracking-wider">Controller</div>
+        <div class="text-sm text-center text-gray-400">{{date('M d, Y')}}</div>
         <div class="mt-12">
             <ul class="space-y-2">
                 <li>
                     <!-- <a href="{{url('ce-award')}}" class="flex items-center p-2"> -->
-                    <a href="#" class="flex items-center p-2">
-                        <i class="bx bx-award text-lg"></i>
+                    <a href="{{url('ce/award/step1')}}" class="flex items-center p-2">
+                        <i class="bi bi-award text-lg"></i>
                         <span class="ml-3">Award List</span>
                     </a>
                 </li>
                 <li>
+                    <a href="{{url('ce/gazette/step1')}}" class="flex items-center p-2">
+                        <i class="bi bi-journal-check text-lg"></i>
+                        <span class="ml-3">Gazette</span>
+                    </a>
+                </li>
+                <li>
                     <a href="#" class="flex items-center p-2">
-                        <i class="bx bx-receipt text-lg"></i>
+                        <i class="bi bi-file-earmark-medical text-lg"></i>
                         <span class="ml-3">Cumulative Sheet</span>
                     </a>
                 </li>
 
-                <li>
-                    <!-- <a href="{{url('ce-gazette')}}" class="flex items-center p-2"> -->
-                    <a href="#" class="flex items-center p-2">
-                        <i class="bx bx-badge-check text-lg"></i>
-                        <span class="ml-3">gazette</span>
-                    </a>
-                </li>
+
 
                 <li>
                     <!-- <a href="{{url('transcripts')}}" class="flex items-center p-2"> -->
                     <a href="#" class="flex items-center p-2">
-                        <i class="bx bxs-graduation text-lg"></i>
+                        <i class="bi bi-mortarboard text-lg"></i>
                         <span class="ml-3">Transcripts</span>
                     </a>
                 </li>

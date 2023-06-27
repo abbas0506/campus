@@ -59,7 +59,7 @@ class LoginOptionsController extends Controller
                 $semester = Semester::find($request->semester_id);
                 session([
                     'semester_id' => $request->semester_id,
-                    'semester' => $semester->title(),
+                    'semester' => $semester,
                 ]);
                 if ($request->role == 'hod') {
                     $department = Department::find($request->department_id);

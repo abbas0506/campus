@@ -30,13 +30,13 @@
 
 <div class="flex flex-row space-x-8">
     <div class="flex flex-column">
-        <form method='post' action="{{url('ce-gazette')}}" class="mt-3">
+        <form method='post' action="{{route('ce.gazette.step1.store')}}" class="mt-3">
             @csrf
             @method('POST')
 
             <label for="" class="text-base text-gray-700 text-left w-full">Semester</label>
             <select id="semester_id" name="semester_id" class="input-indigo px-4 py-3 w-full mb-3">
-                @foreach($semesters->sortDesc() as $semester)
+                @foreach($semesters as $semester)
                 <option value="{{$semester->id}}">{{$semester->short()}}</option>
                 @endforeach
             </select>

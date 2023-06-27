@@ -30,7 +30,7 @@ $roman = config('global.romans');
                         <td class="text-center text-lg font-bold">UNIVERSITY OF OKARA</td>
                     </tr>
                     <tr>
-                        <td class="text-center text-base font-bold">Result Gazette {{session('semester')}}</td>
+                        <td class="text-center text-base font-bold">Result Gazette {{session('semester')->title()}}</td>
                     </tr>
                 </tbody>
             </table>

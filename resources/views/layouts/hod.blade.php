@@ -10,7 +10,7 @@
             <div class="px-4">|</div>
             <div class="text-sm flex items-center space-x-2">
                 <div>HoD</div>
-                <div class="text-xs">[{{session('department')->name}}, {{session('semester')}}]</div>
+                <div class="text-xs">[{{session('department')->name}}, {{session('semester')->title()}}]</div>
                 <a href="{{route('login-options.index')}}" class="text-blue-600 hover:text-blue-800 text-xs">Change</a>
             </div>
         </div>
@@ -57,7 +57,7 @@
 
 </header>
 <aside aria-label="Sidebar" id='sidebar'>
-    <div class="mt-4 font-bold text-center text-orange-300 uppercase tracking-wider">{{session('semester')}}</div>
+    <div class="mt-4 font-bold text-center text-orange-300 uppercase tracking-wider">{{session('semester')->title()}}</div>
     <div class="text-xs text-center">{{date('M d, Y')}}</div>
     <div class="mt-12">
         <ul class="space-y-2">

@@ -4,7 +4,7 @@
 <div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-4">
     <i class="bx bx-printer text-[40px] text-slate-600"></i>
     <div class="font-semibold text-slate-700 text-lg leading-relaxed">Award Lists / Assessment Sheets</div>
-    <div class="text-slate-700">( {{session('semester')}} )</div>
+    <div class="text-slate-700">( {{session('semester')->title()}} )</div>
 </div>
 
 <div class="w-full mt-12">

@@ -10,7 +10,9 @@
                 <div class="text-base md:text-xl font-semibold">Examination System</div>
                 <div class="px-4">|</div>
                 <div>{{Str::title(session('current_role'))}}</div>
-                <a href="{{route('login-options.index')}}" class="text-blue-600 hover:text-blue-800 text-xs ml-4">Change</a>
+                @if(Auth::user()->hasAnyRole(['hod','teacher']))
+                <a href="{{route('login-options.index')}}" class="text-blue-600 hover:text-blue-800 text-xs ml-4"></a>
+                @endif
             </div>
             <!-- right sided current user info -->
             <div id="current-user-area" class="flex space-x-3 items-center justify-center relative mr-8">

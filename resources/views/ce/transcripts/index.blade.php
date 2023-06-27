@@ -1,45 +1,67 @@
 @extends('layouts.controller')
 @section('page-content')
-<div class="flex flex-col justify-center items-center mt-40">
-
-    @if ($errors->any())
-    <div class="bg-red-100 text-red-700 text-sm py-3 px-5 mb-5 w-full md:w-3/4">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-
-    @endif
-
-    <form action="{{route('transcripts.store')}}" class="flex flex-col w-3/4" method="post">
-        @csrf
-        <div class="text-2xl text-indigo-500">Student Transcript</div>
-        <input type="text" name='rollno' class="input-indigo py-2 px-4 mt-3" placeholder="Enter roll no." id='rollno'>
-        <button type='submit' class="btn-indigo p-2 mt-4" onclick="serachByRollNo()">Search</button>
-
-        @if($student)
-        <a href="{{route('transcripts.show', $student)}}" class="flex items-center bg-green-100 relative mt-8 ml-4 p-2">
-            <div class="w-16 h-16 absolute -left-4 rounded-full flex items-center justify-center bg-teal-500 text-yellow-400 ring-4 ring-slate-50">
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
-                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-
-            </div>
-            <div class="flex flex-col pl-12 ">
-                <div class="font-bold">{{$student->name}} @if($student->gender=='M') s/o @else d/o @endif {{$student->father}}</div>
-                <div class="text-sm text-gray-500">{{$student->section->title()}}</div>
-            </div>
-        </a>
-        @elseif($searched)
-        <div class="alert-danger mt-4 text-center">
-            No record exists
-        </div>
-        @endif
-
-    </form>
+<div class="flex">
+    <a class="text-xs text-blue-600"> <i class="bi bi-clock mr-2"></i>{{\Carbon\Carbon::now()}}</a>
 </div>
+
+<div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-2">
+    <div><i class="bi bi-printer text-4xl"></i></div>
+    <div class="font-semibold text-slate-700 text-lg leading-relaxed">Student Transcript</div>
+</div>
+
+<div class="flex items-center mt-12">
+    <input type="text" id='searchby' placeholder="Search by name or roll no." class="search-indigo w-1/3">
+    <div class="flex justify-center items-center btn-teal w-8 h-8 rounded-full" onclick='search()'><i class="bx bx-search"></i></div>
+</div>
+
+
+<div class="flex flex-row w-full mt-8 font-semibold bg-slate-100 py-1">
+    <div class="w-1/4">Roll No</div>
+    <div class="w-1/4">Name</div>
+    <div class="w-1/4">Father</div>
+    <div class="1/4">Class</div>
+</div>
+<div id='tbody' class="text-sm text-slate-600">
+    <div class="mt-4 text-teal-800 animate-bounce text-md">Type a few letters from the student's name or roll no. Press on search icon; result will be shown here</div>
+</div>
+
+
+@endsection
+
+@section('script')
+<script type="text/javascript">
+    function search() {
+        var token = $("meta[name='csrf-token']").attr("content");
+
+        var searchby = $('#searchby').val();
+        if (searchby == '') {
+            Swal.fire({
+                icon: 'warning',
+                title: "Nothing to search",
+            });
+        } else {
+            //show sweet alert and confirm submission
+            $.ajax({
+                type: 'POST',
+                url: "{{url('searchAllByRollNoOrName')}}",
+                data: {
+                    "searchby": searchby,
+                    "_token": token,
+
+                },
+                success: function(response) {
+                    $('#tbody').html(response.result)
+
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: errorThrown
+                    });
+                }
+            }); //ajax end
+        }
+    }
+</script>
 
 @endsection

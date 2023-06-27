@@ -9,15 +9,15 @@ use App\Models\Semester;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class AwardController extends Controller
+class GazetteController extends Controller
 {
-
+    //
     public function step1()
     {
         //
         $semesters = Semester::where('year', '<=', Carbon::now()->format('Y'))->get();
         $departments = Department::all();
-        return view('ce.award.step1', compact('semesters', 'departments'));
+        return view('ce.gazette.step1', compact('semesters', 'departments'));
     }
 
     public function step2()
@@ -25,19 +25,24 @@ class AwardController extends Controller
         //
         $department = session('department');
         $semester = session('semester');
-        return view('ce.award.step2', compact('semester', 'department'));
+        return view('ce.gazette.step2', compact('semester', 'department'));
     }
 
     public function step3($id)
     {
-        $section = Section::find($id);
 
-        $semester_nos = collect();
-        for ($i = 1; $i <= $section->clas->semester_no; $i++) {
-            $semester_nos->add($i);
-        }
-        return view('ce.award.step3', compact('section', 'semester_nos'));
+        $section = Section::find($id);
+        return view('ce.gazette.step3', compact('section'));
+
+        // $section = Section::find($id);
+
+        // $semester_nos = collect();
+        // for ($i = 1; $i <= $section->clas->semester_no; $i++) {
+        //     $semester_nos->add($i);
+        // }
+        // return view('ce.award.step3', compact('section', 'semester_nos'));
     }
+
 
 
     public function store(Request $request)
@@ -57,6 +62,6 @@ class AwardController extends Controller
             'department' => $department,
         ]);
 
-        return redirect()->route('ce.award.step2');
+        return redirect()->route('ce.gazette.step2');
     }
 }
