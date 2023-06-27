@@ -8,7 +8,8 @@
         <div class="mt-12">
             <ul class="space-y-2">
                 <li>
-                    <a href="{{url('ce-award')}}" class="flex items-center p-2">
+                    <!-- <a href="{{url('ce-award')}}" class="flex items-center p-2"> -->
+                    <a href="#" class="flex items-center p-2">
                         <i class="bx bx-award text-lg"></i>
                         <span class="ml-3">Award List</span>
                     </a>
@@ -21,7 +22,8 @@
                 </li>
 
                 <li>
-                    <a href="{{url('ce-gazette')}}" class="flex items-center p-2">
+                    <!-- <a href="{{url('ce-gazette')}}" class="flex items-center p-2"> -->
+                    <a href="#" class="flex items-center p-2">
                         <i class="bx bx-badge-check text-lg"></i>
                         <span class="ml-3">gazette</span>
                     </a>
