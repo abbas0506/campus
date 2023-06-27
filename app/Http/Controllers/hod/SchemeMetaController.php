@@ -128,7 +128,8 @@ class SchemeMetaController extends Controller
 
             $scheme_details = SchemeDetail::where('scheme_id', $scheme_id)
                 ->where('semester_no', $semester_no)
-                ->where('slot', $slot);
+                ->where('slot', $slot)
+                ->get();
 
             foreach ($scheme_details as $scheme_detail) {
                 $scheme_detail->slot = 0;

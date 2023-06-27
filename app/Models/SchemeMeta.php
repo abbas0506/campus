@@ -33,4 +33,8 @@ class SchemeMeta extends Model
         if ($scheme_details_count == 0) return true;
         else return false;
     }
+    public function scopeFor($query, $semester_no)
+    {
+        return $query->where('semester_no', $semester_no);
+    }
 }

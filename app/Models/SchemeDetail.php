@@ -39,4 +39,12 @@ class SchemeDetail extends Model
     {
         return $query->where('semester_no', $no);
     }
+    public function scopeFor($query, $semester_no)
+    {
+        return $query->where('semester_no', $semester_no);
+    }
+    public function scopeHavingSlot($query, $slot)
+    {
+        return $query->where('slot', $slot);
+    }
 }
