@@ -47,6 +47,8 @@
                 <i class="bx bx-chevron-down text-lg"></i>
             </div>
             <div class="body">
+                <!-- show header only if some scheme meta entries exist  -->
+                @if($scheme->scheme_metas()->for($semester_no)->count()>0)
                 <div class="flex items-center w-full font-medium border-b pb-1">
                     <div class="text-sm w-12">Slot</div>
                     <div class="text-sm w-32">Course Type</div>
@@ -54,6 +56,7 @@
                     <div class="flex items-center flex-1 text-indigo-600">List of Courses <span class="ml-1 text-xs"> (Will be purely tentaive; You may not follow it during course allocation, if desired) </span></div>
                     <div class="">Action</div>
                 </div>
+                @endif
                 @foreach($scheme->scheme_metas()->for($semester_no)->get() as $scheme_meta)
                 <div class="flex items-center w-full py-1 odd:bg-slate-100">
                     <div class="text-sm w-12">{{$scheme_meta->slot}}</div>
