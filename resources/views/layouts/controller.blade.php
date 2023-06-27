@@ -30,7 +30,8 @@
                 </li>
 
                 <li>
-                    <a href="{{url('transcripts')}}" class="flex items-center p-2">
+                    <!-- <a href="{{url('transcripts')}}" class="flex items-center p-2"> -->
+                    <a href="#" class="flex items-center p-2">
                         <i class="bx bxs-graduation text-lg"></i>
                         <span class="ml-3">Transcripts</span>
                     </a>
