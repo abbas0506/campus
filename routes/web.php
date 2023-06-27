@@ -63,7 +63,13 @@ use App\Http\Controllers\teacher\EnrollmentController;
 
 Route::get('/{url?}', function () {
     if (Auth::check()) {
-        return redirect('login-options');
+        // if (Auth::user()->hasRole('super')) {
+        // } else if (Auth::user()->hasRole('admin'))
+        //     return redirect('admin');
+        // else if (Auth::user()->hasRole('controller'))
+        //     return redirect('controller');
+        // else //for hod or teacher
+        return redirect()->route('login-options.index');
     } else
         return view('index');
 })->where('url', ('login|signin|index'));

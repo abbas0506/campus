@@ -20,16 +20,30 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
         </svg> -->
 
-        <i class="bx bx-user-check text-8xl text-sky-600"></i>
+        <i class="bi bi-person-fill-check text-8xl text-sky-600"></i>
         <!-- <h1 class="text-4xl mt-8 text-indigo-900 text-center font-culpa tracking-wider">Welcome</h1> -->
-        <h1 class="text-center text-slate-800 mt-8">{{Auth::user()->name}}</h1>
+        <h1 class="text-center text-slate-800 mt-8">Welcome {{Auth::user()->name}}</h1>
 
         <form action="{{route('login-options.store')}}" method='post' class="w-full mt-8" onsubmit="return validate(event)">
             @csrf
 
-            <label for="" class="tex-sm">How would you like to proceed as?</label>
+
+            @if(Auth::user()->roles->count()>1)
+            <div class="text-sm">You have multiple roles: [
+                @foreach(Auth::user()->roles as $role)
+                {{$role->name}},
+                @endforeach
+                ]
+            </div>
+            <div>Please select a role for this session</div>
+            @else
+            <label for="">You will proceed as</label>
+            @endif
+
             <select id="role" name="role" class="input-indigo  px-4 py-3 w-full mt-3 bg-transparent" onchange="loadDepartments()">
-                <option value="" class="text-gray-600">Select a role</option>
+                @if(Auth::user()->roles->count()>1)
+                <option value="">- select -</option>
+                @endif
                 @foreach(Auth::user()->roles as $role)
                 <option value="{{$role->name}}" class="">{{Str::upper($role->name)}}</option>
                 @endforeach
