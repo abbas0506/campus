@@ -99,9 +99,10 @@ Route::group(['middleware' => ['role:admin']], function () {
 
 Route::group(['middleware' => ['role:controller']], function () {
     // Route::view('controller', 'ce.index');
-    Route::redirect('controller', 'transcripts');
-    Route::resource('transcripts', TranscriptController::class);
-    Route::get('transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
+    Route::redirect('controller', '/ce/transcripts');
+    Route::view('ce/transcripts', 'ce.transcripts.index');
+    Route::get('ce/transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
+
     Route::post('searchAllByRollNoOrName', [AjaxController::class, 'searchAllByRollNoOrName']);
 
     Route::get('ce/award/step1', [CeAwardController::class, 'step1']);

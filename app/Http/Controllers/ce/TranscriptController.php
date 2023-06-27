@@ -16,9 +16,9 @@ class TranscriptController extends Controller
     //index
     public function index()
     {
-        $student = session('student');
-        $searched = session('searched');
-        return view('ce.transcripts.index', compact('student', 'searched'));
+        // $student = session('student');
+        // $searched = session('searched');
+        return view('ce.transcripts.index');
     }
 
     public function store(Request $request)

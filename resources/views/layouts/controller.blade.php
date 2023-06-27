@@ -32,7 +32,7 @@
 
                 <li>
                     <!-- <a href="{{url('transcripts')}}" class="flex items-center p-2"> -->
-                    <a href="#" class="flex items-center p-2">
+                    <a href="{{url('/ce/transcripts')}}" class="flex items-center p-2">
                         <i class="bi bi-mortarboard text-lg"></i>
                         <span class="ml-3">Transcripts</span>
                     </a>

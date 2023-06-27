@@ -218,7 +218,7 @@ class AjaxController extends Controller
             $result .=
 
                 "<div class='flex flex-row w-full py-1'>" .
-                "<a href='/transcripts/pdf/" . $student->id . "' class='link w-1/4' target='_blank'>" . $student->rollno . "</a>" .
+                "<a href='/ce/transcripts/pdf/" . $student->id . "' class='link w-1/4' target='_blank'>" . $student->rollno . "</a>" .
                 "<div class='w-1/4'>" . $student->name . "</div>" .
                 "<div class='w-1/4'>" . $student->father . "</div>" .
                 "<div class='w-1/4'>" . $student->section->clas->title() . "</div>" .
