@@ -30,8 +30,7 @@
         <div class="collapsible">
             <div @if($section->clas->semester_no==$semester_no) class="head active" @else class="head" @endif>
                 <h2 class="flex items-center">
-                    <p class="w-24">Semester {{$roman[$semester_no-1]}}</p>
-
+                    <p class="w-32">Semester {{$roman[$semester_no-1]}}</p>
                     <span class="bx bx-book ml-6 text-slate-400"></span> <span class="ml-2 text-xs">{{$section->course_allocations()->allocated($semester_no)->count()}} </span>
                     <span class="bx bx-time-five ml-6 text-slate-400"></span> <span class="ml-2 text-xs">{{$section->course_allocations()->sumOfCreditHrs($semester_no)}} </span>
                     @if($section->course_allocations()->sumOfCreditHrs($semester_no)>0)
@@ -44,6 +43,7 @@
 
                 @foreach($section->course_allocations()->allocated($semester_no)->get() as $course_allocation)
                 <div class="flex items-center w-full even:bg-slate-100 py-1">
+                    <div class="flex w-36 text-sm">{{$course_allocation->course->code}}</div>
                     <div class="flex flex-1 text-sm">{{$course_allocation->course->name}} <span class="ml-3 text-slate-400">{{$course_allocation->course->creditHrsLabel()}}</span></div>
                     <div class="flex flex-1 text-sm">
                         <!-- if teacher name given, show name ... else show link icon -->

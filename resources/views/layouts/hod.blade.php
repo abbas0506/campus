@@ -57,7 +57,8 @@
 
 </header>
 <aside aria-label="Sidebar" id='sidebar'>
-    <div class="mt-4 text-sm text-center">{{date('M d, Y')}}</div>
+    <div class="mt-4 font-bold text-center text-orange-300 uppercase tracking-wider">{{session('semester')}}</div>
+    <div class="text-xs text-center">{{date('M d, Y')}}</div>
     <div class="mt-12">
         <ul class="space-y-2">
             <li>

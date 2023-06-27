@@ -17,12 +17,18 @@
     <form action="{{route('courses.update',$course)}}" method='post' class="flex flex-col w-full mt-12" onsubmit="return validate(event)">
         @csrf
         @method('PATCH')
-        <div class="flex flex-row items-center p-1 bg-teal-100">
-            <label for="" class='mr-4 font-medium'>Course Type:</label>
-            {{$course->course_type->name}}
+        <div class="flex">
+            <p class="flex items-center bg-teal-100 p-2">Original Course Type: <span class="font-semibold ml-2">{{$course->course_type->name}}</span></p>
         </div>
 
-        <input type="hidden" name='course_type_id' value='{{$course->course_type_id}}'>
+        <label for="" class="mt-3">Course Type</label>
+        <select name="course_type_id" id="" class="input-indigo py-2 w-1/3">
+            @foreach($course_types as $course_type)
+            <option value="{{$course_type->id}}" @if($course->course_type_id==$course_type->id) selected @endif>{{$course_type->name}}</option>
+            @endforeach
+        </select>
+
+        <!-- <input type="hidden" name='course_type_id' value='{{$course->course_type_id}}'> -->
         <label for="" class="mt-3">Full Name</label>
         <input type="text" id='full_name' name='name' class="input-indigo" placeholder="Software Engineering" value="{{$course->name}}">
 
