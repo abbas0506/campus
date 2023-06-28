@@ -77,4 +77,8 @@ class Clas extends Model
     {
         return $query->where('semester_id', '<=', $semester_id);
     }
+    public function scopeActive($query, $semester_id)
+    {
+        //to be developed
+    }
 }

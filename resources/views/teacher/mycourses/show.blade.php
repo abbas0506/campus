@@ -51,7 +51,7 @@
                 <div class="tab" onclick="toggle('f')">Re-Appear : {{$course_allocation->reappears->count()}}</div>
             </div>
             <a href="{{route('enroll.fa', $course_allocation)}}" class="btn-teal">
-                <i class="bx bx-user-plus"></i>
+                <i class="bi bi-person-add"></i>
             </a>
         </div>
 
@@ -96,9 +96,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="del('{{$first_attempt->student->id}}')">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-                                </svg>
+                                <i class="bi bi-person-dash text-lg"></i>
                             </button>
                         </form>
                     </td>
@@ -120,7 +118,7 @@
                 <div class="tab" onclick="toggle('r')">Fresh : {{$course_allocation->first_attempts->count()}}</div>
             </div>
             <a href="{{route('enroll.ra', $course_allocation)}}" class="btn-teal">
-                <i class="bx bx-user-plus"></i>
+                <i class="bi bi-person-add"></i>
             </a>
         </div>
 

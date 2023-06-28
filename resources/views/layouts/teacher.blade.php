@@ -67,7 +67,8 @@
 </header>
 
 <aside aria-label="Sidebar" id='sidebar' class="px-3">
-    <div class="mt-4 text-sm text-center">{{date('M d, Y')}}</div>
+    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">{{session('semester')->title()}}</div>
+    <div class="text-xs text-center">{{date('M d, Y')}}</div>
     <div class="mt-12">
         <ul class="space-y-2">
             <!-- <li>
@@ -87,7 +88,7 @@
             </li>
             <li>
                 <a href="{{url('teacher/award')}}" class="flex items-center p-2 ">
-                    <i class="bx bx-printer"></i>
+                    <i class="bi bi-printer"></i>
                     <span class="ml-3">Award Lists</span>
                 </a>
             </li>

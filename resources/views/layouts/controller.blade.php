@@ -4,7 +4,7 @@
 <x-header></x-header>
 <div class="flex relative top-16 w-screen">
     <aside aria-label="Sidebar" id='sidebar'>
-        <div class="mt-6 font-bold text-center text-orange-300 uppercase tracking-wider">Controller</div>
+        <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">Controller</div>
         <div class="text-sm text-center text-gray-400">{{date('M d, Y')}}</div>
         <div class="mt-12">
             <ul class="space-y-2">

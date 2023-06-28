@@ -53,7 +53,7 @@
 
         <div class="flex items-center space-x-4">
             <a href="{{route('students.add', $section)}}" class="btn-indigo flex items-center">
-                <i class="bx bx-user-plus mr-2"></i>
+                <i class="bi bi-person-add mr-2"></i>
                 <span class="text-sm">Manual Feed</span>
 
             </a>

@@ -2,7 +2,7 @@
 @section('page-content')
 
 <div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-4">
-    <i class="bx bx-printer text-[40px] text-slate-600"></i>
+    <i class="bi bi-printer text-[40px] text-slate-600"></i>
     <div class="font-semibold text-slate-700 text-lg leading-relaxed">Award Lists / Assessment Sheets</div>
     <div class="text-slate-700">( {{session('semester')->title()}} )</div>
 </div>
@@ -20,7 +20,7 @@
             <div class="xs">{{$course_allocation->first_attempts->count()+$course_allocation->reappears->count()}}</div>
         </div>
         <a href="{{route('teacher.award',$course_allocation->id)}}" target="_blank" class="flex flex-col justify-center items-center">
-            <i class="bx bx-printer text-blue-600"></i>
+            <i class="bi bi-printer text-blue-600"></i>
         </a>
     </div>
 
@@ -32,7 +32,7 @@
             
         </div>
         <a href="{{route('teacher.award',$course_allocation->id)}}" target="_blank" class="flex flex-col justify-center items-center">
-            <i class="bx bx-printer bx-sm text-slate-600"></i>
+            <i class="bi bi-printer bx-sm text-slate-600"></i>
             <div class="font-semibold text-teal-800 mt-3 w-full text-center">
                 {{$course_allocation->course->name}}
             </div>

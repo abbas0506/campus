@@ -57,7 +57,7 @@
 
 </header>
 <aside aria-label="Sidebar" id='sidebar'>
-    <div class="mt-4 font-bold text-center text-orange-300 uppercase tracking-wider">{{session('semester')->title()}}</div>
+    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">{{session('semester')->title()}}</div>
     <div class="text-xs text-center">{{date('M d, Y')}}</div>
     <div class="mt-12">
         <ul class="space-y-2">
@@ -89,7 +89,7 @@
             </li>
             <li>
                 <a href="{{url('hod/printable')}}" class="flex items-center p-2">
-                    <i class="bx bx-printer"></i>
+                    <i class="bi bi-printer"></i>
                     <span class="ml-3">Print / Soft Copy</span>
                 </a>
             </li>

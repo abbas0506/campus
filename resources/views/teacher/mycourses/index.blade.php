@@ -35,7 +35,7 @@
         <div class="slide-up">
             <a href="{{route('mycourses.show',$course_allocation->id)}}" class="flex flex-1 items-center justify-center bg-teal-200 hover:bg-teal-300 rounded-t-lg">
                 Enroll
-                <i class="bx bx-user-plus text-[14px] ml-1"></i>
+                <i class="bi bi-person-add text-[14px] ml-1"></i>
             </a>
             <a href="{{route('formative.edit', $course_allocation)}}" class="flex flex-1 items-center justify-center bg-blue-200 hover:bg-blue-300 rounded-t-lg">
                 Formative
