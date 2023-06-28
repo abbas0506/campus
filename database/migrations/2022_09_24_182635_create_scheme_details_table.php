@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('scheme_id');
             $table->unsignedInteger('semester_no');
+            $table->unsignedInteger('slot');
             $table->unsignedBigInteger('course_id');
 
             $table->unique(['scheme_id', 'course_id'], 'scheme_course_unique');

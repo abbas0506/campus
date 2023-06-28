@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('section_id');
             $table->unsignedInteger('semester_no');
+            $table->unsignedInteger('slot');
             $table->unsignedBigInteger('scheme_detail_id');
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('teacher_id')->nullable(); //will be initialized at step 2 of course allocation
-            $table->unsignedBigInteger('semester_id');
+            $table->unsignedBigInteger('semester_id');  //for which course are being allocated
             $table->unique(['section_id', 'course_id'], 'section_course_unique');
 
             $table->timestamps();
