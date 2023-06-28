@@ -1,6 +1,6 @@
 @extends('layouts.controller')
 @section('page-content')
-<h1 class="mt-8">Transcript</h1>
+<h1>Transcript</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">Transcripts </a> / {{$student->name}} / {{$student->rollno}}

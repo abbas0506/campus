@@ -1,6 +1,6 @@
 @extends('layouts.controller')
 @section('page-content')
-<h1 class="mt-12">Gazette | Step 3</h1>
+<h1>Gazette | Step 3</h1>
 <h2 class="">{{session('department')->name}}</h2>
 <p class="">{{$section->title()}}</p>
 

@@ -29,7 +29,8 @@
         @csrf
 
         <div class="flex flex-row items-center">
-            <label for="" class='mr-4 text-sm text-orange-600'>Course Type:</label>
+            <div class="w-1 h-1 bg-red-500 animate-ping"></div>
+            <label for="" class='mx-3 text-sm text-orange-600'>Course Type:</label>
             <select id="course_type" name="course_type_id" class="py-1 outline-none" required>
                 <option value="">Select a type</option>
                 @foreach($course_types as $course_type)

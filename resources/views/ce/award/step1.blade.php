@@ -1,6 +1,6 @@
 @extends('layouts.controller')
 @section('page-content')
-<h1 class="mt-12">Award Lists | Step 1</h1>
+<h1>Award Lists | Step 1</h1>
 
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">Choose Department</div>

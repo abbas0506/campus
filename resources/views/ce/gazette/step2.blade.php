@@ -1,6 +1,6 @@
 @extends('layouts.controller')
 @section('page-content')
-<h1 class="mt-12">Gazette | Step 2</h1>
+<h1>Gazette | Step 2</h1>
 <h2 class="">{{$department->name}}</h2>
 
 <div class="flex items-center space-x-2 mt-8">
