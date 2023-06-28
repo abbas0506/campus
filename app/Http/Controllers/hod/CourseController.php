@@ -52,7 +52,7 @@ class CourseController extends Controller
         $request->validate([
             'name' => 'required',
             'short' => 'required',
-            'code' => 'nullable|required_if:course_type_id,1|unique:courses',
+            'code' => 'nullable|required_if:course_type_id,1',
             'course_type_id' => 'required|numeric',
             'credit_hrs_theory' => 'required|numeric',
             'max_marks_theory' => 'required|numeric',
@@ -109,7 +109,7 @@ class CourseController extends Controller
         $request->validate([
             'name' => 'required',
             'short' => 'required',
-            'code' => 'nullable|required_if:course_type_id,1|unique:courses,code,' . $id, 'id',
+            'code' => 'nullable|required_if:course_type_id,1',
             'course_type_id' => 'required|numeric',
             'credit_hrs_theory' => 'required|numeric',
             'max_marks_theory' => 'required|numeric',
