@@ -46,24 +46,24 @@
             </div>
             <div class="flex flex-col">
                 <label for="" class='mt-3'>Cr. Hrs <span class="text-xs font-thin">(degree requirement)</span></label>
-                <input type="number" id='' name='credit_hrs' class="input-indigo" placeholder="Credit hrs" value="{{$program->credit_hrs}}" required>
+                <input type="number" id='' name='cr' class="input-indigo" placeholder="Credit hrs" value="{{$program->cr}}" required>
             </div>
         </div>
 
         <div class="flex space-x-4">
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Min Duration <span class="text-sm">(Years)</span></label>
-                <select id="" name="min_duration" class="input-indigo p-2" required>
+                <select id="" name="min_t" class="input-indigo p-2" required>
                     @foreach($durations as $duration)
-                    <option value="{{$duration}}" @if($program->min_duration==$duration) selected @endif>{{$duration}}</option>
+                    <option value="{{$duration}}" @if($program->min_t==$duration) selected @endif>{{$duration}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Max Duration <span class="text-sm">(Years)</span></label>
-                <select id="" name="max_duration" class="input-indigo p-2" required>
+                <select id="" name="max_t" class="input-indigo p-2" required>
                     @foreach($durations as $duration)
-                    <option value="{{$duration}}" @if($program->max_duration==$duration) selected @endif>{{$duration}}</option>
+                    <option value="{{$duration}}" @if($program->max_t==$duration) selected @endif>{{$duration}}</option>
                     @endforeach
                 </select>
             </div>

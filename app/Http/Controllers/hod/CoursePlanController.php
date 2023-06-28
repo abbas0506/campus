@@ -34,7 +34,7 @@ class CoursePlanController extends Controller
         //
         $section = Section::find($sid);
         $semester_nos = collect();
-        for ($i = 1; $i <= $section->clas->program->min_duration * 2; $i++) {
+        for ($i = 1; $i <= $section->clas->program->min_t * 2; $i++) {
             $semester_nos->add($i);
         }
         return view('hod.courseplan.show', compact('section', 'semester_nos'));
@@ -100,7 +100,7 @@ class CoursePlanController extends Controller
     {
         $section = Section::find($sid);
         $semester_nos = collect();
-        for ($i = 1; $i <= $section->clas->program->min_duration * 2; $i++) {
+        for ($i = 1; $i <= $section->clas->program->min_t * 2; $i++) {
             $semester_nos->add($i);
         }
 

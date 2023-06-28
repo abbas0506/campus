@@ -44,8 +44,8 @@
         <tr class="tr">
             <td>{{$program->short}}</td>
             <td class="text-center">{{$program->level}}</td>
-            <td class="text-center">{{$program->min_duration}}-{{$program->max_duration}}</td>
-            <td class="text-center">{{$program->credit_hrs}}</td>
+            <td class="text-center">{{$program->min_t}}-{{$program->max_t}}</td>
+            <td class="text-center">{{$program->cr}}</td>
 
             <td>
                 <div class="flex items-center justify-center space-x-2 text-sm">

@@ -32,8 +32,8 @@ where model_id>3
 insert into cms_v2.course_types
 select * from cms.course_types
 
-//insert into cms_v1.programs(id,name,short,credit_hrs,min_duration,max_duration,department_id,internal_id, created_at) 
-//select id,name,short,credit_hrs,min_duration,max_duration,department_id,internal_id, created_at from cms.programs;
+//insert into cms_v1.programs(id,name,short,cr,min_t,max_t,department_id,internal_id, created_at) 
+//select id,name,short,cr,min_t,max_t,department_id,internal_id, created_at from cms.programs;
 
 insert into cms_v2.programs
 select * from cms.programs

@@ -12,9 +12,9 @@ class Program extends Model
         'name',
         'short',
         'level',
-        'credit_hrs',   //total credits to pass
-        'min_duration',
-        'max_duration',
+        'cr',   //total credits to pass
+        'min_t',
+        'max_t',
         'department_id',
         'internal_id',  //any teacher working as internal examiner
     ];
@@ -47,7 +47,7 @@ class Program extends Model
     public function semester_nos()
     {
         $series = collect();
-        for ($i = 1; $i <= $this->min_duration * 2; $i++) {
+        for ($i = 1; $i <= $this->min_t * 2; $i++) {
             $series->add($i);
         }
         return $series;
@@ -55,14 +55,14 @@ class Program extends Model
     public function promotable_clases()
     {
         return $this->hasMany(Clas::class)
-            ->where('semester_no', '<=', $this->min_duration * 2)
+            ->where('semester_no', '<=', $this->min_t * 2)
             ->orderBy('shift_id')
             ->orderBy('semester_no'); //currently active;
     }
     public function revertible_clases()
     {
         return $this->hasMany(Clas::class)
-            ->whereBetween('semester_no', [2, $this->min_duration * 2 + 1])
+            ->whereBetween('semester_no', [2, $this->min_t * 2 + 1])
             ->orderBy('shift_id')
             ->orderBy('semester_no'); //currently active;
     }

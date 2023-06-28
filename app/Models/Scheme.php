@@ -58,7 +58,7 @@ class Scheme extends Model
     }
     public function creditHrsMax()
     {
-        return $this->program->credit_hrs;
+        return $this->program->cr;
     }
     public function creditHrsDefined()
     {

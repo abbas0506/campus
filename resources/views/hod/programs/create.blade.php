@@ -47,14 +47,14 @@
             </div>
             <div class="flex flex-col">
                 <label for="" class='mt-3'>Cr. Hrs <span class="text-xs font-thin">(degree requirement)</span></label>
-                <input type="number" id='' name='credit_hrs' class="input-indigo" placeholder="Credit hrs" required>
+                <input type="number" id='' name='cr' class="input-indigo" placeholder="Credit hrs" required>
             </div>
         </div>
 
         <div class="flex space-x-4">
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Min Duration <span class="text-sm">(Years)</span></label>
-                <select id="" name="min_duration" class="input-indigo p-2" required>
+                <select id="" name="min_t" class="input-indigo p-2" required>
                     @foreach($durations as $duration)
                     <option value="{{$duration}}">{{$duration}}</option>
                     @endforeach
@@ -62,7 +62,7 @@
             </div>
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Max Duration <span class="text-sm">(Years)</span></label>
-                <select id="" name="max_duration" class="input-indigo p-2" required>
+                <select id="" name="max_t" class="input-indigo p-2" required>
                     @foreach($durations as $duration)
                     <option value="{{$duration}}">{{$duration}}</option>
                     @endforeach

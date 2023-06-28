@@ -4911,9 +4911,9 @@ CREATE TABLE `programs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `short` varchar(255) NOT NULL,
-  `credit_hrs` int(10) UNSIGNED NOT NULL,
-  `min_duration` double(8,2) UNSIGNED NOT NULL,
-  `max_duration` double(8,2) UNSIGNED NOT NULL,
+  `cr` int(10) UNSIGNED NOT NULL,
+  `min_t` double(8,2) UNSIGNED NOT NULL,
+  `max_t` double(8,2) UNSIGNED NOT NULL,
   `department_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -4924,7 +4924,7 @@ CREATE TABLE `programs` (
 -- Dumping data for table `programs`
 --
 
-INSERT INTO `programs` (`id`, `name`, `short`, `credit_hrs`, `min_duration`, `max_duration`, `department_id`, `created_at`, `updated_at`, `internal_id`) VALUES
+INSERT INTO `programs` (`id`, `name`, `short`, `cr`, `min_t`, `max_t`, `department_id`, `created_at`, `updated_at`, `internal_id`) VALUES
 (1, 'Master of Science in Computer Science', 'MSCS', 32, 2.00, 3.00, 1, '2022-12-19 17:03:08', '2022-12-19 17:03:08', NULL),
 (2, 'Bachelor of Science in Computer Science', 'BSCS', 32, 4.00, 5.00, 1, '2022-12-19 17:03:08', '2022-12-19 17:03:08', NULL),
 (3, 'Associate Degree Program in Computer Science', 'ADPCS', 32, 4.00, 5.00, 1, '2022-12-19 17:03:08', '2022-12-19 17:03:08', NULL),

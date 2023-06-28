@@ -72,7 +72,7 @@ class FirstAttempt extends Model
         else return 0;
     }
 
-    public function credit_hrs()
+    public function cr()
     {
     }
     public function gpa()

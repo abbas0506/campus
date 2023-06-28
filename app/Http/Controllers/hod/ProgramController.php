@@ -51,9 +51,9 @@ class ProgramController extends Controller
             'name' => 'required',
             'short' => 'required',
             'level' => 'required',
-            'credit_hrs' => 'required|numeric',
-            'min_duration' => 'required|numeric',
-            'max_duration' => 'required|numeric',
+            'cr' => 'required|numeric',
+            'min_t' => 'required|numeric',
+            'max_t' => 'required|numeric',
             'department_id' => 'required|numeric',
 
         ]);
@@ -114,9 +114,9 @@ class ProgramController extends Controller
             'name' => 'required',
             'short' => 'required',
             'level' => 'required',
-            'credit_hrs' => 'required|numeric',
-            'min_duration' => 'required|numeric',
-            'max_duration' => 'required|numeric',
+            'cr' => 'required|numeric',
+            'min_t' => 'required|numeric',
+            'max_t' => 'required|numeric',
         ]);
 
         try {

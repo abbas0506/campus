@@ -57,7 +57,7 @@ class AjaxController extends Controller
             $scheme_options .= "<option value='" . $scheme->id . "'>" . $scheme->title() . "</option>";
         }
         $semester_nos = '0';
-        $semester_count = $program->min_duration * 2;
+        $semester_count = $program->min_t * 2;
         if ($semester_count > 0) {
             for ($i = 1; $i <= $semester_count; $i++) {
                 $semester_nos .= "<option value='" . $i . "'>" . $i . "</option>";

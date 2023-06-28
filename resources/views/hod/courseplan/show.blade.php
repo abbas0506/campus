@@ -22,7 +22,7 @@
         <p class="flex items-center bg-orange-100 px-2">Scheduled:
             <i class="bx bx-book ml-2"></i> <span class="font-semibold ml-2">{{$section->course_allocations->count()}} / {{$section->clas->scheme->scheme_details->count()}}</span>
             <span class="mx-4">|</span>
-            <i class="bx bx-time-five"></i> <span class="font-semibold ml-2">{{$section->credit_hrs()}} / {{$section->clas->scheme->creditHrsMax()}}</span>
+            <i class="bx bx-time-five"></i> <span class="font-semibold ml-2">{{$section->cr()}} / {{$section->clas->scheme->creditHrsMax()}}</span>
         </p>
     </div>
     <div class="flex flex-col accordion mt-4">

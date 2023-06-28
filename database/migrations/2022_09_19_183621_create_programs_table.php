@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('short');
             $table->unsignedInteger('level');   //how many year eduction
-            $table->unsignedInteger('credit_hrs');  //compulsory to pass
-            $table->unsignedFloat('min_duration'); //in years
-            $table->unsignedFloat('max_duration'); //in years
+            $table->unsignedInteger('cr');  //compulsory to pass
+            $table->unsignedFloat('min_t'); //in years
+            $table->unsignedFloat('max_t'); //in years
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('internal_id')->nullable();
             $table->timestamps();

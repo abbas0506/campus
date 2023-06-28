@@ -44,7 +44,7 @@ class Student extends Model
     {
         $semester = $this->section->clas->semester->semester_type->name;
         $start = $this->section->clas->semester->year;
-        $end = $start + $this->section->clas->program->min_duration;
+        $end = $start + $this->section->clas->program->min_t;
         return  $start . "-" . $end - 2000 . " (" . $semester . ")";
     }
 

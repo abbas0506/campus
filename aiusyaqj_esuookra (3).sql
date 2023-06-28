@@ -6261,9 +6261,9 @@ CREATE TABLE `programs` (
   `name` varchar(255) NOT NULL,
   `short` varchar(255) NOT NULL,
   `level` int(10) UNSIGNED NOT NULL,
-  `credit_hrs` int(10) UNSIGNED NOT NULL,
-  `min_duration` double(8,2) UNSIGNED NOT NULL,
-  `max_duration` double(8,2) UNSIGNED NOT NULL,
+  `cr` int(10) UNSIGNED NOT NULL,
+  `min_t` double(8,2) UNSIGNED NOT NULL,
+  `max_t` double(8,2) UNSIGNED NOT NULL,
   `department_id` bigint(20) UNSIGNED NOT NULL,
   `internal_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -6274,7 +6274,7 @@ CREATE TABLE `programs` (
 -- Dumping data for table `programs`
 --
 
-INSERT INTO `programs` (`id`, `name`, `short`, `level`, `credit_hrs`, `min_duration`, `max_duration`, `department_id`, `internal_id`, `created_at`, `updated_at`) VALUES
+INSERT INTO `programs` (`id`, `name`, `short`, `level`, `cr`, `min_t`, `max_t`, `department_id`, `internal_id`, `created_at`, `updated_at`) VALUES
 (4, 'Bachelor of Education 1.5', 'B.Ed. 1.5', 16, 51, 1.50, 2.50, 8, 72, '2022-12-21 13:32:32', NULL),
 (5, 'Bachelor of Education (Hons)', 'B.Ed.(Hons)', 16, 138, 4.00, 6.00, 8, 72, '2022-12-21 13:36:42', NULL),
 (6, 'BS English Language Teaching', 'BS ELT', 16, 140, 4.00, 6.00, 8, 72, '2022-12-21 13:39:01', NULL),

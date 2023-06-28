@@ -32,7 +32,7 @@ class Clas extends Model
     public function session()
     {
         $start = $this->semester->year - 2000;
-        $end = $start + $this->program->min_duration;
+        $end = $start + $this->program->min_t;
         return $this->semester->semester_type->name . ' ' . $start . '-' . $end;
     }
     public function scheme()

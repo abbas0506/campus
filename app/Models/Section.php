@@ -42,7 +42,7 @@ class Section extends Model
         // if course already scheduled, return true
         return $this->course_allocations()->where('course_id', $course_id)->count() > 0 ? true : false;
     }
-    public function credit_hrs() //allocated till now
+    public function cr() //allocated till now
     {
         $sum = $this->course_allocations->where('semester_id', '<=', session('semester_id'))->sum(function ($course_allocation) {
             return $course_allocation->course->creditHrs();
