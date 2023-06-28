@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('program_id');
             $table->unsignedBigInteger('shift_id');
-            $table->unsignedBigInteger('semester_id');  //root
             $table->unsignedBigInteger('scheme_id');    //to follow
             $table->unsignedInteger('semester_no')->default(1); //dynamic
-            $table->boolean('status')->default(1);  //finished:0, active:1 
-            $table->unique(['program_id', 'shift_id', 'semester_id'], 'program_shift_semester_unique'); //composite pk
+            $table->unsignedBigInteger('first_semester_id');
+            $table->unsignedBigInteger('last_semester_id');
+            $table->unique(['program_id', 'shift_id', 'first_semester_id', 'semester_no'], 'program_shift_semester_unique'); //composite pk
 
             $table->timestamps();
 
@@ -37,7 +37,13 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->foreign('semester_id')
+            $table->foreign('first_semester_id')
+                ->references('id')
+                ->on('semesters')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('last_semester_id')
                 ->references('id')
                 ->on('semesters')
                 ->onUpdate('cascade')

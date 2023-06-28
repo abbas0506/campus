@@ -34,7 +34,7 @@ $roman = config('global.romans');
     @foreach($semesters as $semester)
     <div class="collapsible">
         <div class="head">
-            <h2 class="">Semester {{$roman[$semester->id - $section->clas->semester_id]}}<span class="ml-6 text-xs text-slate-600"><span class="bx bx-book mr-2"></span>{{$section->course_allocations()->during($semester->id)->count()}}</span></h2>
+            <h2 class="">Semester {{$roman[$semester->id - $section->clas->first_semester_id]}}<span class="ml-6 text-xs text-slate-600"><span class="bx bx-book mr-2"></span>{{$section->course_allocations()->during($semester->id)->count()}}</span></h2>
             <i class="bx bx-chevron-down"></i>
         </div>
         <div class="body">

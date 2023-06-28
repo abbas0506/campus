@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clas;
 use App\Models\CourseType;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Exception;
 use App\Models\Program;
+use Illuminate\Support\Facades\DB;
 
 class ProgramController extends Controller
 {
@@ -119,6 +121,7 @@ class ProgramController extends Controller
             'max_t' => 'required|numeric',
         ]);
 
+        DB::beginTransaction();
         try {
             $exists = Program::where('name', $request->name)
                 ->where('id', '<>', $id)
@@ -129,9 +132,21 @@ class ProgramController extends Controller
             } else {
                 $program = Program::findOrFail($id);
                 $program->update($request->all());
+
+                //update all the related classes last-semester-id
+
+                $programs = Program::all();
+                foreach ($programs as $program) {
+                    foreach ($program->clases as $clas) {
+                        $clas->last_semester_id = $clas->first_semester_id + intval($program->min_t * 2) - $clas->semester_no;
+                        $clas->update();
+                    }
+                }
+                DB::commit();
                 return redirect()->route('programs.index')->with('success', 'Successfully updated');
             }
         } catch (Exception $ex) {
+            DB::rollBack();
             return redirect()->back()
                 ->withErrors(['update' => $ex->getMessage()]);
         }

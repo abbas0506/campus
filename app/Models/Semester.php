@@ -29,4 +29,8 @@ class Semester extends Model
     {
         return $this->semester_type->short . '' . $this->year - 2000;
     }
+    public function scopeTill($query, $semester_id)
+    {
+        return $query->where('id', '<=', session('semester')->id);
+    }
 }

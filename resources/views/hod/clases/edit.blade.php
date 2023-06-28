@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1 class="mt-12"><a href="{{route('clases.index')}}"> Classes</a></h1>
+<h1><a href="{{route('clases.index')}}"> Classes</a></h1>
 <div class="bread-crumb">{{$clas->short()}} / edit</div>
 
 <div class="container md:w-3/4 mx-auto px-5">
@@ -12,9 +12,10 @@
             </svg>
         </div>
         <div class="flex-grow text-left sm:mt-0">
-            <h2>What is initial semester?</h2>
+            <h2>Do you know?</h2>
             <ul class="text-sm">
-                <li>Initial semester means the first semester (when class started on).</li>
+                <li>First semester means the very first semester (when class started on).</li>
+                <li>If study scheme is missing, it can be defined using one time activity tab</li>
             </ul>
         </div>
     </div>
@@ -41,21 +42,46 @@
     <form action="{{route('clases.update',$clas)}}" method='post' class="flex flex-col w-full mt-8" onsubmit="return validate(event)">
         @csrf
         @method('PATCH')
-        <label for="" class='mt-4 text-md text-red-600 font-thin'>{{$clas->short()}}</label>
+
+        <label for="" class='mt-4 text-md text-red-600 font-semibold'>{{$clas->program->short}}</label>
         <div class="flex items-center space-x-4 mt-5">
             <div class="flex flex-col flex-1">
-                <label for="" class="">Initial Semester <span class='text-xs text-slate-600'>(S=Spring, F=Fall)</span></label>
-                <select id='semester_id' name="semester_id" class="input-indigo p-2">
+                <label for="" class="flex items-center ">First Semester (class started on)<span class='ml-8 mr-2 rotate-90'> <i class="bi bi-hand-index rotate-90"></i></span>S=Spring, F=Fall</label>
+                <select id='first_semester_id' name="first_semester_id" class="input-indigo p-2 mt-1">
                     @foreach($semesters as $semester)
-                    <option value="{{$semester->id}}" @selected($semester->id==$clas->semester_id)>{{$semester->short()}}</option>
+                    <option value="{{$semester->id}}" @selected($semester->id==$clas->first_semester_id)>{{$semester->short()}}</option>
                     @endforeach
                 </select>
             </div>
-
+            <div class="flex flex-col">
+                <label for="" class="">Choose Shift</label>
+                <select name="shift_id" class="input-indigo p-2 mt-1">
+                    @foreach($shifts as $shift)
+                    <option value="{{$shift->id}}" @selected($shift->id==$clas->shift_id)>{{$shift->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4 mt-3">
+            <div class="flex flex-col flex-1">
+                <label for="" class="">Study Scheme for this class?</label>
+                <select id='scheme_id' name="scheme_id" class="input-indigo p-2">
+                    @foreach($clas->program->schemes as $scheme)
+                    <option value="{{$scheme->id}}" @selected($scheme->id==$clas->scheme_id)>{{$scheme->subtitle()}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="flex flex-col flex-1">
+                <label for="" class="">Intake Semester</label>
+                <select id='semester_no' name="semester_no" class="input-indigo p-2">
+                    <option value="1" @selected($clas->semester_no==1)>1st Semester</option>
+                    <option value="5" @selected($clas->semester_no==5)>5th Semester</option>
+                </select>
+            </div>
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <button type="submit" class="btn-indigo-rounded">Update</button>
+            <button type="submit" class="btn-indigo-rounded">Save</button>
         </div>
     </form>
 

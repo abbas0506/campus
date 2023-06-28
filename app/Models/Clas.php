@@ -11,9 +11,10 @@ class Clas extends Model
     protected $fillable = [
         'program_id',
         'shift_id',
-        'semester_id',  //root semester
         'scheme_id',
-        'semester_no',  //will be dynamic
+        'semester_no',  //intake semester no
+        'first_semester_id',
+        'last_semester_id',
         'status',       //0, finished
     ];
 
@@ -27,7 +28,7 @@ class Clas extends Model
     }
     public function semester()
     {
-        return $this->belongsTo(Semester::class);
+        return $this->belongsTo(Semester::class, 'first_semester_id', 'id');
     }
     public function session()
     {
@@ -54,9 +55,10 @@ class Clas extends Model
         $semester = $this->semester->short();
         $program = $this->program->short;
         $shift = $this->shift->short;
+        $semester_no = session('semester')->id - $this->first_semester_id + $this->semester_no;
         $roman = config('global.romans');
         // return $program . ' / ' . $shift . ' / ' . $semester . ' / ' .   'Semester - ' . $roman[$this->semester_no - 1];
-        return $semester . " / " . $program . " / " . $shift . " / " . $roman[$this->semester_no - 1];
+        return $semester . " / " . $program . " / " . $shift . " / " . $roman[$semester_no - 1];
     }
 
     public function short()
@@ -64,7 +66,8 @@ class Clas extends Model
         $semester = $this->semester->short();
         $roman = config('global.romans');
         $shift = $this->shift->short;
-        return $semester . " / " . $shift . " / " . $roman[$this->semester_no - 1];
+        $semester_no = session('semester')->id - $this->first_semester_id + $this->semester_no;
+        return $semester . " / " . $shift . " / " . $roman[$semester_no - 1];
     }
 
     public function strength()
@@ -75,7 +78,7 @@ class Clas extends Model
     }
     public function scopeTill($query, $semester_id)
     {
-        return $query->where('semester_id', '<=', $semester_id);
+        return $query->where('first_semester_id', '<=', $semester_id);
     }
     public function scopeActive($query, $semester_id)
     {

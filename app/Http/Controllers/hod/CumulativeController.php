@@ -26,7 +26,7 @@ class CumulativeController extends Controller
     public function step2($id)
     {
         $section = Section::find($id);
-        $semesters = Semester::whereBetween('id', [$section->clas->semester_id, session('semester_id')])->get();
+        $semesters = Semester::whereBetween('id', [$section->clas->first_semester_id, session('semester_id')])->get();
 
         return view('hod.printable.cumulative.step2', compact('section', 'semesters'));
     }
