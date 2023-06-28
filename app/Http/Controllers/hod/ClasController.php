@@ -52,13 +52,12 @@ class ClasController extends Controller
     public function store(Request $request)
     {
         //append current semester to request
-        $request->merge(['semester_no' => 1]);
         $request->validate([
             'program_id' => 'required|numeric',
             'shift_id' => 'required|numeric',
-            'semester_no' => 'required|numeric',
-            'semester_id' => 'required|numeric',
             'scheme_id' => 'required|numeric',
+            'semester_no' => 'required|numeric',    //intake semester
+            'first_semester_id' => 'required|numeric',
 
         ]);
 
@@ -66,7 +65,7 @@ class ClasController extends Controller
         try {
             $exists = Clas::where('program_id', $request->program_id)
                 ->where('shift_id', $request->shift_id)
-                ->where('semester_id', $request->semester_id)
+                ->where('first_semester_id', $request->semester_id)
                 ->first();
             if ($exists) {
                 return redirect()->back()->with('error', 'Class ' . $exists->short() . ' already exists! You may promote/demote it.');
@@ -108,8 +107,9 @@ class ClasController extends Controller
     {
         //
         $clas = Clas::find($id);
-        $semesters = Semester::all();
-        return view('hod.clases.edit', compact('clas', 'semesters'));
+        $shifts = Shift::all();
+        $semesters = Semester::till(session('semester')->id)->get();
+        return view('hod.clases.edit', compact('clas', 'shifts', 'semesters'));
     }
 
     /**
@@ -123,26 +123,27 @@ class ClasController extends Controller
     {
         //
         $request->validate([
-            'semester_id' => 'required',
+            'first_semester_id' => 'required',
+            'shift_id' => 'required|numeric',
+            'scheme_id' => 'required|numeric',
+            'semester_no' => 'required|numeric',
+            'first_semester_id' => 'required|numeric',
         ]);
 
         $clas = Clas::find($id);
         try {
 
-            if ($clas->semester_id == $request->semester_id)
-                return redirect()->back()->with('error', 'Nothing to change');
-            else {
-                $exists = Clas::where('program_id', $clas->program_id)
-                    ->where('shift_id', $clas->shift_id)
-                    ->where('semester_id', $request->semester_id)
-                    ->first();
-                if ($exists) {
-                    return redirect()->back()->with('error', 'Class ' . $exists->short() . ' already exists! You may promote/demote it.');
-                } else {
-                    $clas = Clas::findOrFail($id);
-                    $clas->update($request->all());
-                    return redirect()->route('clases.index')->with('success', 'Successfully updated');;
-                }
+            $exists = Clas::where('program_id', $clas->program_id)
+                ->where('shift_id', $request->shift_id)
+                ->where('semester_no', $request->semester_no)
+                ->where('first_semester_id', $request->frist_semester_id)
+                ->first();
+            if ($exists) {
+                return redirect()->back()->with('error', 'Class ' . $exists->short() . ' already exists! You may promote/demote it.');
+            } else {
+                // $clas = Clas::findOrFail($id);
+                $clas->update($request->all());
+                return redirect()->route('clases.index')->with('success', 'Successfully updated');;
             }
         } catch (Exception $ex) {
             return redirect()->back()
@@ -174,7 +175,8 @@ class ClasController extends Controller
         $program = Program::find($pid);
         $shifts = Shift::all();
         $schemes = Scheme::all();
-        $semesters = Semester::all();
+        $semesters = Semester::till(session('semester')->id)->get();
+
         return view('hod.clases.append', compact('program', 'shifts', 'schemes', 'semesters'));
     }
 
