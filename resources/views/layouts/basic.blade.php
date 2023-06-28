@@ -11,10 +11,10 @@
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Styles -->
-    @vite(['resources/js/app.js','resources/css/app.css'])
+    <!-- @vite(['resources/js/app.js','resources/css/app.css']) -->
 
-    <!-- <link rel="stylesheet" href="{{ asset('/build/assets/app.css') }}">
-    <script src="{{ asset('/build/assets/app.js') }}"></script> -->
+    <link rel="stylesheet" href="{{ asset('/build/assets/app.css') }}">
+    <script src="{{ asset('/build/assets/app.js') }}"></script>
 
     <script src="{{ asset('/fonts/bootstrap-icons/bootstrap-icons.min.css') }}"></script>
 
