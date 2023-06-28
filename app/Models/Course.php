@@ -13,10 +13,10 @@ class Course extends Model
         'short',
         'code',
         'course_type_id',
-        'credit_hrs_theory',
-        'max_marks_theory',
-        'credit_hrs_practical',
-        'max_marks_practical',
+        'cr_theory',
+        'cr_practical',
+        'marks_theory',
+        'marks_practical',
         'department_id',
     ];
 
@@ -37,15 +37,15 @@ class Course extends Model
 
     public function creditHrs()
     {
-        return $this->credit_hrs_theory + $this->credit_hrs_practical;
+        return $this->cr_theory + $this->cr_practical;
     }
     public function marks()
     {
-        return $this->max_marks_theory + $this->max_marks_practical;
+        return $this->marks_theory + $this->marks_practical;
     }
     public function creditHrsLabel()
     {
-        return $this->credit_hrs_theory + $this->credit_hrs_practical . "(" . $this->credit_hrs_theory . "-" . $this->credit_hrs_practical . ")";
+        return $this->cr_theory + $this->cr_practical . "(" . $this->cr_theory . "-" . $this->cr_practical . ")";
     }
     public function scopeType($query, $type)
     {
@@ -59,10 +59,10 @@ class Course extends Model
     //new style for cr hr, will replace the older
     public function lblCr()
     {
-        return $this->credit_hrs_theory + $this->credit_hrs_practical . "(" . $this->credit_hrs_theory . "-" . $this->credit_hrs_practical . ")";
+        return $this->cr_theory + $this->cr_practical . "(" . $this->cr_theory . "-" . $this->cr_practical . ")";
     }
     public function cr()
     {
-        return $this->credit_hrs_theory + $this->credit_hrs_practical;
+        return $this->cr_theory + $this->cr_practical;
     }
 }

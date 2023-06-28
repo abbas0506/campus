@@ -135,10 +135,10 @@ CREATE TABLE `courses` (
   `short` varchar(255) NOT NULL,
   `code` varchar(255) DEFAULT NULL,
   `course_type_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1,
-  `credit_hrs_theory` int(10) UNSIGNED NOT NULL,
-  `max_marks_theory` int(10) UNSIGNED NOT NULL,
-  `credit_hrs_practical` int(10) UNSIGNED NOT NULL,
-  `max_marks_practical` int(10) UNSIGNED NOT NULL,
+  `cr_theory` int(10) UNSIGNED NOT NULL,
+  `marks_theory` int(10) UNSIGNED NOT NULL,
+  `cr_practical` int(10) UNSIGNED NOT NULL,
+  `marks_practical` int(10) UNSIGNED NOT NULL,
   `department_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -148,7 +148,7 @@ CREATE TABLE `courses` (
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`id`, `name`, `short`, `code`, `course_type_id`, `credit_hrs_theory`, `max_marks_theory`, `credit_hrs_practical`, `max_marks_practical`, `department_id`, `created_at`, `updated_at`) VALUES
+INSERT INTO `courses` (`id`, `name`, `short`, `code`, `course_type_id`, `cr_theory`, `marks_theory`, `cr_practical`, `marks_practical`, `department_id`, `created_at`, `updated_at`) VALUES
 (1, 'Fundamentals of Computer Science', 'Computer Science', 'C001', 1, 3, 100, 1, 100, 1, '2022-12-19 17:03:08', '2022-12-19 17:03:08'),
 (2, 'Data Structures and Algoithms', 'DSA', 'C002', 1, 4, 100, 0, 0, 1, '2022-12-19 17:03:08', '2022-12-19 17:03:08'),
 (3, 'Object Oriented and Programming', 'OOP', 'C003', 1, 4, 100, 0, 0, 1, '2022-12-19 17:03:08', '2022-12-19 17:03:08'),
@@ -520,7 +520,7 @@ INSERT INTO `courses` (`id`, `name`, `short`, `code`, `course_type_id`, `credit_
 (376, 'Indexing and Abstracting', 'IA', '01702', 7, 3, 100, 0, 0, 15, '2023-02-16 14:31:23', '2023-02-16 14:31:23'),
 (377, 'Resource Sharing and Networking', 'RSN', '01703', 7, 3, 100, 0, 0, 15, '2023-02-16 14:31:52', '2023-02-16 14:31:52'),
 (378, 'Elective I', 'el', '01704', 2, 3, 100, 0, 0, 15, '2023-02-16 14:32:13', '2023-02-16 14:32:13');
-INSERT INTO `courses` (`id`, `name`, `short`, `code`, `course_type_id`, `credit_hrs_theory`, `max_marks_theory`, `credit_hrs_practical`, `max_marks_practical`, `department_id`, `created_at`, `updated_at`) VALUES
+INSERT INTO `courses` (`id`, `name`, `short`, `code`, `course_type_id`, `cr_theory`, `marks_theory`, `cr_practical`, `marks_practical`, `department_id`, `created_at`, `updated_at`) VALUES
 (379, 'Elective II', 'EL', '01705', 2, 3, 100, 0, 0, 15, '2023-02-16 14:32:42', '2023-02-16 14:32:42'),
 (380, 'Qualitative Research Methods', 'QRM', '01706', 7, 3, 100, 0, 0, 15, '2023-02-16 14:33:19', '2023-02-16 14:33:19'),
 (381, 'Inf. Storage and Retrieval', 'ISR', '01801', 7, 4, 100, 0, 0, 15, '2023-02-16 14:36:35', '2023-02-16 14:36:35'),

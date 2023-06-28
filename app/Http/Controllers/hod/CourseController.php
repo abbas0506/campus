@@ -54,10 +54,10 @@ class CourseController extends Controller
             'short' => 'required',
             'code' => 'nullable|required_if:course_type_id,1',
             'course_type_id' => 'required|numeric',
-            'credit_hrs_theory' => 'required|numeric',
-            'max_marks_theory' => 'required|numeric',
-            'credit_hrs_practical' => 'required|numeric',
-            'max_marks_practical' => 'required|numeric',
+            'cr_theory' => 'required|numeric',
+            'marks_theory' => 'required|numeric',
+            'cr_practical' => 'required|numeric',
+            'marks_practical' => 'required|numeric',
             'department_id' => 'required|numeric',
         ]);
 
@@ -111,10 +111,10 @@ class CourseController extends Controller
             'short' => 'required',
             'code' => 'nullable|required_if:course_type_id,1',
             'course_type_id' => 'required|numeric',
-            'credit_hrs_theory' => 'required|numeric',
-            'max_marks_theory' => 'required|numeric',
-            'credit_hrs_practical' => 'required|numeric',
-            'max_marks_practical' => 'required|numeric',
+            'cr_theory' => 'required|numeric',
+            'marks_theory' => 'required|numeric',
+            'cr_practical' => 'required|numeric',
+            'marks_practical' => 'required|numeric',
 
         ]);
 

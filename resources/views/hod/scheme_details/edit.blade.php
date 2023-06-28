@@ -61,7 +61,7 @@ $roman=config('global.romans');
             @if($course->department_id==session('department_id'))
             <tr class="tr">
                 <td class="text-center">{{$course->code}}</td>
-                <td>{{$course->name}} <span class="text-slate-400 ml-2">({{$course->credit_hrs_theory}}-{{$course->credit_hrs_practical}})</span></td>
+                <td>{{$course->name}} <span class="text-slate-400 ml-2">({{$course->cr_theory}}-{{$course->cr_practical}})</span></td>
                 <td class="text-center font-thin">{{$course->course_type->name}}</td>
                 <td class="text-center font-thin">Self</td>
                 <td>
@@ -77,7 +77,7 @@ $roman=config('global.romans');
             @else
             <tr class="tr other hidden">
                 <td class="text-center">{{$course->code}}</td>
-                <td>{{$course->name}} <span class="text-slate-400 ml-2">({{$course->credit_hrs_theory}}-{{$course->credit_hrs_practical}})</span></td>
+                <td>{{$course->name}} <span class="text-slate-400 ml-2">({{$course->cr_theory}}-{{$course->cr_practical}})</span></td>
                 <td class="text-center font-thin">{{$course->course_type->name}}</td>
                 <td class="text-center font-thin">{{str_replace("Department of ","",$course->department->name)}}</td>
                 <td>

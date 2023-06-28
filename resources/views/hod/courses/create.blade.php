@@ -56,21 +56,21 @@
         <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Credit Hrs (Theory)</label>
-                <input id="" type='number' name="credit_hrs_theory" class="input-indigo p-1 pl-2" placeholder="Crdit Hrs" value='4' required>
+                <input id="" type='number' name="cr_theory" class="input-indigo p-1 pl-2" placeholder="Crdit Hrs" value='4' required>
             </div>
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Max Marks (Theory)</label>
-                <input type='number' id="" name="max_marks_theory" class="input-indigo p-1 pl-2" placeholder="Marks" value='100' required>
+                <input type='number' id="" name="marks_theory" class="input-indigo p-1 pl-2" placeholder="Marks" value='100' required>
             </div>
         </div>
         <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Credit Hrs (Practical)</label>
-                <input id="" type='number' name="credit_hrs_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value='0' min=0 required>
+                <input id="" type='number' name="cr_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value='0' min=0 required>
             </div>
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Max Marks (Practical)</label>
-                <input type='number' id="" name="max_marks_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value='0' min=0 required>
+                <input type='number' id="" name="marks_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value='0' min=0 required>
             </div>
         </div>
 

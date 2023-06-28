@@ -71,7 +71,7 @@
 
                 <td class="text-center">{{$course->creditHrsLabel()}}</td>
                 <td class="text-center">
-                    {{$course->max_marks_theory}} + {{$course->max_marks_practical}}
+                    {{$course->marks_theory}} + {{$course->marks_practical}}
                 </td>
 
                 <td>

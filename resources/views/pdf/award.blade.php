@@ -107,7 +107,7 @@ $roman = config('global.romans');
                         <td class="font-bold text-xs">Code:</td>
                         <td class="text-xs">{{$course_allocation->course->code}}</td>
                         <td class="font-bold text-xs">Cr. Hrs:</td>
-                        <td class="text-xs">{{$course_allocation->course->creditHrs()}}({{$course_allocation->course->credit_hrs_theory}}-{{$course_allocation->course->credit_hrs_practical}})</td>
+                        <td class="text-xs">{{$course_allocation->course->creditHrs()}}({{$course_allocation->course->cr_theory}}-{{$course_allocation->course->cr_practical}})</td>
                     </tr>
                 </tbody>
             </table>

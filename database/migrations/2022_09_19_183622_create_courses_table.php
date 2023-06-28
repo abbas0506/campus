@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('short');
             $table->string('code')->nullable();
             $table->unsignedBigInteger('course_type_id')->default(1);
-            $table->unsignedInteger('credit_hrs_theory');
-            $table->unsignedInteger('max_marks_theory');
-            $table->unsignedInteger('credit_hrs_practical');
-            $table->unsignedInteger('max_marks_practical');
+            $table->unsignedInteger('cr_theory');
+            $table->unsignedInteger('cr_practical');
+            $table->unsignedInteger('marks_theory');
+            $table->unsignedInteger('marks_practical');
             $table->unsignedBigInteger('department_id');
             $table->unique(['code', 'department_id']);
             $table->timestamps();

@@ -131,10 +131,10 @@ CREATE TABLE `courses` (
   `short` varchar(255) NOT NULL,
   `code` varchar(255) DEFAULT NULL,
   `course_type_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1,
-  `credit_hrs_theory` int(10) UNSIGNED NOT NULL,
-  `max_marks_theory` int(10) UNSIGNED NOT NULL,
-  `credit_hrs_practical` int(10) UNSIGNED NOT NULL,
-  `max_marks_practical` int(10) UNSIGNED NOT NULL,
+  `cr_theory` int(10) UNSIGNED NOT NULL,
+  `marks_theory` int(10) UNSIGNED NOT NULL,
+  `cr_practical` int(10) UNSIGNED NOT NULL,
+  `marks_practical` int(10) UNSIGNED NOT NULL,
   `department_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -144,7 +144,7 @@ CREATE TABLE `courses` (
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`id`, `name`, `short`, `code`, `course_type_id`, `credit_hrs_theory`, `max_marks_theory`, `credit_hrs_practical`, `max_marks_practical`, `department_id`, `created_at`, `updated_at`) VALUES
+INSERT INTO `courses` (`id`, `name`, `short`, `code`, `course_type_id`, `cr_theory`, `marks_theory`, `cr_practical`, `marks_practical`, `department_id`, `created_at`, `updated_at`) VALUES
 (16, 'Functional English-I', 'Functional English-I', 'TE-B.Ed(H)-1001', 1, 3, 100, 0, 0, 8, '2022-12-21 13:40:39', '2022-12-30 12:27:38'),
 (17, 'Pakistan Studies', 'Pakistan Studies', 'TE-B.Ed(H)-1007', 1, 2, 100, 0, 0, 8, '2022-12-21 13:42:14', '2022-12-30 12:28:08'),
 (18, 'English-II (Communication Skills)', 'English-II', 'TE-B.Ed(H)-1002', 1, 3, 100, 0, 0, 8, '2022-12-21 13:43:17', '2022-12-30 12:27:49'),
@@ -515,7 +515,7 @@ INSERT INTO `courses` (`id`, `name`, `short`, `code`, `course_type_id`, `credit_
 (394, 'Introductory Biochemistry', 'Biochem', 'Biochem-1', 1, 2, 80, 1, 20, 5, '2023-02-17 13:39:51', '2023-02-17 13:39:51'),
 (395, 'Essential of Food Science & Technology', 'FST', 'FST 101', 7, 2, 80, 1, 20, 5, '2023-02-17 13:41:51', '2023-02-17 13:41:51'),
 (396, 'Fundamentals of Human Nutrition', 'HND', 'HND-102', 7, 2, 80, 1, 20, 5, '2023-02-17 13:43:28', '2023-02-17 13:43:28');
-INSERT INTO `courses` (`id`, `name`, `short`, `code`, `course_type_id`, `credit_hrs_theory`, `max_marks_theory`, `credit_hrs_practical`, `max_marks_practical`, `department_id`, `created_at`, `updated_at`) VALUES
+INSERT INTO `courses` (`id`, `name`, `short`, `code`, `course_type_id`, `cr_theory`, `marks_theory`, `cr_practical`, `marks_practical`, `department_id`, `created_at`, `updated_at`) VALUES
 (397, 'General Methods of Teaching', 'GMT', 'TE-B.Ed(1.5)-3001', 1, 3, 100, 0, 0, 8, '2023-02-17 13:44:09', '2023-02-17 13:44:09'),
 (398, 'Instructional and Communication Technology in Education', 'ICT', 'TE-B.Ed(1.5)-3002', 1, 3, 100, 0, 0, 8, '2023-02-17 13:45:22', '2023-02-17 13:45:22'),
 (399, 'Classroom Assessment', 'Classroom Assessment', 'TE-B.Ed(1.5)-3003', 1, 3, 100, 0, 0, 8, '2023-02-17 15:34:21', '2023-02-17 15:34:21'),
