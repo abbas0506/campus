@@ -78,10 +78,12 @@ class Clas extends Model
     }
     public function scopeTill($query, $semester_id)
     {
-        return $query->where('first_semester_id', '<=', $semester_id);
+        return $query->where('last_semester_id', '<=', $semester_id);
     }
-    public function scopeActive($query, $semester_id)
+    public function scopeActive($query)
     {
-        //to be developed
+        $semester_id = session('semester')->id;
+        return $query->where('last_semester_id', '>=', $semester_id)
+            ->where('first_semester_id', '<=', $semester_id);
     }
 }

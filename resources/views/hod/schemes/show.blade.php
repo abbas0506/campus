@@ -97,7 +97,7 @@
                     <div class="text-sm w-1/3">{{$scheme_detail->course->name}} </div>
                     <div class="text-sm w-1/3">{{$scheme_detail->course->course_type->name}} </div>
                     <div class="text-xs text-slate-400">{{$scheme_detail->course->lblCr()}}</div>
-                    @if(Auth::user()->hasRole('super'))
+                    @role('super')
                     <form action="{{route('scheme-details.destroy', $scheme_detail)}}" method="POST" id='del_form{{$scheme_detail->id}}' class="mt-1">
                         @csrf
                         @method('DELETE')
@@ -105,7 +105,7 @@
                             <i class="bi bi-trash3"></i>
                         </button>
                     </form>
-                    @endif
+                    @endrole
                 </div>
                 @endforeach
 

@@ -32,14 +32,14 @@ class Program extends Model
     }
     public function clases()
     {
-        return $this->hasMany(Clas::class)
-            ->where('first_semester_id', "<=", session('semester')->id);
+        return $this->hasMany(Clas::class);
     }
     public function sections()
     {
         // return $this->hasMany(Section::class);
         return Section::whereRelation('clas', 'program_id', $this->id)->get();
     }
+
     public function students()
     {
         return Student::whereRelation('section.clas', 'program_id', $this->id)->get();
