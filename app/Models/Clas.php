@@ -80,9 +80,9 @@ class Clas extends Model
     {
         return $query->where('last_semester_id', '<=', $semester_id);
     }
-    public function scopeActive($query, $semester_id)
+    public function scopeActive($query)
     {
-        // $semester_id = session('semester')->id;
+        $semester_id = session('semester')->id;
         return $query->where('last_semester_id', '>=', $semester_id)
             ->where('first_semester_id', '<=', $semester_id);
     }
