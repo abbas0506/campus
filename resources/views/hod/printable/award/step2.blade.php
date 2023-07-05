@@ -35,7 +35,7 @@ $roman = config('global.romans');
             <h2 class="">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
                 <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
                 <span class="text-xs text-slate-600 bx bx-book ml-6"></span>
-                <span class="text-xs text-slate-600 ml-2">
+                <span class="text-xs text-slate-600 ml-1">
                     {{$section->course_allocations()->during($semester->id)->count()}}
                 </span>
             </h2>
