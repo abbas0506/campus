@@ -41,7 +41,7 @@
             @endif
 
             <select id="role" name="role" class="input-indigo  px-4 py-3 w-full mt-3 bg-transparent" onchange="loadDepartments()">
-                @if(Auth::user()->roles->count()>1)
+                @if(Auth::user()->hasAnyRole('hod','teacher'))
                 <option value="">- select -</option>
                 @endif
                 @foreach(Auth::user()->roles as $role)

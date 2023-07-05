@@ -38,9 +38,9 @@
             <div class="head">
                 <h2 class="">
                     Semester {{$roman[$semester_no-1]}}
-                    <span class="ml-6 text-xs font-thin">Cr Hrs: {{$scheme->scheme_metas()->for($semester_no)->sum('cr')}}</span>
-                    <span class="ml-3 text-xs font-thin">Courses: {{$scheme->courses($semester_no)->count()}}</span>
-                    @if($scheme->courses($semester_no)->count()>0)
+                    <span class="ml-6 text-xs font-thin"> <i class="bi bi-clock"></i> {{$scheme->scheme_metas()->for($semester_no)->sum('cr')}}</span>
+                    <span class="ml-3 text-xs font-thin"><i class="bi bi-book"></i> {{$scheme->scheme_details()->for($semester_no)->count()}}</span>
+                    @if($scheme->scheme_details()->for($semester_no)->count()>0)
                     <span class="bx bx-check-double ml-2"></span>
                     @endif
                 </h2>
@@ -91,7 +91,7 @@
                     </a>
                 </div>
 
-                @foreach($scheme->scheme_details->where('semester_no',$semester_no)->where('slot',0) as $scheme_detail)
+                @foreach($scheme->scheme_details()->for($semester_no)->havingSlot(0)->get() as $scheme_detail)
                 <div class="flex items-center justify-between w-full even:bg-slate-100">
                     <div class="text-sm w-1/6">{{$scheme_detail->course->code}} </div>
                     <div class="text-sm w-1/3">{{$scheme_detail->course->name}} </div>
