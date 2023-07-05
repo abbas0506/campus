@@ -40,7 +40,8 @@
                 @foreach($section->course_allocations()->during($semester->id)->get() as $course_allocation)
                 <div class="flex items-center w-full even:bg-slate-100 py-1">
                     <div class="flex w-36 text-sm">{{$course_allocation->course->code}}</div>
-                    <div class="flex flex-1 text-sm">{{$course_allocation->course->name}} <span class="ml-3 text-slate-400">{{$course_allocation->course->creditHrsLabel()}}</span></div>
+                    <div class="flex flex-1 text-sm">{{$course_allocation->course->name}} <span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>
+                    <div class="flex flex-1 text-xs text-slate-600">Slot:{{$course_allocation->slot}}</div>
                     <div class="flex flex-1 text-sm">
                         <!-- if teacher name given, show name ... else show link icon -->
                         @if($course_allocation->teacher)

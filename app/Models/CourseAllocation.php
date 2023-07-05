@@ -11,6 +11,7 @@ class CourseAllocation extends Model
     protected $fillable = [
         'section_id',
         'semester_no',
+        'slot',
         'course_id',    //optional course id
         'scheme_detail_id',
         'teacher_id',

@@ -42,6 +42,7 @@ class CoursePlanController extends Controller
 
         $request->merge([
             'semester_id' => session('semester_id'),
+            'slot' => 0,
         ]);
 
         $request->validate([
