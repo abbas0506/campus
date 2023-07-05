@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
 use App\Models\Department;
 use App\Models\Section;
+use App\Models\Semester;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AwardController extends Controller
@@ -23,12 +24,7 @@ class AwardController extends Controller
     public function step2($id)
     {
         $section = Section::find($id);
-
-        $semester_nos = collect();
-        for ($i = 1; $i <= $section->clas->semester_no; $i++) {
-            $semester_nos->add($i);
-        }
-        return view('hod.printable.award.step2', compact('section', 'semester_nos'));
+        return view('hod.printable.award.step2', compact('section'));
     }
 
     public function export($id)

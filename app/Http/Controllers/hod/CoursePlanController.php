@@ -22,7 +22,7 @@ class CoursePlanController extends Controller
         $department = Department::find(session('department_id'));
         $programs = $department->programs;
 
-        return view('hod.courseplan.index', compact('programs'));
+        return view('hod.courseplan.step1', compact('programs'));
     }
     public function create()
     {
@@ -33,11 +33,7 @@ class CoursePlanController extends Controller
     {
         //
         $section = Section::find($sid);
-        $semester_nos = collect();
-        for ($i = 1; $i <= $section->clas->program->min_t * 2; $i++) {
-            $semester_nos->add($i);
-        }
-        return view('hod.courseplan.show', compact('section', 'semester_nos'));
+        return view('hod.courseplan.step2', compact('section'));
     }
 
     public function store(Request $request)
@@ -99,12 +95,7 @@ class CoursePlanController extends Controller
     public function courses($sid)
     {
         $section = Section::find($sid);
-        $semester_nos = collect();
-        for ($i = 1; $i <= $section->clas->program->min_t * 2; $i++) {
-            $semester_nos->add($i);
-        }
-
-        return view('hod.courseplan.courses', compact('section', 'semester_nos'));
+        return view('hod.courseplan.courses', compact('section'));
     }
 
     // view available teachers for selected course

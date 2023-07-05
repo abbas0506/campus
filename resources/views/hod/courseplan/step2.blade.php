@@ -12,13 +12,10 @@
         {{session('success')}}
     </div>
     @endif
-
-
     @php
     $roman=config('global.romans');
     @endphp
     <div class="flex items-center space-x-4">
-        <p class="flex items-center bg-teal-100 px-2">Current Semester: <span class="font-semibold ml-2">{{$roman[$section->currentSemester()-1]}}</span></p>
         <p class="flex items-center bg-orange-100 px-2">Scheduled:
             <i class="bx bx-book ml-2"></i> <span class="font-semibold ml-2">{{$section->course_allocations->count()}} / {{$section->clas->scheme->scheme_details->count()}}</span>
             <span class="mx-4">|</span>
@@ -26,22 +23,21 @@
         </p>
     </div>
     <div class="flex flex-col accordion mt-4">
-        @foreach($semester_nos as $semester_no)
+        @foreach($section->semesters() as $semester)
         <div class="collapsible">
-            <div @if($section->clas->semester_no==$semester_no) class="head active" @else class="head" @endif>
-                <h2 class="flex items-center">
-                    <p class="w-32">Semester {{$roman[$semester_no-1]}}</p>
-                    <span class="bx bx-book ml-6 text-slate-400"></span> <span class="ml-2 text-xs">{{$section->course_allocations()->allocated($semester_no)->count()}} </span>
-                    <span class="bx bx-time-five ml-6 text-slate-400"></span> <span class="ml-2 text-xs">{{$section->course_allocations()->sumOfCreditHrs($semester_no)}} </span>
-                    @if($section->course_allocations()->sumOfCreditHrs($semester_no)>0)
-                    <span class="bx bx-check-double ml-2"></span>
-                    @endif
+            <div @if($semester->id==session('semester')->id) class="head active" @else class="head" @endif>
+                <h2 class="flex items-center">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
+                    <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
+                    <span class="bx bx-book text-slate-400 ml-6"></span>
+                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->during($semester->id)->count()}}</span>
+                    <span class="bx bx-time-five ml-6 text-slate-400"></span>
+                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->sumOfCreditHrs($semester->id)}} </span>
                 </h2>
                 <i class="bx bx-chevron-down text-lg"></i>
             </div>
             <div class="body">
 
-                @foreach($section->course_allocations()->allocated($semester_no)->get() as $course_allocation)
+                @foreach($section->course_allocations()->during($semester->id)->get() as $course_allocation)
                 <div class="flex items-center w-full even:bg-slate-100 py-1">
                     <div class="flex w-36 text-sm">{{$course_allocation->course->code}}</div>
                     <div class="flex flex-1 text-sm">{{$course_allocation->course->name}} <span class="ml-3 text-slate-400">{{$course_allocation->course->creditHrsLabel()}}</span></div>
@@ -49,7 +45,7 @@
                         <!-- if teacher name given, show name ... else show link icon -->
                         @if($course_allocation->teacher)
                         {{$course_allocation->teacher->name}}
-                        @elseif($section->clas->semester_no==$semester_no)
+                        @elseif($semester->id==session('semester')->id)
                         <div class="flex items-center py-2">
                             <a href="{{route('courseplan.teachers',$course_allocation)}}">
                                 <i class="bx bx-paperclip text-indigo-600"></i>
@@ -60,9 +56,10 @@
                         @endif
                     </div>
                     <!-- show remove icon for each allocation -->
+                    @if($semester->id==session('semester')->id)
                     @if($course_allocation->teacher)
                     <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
-                    @elseif($section->clas->semester_no==$semester_no)
+                    @else
                     <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_elective_form{{$course_allocation->id}}'>
                         @csrf
                         @method('DELETE')
@@ -71,11 +68,12 @@
                         </button>
                     </form>
                     @endif
+                    @endif
 
                 </div>
                 @endforeach
                 <!-- allow course addition only for current semester -->
-                @if($section->clas->semester_no==$semester_no)
+                @if($semester->id==session('semester')->id)
                 <div class="w-full mt-2">
                     <a href="{{route('courseplan.courses', $section)}}" class="flex items-center btn-teal text-sm float-left">
                         Add Course

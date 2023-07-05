@@ -83,7 +83,11 @@ class Clas extends Model
     public function scopeActive($query)
     {
         $semester_id = session('semester')->id;
-        return $query->where('last_semester_id', '>=', $semester_id)
-            ->where('first_semester_id', '<=', $semester_id);
+        return $query->where('first_semester_id', '<=', $semester_id)
+            ->where('last_semester_id', '>=', $semester_id);
+    }
+    public function semesterNo($semester_id)
+    {
+        return $semester_id - $this->first_semester_id + 1;
     }
 }

@@ -20,22 +20,29 @@
 @php
 $roman=config('global.romans');
 @endphp
+<div class="text-lg font-semibold text-teal-800 mt-8">Study Scheme: {{$section->clas->scheme->subtitle()}}</div>
 <!-- courses list by default hidden -->
 <div class="flex flex-col accordion mt-4">
-    @foreach($semester_nos as $semester_no)
+    @foreach($section->semesters() as $semester)
+    @php
+    $semester_no=$section->clas->semesterNo($semester->id);
+    @endphp
     <div class="collapsible">
         <div class="head active">
-            <h2>Semester {{$roman[$semester_no-1]}}</h2>
+            <h2>Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
+                <span class="bx bx-book text-slate-400 ml-6"></span>
+                <span class="text-xs text-slate-600 ml-2">{{$section->clas->scheme->scheme_details()->for($semester_no)->count()}}</span>
+            </h2>
             <i class="bx bx-chevron-down text-lg"></i>
         </div>
         <div class="body">
 
-            @foreach($section->clas->scheme->scheme_details()->semester($semester_no)->get() as $scheme_detail)
+            @foreach($section->clas->scheme->scheme_details()->for($semester_no)->get() as $scheme_detail)
 
             <div class="flex items-center w-full even:bg-slate-100 tr">
 
                 <div class="text-sm py-2 w-32 text-center">{{$scheme_detail->course->code}}</div>
-                <div class="text-sm py-2 flex-1">{{$scheme_detail->course->name}}</div>
+                <div class="text-sm py-2 flex-1">{{$scheme_detail->course->name}} <span class="text-slate-400 text-xs ml-4">{{$scheme_detail->course->lblCr()}}</span></div>
                 <div class="text-sm py-2 w-32 font-thin">{{$scheme_detail->course->course_type->name}}</div>
 
                 <!-- if compulsory subject, then fine, else jump to specific optional subjects page   -->

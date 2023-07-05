@@ -72,11 +72,11 @@ class CourseAllocation extends Model
     }
     public function scopeAllocated($query, $no)
     {
-        return $query->where('semester_no', $no);
+        return $query->where('semester_id', $no);
     }
-    public function scopeSumOfCreditHrs($query, $no)
+    public function scopeSumOfCreditHrs($query, $id)
     {
-        return $query->where('semester_no', $no)->get()->sum(function ($allocation) {
+        return $query->where('semester_id', $id)->get()->sum(function ($allocation) {
             return $allocation->course->creditHrs();
         });
     }

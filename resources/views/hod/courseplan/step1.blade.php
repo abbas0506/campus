@@ -51,18 +51,12 @@
         <div class="head">
             <h2 class="flex items-center space-x-4">
                 {{$program->short}}
-                <span class="text-xs ml-4 font-thin">Classes:{{$program->clases()->count()}}</span>
-                <span class="text-xs ml-4 font-thin">Sections:{{$program->sections()->count()}}</span>
-                <div class="flex items-center space-x-1">
-                    <span class="bx bx-user text-[12px] text-slate-500"></span>
-                    <span class="text-xs font-thin">{{$program->students()->count()}}</span>
-                </div>
-
+                <span class="text-xs ml-4 font-thin">Classes:{{$program->clases()->active()->count()}}</span>
             </h2>
             <i class="bx bx-chevron-down text-lg"></i>
         </div>
         <div class="body">
-            @foreach($program->clases as $clas)
+            @foreach($program->clases()->active()->get() as $clas)
             <div class="flex items-center w-full border-b py-1 space-x-4">
                 <div class="flex items-center justify-between w-1/2 md:w-1/4">
                     <div class="text-sm">{{$clas->short()}}</div>

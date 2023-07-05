@@ -26,17 +26,22 @@
 $roman = config('global.romans');
 @endphp
 <!-- records found -->
-<div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$section->course_allocations->count()}} courses found</div>
+<!-- <div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$section->course_allocations->count()}} courses found</div> -->
 
-<div class="flex flex-col accordion">
-    @foreach($semester_nos as $semester_no)
+<div class="flex flex-col accordion mt-12">
+    @foreach($section->semesters() as $semester)
     <div class="collapsible">
-        <div class="head">
-            <h2 class="">Semester {{$roman[$semester_no-1]}} <span class="ml-6 text-xs text-slate-600"><span class="bx bx-book mr-2"></span>{{$section->course_allocations()->allocated($semester_no)->count()}}</span></h2>
+        <div @if($semester->id==session('semester')->id) class="head active" @else class="head" @endif>
+            <h2 class="">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
+                <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
+                <span class="ml-6 text-xs text-slate-600 bx bx-book mr-2">
+                    {{$section->course_allocations()->during($semester->id)->count()}}
+                </span>
+            </h2>
             <i class="bx bx-chevron-down text-lg"></i>
         </div>
         <div class="body">
-            @foreach($section->course_allocations->where('semester_no',$semester_no) as $course_allocation)
+            @foreach($section->course_allocations()->during($semester->id)->get() as $course_allocation)
             <div class="flex items-center justify-between w-full mb-1">
                 <div class="w-1/4">{{$course_allocation->course->code}}</div>
                 <div class="w-1/3">{{$course_allocation->course->name}}</div>
@@ -55,9 +60,7 @@ $roman = config('global.romans');
             @endforeach
         </div>
     </div>
-
     @endforeach
-
 </div>
 
 @endsection
