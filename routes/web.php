@@ -86,7 +86,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
-    Route::resource('headship', HeadshipController::class);
+    Route::resource('headships', HeadshipController::class);
     Route::resource('coursetypes', CourseTypeController::class);
     //
 });

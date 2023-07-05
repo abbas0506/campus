@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1><a href="{{route('departments.index')}}">Departments</a></h1>
+<h1 class="mt-12"><a href="{{route('departments.index')}}">Deptt & Headship</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         {{$department->name}} / edit
@@ -18,6 +18,7 @@
         </ul>
     </div>
     @endif
+
 
     <form action="{{route('departments.update',$department)}}" method='post' class="flex flex-col w-full mt-16">
         @csrf

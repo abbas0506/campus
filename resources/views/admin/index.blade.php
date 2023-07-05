@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1 class="mt-12">Dashboard</h1>
+<h1>Dashboard</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         Data entry progress

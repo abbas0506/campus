@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1>Departments</h1>
+<h1>Headships</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        Departments / all
+        Headships / all
     </div>
 </div>
 
@@ -15,9 +15,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
         </div>
-        <a href="{{route('departments.create')}}" class="btn-indigo text-sm">
-            Add New Deptt
-        </a>
     </div>
     @if ($errors->any())
     <div class="alert-danger mt-8">
@@ -38,40 +35,39 @@
         {{session('success')}}
     </div>
     @endif
-    <div class="text-sm mt-8">{{$departments->count()}} departments found</div>
+    <div class="text-sm mt-8">{{$departments->count()}} records found</div>
     <table class="table-auto w-full mt-2">
         <thead>
             <tr class="border-b border-slate-200">
-                <th>Full Name</th>
-                <th>On Degree</th>
+                <th>Department</th>
+                <th>HoD</th>
                 <th class='text-center'>Actions</th>
             </tr>
         </thead>
         <tbody>
 
-            @foreach($departments->sortByDesc('id') as $department)
-            <tr class="tr border-b">
+            @foreach($departments->sortBy('name') as $department)
+            <tr class="tr border-b ">
+                <td>{{Str::replace('Department of ','',$department->name)}}</td>
                 <td>
-                    <div class="flex items-center py-2">
-                        <a href="{{route('departments.show', $department)}}" class="link">
-                            {{$department->name}}
-                        </a>
-                    </div>
+                    @if($department->headship)
+                    <div>{{$department->headship->user->name}}</div>
+                    <div class="text-sm text-slate-400">{{$department->headship->user->email}}</div>
+                    <div class="text-sm text-slate-400">{{$department->headship->department->name}}</div>
+                    @endif
                 </td>
-                <td class="text-slate-600">{{$department->title}}</td>
-                <td>
-                    <div class="flex items-center justify-center space-x-3">
-                        <a href="{{route('departments.edit', $department)}}" class="flex items-center text-green-800 hover:text-green-900">
-                            <i class="bi bi-pencil-square text-xs"></i>
-                        </a>
-                        <form action="{{route('departments.destroy',$department)}}" method="POST" id='del_form{{$department->id}}'>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600" onclick="delme('{{$department->id}}')">
-                                <i class="bi bi-trash3 text-xs"></i>
-                            </button>
-                        </form>
-                    </div>
+
+
+                <td class="text-center text-sm">
+                    @if($department->headship)
+                    <a href="{{route('headships.edit',$department)}}" class="btn-orange">
+                        Replace
+                    </a>
+                    @else
+                    <a href="{{route('headships.edit', $department->id)}}" class="btn-teal">
+                        Assign
+                    </a>
+                    @endif
                 </td>
             </tr>
             @endforeach
@@ -81,26 +77,6 @@
 </div>
 
 <script type="text/javascript">
-    function delme(formid) {
-
-        event.preventDefault();
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.value) {
-                //submit corresponding form
-                $('#del_form' + formid).submit();
-            }
-        });
-    }
-
     function search(event) {
         var searchtext = event.target.value.toLowerCase();
         var str = 0;

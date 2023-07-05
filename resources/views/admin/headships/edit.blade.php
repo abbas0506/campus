@@ -23,7 +23,7 @@
             </svg>
 
         </div>
-        <a href="{{route('headship.create')}}" class="btn-indigo text-sm">
+        <a href="{{route('headships.create')}}" class="btn-indigo text-sm">
             Create & Assign New
         </a>
     </div>
@@ -62,22 +62,19 @@
         <tr class="border-b tr">
             <td class="py-2">
                 <div>{{$teacher->name}}</div>
-                <div class="text-sm text-gray-500 font-medium">{{$teacher->email}}</div>
+                <div class="text-sm text-slate-400">{{$teacher->email}}</div>
             </td>
-            <td class="py-2 text-sm text-gray-500 font-medium">
-                <div>{{$teacher->department->name}}</div>
+            <td class="py-2 text-sm text-slate-600">
+                <div>{{Str::replace('Department of ','',$teacher->department->name)}}</div>
             </td>
             <td>
                 <div class="flex justify-center items-center">
-                    <form action="{{route('headship.update', $teacher->id)}}" method="POST" id='assign_form{{$teacher->id}}' class="mt-2 text-sm">
+                    <form action="{{route('headships.update', $teacher->id)}}" method="POST" id='assign_form{{$teacher->id}}' class="mt-2 text-sm">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="department_id" value="{{$selected_department->id}}">
-                        <button type="submit" class="flex  text-green-800 px-3 py-2 rounded" onclick="assign('{{$teacher->id}}')">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
-                            </svg>
-                            <span class="text-xs ml-2">(assign)</span>
+                        <button type="submit" class="text-blue-600" onclick="assign('{{$teacher->id}}')">
+                            <i class=" bi bi-paperclip"></i>
                         </button>
                     </form>
                 </div>

@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1><a href="{{route('departments.index')}}">Departments</a></h1>
+<h1 class="mt-12"><a href="{{route('departments.index')}}">Deptt & Headship</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        {{$department->name}} / edit
+        Departments / new
     </div>
 </div>
 
@@ -19,17 +19,16 @@
     </div>
     @endif
 
-    <form action="{{route('departments.update',$department)}}" method='post' class="flex flex-col w-full mt-16">
+    <form action="{{route('departments.store')}}" method='post' class="flex flex-col w-full mt-16">
         @csrf
-        @method('PATCH')
         <label for="">Full Name</label>
-        <input type="text" id='' name='name' class="input-indigo" placeholder="Enter department name" value="{{$department->name}}">
+        <input type="text" id='' name='name' class="input-indigo" placeholder="Department of Analytical Chemistry">
 
         <label for="" class='mt-3'>Display Name <span class="text-sm text-orange-700">(to be displayed on final degree)</span></label>
-        <input type="text" id='' name='title' class="input-indigo" placeholder="Department of Chemistry" value="{{$department->title}}">
+        <input type="text" id='' name='title' class="input-indigo" placeholder="Department of Chemistry">
 
         <div class="flex items-center justify-end mt-4 py-2">
-            <button type="submit" class="btn-indigo-rounded">Update</button>
+            <button type="submit" class="btn-indigo-rounded">Save</button>
         </div>
     </form>
 

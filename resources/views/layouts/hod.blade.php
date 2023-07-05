@@ -141,15 +141,11 @@
     <div class="flex flex-col flex-1">
         <div class="offset-header"></div>
         <div class="flex flex-col flex-1 p-12 overflow-x-hidden">
-            <!-- <div class="w-full md:w-3/4 md:ml-auto px-5 md:mr-8 text-slate-600"> -->
             @yield('page-content')
-            <!-- </div> -->
         </div>
     </div>
 
 </div>
-
-
 
 <script type="module">
     $('#toggle-current-user-dropdown').click(function() {

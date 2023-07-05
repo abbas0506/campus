@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1 class="mt-12"><a href="{{route('departments.index')}}">Deptt & Headship</a></h1>
+<h1><a href="{{route('departments.index')}}">Deptt & Headship</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
         {{$selected_department->name}} / assign hod
@@ -19,7 +19,7 @@
 
     @endif
 
-    <form action="{{route('headship.store')}}" method='post' class="flex flex-col w-full md:w-3/4 mx-auto mt-8">
+    <form action="{{route('headships.store')}}" method='post' class="flex flex-col w-full md:w-3/4 mx-auto mt-8">
         @csrf
         <label for="">HOD Name</label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">

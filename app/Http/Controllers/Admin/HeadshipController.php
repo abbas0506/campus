@@ -22,7 +22,8 @@ class HeadshipController extends Controller
     public function index()
     {
         //
-
+        $departments = Department::where('id', '>', 1)->get();
+        return view('admin.headships.index', compact('departments'));
     }
 
     /**
@@ -35,7 +36,7 @@ class HeadshipController extends Controller
         //
         $departments = Department::all();
         $selected_department = Department::find(session('department_id'));
-        return view('admin.headship.create', compact('selected_department', 'departments'));
+        return view('admin.headships.create', compact('selected_department', 'departments'));
     }
 
     /**
@@ -74,7 +75,7 @@ class HeadshipController extends Controller
             ]);
 
             DB::commit();
-            return redirect('departments')->with('success', 'Successfully created');
+            return redirect('headships')->with('success', 'Successfully created');
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
@@ -108,7 +109,7 @@ class HeadshipController extends Controller
         ]);
 
         $selected_department = Department::find($department_id);
-        return view('admin.headship.edit', compact('departments', 'teachers', 'selected_department'));
+        return view('admin.headships.edit', compact('departments', 'teachers', 'selected_department'));
     }
 
     /**
@@ -140,7 +141,7 @@ class HeadshipController extends Controller
                 $department = Department::find($department_id);
                 $department->headship->user->assignRole('hod');
                 DB::commit();
-                return redirect('departments')->with('success', 'Successfully replaced');
+                return redirect('headships')->with('success', 'Successfully replaced');
             } else {
                 $headship = Headship::create([
                     'department_id' => $department->id,
@@ -150,7 +151,7 @@ class HeadshipController extends Controller
                 //assign role
                 $headship->user->assignRole('hod');
                 DB::commit();
-                return redirect('departments')->with('success', 'Successfully assigned');
+                return redirect('headships')->with('success', 'Successfully assigned');
             }
         } catch (Exception $ex) {
             DB::rollBack();
@@ -167,15 +168,6 @@ class HeadshipController extends Controller
     public function destroy($id)
     {
         //
-        try {
-            $department = Department::find($id);
-            if ($department->headship->user->headships->count() == 1)
-                $department->headship->user->removeRole('hod');
-            $department->headship->delete();
-            return redirect('departments')->with('success', 'Successfully removed');
-        } catch (Exception $ex) {
-            return redirect()->back()
-                ->withErrors($ex->getMessage());
-        }
+
     }
 }
