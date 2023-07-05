@@ -20,16 +20,13 @@
 @php
 $roman=config('global.romans');
 @endphp
-<div class="text-lg font-semibold text-teal-800 mt-8">Study Scheme: {{$section->clas->scheme->subtitle()}}</div>
+<div class="text-md font-semibold text-teal-800 mt-8">Study Scheme: {{$section->clas->scheme->title()}}</div>
 <!-- courses list by default hidden -->
 <div class="flex flex-col accordion mt-4">
-    @foreach($section->semesters() as $semester)
-    @php
-    $semester_no=$section->clas->semesterNo($semester->id);
-    @endphp
+    @foreach($semester_nos as $semester_no)
     <div class="collapsible">
         <div class="head active">
-            <h2>Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
+            <h2>Semester {{$roman[$semester_no-1]}}
                 <span class="bx bx-book text-slate-400 ml-6"></span>
                 <span class="text-xs text-slate-600 ml-2">{{$section->clas->scheme->scheme_details()->for($semester_no)->count()}}</span>
             </h2>

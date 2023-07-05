@@ -96,7 +96,11 @@ class CoursePlanController extends Controller
     public function courses($sid)
     {
         $section = Section::find($sid);
-        return view('hod.courseplan.courses', compact('section'));
+        $semester_nos = collect();
+        for ($i = 1; $i <= $section->clas->program->min_t * 2; $i++) {
+            $semester_nos->push($i);
+        }
+        return view('hod.courseplan.courses', compact('section', 'semester_nos'));
     }
 
     // view available teachers for selected course
