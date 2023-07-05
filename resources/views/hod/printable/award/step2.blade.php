@@ -34,7 +34,8 @@ $roman = config('global.romans');
         <div @if($semester->id==session('semester')->id) class="head active" @else class="head" @endif>
             <h2 class="">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
                 <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
-                <span class="ml-6 text-xs text-slate-600 bx bx-book mr-2">
+                <span class="text-xs text-slate-600 bx bx-book ml-6"></span>
+                <span class="text-xs text-slate-600 ml-2">
                     {{$section->course_allocations()->during($semester->id)->count()}}
                 </span>
             </h2>
