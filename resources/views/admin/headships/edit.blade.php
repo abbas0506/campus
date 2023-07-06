@@ -1,45 +1,44 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1><a href="{{route('departments.index')}}">Deptt & Headship</a></h1>
-<div class="bread-crumb">{{$selected_department->name}} / assign hod</div>
+<h1><a href="{{route('departments.index')}}">Headship Control</a></h1>
+<div class="bread-crumb">{{$selected_department->name}} / Assign HoD</div>
 
-<div class="container w-full mx-auto mt-8">
-    <div class="flex items-center flex-wrap justify-between">
-        <div class="flex relative ">
-            <input type="text" id='search_input' placeholder="Search ..." class="search-indigo" oninput="search()">
-            <i class="bi bi-search absolute right-1 top-3"></i>
-        </div>
-        <a href="{{route('headships.create')}}" class="btn-indigo text-sm">
-            Create & Assign New
-        </a>
-    </div>
-    @if ($errors->any())
-    <div class="alert-danger mt-8">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-
-    @if(session('success'))
-    <div class="flex alert-success items-center mt-8">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-        </svg>
-
-        {{session('success')}}
-    </div>
-    @endif
+<div class="flex relative w-60 mt-8">
+    <input type="text" id='search_input' placeholder="Search ..." class="search-indigo w-60" oninput="search(event)">
+    <i class="bi bi-search absolute right-1 top-3"></i>
 </div>
 
-<div class="text-sm  text-gray-500 mt-8">{{$teachers->count()}} records found</div>
+<div class="flex items-center flex-wrap justify-between mt-8">
+    <div class="text-sm  text-gray-500 mt-4">{{$teachers->count()}} records found</div>
+    <a href="{{route('headships.create')}}" class="btn-indigo text-sm">
+        Create New HoD & Assign
+    </a>
+</div>
+@if ($errors->any())
+<div class="alert-danger mt-8">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
+@if(session('success'))
+<div class="flex alert-success items-center mt-8">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+    </svg>
+
+    {{session('success')}}
+</div>
+@endif
+
 <table class="table-auto w-full mt-3">
     <thead>
         <tr class="border-b border-slate-200">
             <th>Teacher Name</th>
-            <th>Department <span class="text-sm text-orange-700 font-thin">( basic )</span> </th>
+            <th>Parent Department</span> </th>
             <th class="py-2 text-gray-600 text-center">Actions</th>
         </tr>
     </thead>
@@ -72,6 +71,20 @@
 </table>
 </div>
 <script type="text/javascript">
+    function search(event) {
+        var searchtext = event.target.value.toLowerCase();
+        var str = 0;
+        $('.tr').each(function() {
+            if (!(
+                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
+                )) {
+                $(this).addClass('hidden');
+            } else {
+                $(this).removeClass('hidden');
+            }
+        });
+    }
+
     function assign(formid) {
         event.preventDefault();
         Swal.fire({

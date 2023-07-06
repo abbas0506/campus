@@ -19,7 +19,9 @@ class SemesterController extends Controller
     public function index()
     {
         ///
+        // $semesters = Semester::where('year', '<=', Carbon::now()->format('Y'))->get();
         $semesters = Semester::all();
+
         return view('admin.semesters.index', compact('semesters'));
     }
 
@@ -31,8 +33,7 @@ class SemesterController extends Controller
     public function create()
     {
         //
-        $semester_types = SemesterType::all();
-        return view('admin.semesters.create', compact('semester_types'));
+
     }
 
     /**
@@ -44,14 +45,18 @@ class SemesterController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'semester_type_id' => 'required|numeric',
-            'year' => 'required|numeric|min:2014|unique:semesters,year,NULL,id,semester_type_id,' . $request->semester_type_id,
-            'edit_till' => 'nullable|date',
-        ]);
 
         try {
-            Semester::create($request->all());
+            $semester = Semester::latest()->first();
+            // increment year after fall
+            $year = ($semester->semester_type_id == 2 ? $semester->year + 1 : $semester->year);
+            $semester_type_id = ($semester->semester_type_id == 1 ? 2 : 1);
+            Semester::create(
+                [
+                    'year' => $year,
+                    'semester_type_id' => $semester_type_id,
+                ]
+            );
             return redirect('semesters')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
@@ -93,17 +98,13 @@ class SemesterController extends Controller
      */
     public function update(Request $request, Semester $semester)
     {
-        //
-        $request->validate([
-            'edit_till' => 'nullable|date',
-        ]);
-
+        //toggle status
         try {
+            $semester->status = ($semester->status == 1 ? 0 : 1);
             $semester->update($request->all());
-            return redirect()->route('semesters.index')->with('success', 'Successfully updated');
+            return redirect('semesters')->with('success', 'Successfully updated');
         } catch (Exception $ex) {
-            return redirect()->back()
-                ->withErrors($ex->getMessage());
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 
@@ -116,11 +117,11 @@ class SemesterController extends Controller
     public function destroy(Semester $semester)
     {
         //
-        try {
-            $semester->delete();
-            return redirect()->back()->with('success', 'Successfully deleted');
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage());
-        }
+        // try {
+        //     $semester->delete();
+        //     return redirect()->back()->with('success', 'Successfully deleted');
+        // } catch (Exception $e) {
+        //     return redirect()->back()->withErrors($e->getMessage());
+        // }
     }
 }

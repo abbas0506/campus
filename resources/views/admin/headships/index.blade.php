@@ -8,15 +8,12 @@
 </div>
 
 <div class="container w-full mx-auto mt-8">
-    <div class="flex items-center flex-wrap justify-between">
-        <div class="flex relative ">
-            <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-            </svg>
-        </div>
+    <div class="flex relative w-60">
+        <input type="text" placeholder="Search ..." class="search-indigo w-60" oninput="search(event)">
+        <i class="bi bi-search absolute right-1 top-3"></i>
     </div>
     @if ($errors->any())
+
     <div class="alert-danger mt-8">
         <ul>
             @foreach ($errors->all() as $error)
@@ -58,13 +55,13 @@
                 </td>
 
 
-                <td class="text-center text-sm">
+                <td class="text-sm">
                     @if($department->headship)
-                    <a href="{{route('headships.edit',$department)}}" class="btn-orange">
+                    <a href="{{route('headships.edit',$department)}}" class="flex justify-center btn-orange w-16 mx-auto">
                         Replace
                     </a>
                     @else
-                    <a href="{{route('headships.edit', $department->id)}}" class="btn-teal">
+                    <a href="{{route('headships.edit', $department->id)}}" class="flex justify-center btn-teal w-16 mx-auto">
                         Assign
                     </a>
                     @endif

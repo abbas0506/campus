@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1><a href="{{route('departments.index')}}">Deptt & Headship</a></h1>
+<h1><a href="{{route('departments.index')}}">Create New HoD</a></h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        {{$selected_department->name}} / assign hod
+        {{$selected_department->name}} / Assign HoD
     </div>
 </div>
 <div class="container px-8 mt-12">
@@ -19,13 +19,16 @@
 
     @endif
 
-    <form action="{{route('headships.store')}}" method='post' class="flex flex-col w-full md:w-3/4 mx-auto mt-8">
+    <form action="{{route('headships.store')}}" method='post' class="flex flex-col w-full md:w-3/4 mx-auto mt-4">
         @csrf
-        <label for="">HOD Name</label>
+        <label for="">HoD Name</label>
         <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">
 
         <label for="" class='mt-3'>Email</label>
         <input type="text" id='email' name='email' class="input-indigo" placeholder="Enter email address">
+
+        <label for="" class='mt-3'>Phone</label>
+        <input type="text" id='phone' name='phone' class="input-indigo" placeholder="Enter phone">
 
         <label for="" class='mt-3'>CNIC <span id="cnic_length" class="text-slate-500 text-sm ml-3">0/13</span></label>
         <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Without dashes">

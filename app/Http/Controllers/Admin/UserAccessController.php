@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\CourseType;
+use App\Models\Department;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 
-class CourseTypeController extends Controller
+class UserAccessController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +18,8 @@ class CourseTypeController extends Controller
     public function index()
     {
         //
-        $coursetypes = CourseType::all();
-        return view('admin.coursetypes.index', compact('coursetypes'));
+        $users = User::where('id', '>', 3)->get();
+        return view('admin.user-access.index', compact('users'));
     }
 
     /**
@@ -29,7 +30,7 @@ class CourseTypeController extends Controller
     public function create()
     {
         //
-        return view('admin.coursetypes.create');
+
     }
 
     /**
@@ -41,17 +42,6 @@ class CourseTypeController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'name' => 'required|unique:course_types',
-        ]);
-
-        try {
-            CourseType::create($request->all());
-            return redirect()->route('coursetypes.index')->with('success', 'Successfully created');
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage());
-            // something went wrong
-        }
     }
 
     /**
@@ -72,11 +62,10 @@ class CourseTypeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-
     {
         //
-        $coursetype = CourseType::find($id);
-        return view('admin.coursetypes.edit', compact('coursetype'));
+        $user = User::findOrFail($id);
+        return view('admin.user-access.edit', compact('user'));
     }
 
     /**
@@ -89,17 +78,14 @@ class CourseTypeController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $request->validate([
-            'name' => 'required|unique:course_types,name,' . $id, 'id',
-        ]);
-
         try {
-            $course = CourseType::findOrFail($id);
-            $course->update($request->all());
-            return redirect()->route('coursetypes.index')->with('success', 'Successfully updated');;
+            $user = User::findOrFail($id);
+            $user->status = ($user->status == 1 ? 0 : 1);
+            $user->save();
+
+            return redirect('user-access')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
-            return redirect()->back()
-                ->withErrors($ex->getMessage());
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 
@@ -112,13 +98,5 @@ class CourseTypeController extends Controller
     public function destroy($id)
     {
         //
-        $coursetype = CourseType::findOrFail($id);
-        try {
-            $coursetype->delete();
-            return redirect()->back()->with('success', 'Successfully removed!');
-        } catch (Exception $ex) {
-            return redirect()->back()
-                ->withErrors($ex->getMessage());
-        }
     }
 }

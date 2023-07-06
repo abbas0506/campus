@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\HeadshipController;
+use App\Http\Controllers\admin\UserAccessController;
 use App\Http\Controllers\ce\AwardController as CeAwardController;
 use App\Http\Controllers\ce\FinalGazetteController;
 use App\Http\Controllers\ce\GazetteController as CeGazetteController;
@@ -82,7 +83,9 @@ Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('admin', [DashboardController::class, 'admin']);
-    Route::resource('users', UserController::class);
+    // Route::resource('users', UserController::class);
+    Route::resource('user-access', UserAccessController::class);
+
     Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);

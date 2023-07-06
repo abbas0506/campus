@@ -11,6 +11,7 @@ class Semester extends Model
     protected $fillable = [
         'semester_type_id',
         'year',
+        'status',
         'edit_till',    //allow edits till given date
     ];
     public function semester_type()

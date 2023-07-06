@@ -57,17 +57,24 @@ class Clas extends Model
         $shift = $this->shift->short;
         $semester_no = session('semester')->id - $this->first_semester_id + $this->semester_no;
         $roman = config('global.romans');
-        // return $program . ' / ' . $shift . ' / ' . $semester . ' / ' .   'Semester - ' . $roman[$this->semester_no - 1];
         return $semester . " / " . $program . " / " . $shift . " / " . $roman[$semester_no - 1];
     }
 
-    public function short()
+    public function old_short()
     {
         $semester = $this->semester->short();
         $roman = config('global.romans');
         $shift = $this->shift->short;
         $semester_no = session('semester')->id - $this->first_semester_id + $this->semester_no;
         return $semester . " / " . $shift . " / " . $roman[$semester_no - 1];
+    }
+    public function short()
+    {
+        $semester = $this->semester->short();
+        $program = $this->program->short;
+        $shift = $this->shift->short;
+        $roman = config('global.romans');
+        return $semester . " / " . $program . " / " . $shift;
     }
 
     public function strength()

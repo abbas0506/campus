@@ -15,9 +15,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
         </div>
-        <a href="{{route('departments.create')}}" class="btn-indigo text-sm">
-            Add New Deptt
-        </a>
     </div>
     @if ($errors->any())
     <div class="alert-danger mt-8">
@@ -38,7 +35,12 @@
         {{session('success')}}
     </div>
     @endif
-    <div class="text-sm mt-8">{{$departments->count()}} departments found</div>
+    <div class="flex justify-between items-center">
+        <div class="text-sm mt-8">{{$departments->count()}} departments found</div>
+        <a href="{{route('departments.create')}}" class="btn-indigo text-sm">Add New Deptt</a>
+    </div>
+
+
     <table class="table-auto w-full mt-2">
         <thead>
             <tr class="border-b border-slate-200">
@@ -64,6 +66,7 @@
                         <a href="{{route('departments.edit', $department)}}" class="flex items-center text-green-800 hover:text-green-900">
                             <i class="bi bi-pencil-square text-xs"></i>
                         </a>
+                        @role('super')
                         <form action="{{route('departments.destroy',$department)}}" method="POST" id='del_form{{$department->id}}'>
                             @csrf
                             @method('DELETE')
@@ -71,6 +74,7 @@
                                 <i class="bi bi-trash3 text-xs"></i>
                             </button>
                         </form>
+                        @endrole
                     </div>
                 </td>
             </tr>

@@ -52,6 +52,7 @@ class HeadshipController extends Controller
         $request->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
+            'phone' => 'max:11',
             'cnic' => 'required|unique:users|max:13|min:13',
             'department_id' => 'required|numeric',
         ]);
@@ -61,6 +62,7 @@ class HeadshipController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone' => $request->phone,
                 'password' => Hash::make('password'),
                 'cnic' => $request->cnic,
                 'department_id' => $request->department_id,
@@ -69,10 +71,17 @@ class HeadshipController extends Controller
             $user->save();
             $user->assignRole('hod', 'teacher');
 
-            Headship::create([
-                'user_id' => $user->id,
-                'department_id' => $request->department_id,
-            ]);
+            $headship = Headship::where('department_id', $request->department_id)->first();
+
+            if ($headship) {
+                $headship->user_id = $user->id;
+                $headship->update();
+            } else {
+                Headship::create([
+                    'user_id' => $user->id,
+                    'department_id' => $request->department_id,
+                ]);
+            }
 
             DB::commit();
             return redirect('headships')->with('success', 'Successfully created');

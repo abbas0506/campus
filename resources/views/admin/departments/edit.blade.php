@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<div class="container md:w-3/4 mx-auto px-5">
+<div class="flex justify-center items-center w-full h-full">
 
     @if ($errors->any())
     <div class="alert-danger mt-8">
@@ -19,14 +19,14 @@
     </div>
     @endif
 
-    <form action="{{route('departments.update',$department)}}" method='post' class="flex flex-col w-full mt-16">
+    <form action="{{route('departments.update',$department)}}" method='post' class="flex flex-col w-full md:w-2/3">
         @csrf
         @method('PATCH')
         <label for="">Full Name</label>
-        <input type="text" id='' name='name' class="input-indigo" placeholder="Enter department name" value="{{$department->name}}">
+        <input type="text" id='' name='name' class="input-indigo mt-2" placeholder="Enter department name" value="{{$department->name}}">
 
-        <label for="" class='mt-3'>Display Name <span class="text-sm text-orange-700">(to be displayed on final degree)</span></label>
-        <input type="text" id='' name='title' class="input-indigo" placeholder="Department of Chemistry" value="{{$department->title}}">
+        <label for="" class='mt-4'>Display Name <span class="text-sm text-orange-700">(to be displayed on final degree)</span></label>
+        <input type="text" id='' name='title' class="input-indigo mt-2" placeholder="Department of Chemistry" value="{{$department->title}}">
 
         <div class="flex items-center justify-end mt-4 py-2">
             <button type="submit" class="btn-indigo-rounded">Update</button>
