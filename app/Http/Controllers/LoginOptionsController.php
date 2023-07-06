@@ -20,7 +20,7 @@ class LoginOptionsController extends Controller
     public function index()
     {
         //
-        $semesters = Semester::whereNotNull('edit_till')->get();
+        $semesters = Semester::active()->get();
         return view('login_options', compact('semesters'));
     }
 

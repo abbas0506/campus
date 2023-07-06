@@ -34,4 +34,8 @@ class Semester extends Model
     {
         return $query->where('id', '<=', session('semester')->id);
     }
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
 }
