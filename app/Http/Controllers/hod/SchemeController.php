@@ -35,7 +35,7 @@ class SchemeController extends Controller
     public function create()
     {
         //
-        $semesters = Semester::whereNotNull('edit_till')->get();
+        $semesters = Semester::active()->get();
         $programs = Program::where('department_id', session('department_id'))->get();
 
         return view('hod.schemes.create', compact('semesters', 'programs'));
@@ -125,7 +125,7 @@ class SchemeController extends Controller
     public function append($id)
     {
         $program = Program::find($id);
-        $semesters = Semester::whereNotNull('edit_till')->get();
+        $semesters = Semester::active()->get();
         return view('hod.schemes.create', compact('semesters', 'program',));
     }
 }
