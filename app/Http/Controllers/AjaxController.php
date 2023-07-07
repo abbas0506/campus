@@ -139,7 +139,7 @@ class AjaxController extends Controller
                 } else {
                     //student has made no attempt
                     $result .= "<tr>" .
-                        "<td class='text-center' colspan='5'>Student has naver any attempt for this course</td>" .
+                        "<td class='text-center' colspan='5'>Student has never made any attempt for this course</td>" .
                         "</tr>";
                     return response()->json([
                         'eligible' => 0,
