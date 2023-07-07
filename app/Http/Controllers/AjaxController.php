@@ -111,7 +111,7 @@ class AjaxController extends Controller
             foreach ($first_attempts as $first_attempt) {
                 //look for only same course
                 if ($current_course_allocation->course->id == $first_attempt->course_allocation->course->id) {
-                    //if student failed, then look into reappear attempts
+                    //if student failed in the same course, show its first attempt
                     $result .= "<tr>" .
                         "<td class='text-center'>" . $first_attempt->semester->short() . "</td>" .
                         "<td class='text-center'>" . $roman[$first_attempt->semester_no - 1] . "</td>" .
@@ -119,7 +119,7 @@ class AjaxController extends Controller
                         "<td class='text-center'>" . $first_attempt->gpa() . "</td>" .
                         "<td class='text-center'>" . $first_attempt->grade() . "</td>" .
                         '</tr>';
-
+                    //also look into reappear attempts
                     foreach ($first_attempt->reappears->where('semester_id', '<', $current_course_allocation->semester_id) as $reappear) {
                         $result .= "<tr>" .
                             '<td>' . $reappear->semester->short() . '</td>' .
@@ -149,7 +149,7 @@ class AjaxController extends Controller
                 }
             }
         } else {
-            //student exists but has never made any attempt
+            //student not found
             return response()->json([
                 'eligible' => 0,
                 'result' => $result,

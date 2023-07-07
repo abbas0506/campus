@@ -27,6 +27,7 @@
         </div>
         <a href="{{route('mycourses.show',$course_allocation->id)}}" class="flex flex-col justify-center items-center">
             <i class="bx bx-book bx-md mt-4 text-slate-600"></i>
+            <div class="text-xs mt-2">{{$course_allocation->course->code}}({{$course_allocation->course->id}})</div>
             <div class="font-semibold text-teal-800 mt-4 w-full text-center">
                 {{$course_allocation->course->name}}
             </div>
