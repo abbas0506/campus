@@ -41,8 +41,8 @@
 
     <!-- section students -->
     <table class="table-auto w-full mt-8 text-xs">
-        <thead class="border bg-gray-100">
-            <tr class="border-slate-600">
+        <thead class="border bg-gray-100 text-xs">
+            <tr class="border-slate-600 ">
                 <th rowspan="3" class="text-center">Sr No</th>
                 <th rowspan="3" class="text-center">Roll No</th>
                 <th rowspan="3" class="text-center">Reg. No</th>
@@ -64,16 +64,16 @@
         <tbody>
             @php $sr=0;@endphp
             @foreach($section->students as $student)
-            <tr class="tr ">
-                <td class="text-center">{{++$sr}}</td>
-                <td class="text-center">{{$student->rollno}}</td>
-                <td class="text-center">{{$student->regno}}</td>
-                <td class="">{{$student->name}}</td>
-                <td class="">{{$student->father}}</td>
-                <td class="text-center">{{$student->overall_percentage()}} %</td>
-                <td class="text-center">{{$student->cgpa()}}</td>
-                <td class="text-center">{{$student->promotion_status()}}</td>
-                <td class="">{{$student->failed_courses()}}</td>
+            <tr class="tr">
+                <td class="text-center text-xs">{{++$sr}}</td>
+                <td class="text-center text-xs">{{$student->rollno}}</td>
+                <td class="text-center text-xs">{{$student->regno}}</td>
+                <td class="text-xs">{{$student->name}}</td>
+                <td class="text-xs">{{$student->father}}</td>
+                <td class="text-center text-xs">{{$student->overall_percentage()}} %</td>
+                <td class="text-center tex-xs">{{$student->cgpa()}}</td>
+                <td class="text-center text-xs">{{$student->promotion_status()}}</td>
+                <td class="text-xs">{{$student->failed_courses()}}</td>
 
             </tr>
             @endforeach

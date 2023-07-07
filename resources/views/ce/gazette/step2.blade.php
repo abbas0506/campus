@@ -28,24 +28,25 @@
 <div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$department->programs->count()}} programs found</div>
 
 <div class="flex flex-col accordion">
-
-    @foreach($department->programs as $program)
+    @foreach($department->programs->sortBy('level') as $program)
     <div class="collapsible">
         <div class="head">
-            <h2>{{$program->short}} <span class="text-xs ml-4 font-thin">({{$program->sections()->count()}} sections)</span></h2>
-
+            <h2 class="flex items-center space-x-4">
+                {{$program->short}}
+                <span class="text-xs ml-4 font-thin">Classes:{{$program->clases()->active()->count()}}</span>
+            </h2>
             <i class="bx bx-chevron-down text-lg"></i>
         </div>
         <div class="body">
-            @foreach($program->clases as $clas)
+            @foreach($program->clases()->active()->get() as $clas)
             <div class="flex items-center w-full border-b py-1 space-x-4">
                 <div class="flex items-center justify-between w-1/2 md:w-1/4">
-                    <div class="">{{$clas->short()}}</div>
+                    <div class="">{{$clas->title()}}</div>
                     <div class="text-xs text-slate-400"><i class="bx bx-user"></i> ({{$clas->strength()}})</div>
                 </div>
                 <div class="grid grid-cols-10 gap-2">
                     @foreach($clas->sections as $section)
-                    <a href="{{route('ce.gazette.step3',$section)}}" class='flex justify-center items-center bg-teal-100 hover:bg-teal-600 hover:text-slate-100 px-2'>
+                    <a href="{{route('ce.gazette.step3',$section)}}" class='flex justify-center items-center bg-teal-100 hover:bg-teal-600 hover:text-slate-100 px-2 w-12'>
                         {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                     </a>
                     @endforeach
@@ -57,7 +58,7 @@
     </div>
 
     @endforeach
-
 </div>
+
 
 @endsection

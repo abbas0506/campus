@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\ce;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseAllocation;
 use App\Models\Department;
 use App\Models\Section;
 use App\Models\Semester;
 use Carbon\Carbon;
+use App\Exports\ExportAward;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class AwardController extends Controller
@@ -24,8 +27,8 @@ class AwardController extends Controller
     {
         //
         $department = session('department');
-        $semester = session('semester');
-        return view('ce.award.step2', compact('semester', 'department'));
+        $programs = $department->programs;
+        return view('ce.award.step2', compact('department', 'programs'));
     }
 
     public function step3($id)
@@ -58,5 +61,10 @@ class AwardController extends Controller
         ]);
 
         return redirect()->route('ce.award.step2');
+    }
+    public function export($id)
+    {
+        $course_allocation = CourseAllocation::find($id);
+        return Excel::download(new ExportAward($course_allocation), 'award_' . ($course_allocation->course->code == '' ? $course_allocation->id : $course_allocation->course->code) . '.xlsx');
     }
 }

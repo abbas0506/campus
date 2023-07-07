@@ -93,25 +93,6 @@
                     <span class="ml-3">Print / Soft Copy</span>
                 </a>
             </li>
-            <!-- <li>
-                <a href="{{url('hod-award')}}" class="flex items-center p-2">
-                    <i class="bx bx-receipt"></i>
-                    <span class="ml-3">Award Lists</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{url('gazette')}}" class="flex items-center p-2">
-                    <i class="bx bx-badge-check text-lg"></i>
-                    <span class="ml-3">gazette</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{url('hod-cumulative')}}" class="flex items-center p-2">
-                    <i class="bx bx-badge-check text-lg"></i>
-                    <span class="ml-3">Cumulative Sheet</span>
-                </a>
-            </li> -->
-
             <li class="md:hidden">
                 <hr>
             </li>
