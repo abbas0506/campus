@@ -66,7 +66,7 @@
         <div class="body">
             @foreach($program->clases as $clas)
             <div class="flex items-center justify-between w-full even:bg-slate-100 py-1 space-x-4">
-                <div class="text-sm ml-2 flex-1">{{$clas->short()}}</div>
+                <div class="text-sm ml-2 flex-1">{{$clas->title()}}</div>
                 <div class="text-xs text-slate-400"><i class="bx bx-user"></i> ({{$clas->strength()}})</div>
                 <input type="checkbox" name='chk' value="{{$clas->id}}" onclick="updateChkCount()">
             </div>

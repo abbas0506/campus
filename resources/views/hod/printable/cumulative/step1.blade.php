@@ -41,7 +41,7 @@
             @foreach($program->clases as $clas)
             <div class="flex items-center w-full border-b py-1 space-x-4">
                 <div class="flex items-center justify-between w-1/2 md:w-1/4">
-                    <div class="">{{$clas->short()}}</div>
+                    <div class="">{{$clas->title()}}</div>
                     <div class="text-xs text-slate-400"><i class="bx bx-user"></i> ({{$clas->strength()}})</div>
                 </div>
                 <div class="grid grid-cols-10 gap-2">

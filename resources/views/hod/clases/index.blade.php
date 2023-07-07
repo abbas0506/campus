@@ -40,24 +40,6 @@
 </div>
 @endif
 
-<!-- search bar -->
-<!-- <div class="flex items-center justify-end mt-8">
-    <div class="flex items-center space-x-3">
-        <a href="{{route('promotions.index')}}" class="flex items-center text-sm btn-teal px-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
-            </svg>
-            <span class="ml-1">Promote</span>
-        </a>
-        <a href="{{route('reversions.index')}}" class="flex items-center text-sm btn-red px-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
-            </svg>
-            <span class="ml-1">Revert</span>
-        </a>
-    </div>
-
-</div> -->
 <!-- records found -->
 <div class="text-xs font-thin text-slate-600 mt-8 mb-1">{{$programs->count()}} programs found</div>
 
@@ -77,7 +59,7 @@
                 @foreach($program->clases()->active()->get() as $clas)
                 <div class="flex items-center w-full border-b py-1 space-x-4">
                     <div class="flex items-center justify-between w-1/2 md:w-1/4">
-                        <div class="text-sm">{{$clas->short()}}</div>
+                        <div class="text-sm">{{$clas->title()}}</div>
                         <div class="text-xs text-slate-400"><i class="bx bx-user"></i> ({{$clas->strength()}})</div>
                     </div>
                     <div class="flex items-center justify-center space-x-2">
