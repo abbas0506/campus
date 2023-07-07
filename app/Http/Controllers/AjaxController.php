@@ -141,8 +141,8 @@ class AjaxController extends Controller
                 }
             }
             if ($eligible == 0)
-                $result .= "<tr colspan=5>" .
-                    '<td> Student has never made any attempt for the course</td>' .
+                $result .= "<tr>" .
+                    '<td colspan=5> Student has never made any attempt for the course</td>' .
                     '</tr>';
         }
         // return search output
