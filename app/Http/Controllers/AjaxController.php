@@ -101,10 +101,15 @@ class AjaxController extends Controller
         $student = Student::where('rollno', $request->rollno)->first();
         $current_course_allocation = CourseAllocation::find($request->course_allocation_id);
 
+        $eligible = 0;
+        $student_info = 'Student not found';
         $result = '';
+
         $roman = config('global.romans');
         //if student found, fetch student history and check whether he/she has ever failed in the same course
         if ($student) {
+            $student_info = $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father;
+
             //get previous semesters data
             $first_attempts = $student->first_attempts->where('semester_id', '<', $current_course_allocation->semester_id);
 
@@ -131,32 +136,23 @@ class AjaxController extends Controller
                     }
 
                     //student data found
-                    return response()->json([
-                        'eligible' => 1,
-                        'result' => $result,
-                        'student_info' => $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father,
-                    ]);
-                } else {
-                    //student has made no attempt
-                    $result .= "<tr>" .
-                        "<td class='text-center' colspan='5'>Student has never made any attempt for this course</td>" .
-                        "</tr>";
-                    return response()->json([
-                        'eligible' => 0,
-                        'result' => $result,
-                        'student_info' => $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father,
-                    ]);
+                    $eligible = 1;
+                    break;
                 }
             }
-        } else {
-            //student not found
-            return response()->json([
-                'eligible' => 0,
-                'result' => $result,
-                'student_info' => "Student not found",
-            ]);
+            if ($eligible == 0)
+                $result .= "<tr colspan=5>" .
+                    '<td> Student has never made any attempt for the course</td>' .
+                    '</tr>';
         }
+        // return search output
+        return response()->json([
+            'eligible' => $eligible,
+            'result' => $result,
+            'student_info' => $student_info,
+        ]);
     }
+
     public function searchByRollNoOrName(Request $request)
     {
         $request->validate([
