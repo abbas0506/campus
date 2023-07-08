@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Semester;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
@@ -15,6 +17,7 @@ use Exception;
 class AuthController extends Controller
 {
     //
+
     public function signup(Request $request)
     {
         //signup  process
@@ -57,15 +60,45 @@ class AuthController extends Controller
             return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
         }
     }
+    // login step2
+    public function loginAs(Request $request)
+    {
+        $request->validate([
+            'role' => 'required',
+            'department_id' => 'required_if:role,hod',
+            'semester_id' => 'required_if:role,hod,teacher',
+        ]);
+
+        if (Auth::user()->hasRole($request->role)) {
+
+            session([
+                'current_role' => Str::title($request->role)
+            ]);
+            //save selected semester id for entire session
+            if ($request->role == 'hod' || $request->role == 'teacher') {
+                $semester = Semester::find($request->semester_id);
+                session([
+                    'semester_id' => $request->semester_id,
+                    'semester' => $semester,
+                ]);
+                if ($request->role == 'hod') {
+                    $department = Department::find($request->department_id);
+                    session([
+                        'department_id' => $request->department_id,
+                        'department' => $department,
+                    ]);
+                }
+            }
+            return redirect($request->role);
+        } else
+            return redirect('/');
+    }
 
     public function verify_step2(Request $request)
     {
         //get 2nd factor secret code sent to gmail
         //if matched, redirect to user dashboard
-        if (Auth::user()->roles->count() > 1)
-            return redirect('login-options');
-        else
-            return redirect('/');
+
     }
 
     /**

@@ -14,7 +14,7 @@
                 <div class="text-sm flex items-center space-x-2">
                     <div>Teacher</div>
                     <div class="text-xs">[{{session('semester')->title()}}]</div>
-                    <a href="{{route('login-options.index')}}" class="text-blue-600 hover:text-blue-800 text-xs">Change</a>
+                    <a href="{{url('/')}}" class="text-blue-600 hover:text-blue-800 text-xs">Change</a>
                 </div>
             </div>
             <!-- right sided current user info -->

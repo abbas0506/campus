@@ -9,9 +9,15 @@
             <div class="text-base md:text-xl font-semibold">Examination System</div>
             <div class="px-4">|</div>
             <div class="text-sm flex items-center space-x-2">
-                <div>HoD</div>
-                <div class="text-xs">[{{session('department')->name}}, {{session('semester')->title()}}]</div>
-                <a href="{{route('login-options.index')}}" class="text-blue-600 hover:text-blue-800 text-xs">Change</a>
+                <div>HoD {{Str::replace('Department of', '', session('department')->name)}}</div>
+                <i class="bi bi-chevron-compact-right"></i>
+                <!-- <a href="{{url('/')}}" class="text-blue-600 hover:text-blue-800 text-xs">Change</a> -->
+                <select name="" id="cboSemesterId" class="px-2 font-semibold">
+                    @foreach(App\Models\Semester::active()->get() as $semester)
+                    <option value="{{$semester->id}}" @selected($semester->id==session('semester')->id)>{{$semester->short()}}</option>
+                    @endforeach
+                </select>
+
             </div>
         </div>
         <!-- right sided current user info -->
@@ -75,7 +81,7 @@
             </li>
             <li>
                 <a href="{{url('students')}}" class="flex items-center p-2">
-                    <i class="bx bx-user-circle"></i>
+                    <i class="bi bi-person-circle"></i>
                     <span class="ml-3">Student Profile</span>
                 </a>
             </li>
@@ -134,6 +140,30 @@
     });
     $('#menu').click(function() {
         $("#sidebar").toggle();
+    });
+    $('#cboSemesterId').change(function() {
+        var token = $("meta[name='csrf-token']").attr("content");
+        var semester_id = $('#cboSemesterId').val();
+        //change current semester
+        $.ajax({
+            type: 'POST',
+            url: "changeSemester",
+            data: {
+                "semester_id": semester_id,
+                "_token": token,
+            },
+            success: function(response) {
+                //refresh page
+                location.reload(true);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: errorThrown
+                });
+            }
+        }); //ajax end
+
     });
 </script>
 @endsection

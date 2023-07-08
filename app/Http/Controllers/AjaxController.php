@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\CourseAllocation;
 use App\Models\Department;
 use App\Models\Program;
+use App\Models\Semester;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -220,6 +221,54 @@ class AjaxController extends Controller
         }
         return response()->json([
             'result' => $result,
+        ]);
+    }
+
+
+    public function searchByRollNoOrNameToViewProfile(Request $request)
+    {
+        $request->validate([
+            'searchby' => 'required',
+        ]);
+
+        $students = Student::where('rollno', 'like', '%' . $request->searchby . '%')
+            ->orWhere('name', 'like', '%' . $request->searchby . '%')->get();
+
+        $result = '';
+        $roman = config('global.romans');
+
+        foreach ($students as $student) {
+            //students data found
+            $result .=
+
+                "<div class='flex flex-row w-full py-1'>" .
+                "<a href='/ce/students/profile/" . $student->id . "' class='link w-1/4'>" . $student->rollno . "</a>" .
+                "<div class='w-1/4'>" . $student->name . "</div>" .
+                "<div class='w-1/4'>" . $student->father . "</div>" .
+                "<div class='w-1/4'>" . $student->section->clas->short() . "</div>" .
+                "</div>";
+        }
+        //student data missing
+        if ($result == '') {
+            $result = "<div class='flex flex-row flex-1 py-1 text-center'>No record found!</div>";
+        }
+        return response()->json([
+            'result' => $result,
+        ]);
+    }
+
+    public function changeSemester(Request $request)
+    {
+        $request->validate([
+            'semester_id' => 'required',
+        ]);
+
+        $semester = Semester::find($request->semester_id);
+        session([
+            'semester' => $semester,
+        ]);
+        return response()->json([
+            'msg' => 'ok',
         ]);
     }
 }

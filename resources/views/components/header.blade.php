@@ -11,7 +11,7 @@
                 <div class="px-4">|</div>
                 <div>{{Str::title(session('current_role'))}}</div>
                 @if(Auth::user()->hasAnyRole(['hod','teacher']))
-                <a href="{{route('login-options.index')}}" class="text-blue-600 hover:text-blue-800 text-xs ml-4"></a>
+                <a href="{{url('/')}}" class="text-blue-600 hover:text-blue-800 text-xs ml-4"></a>
                 @endif
             </div>
             <!-- right sided current user info -->

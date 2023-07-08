@@ -1,13 +1,13 @@
-@extends('layouts.hod')
+@extends('layouts.controller')
 @section('page-content')
 <div class="flex">
-    <a href="{{route('students.index')}}" class="text-xs text-blue-600"> <i class="bx bx-chevron-left mr-2"></i>Back</a>
+    <a href="{{route('ce.students.index')}}" class="text-xs text-blue-600"> <i class="bx bx-chevron-left mr-2"></i>Back</a>
 </div>
 
 <div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-2">
     <i class="bi bi-person-circle text-slate-600 bx-md"></i>
     <div class="text-xl text-orange-500 leading-relaxed">{{$student->name}} @if($student->gender=='m') s/o @else d/o @endif {{$student->father}}</div>
-    <div class="text-sm text-slate-600">{{$student->section->clas->title()}}</div>
+    <div class="text-sm text-slate-600">{{$student->section->clas->short()}}</div>
 </div>
 <div class="flex flex-row space-x-8 mt-12 w-full">
     <div class="flex flex-col border border-dashed p-4 rounded-lg w-1/3">

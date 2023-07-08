@@ -20,6 +20,7 @@ use App\Http\Controllers\ce\AwardController as CeAwardController;
 use App\Http\Controllers\ce\FinalGazetteController;
 use App\Http\Controllers\ce\GazetteController as CeGazetteController;
 use App\Http\Controllers\ce\NotifiedGazetteController;
+use App\Http\Controllers\ce\StudentController as CeStudentController;
 use App\Http\Controllers\ce\TranscriptController;
 use App\Http\Controllers\hod\AwardController;
 use App\Http\Controllers\hod\ProgramController;
@@ -50,7 +51,7 @@ use App\Http\Controllers\teacher\ReappearFormativeController;
 use App\Http\Controllers\teacher\ReappearSummativeController;
 use App\Http\Controllers\teacher\SummativeController;
 use App\Http\Controllers\teacher\EnrollmentController;
-
+use App\Models\Semester;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,7 +66,9 @@ use App\Http\Controllers\teacher\EnrollmentController;
 
 Route::get('/{url?}', function () {
     if (Auth::check()) {
-        return redirect()->route('login-options.index');
+        // return redirect()->route('login-options.index');
+        $semesters = Semester::active()->get();
+        return view('index', compact('semesters'));
     } else
         return view('index');
 })->where('url', ('login|signin|index'));
@@ -75,17 +78,16 @@ Route::post('changepw', [UserController::class, 'changepw']);
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
-Route::resource('login-options', LoginOptionsController::class)->only('index', 'store');
+Route::post('login/as', [AuthController::class, 'loginAs'])->name('login.as');
 Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
 Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
+Route::post('changeSemester', [AjaxController::class, 'changeSemester'])->name('changeSemester');; //for ajax call
 
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('admin', [DashboardController::class, 'admin']);
-    // Route::resource('users', UserController::class);
     Route::resource('user-access', UserAccessController::class);
-
     Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
@@ -95,12 +97,15 @@ Route::group(['middleware' => ['role:admin']], function () {
 });
 
 Route::group(['middleware' => ['role:controller']], function () {
-    // Route::view('controller', 'ce.index');
-    Route::redirect('controller', '/ce/transcripts');
+    Route::redirect('controller', '/ce/students');
     Route::view('ce/transcripts', 'ce.transcripts.index');
     Route::get('ce/transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
 
     Route::post('searchAllByRollNoOrName', [AjaxController::class, 'searchAllByRollNoOrName']);
+    Route::post('searchByRollNoOrNameToViewProfile', [AjaxController::class, 'searchByRollNoOrNameToViewProfile']);
+
+    Route::get('ce/students', [CeStudentController::class, 'index'])->name('ce.students.index');
+    Route::get('ce/students/profile/{student}', [CeStudentController::class, 'show'])->name('ce.students.show');
 
     Route::get('ce/award/step1', [CeAwardController::class, 'step1']);
     Route::post('ce/award/step1', [CeAwardController::class, 'store'])->name('ce.award.step1.store');

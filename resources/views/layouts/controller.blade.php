@@ -8,7 +8,12 @@
     <div class="mt-12">
         <ul class="space-y-2">
             <li>
-                <!-- <a href="{{url('ce-award')}}" class="flex items-center p-2"> -->
+                <a href="{{route('ce.students.index')}}" class="flex items-center p-2">
+                    <i class="bi bi-person-circle"></i>
+                    <span class="ml-3">Student Profile</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{url('ce/award/step1')}}" class="flex items-center p-2">
                     <i class="bi bi-award text-lg"></i>
                     <span class="ml-3">Award List</span>
