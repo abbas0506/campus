@@ -13,6 +13,7 @@ use Spatie\Permission\Models\Role;
 
 use App\Models\User;
 use Exception;
+use Illuminate\Contracts\Session\Session;
 use Svg\Tag\Rect;
 
 class AuthController extends Controller
@@ -101,6 +102,9 @@ class AuthController extends Controller
         ]);
 
         $semester = Semester::find($request->semester_id);
+
+        session()->forget('semester');
+
         session([
             'semester' => $semester,
         ]);
