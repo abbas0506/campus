@@ -14,7 +14,8 @@ class AwardController extends Controller
     public function index()
     {
         $teacher = Auth::user();
-        $course_allocations = $teacher->course_allocations;
+        $course_allocations = $teacher->course_allocations()->during(session('semester')->id)->get();
+
         return view('teacher.award.index', compact('course_allocations'));
     }
 

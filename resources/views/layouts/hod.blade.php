@@ -12,11 +12,14 @@
                 <div>HoD {{Str::replace('Department of', '', session('department')->name)}}</div>
                 <i class="bi bi-chevron-compact-right"></i>
                 <!-- <a href="{{url('/')}}" class="text-blue-600 hover:text-blue-800 text-xs">Change</a> -->
-                <select name="" id="cboSemesterId" class="px-2 font-semibold">
-                    @foreach(App\Models\Semester::active()->get() as $semester)
-                    <option value="{{$semester->id}}" @selected($semester->id==session('semester')->id)>{{$semester->short()}}</option>
-                    @endforeach
-                </select>
+                <form action="{{route('switch.semester')}}" method="post" id='switchSemesterForm'>
+                    @csrf
+                    <select name="semester_id" id="cboSemesterId" class="px-2 font-semibold">
+                        @foreach(App\Models\Semester::active()->get() as $semester)
+                        <option value="{{$semester->id}}" @selected($semester->id==session('semester')->id)>{{$semester->short()}}</option>
+                        @endforeach
+                    </select>
+                </form>
 
             </div>
         </div>
@@ -142,28 +145,7 @@
         $("#sidebar").toggle();
     });
     $('#cboSemesterId').change(function() {
-        var token = $("meta[name='csrf-token']").attr("content");
-        var semester_id = $('#cboSemesterId').val();
-        //change current semester
-        $.ajax({
-            type: 'POST',
-            url: "changeSemester",
-            data: {
-                "semester_id": semester_id,
-                "_token": token,
-            },
-            success: function(response) {
-                //refresh page
-                location.reload(true);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: errorThrown
-                });
-            }
-        }); //ajax end
-
+        $('#switchSemesterForm').submit();
     });
 </script>
 @endsection

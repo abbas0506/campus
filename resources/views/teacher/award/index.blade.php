@@ -27,19 +27,4 @@
     @endforeach
 </div>
 
-<!-- <div class="relative flex flex-col justify-between items-center border p-4 bg-white hover:bg-slate-100">
-        <div class="absolute right-0 top-0 bg-emerald-100 text-emerald-600 px-2 py-0 text-sm">
-            
-        </div>
-        <a href="{{route('teacher.award',$course_allocation->id)}}" target="_blank" class="flex flex-col justify-center items-center">
-            <i class="bi bi-printer bx-sm text-slate-600"></i>
-            <div class="font-semibold text-teal-800 mt-3 w-full text-center">
-                {{$course_allocation->course->name}}
-            </div>
-            <div class="text-xs mt-2 mb-3">{{$course_allocation->section->title()}}</div>
-        </a>
-
-    </div> -->
-
-</div>
 @endsection

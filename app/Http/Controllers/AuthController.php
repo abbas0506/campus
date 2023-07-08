@@ -13,6 +13,7 @@ use Spatie\Permission\Models\Role;
 
 use App\Models\User;
 use Exception;
+use Svg\Tag\Rect;
 
 class AuthController extends Controller
 {
@@ -75,7 +76,7 @@ class AuthController extends Controller
                 'current_role' => Str::title($request->role)
             ]);
             //save selected semester id for entire session
-            if ($request->role == 'hod' || $request->role == 'teacher') {
+            if (Auth::user()->hasAnyRole('hod', 'teacher')) {
                 $semester = Semester::find($request->semester_id);
                 session([
                     'semester_id' => $request->semester_id,
@@ -92,6 +93,18 @@ class AuthController extends Controller
             return redirect($request->role);
         } else
             return redirect('/');
+    }
+    public function switchSemester(Request $request)
+    {
+        $request->validate([
+            'semester_id' => 'required',
+        ]);
+
+        $semester = Semester::find($request->semester_id);
+        session([
+            'semester' => $semester,
+        ]);
+        return redirect(Str::lower(session('current_role')));
     }
 
     public function verify_step2(Request $request)

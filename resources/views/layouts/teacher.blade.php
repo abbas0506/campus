@@ -13,8 +13,14 @@
                 <div class="px-4">|</div>
                 <div class="text-sm flex items-center space-x-2">
                     <div>Teacher</div>
-                    <div class="text-xs">[{{session('semester')->title()}}]</div>
-                    <a href="{{url('/')}}" class="text-blue-600 hover:text-blue-800 text-xs">Change</a>
+                    <form action="{{route('switch.semester')}}" method="post" id='switchSemesterForm'>
+                        @csrf
+                        <select name="semester_id" id="cboSemesterId" class="px-2 font-semibold">
+                            @foreach(App\Models\Semester::active()->get() as $semester)
+                            <option value="{{$semester->id}}" @selected($semester->id==session('semester')->id)>{{$semester->short()}}</option>
+                            @endforeach
+                        </select>
+                    </form>
                 </div>
             </div>
             <!-- right sided current user info -->
@@ -116,6 +122,9 @@
     });
     $('#menu').click(function() {
         $("#sidebar").toggle();
+    });
+    $('#cboSemesterId').change(function() {
+        $('#switchSemesterForm').submit();
     });
 </script>
 @endsection

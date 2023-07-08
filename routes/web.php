@@ -81,7 +81,7 @@ Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::post('login/as', [AuthController::class, 'loginAs'])->name('login.as');
 Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
 Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
-Route::post('changeSemester', [AjaxController::class, 'changeSemester'])->name('changeSemester');; //for ajax call
+Route::post('switch/semester', [AuthController::class, 'switchSemester'])->name('switch.semester');; //for ajax call
 
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
