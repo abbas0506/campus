@@ -53,8 +53,8 @@ class AwardController extends Controller
 
         //save for next pages
         session([
-            'semester' => $request->semester_id,
-            'department' => $request->department_id,
+            'semester_id' => $request->semester_id,
+            'department_id' => $request->department_id,
         ]);
 
         return redirect()->route('ce.award.step2');
