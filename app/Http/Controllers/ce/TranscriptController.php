@@ -50,13 +50,8 @@ class TranscriptController extends Controller
     public function pdf($id)
     {
         $student = Student::find($id);
-        $first_attempts = $student->first_attempts;
-        $semester_nos = array_unique($first_attempts->pluck('semester_no')->toArray());
 
-        $pdf = PDF::loadView('ce.transcripts.pdf', compact('student', 'first_attempts', 'semester_nos'))->setPaper('a4', 'portrait');
-
-        // $pdf->output();
+        $pdf = PDF::loadView('ce.transcripts.pdf', compact('student'))->setPaper('a4', 'portrait');
         return $pdf->stream();
-        // return $pdf->setPaper('a4')->stream();
     }
 }

@@ -52,7 +52,7 @@
 
         <table class="w-full mt-8">
             <thead>
-                <tr class="w-full text-sm">
+                <tr class="w-full text-xs">
                     <th class="border border-solid pl-2">Course Code</th>
                     <th class="border border-solid pl-2">Course Title</th>
                     <th class="border border-solid text-center">Credit Hrs</th>
@@ -67,19 +67,19 @@
             @endphp
 
             <tbody>
-                @foreach($semester_nos as $semester_no)
+                @foreach($student->section->clas->semesters()->get() as $semester )
                 <tr>
-                    <td colspan="6" class="text-sm">Semester - {{$roman[$semester_no-1]}}</td>
+                    <td colspan="6" class="text-sm">Semester - {{$roman[$student->section->clas->semesterNo($semester->id)-1]}} ({{$semester->short()}})</td>
                 </tr>
-                @foreach($first_attempts->where('semester_no',$semester_no) as $first_attempt)
+                @foreach($student->first_attempts()->during($semester->id)->get() as $first_attempt)
 
                 <tr class="text-xs">
-                    <td class="py-1 pl-2 border border-solid border-gray-600 w-12">{{$first_attempt->course_allocation->course->code}}</td>
-                    <td class="py-1 pl-2 border border-solid border-gray-600 w-64">{{$first_attempt->course_allocation->course->name}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->course_allocation->course->creditHrs()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600 w-28">{{$first_attempt->best_attempt()->total()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->gpa()}}</td>
-                    <td class="py-1 text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->grade()}}</td>
+                    <td class="pl-2 border border-solid border-gray-600 w-24">{{$first_attempt->course_allocation->course->code}}</td>
+                    <td class="pl-2 border border-solid border-gray-600 w-64">{{$first_attempt->course_allocation->course->name}}</td>
+                    <td class="text-center border border-solid border-gray-600">{{$first_attempt->course_allocation->course->creditHrs()}}</td>
+                    <td class="text-center border border-solid border-gray-600 w-28">{{$first_attempt->best_attempt()->total()}}</td>
+                    <td class="text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->gpa()}}</td>
+                    <td class="text-center border border-solid border-gray-600">{{$first_attempt->best_attempt()->grade()}}</td>
                 </tr>
 
                 @endforeach

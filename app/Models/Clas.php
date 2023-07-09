@@ -97,4 +97,8 @@ class Clas extends Model
     {
         return $semester_id - $this->first_semester_id + 1;
     }
+    public function semesters()
+    {
+        return Semester::whereBetween('id', [$this->first_semester_id, $this->last_semester_id]);
+    }
 }
