@@ -32,7 +32,7 @@ class Semester extends Model
     }
     public function scopeTill($query, $semester_id)
     {
-        return $query->where('id', '<=', session('semester')->id);
+        return $query->where('id', '<=', session('semester_id'));
     }
     public function scopeActive($query)
     {

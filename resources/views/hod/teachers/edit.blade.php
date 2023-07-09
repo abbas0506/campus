@@ -23,17 +23,10 @@
                 <input type="text" id='' name='name' class="input-indigo" placeholder="Dr. Sajjad Ahmad" value="{{$teacher->name}}" required>
             </div>
         </div>
-        <div class="flex flex-col md:flex-row md:space-x-4">
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="">Department</label>
-                <select name="department_id" id='' class="input-indigo p-2" required>
-                    <option value="{{$department->id}}">{{$department->name}}</option>
-                </select>
-            </div>
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="">Email</label>
-                <input type="text" id='' name='email' class="input-indigo" placeholder="abc@uo.edu.pk" value="{{$teacher->email}}" required>
-            </div>
+
+        <div class="flex flex-col flex-1 mt-3">
+            <label for="">Email</label>
+            <input type="text" id='' name='email' class="input-indigo" placeholder="abc@uo.edu.pk" value="{{$teacher->email}}" required>
         </div>
 
         <div class="flex flex-col md:flex-row md:space-x-4">

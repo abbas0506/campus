@@ -21,7 +21,8 @@ class MyCoursesController extends Controller
     {
         //
         $teacher = Auth::user();
-        $course_allocations = $teacher->course_allocations()->during(session('semester')->id)->get();
+        $course_allocations = $teacher->course_allocations()->during(session('semester_id'))->get();
+
         return view('teacher.mycourses.index', compact('course_allocations'));
     }
 

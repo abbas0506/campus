@@ -66,7 +66,7 @@ use App\Models\Semester;
 
 Route::get('/{url?}', function () {
     if (Auth::check()) {
-        // return redirect()->route('login-options.index');
+        //if authenticated, attach semesters
         $semesters = Semester::active()->get();
         return view('index', compact('semesters'));
     } else
@@ -176,21 +176,16 @@ Route::group([' middleware' => ['role:hod']], function () {
     Route::get('hod/award/{allocation}/pdf', [PdfController::class, 'award'])->name('hod.award.pdf');
     Route::get('hod/award/{allocation}/export', [AwardController::class, 'export'])->name('hod.award.export');
 
-
     Route::get('hod/cum/step1', [CumulativeController::class, 'step1']);
     Route::get('hod/cum/{section}/step2', [CumulativeController::class, 'step2'])->name('hod.cum.step2');
     Route::get('hod/cum/{section}/{semester}/preview', [CumulativeController::class, 'preview'])->name('hod.cum.preview');
-
-    // Route::resource('gazette', gazetteController::class);
-    // Route::resource('hod-award', HodAwardController::class);
-    // Route::resource('hod-cumulative', HodCumulativeController::class);
 });
 
-Route::group([' middleware' => ['role:admin|controller|hod']], function () {
-    Route::get('gazette/pdf/{id}', [GazetteController::class, 'pdf']);
-    Route::get('pdf/award/{id}', [PdfController::class, 'award']);
-    Route::get('preview/cumulative/{section}/{semester}', [PdfController::class, 'previewCumulative']);
-});
+// Route::group([' middleware' => ['role:admin|controller|hod']], function () {
+//     Route::get('gazette/pdf/{id}', [GazetteController::class, 'pdf']);
+//     Route::get('pdf/award/{id}', [PdfController::class, 'award']);
+//     Route::get('preview/cumulative/{section}/{semester}', [PdfController::class, 'previewCumulative']);
+// });
 
 Route::group(['middleware' => ['role:teacher']], function () {
     Route::get('teacher', [MyCoursesController::class, 'index']);

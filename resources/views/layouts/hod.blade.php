@@ -9,14 +9,14 @@
             <div class="text-base md:text-xl font-semibold">Examination System</div>
             <div class="px-4">|</div>
             <div class="text-sm flex items-center space-x-2">
-                <div>HoD {{Str::replace('Department of', '', session('department')->name)}}</div>
+                <div>HoD {{Str::replace('Department of', '', App\Models\Department::find(session('department_id'))->name)}}</div>
                 <i class="bi bi-chevron-compact-right"></i>
                 <!-- <a href="{{url('/')}}" class="text-blue-600 hover:text-blue-800 text-xs">Change</a> -->
                 <form action="{{route('switch.semester')}}" method="post" id='switchSemesterForm'>
                     @csrf
                     <select name="semester_id" id="cboSemesterId" class="px-2 font-semibold">
                         @foreach(App\Models\Semester::active()->get() as $semester)
-                        <option value="{{$semester->id}}" @selected($semester->id==session('semester')->id)>{{$semester->short()}}</option>
+                        <option value="{{$semester->id}}" @selected($semester->id==session('semester_id'))>{{$semester->short()}}</option>
                         @endforeach
                     </select>
                 </form>
@@ -66,7 +66,7 @@
 
 </header>
 <aside aria-label="Sidebar" id='sidebar'>
-    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">{{session('semester')->title()}}</div>
+    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">{{App\Models\Semester::find(session('semester_id'))->title()}}</div>
     <div class="text-xs text-center">{{date('M d, Y')}}</div>
     <div class="mt-12">
         <ul class="space-y-2">

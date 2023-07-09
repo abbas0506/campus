@@ -2,7 +2,7 @@
 @section('page-content')
 
 <h1>Student Profile</h1>
-<div class="text-sm">{{session('department')->name}}</div>
+<div class="text-sm">{{$department->name}}</div>
 
 <div class="flex items-center mt-12">
     <input type="text" id='searchby' placeholder="Search by name or roll no." class="search-indigo w-1/3">

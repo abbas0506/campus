@@ -31,7 +31,7 @@ $roman = config('global.romans');
 <div class="flex flex-col accordion mt-12">
     @foreach($section->semesters() as $semester)
     <div class="collapsible">
-        <div @if($semester->id==session('semester')->id) class="head active" @else class="head" @endif>
+        <div @if($semester->id==session('semester_id')) class="head active" @else class="head" @endif>
             <h2 class="">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
                 <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
                 <span class="text-xs text-slate-600 bx bx-book ml-6"></span>

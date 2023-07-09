@@ -163,10 +163,10 @@ class AjaxController extends Controller
         // $students = Student::where('rollno', $request->searchby)->get();
 
         $studentsByRollNo = Student::where('rollno', 'like', '%' . $request->searchby . '%')
-            ->whereRelation('section.clas.program', 'department_id', session('department')->id);
+            ->whereRelation('section.clas.program', 'department_id', session('department_id'));
 
         $studentsByName = Student::where('name', 'like', '%' . $request->searchby . '%')
-            ->whereRelation('section.clas.program', 'department_id', session('department')->id);
+            ->whereRelation('section.clas.program', 'department_id', session('department_id'));
         $students = $studentsByRollNo->union($studentsByName)->get();
 
         $result = '';

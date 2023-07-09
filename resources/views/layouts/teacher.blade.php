@@ -17,7 +17,7 @@
                         @csrf
                         <select name="semester_id" id="cboSemesterId" class="px-2 font-semibold">
                             @foreach(App\Models\Semester::active()->get() as $semester)
-                            <option value="{{$semester->id}}" @selected($semester->id==session('semester')->id)>{{$semester->short()}}</option>
+                            <option value="{{$semester->id}}" @selected($semester->id==session('semester_id'))>{{$semester->short()}}</option>
                             @endforeach
                         </select>
                     </form>
@@ -73,7 +73,7 @@
 </header>
 
 <aside aria-label="Sidebar" id='sidebar' class="px-3">
-    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">{{session('semester')->title()}}</div>
+    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">{{App\Models\Semester::find(session('semester_id'))->title()}}</div>
     <div class="text-xs text-center">{{date('M d, Y')}}</div>
     <div class="mt-12">
         <ul class="space-y-2">

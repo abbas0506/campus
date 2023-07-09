@@ -62,6 +62,6 @@ class Section extends Model
     }
     public function semesters()
     {
-        return Semester::whereBetween('id', [$this->clas->first_semester_id, session('semester')->id])->get();
+        return Semester::whereBetween('id', [$this->clas->first_semester_id, session('semester_id')])->get();
     }
 }

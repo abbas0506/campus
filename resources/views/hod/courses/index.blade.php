@@ -38,7 +38,7 @@
         @foreach($course_types as $course_type)
         <div class="relative">
             <label id='lbl_{{$course_type->id}}' class="checked-label" onclick="filter(event)">
-                {{$course_type->name}}: <span class="ml-1"></span>{{$course_type->courses()->type($course_type->id)->deptt(session('department')->id)->count()}}
+                {{$course_type->name}}: <span class="ml-1"></span>{{$course_type->courses()->type($course_type->id)->deptt(session('department_id'))->count()}}
             </label>
             <div class="bullet"></div>
         </div>

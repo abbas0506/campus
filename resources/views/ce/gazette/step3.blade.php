@@ -1,7 +1,7 @@
 @extends('layouts.controller')
 @section('page-content')
 <h1>Gazette | Step 3</h1>
-<h2 class="">{{session('department')->name}}</h2>
+<h2 class="">{{$section->clas->program->department->name}}</h2>
 <p class="">{{$section->title()}}</p>
 
 <div class="container w-full mx-auto mt-12">

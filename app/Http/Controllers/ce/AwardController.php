@@ -26,7 +26,7 @@ class AwardController extends Controller
     public function step2()
     {
         //
-        $department = session('department');
+        $department = Department::find(session('department_id'));
         $programs = $department->programs;
         return view('ce.award.step2', compact('department', 'programs'));
     }
@@ -51,13 +51,10 @@ class AwardController extends Controller
             'department_id' => 'required',
         ]);
 
-        $department = Department::find($request->department_id);
-        $semester = Semester::find($request->semester_id);
-
         //save for next pages
         session([
-            'semester' => $semester,
-            'department' => $department,
+            'semester' => $request->semester_id,
+            'department' => $request->department_id,
         ]);
 
         return redirect()->route('ce.award.step2');

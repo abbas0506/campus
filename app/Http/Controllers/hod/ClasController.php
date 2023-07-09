@@ -108,7 +108,7 @@ class ClasController extends Controller
         //
         $clas = Clas::find($id);
         $shifts = Shift::all();
-        $semesters = Semester::till(session('semester')->id)->get();
+        $semesters = Semester::till(session('semester_id'))->get();
         return view('hod.clases.edit', compact('clas', 'shifts', 'semesters'));
     }
 
@@ -175,7 +175,7 @@ class ClasController extends Controller
         $program = Program::find($pid);
         $shifts = Shift::all();
         $schemes = Scheme::all();
-        $semesters = Semester::till(session('semester')->id)->get();
+        $semesters = Semester::till(session('semester_id'))->get();
 
         return view('hod.clases.append', compact('program', 'shifts', 'schemes', 'semesters'));
     }

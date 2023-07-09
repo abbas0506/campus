@@ -30,8 +30,7 @@ class TeacherController extends Controller
     public function create()
     {
         //
-        $departments = Department::all();
-        return view('hod.teachers.create', compact('departments'));
+        return view('hod.teachers.create');
     }
 
     /**
@@ -43,6 +42,7 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         //
+        $request->merge(['department_id' => session('department_id')]);
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -62,7 +62,6 @@ class TeacherController extends Controller
                 'department_id' => $request->department_id,
             ]);
 
-            $user->save();
             $user->assignRole(['teacher']);
             return redirect('teachers')->with('success', 'Successfully created');
         } catch (Exception $ex) {
@@ -91,8 +90,7 @@ class TeacherController extends Controller
     {
         //
         $teacher = User::findOrFail($id);
-        $department = Department::find(session('department_id'));
-        return view('hod.teachers.edit', compact('teacher', 'department'));
+        return view('hod.teachers.edit', compact('teacher'));
     }
 
     /**
@@ -114,11 +112,7 @@ class TeacherController extends Controller
 
         try {
             $user = User::findOrFail($id);
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->cnic = $request->cnic;
-            $user->save();
+            $user->update($request->all());
 
             return redirect('teachers')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {

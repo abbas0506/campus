@@ -25,7 +25,7 @@
     <div class="flex flex-col accordion mt-4">
         @foreach($section->semesters() as $semester)
         <div class="collapsible">
-            <div @if($semester->id==session('semester')->id) class="head active" @else class="head" @endif>
+            <div @if($semester->id==session('semester_id')) class="head active" @else class="head" @endif>
                 <h2 class="flex items-center">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
                     <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
                     <span class="bx bx-book text-slate-400 ml-6"></span>
@@ -46,7 +46,7 @@
                         <!-- if teacher name given, show name ... else show link icon -->
                         @if($course_allocation->teacher)
                         {{$course_allocation->teacher->name}}
-                        @elseif($semester->id==session('semester')->id)
+                        @elseif($semester->id==session('semester_id'))
                         <div class="flex items-center py-2">
                             <a href="{{route('courseplan.teachers',$course_allocation)}}">
                                 <i class="bx bx-paperclip text-indigo-600"></i>
@@ -57,7 +57,7 @@
                         @endif
                     </div>
                     <!-- show remove icon for each allocation -->
-                    @if($semester->id==session('semester')->id)
+                    @if($semester->id==session('semester_id'))
                     @if($course_allocation->teacher)
                     <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
                     @else
@@ -74,7 +74,7 @@
                 </div>
                 @endforeach
                 <!-- allow course addition only for current semester -->
-                @if($semester->id==session('semester')->id)
+                @if($semester->id==session('semester_id'))
                 <div class="w-full mt-2">
                     <a href="{{route('courseplan.courses', $section)}}" class="flex items-center btn-teal text-sm float-left">
                         Add Course

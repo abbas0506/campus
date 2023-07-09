@@ -7,9 +7,10 @@ use App\Imports\ImportStudent;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Models\Section;
-use Illuminate\Support\Facades\DB;
+use App\Models\Department;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 use Exception;
@@ -24,7 +25,7 @@ class StudentController extends Controller
     public function index()
     {
         //
-        $department = session('department');
+        $department = Department::find(session('department_id'));
         return view('hod.students.index', compact('department'));
     }
 

@@ -30,7 +30,7 @@ $roman = config('global.romans');
                         <td class="text-center text-lg font-bold">UNIVERSITY OF OKARA</td>
                     </tr>
                     <tr>
-                        <td class="text-center text-base font-bold">Result Gazette {{session('semester')->title()}}</td>
+                        <td class="text-center text-base font-bold">Result Gazette {{App\Models\Semester::find(session('semester_id'))->title()}}</td>
                     </tr>
                 </tbody>
             </table>

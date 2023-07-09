@@ -81,13 +81,11 @@ class AuthController extends Controller
                 $semester = Semester::find($request->semester_id);
                 session([
                     'semester_id' => $request->semester_id,
-                    'semester' => $semester,
                 ]);
                 if ($request->role == 'hod') {
                     $department = Department::find($request->department_id);
                     session([
                         'department_id' => $request->department_id,
-                        'department' => $department,
                     ]);
                 }
             }
@@ -101,12 +99,8 @@ class AuthController extends Controller
             'semester_id' => 'required',
         ]);
 
-        $semester = Semester::find($request->semester_id);
-
-        session()->forget('semester');
-
         session([
-            'semester' => $semester,
+            'semester_id' => $request->semester_id,
         ]);
         return redirect(Str::lower(session('current_role')));
     }

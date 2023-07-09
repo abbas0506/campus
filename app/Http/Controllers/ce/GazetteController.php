@@ -23,8 +23,9 @@ class GazetteController extends Controller
     public function step2()
     {
         //
-        $department = session('department');
-        $semester = session('semester');
+        $department = Department::find(session('department_id'));
+        $semester = Semester::find(session('semester_id'));
+
         return view('ce.gazette.step2', compact('semester', 'department'));
     }
 
@@ -32,7 +33,9 @@ class GazetteController extends Controller
     {
 
         $section = Section::find($id);
-        return view('ce.gazette.step3', compact('section'));
+        $department = Department::find(session('department_id'));
+
+        return view('ce.gazette.step3', compact('department', 'section'));
 
         // $section = Section::find($id);
 
@@ -58,8 +61,8 @@ class GazetteController extends Controller
 
         //save for next pages
         session([
-            'semester' => $semester,
-            'department' => $department,
+            'semester_id' => $request->semester_id,
+            'department' => $request->department_id,
         ]);
 
         return redirect()->route('ce.gazette.step2');
