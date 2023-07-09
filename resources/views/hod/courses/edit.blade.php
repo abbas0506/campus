@@ -45,21 +45,21 @@
 
         <div class="flex flex-col md:flex-row md:items-center md:space-x-8">
             <div class="flex flex-col flex-1">
-                <label for="" class='mt-3'>Credit Hrs (Theory)</label>
+                <label for="" class='mt-3'>Cr Hrs (Theory)</label>
                 <input id="" type='number' name="cr_theory" class="input-indigo p-1 pl-2" placeholder="Crdit Hrs" value="{{$course->cr_theory}}" required>
             </div>
             <div class="flex flex-col flex-1">
-                <label for="" class='mt-3'>Max Marks (Theory)</label>
-                <input type='number' id="" name="marks_theory" class="input-indigo p-1 pl-2" placeholder="Marks" value="{{$course->marks_theory}}" min=0 required>
+                <label for="" class='mt-3'>Cr Hrs (Practical)</label>
+                <input id="" type='number' name="cr_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value="{{$course->cr_practical}}" min=0 required>
             </div>
         </div>
         <div class="flex flex-col md:flex-row md:items-center md:space-x-8">
             <div class="flex flex-col flex-1">
-                <label for="" class='mt-3'>Credit Hrs (Practical)</label>
-                <input id="" type='number' name="cr_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value="{{$course->cr_practical}}" min=0 required>
+                <label for="" class='mt-3'>Marks (Theory)</label>
+                <input type='number' id="" name="marks_theory" class="input-indigo p-1 pl-2" placeholder="Marks" value="{{$course->marks_theory}}" min=0 required>
             </div>
             <div class="flex flex-col flex-1">
-                <label for="" class='mt-3'>Max Marks (Practical)</label>
+                <label for="" class='mt-3'>Marks (Practical)</label>
                 <input type='number' id="" name="marks_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value="{{$course->marks_practical}}" min=0 required>
             </div>
 
