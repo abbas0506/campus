@@ -84,6 +84,9 @@ Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->na
 Route::post('switch/semester', [AjaxController::class, 'switchSemester'])->name('switch.semester');; //for ajax call
 
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
+Route::view('exception/r', 'exceptions.missing.role')->name('role_missed_exception');
+Route::view('exception/d', 'exceptions.missing.department')->name('department_missed_exception');
+Route::view('exception/s', 'exceptions.missing.semester')->name('semester_missed_exception');
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('admin', [DashboardController::class, 'admin']);
@@ -121,7 +124,7 @@ Route::group(['middleware' => ['role:controller']], function () {
     Route::get('ce/gazette/{allocation}/pdf', [PdfController::class, 'gazette'])->name('ce.gazette.pdf');
 });
 
-Route::group(['middleware' => ['role:hod']], function () {
+Route::group(['middleware' => ['role:hod', 'my_exception_handler']], function () {
     Route::get('hod', [DashboardController::class, 'hod']);
     Route::resource('programs', ProgramController::class);
     Route::resource('clases', ClasController::class);
@@ -181,13 +184,7 @@ Route::group(['middleware' => ['role:hod']], function () {
     Route::get('hod/cum/{section}/{semester}/preview', [CumulativeController::class, 'preview'])->name('hod.cum.preview');
 });
 
-// Route::group([' middleware' => ['role:admin|controller|hod']], function () {
-//     Route::get('gazette/pdf/{id}', [GazetteController::class, 'pdf']);
-//     Route::get('pdf/award/{id}', [PdfController::class, 'award']);
-//     Route::get('preview/cumulative/{section}/{semester}', [PdfController::class, 'previewCumulative']);
-// });
-
-Route::group(['middleware' => ['role:teacher']], function () {
+Route::group(['middleware' => ['role:teacher', 'my_exception_handler']], function () {
     Route::get('teacher', [MyCoursesController::class, 'index']);
     Route::resource('mycourses', MyCoursesController::class);
     Route::resource('formative', FormativeController::class);

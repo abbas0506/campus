@@ -69,7 +69,7 @@ class AuthController extends Controller
         if (Auth::user()->hasRole($request->role)) {
 
             session([
-                'current_role' => Str::title($request->role)
+                'current_role' => $request->role,
             ]);
             //save selected semester id for entire session
             if (Auth::user()->hasAnyRole('hod', 'teacher')) {

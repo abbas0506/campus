@@ -51,7 +51,7 @@ class ClasController extends Controller
      */
     public function store(Request $request)
     {
-        //append current semester to request
+
         $request->validate([
             'program_id' => 'required|numeric',
             'shift_id' => 'required|numeric',
@@ -60,17 +60,24 @@ class ClasController extends Controller
             'first_semester_id' => 'required|numeric',
 
         ]);
+        $program = Program::find($request->program_id);
+        //derive last semester of the class
+
+        $request->merge([
+            'last_semester_id' => $request->first_semester_id + intval($program->min_t * 2) - $request->semester_no,
+        ]);
 
         DB::beginTransaction();
         try {
             $exists = Clas::where('program_id', $request->program_id)
                 ->where('shift_id', $request->shift_id)
-                ->where('first_semester_id', $request->semester_id)
+                ->where('first_semester_id', $request->first_semester_id)
                 ->first();
             if ($exists) {
-                return redirect()->back()->with('error', 'Class ' . $exists->short() . ' already exists! You may promote/demote it.');
+                return redirect()->back()->with('error', 'Class ' . $exists->title() . ' already exists! Please review your input carefully.');
             } else {
                 $clas = Clas::create($request->all());
+
                 Section::create([
                     'clas_id' => $clas->id,
                     'name' => 'A',
