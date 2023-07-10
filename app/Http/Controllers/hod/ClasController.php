@@ -136,15 +136,14 @@ class ClasController extends Controller
             'semester_no' => 'required|numeric',
             'first_semester_id' => 'required|numeric',
         ]);
-        //derive last semester id
-        $program = Program::find($request->program_id);
-        $request->merge([
-            'last_semester_id' => $request->first_semester_id + intval($program->min_t * 2) - $request->semester_no,
-        ]);
-
-        $clas = Clas::find($id);
 
         try {
+
+            //derive last semester id
+            $clas = Clas::find($id);
+            $request->merge([
+                'last_semester_id' => $request->first_semester_id + intval($clas->program->min_t * 2) - $request->semester_no,
+            ]);
 
             $exists = Clas::where('program_id', $clas->program_id)
                 ->where('shift_id', $request->shift_id)
