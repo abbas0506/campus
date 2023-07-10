@@ -136,8 +136,14 @@ class ClasController extends Controller
             'semester_no' => 'required|numeric',
             'first_semester_id' => 'required|numeric',
         ]);
+        //derive last semester id
+        $program = Program::find($request->program_id);
+        $request->merge([
+            'last_semester_id' => $request->first_semester_id + intval($program->min_t * 2) - $request->semester_no,
+        ]);
 
         $clas = Clas::find($id);
+
         try {
 
             $exists = Clas::where('program_id', $clas->program_id)
@@ -145,6 +151,7 @@ class ClasController extends Controller
                 ->where('semester_no', $request->semester_no)
                 ->where('first_semester_id', $request->frist_semester_id)
                 ->first();
+
             if ($exists) {
                 return redirect()->back()->with('error', 'Class ' . $exists->short() . ' already exists! You may promote/demote it.');
             } else {

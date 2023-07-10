@@ -91,7 +91,7 @@ class Clas extends Model
     {
         $semester_id = session('semester_id');
         return $query->where('first_semester_id', '<=', $semester_id)
-            ->where('last_semester_id', '>=', $semester_id);
+            ->where('last_semester_id', '>=', $semester_id)->orderBy('first_semester_id');
     }
     public function semesterNo($semester_id)
     {
