@@ -81,7 +81,7 @@ Route::post('verify/step2', [AuthController::class, 'verify_step2']);
 Route::post('login/as', [AuthController::class, 'loginAs'])->name('login.as');
 Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
 Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
-Route::post('switch/semester', [AuthController::class, 'switchSemester'])->name('switch.semester');; //for ajax call
+Route::post('switch/semester', [AjaxController::class, 'switchSemester'])->name('switch.semester');; //for ajax call
 
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
@@ -121,7 +121,7 @@ Route::group(['middleware' => ['role:controller']], function () {
     Route::get('ce/gazette/{allocation}/pdf', [PdfController::class, 'gazette'])->name('ce.gazette.pdf');
 });
 
-Route::group([' middleware' => ['role:hod']], function () {
+Route::group(['middleware' => ['role:hod']], function () {
     Route::get('hod', [DashboardController::class, 'hod']);
     Route::resource('programs', ProgramController::class);
     Route::resource('clases', ClasController::class);

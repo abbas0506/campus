@@ -145,7 +145,29 @@
         $("#sidebar").toggle();
     });
     $('#cboSemesterId').change(function() {
-        $('#switchSemesterForm').submit();
+        // $('#switchSemesterForm').submit();
+        var token = $("meta[name='csrf-token']").attr("content");
+        var semester_id = $('#cboSemesterId').val();
+
+        $.ajax({
+            type: 'POST',
+            url: "switch/semester",
+            data: {
+                "semester_id": semester_id,
+                "_token": token,
+            },
+            success: function(response) {
+                //
+                location.reload(true);
+                //scheme id will also be fetched dynamically
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: errorThrown
+                });
+            }
+        }); //ajax end
     });
 </script>
 @endsection

@@ -9,6 +9,7 @@ use App\Models\Program;
 use App\Models\Semester;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -254,6 +255,20 @@ class AjaxController extends Controller
         }
         return response()->json([
             'result' => $result,
+        ]);
+    }
+
+    public function switchSemester(Request $request)
+    {
+        $request->validate([
+            'semester_id' => 'required',
+        ]);
+
+        session([
+            'semester_id' => $request->semester_id,
+        ]);
+        return response()->json([
+            'msg' => 'ok',
         ]);
     }
 }

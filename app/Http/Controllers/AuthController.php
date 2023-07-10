@@ -8,18 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 
 use App\Models\User;
 use Exception;
-use Illuminate\Contracts\Session\Session;
-use Svg\Tag\Rect;
 
 class AuthController extends Controller
 {
     //
-
     public function signup(Request $request)
     {
         //signup  process
@@ -93,17 +88,7 @@ class AuthController extends Controller
         } else
             return redirect('/');
     }
-    public function switchSemester(Request $request)
-    {
-        $request->validate([
-            'semester_id' => 'required',
-        ]);
 
-        session([
-            'semester_id' => $request->semester_id,
-        ]);
-        return redirect(Str::lower(session('current_role')));
-    }
 
     public function verify_step2(Request $request)
     {
@@ -145,13 +130,12 @@ class AuthController extends Controller
     {
         //
         $user = User::find($id);
-        //signup  process
+        //change password process
         $request->validate([
             'current' => 'required',
             'new' => 'required',
         ]);
 
-        //echo 'current:' . $request->current . "new" . $request->new . "existing" . $user->password;
         try {
 
             if (Hash::check($request->current, $user->password)) {
