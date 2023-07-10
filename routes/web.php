@@ -39,6 +39,7 @@ use App\Http\Controllers\hod\CumulativeController;
 use App\Http\Controllers\hod\InternalController;
 use App\Http\Controllers\hod\SchemeMetaController;
 use App\Http\Controllers\hod\SectionController;
+use App\Http\Controllers\MyExceptionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\teacher\AssessmentController;
 use App\Http\Controllers\teacher\AwardController as TeacherAwardController;
@@ -68,8 +69,14 @@ use App\Models\Semester;
 Route::get('/{url?}', function () {
     if (Auth::check()) {
         //if authenticated, attach semesters
-        $semesters = Semester::active()->get();
-        return view('index', compact('semesters'));
+        if (Auth::user()->status == 0) {
+            Auth::logout();
+            session()->flush();
+            return redirect()->route('exception.show', 0);
+        } else {
+            $semesters = Semester::active()->get();
+            return view('index', compact('semesters'));
+        }
     } else
         return view('index');
 })->where('url', ('login|signin|index'));
@@ -88,6 +95,9 @@ Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 Route::view('exception/r', 'exceptions.missing.role')->name('role_missed_exception');
 Route::view('exception/d', 'exceptions.missing.department')->name('department_missed_exception');
 Route::view('exception/s', 'exceptions.missing.semester')->name('semester_missed_exception');
+Route::view('exception/b', 'exceptions.blocked')->name('user_blocked_exception');
+
+Route::get('exception/{code}', [MyExceptionController::class, 'show'])->name('exception.show');
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('admin', [DashboardController::class, 'admin']);

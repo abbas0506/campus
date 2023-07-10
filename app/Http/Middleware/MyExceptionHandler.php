@@ -17,18 +17,17 @@ class MyExceptionHandler
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!session('current_role'))
-            return redirect()->route('role_missed_exception');
-
-        else if (session('current_role') == 'hod') {
+        if (!session('current_role')) {
+            return redirect()->route('exception.show', 1);
+        } else if (session('current_role') == 'hod') {
             if (!session('department_id'))
-                return redirect()->route('department_missed_exception');
+                return redirect()->route('exception.show', 2);
             else if (!session('semester_id'))
-                return redirect()->route('semester_missed_exception');
+                return redirect()->route('exception.show', 3);
         } else if (session('current_role') == 'teacher') {
             if (!session('semester_id'))
-                return redirect()->route('semester_missed_exception');
+                return redirect()->route('exception.show', 3);
+            return $next($request);
         }
-        return $next($request);
     }
 }
