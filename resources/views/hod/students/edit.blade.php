@@ -23,20 +23,51 @@
         @csrf
         @method('PATCH')
 
-        <div class="flex item-cetner mt-12">
-            <input type="radio" name='gender' value="M" @if($student->gender=='M') checked @endif>
-            <label for="" class="ml-3">Male</label>
+        <div class="flex mt-12 space-x-4">
+            <div class="flex item-center">
+                <input type="radio" name='gender' value="M" @if($student->gender=='M') checked @endif>
+                <label for="" class="ml-3">Male</label>
+            </div>
+            <div class="flex item-center">
+                <input type="radio" name='gender' value="F" @if($student->gender=='F') checked @endif>
+                <label for="" class="ml-3">Female</label>
+            </div>
         </div>
-        <div class="flex item-cetner mt-3">
-            <input type="radio" name='gender' value="F" @if($student->gender=='F') checked @endif>
-            <label for="" class="ml-3">Female</label>
-        </div>
-
-        <label for="" class='mt-8'>Full Name</label>
+        <label for="" class='mt-8'>Student Name</label>
         <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad" value="{{$student->name}}" required>
+        <div class="flex flex-col md:flex-row md:space-x-8">
+            <div class="flex flex-col flex-1 mt-3">
+                <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
+                <input type="text" id='cnic' name='cnic' value="{{$student->cnic}}" class="input-indigo" placeholder="Without dashes" required>
+            </div>
+            <div class="flex flex-col flex-1 mt-3">
+                <label for="" class='mt-3'>Father</label>
+                <input type="text" id='' name='father' class="input-indigo" placeholder="father name" value="{{$student->father}}" required>
+            </div>
+        </div>
 
-        <label for="" class='mt-3'>Father</label>
-        <input type="text" id='' name='father' class="input-indigo" placeholder="father name" value="{{$student->father}}" required>
+        <div class="flex flex-col md:flex-row md:space-x-8">
+            <div class="flex flex-col flex-1 mt-3">
+                <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
+                <input type="text" id='cnic' name='cnic' value="{{$student->cnic}}" class="input-indigo" placeholder="Without dashes" required>
+            </div>
+            <div class="flex flex-col flex-1 mt-3">
+                <label for="">Phone <span id="phone_length" class="text-slate-500 text-xs ml-3">0/11</span></label>
+                <input type="text" id='phone' name='phone' value="{{$student->phone}}" class="input-indigo" placeholder="Without dash" required>
+            </div>
+            <div class="flex flex-col flex-1 mt-3">
+                <label for="">Email</label>
+                <input type="text" id='email' name='email' value="{{$student->email}}" class="input-indigo" placeholder="email" required>
+            </div>
+        </div>
+
+        <div class="flex flex-col flex-1 mt-3">
+            <label for="">Address</label>
+            <input type="text" id='address' name='address' value="{{$student->address}}" class="input-indigo" placeholder="address" required>
+        </div>
+
+        <div class="border-b border-dashed border-slate-500 mt-3 h-4"></div>
+
         <div class="flex md:space-x-8">
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Roll No</label>
@@ -47,12 +78,25 @@
                 <input type="text" name="regno" class="input-indigo" placeholder="Registration No." value="{{$student->regno}}">
             </div>
         </div>
+
         <div class="flex items-center justify-end mt-4">
             <button type="submit" class="btn-indigo-rounded">Save</button>
         </div>
-
     </form>
 
 </div>
 
+@endsection
+@section('script')
+<script>
+    $('#cnic').on('input', function() {
+        var cnic = $('#cnic').val()
+        $('#cnic_length').html(cnic.length + "/13");
+    });
+
+    $('#phone').on('input', function() {
+        var phone = $('#phone').val()
+        $('#phone_length').html(phone.length + "/11");
+    });
+</script>
 @endsection
