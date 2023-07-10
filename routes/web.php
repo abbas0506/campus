@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\CourseTypeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +14,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\HeadshipController;
-use App\Http\Controllers\admin\UserAccessController;
+use App\Http\Controllers\Admin\UserAccessController;
+use App\Http\Controllers\Admin\CourseTypeController;
+
 use App\Http\Controllers\ce\AwardController as CeAwardController;
 use App\Http\Controllers\ce\FinalGazetteController;
 use App\Http\Controllers\ce\GazetteController as CeGazetteController;
