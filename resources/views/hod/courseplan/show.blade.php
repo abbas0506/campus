@@ -65,7 +65,7 @@
                             @foreach($section->course_allocations()->during($semester->id)->on($meta->slot)->get() as $course_allocation)
                             <div class="flex w-full my-1">
                                 <div class="flex w-24">{{$course_allocation->course->code}}</div>
-                                <div class="flex flex-1">{{$course_allocation->course->name}}</div>
+                                <div class="flex flex-1">{{$course_allocation->course->name}}<span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>
                                 <div class="flex flex-1">
                                     @if($course_allocation->teacher)
                                     {{$course_allocation->teacher->name}}
