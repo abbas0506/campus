@@ -50,34 +50,25 @@
                 <!-- show header only if some scheme meta entries exist  -->
                 @if($scheme->scheme_metas()->for($semester_no)->count()>0)
                 <div class="flex items-center w-full font-medium border-b pb-1">
-                    <div class="text-sm w-12">Slot</div>
-                    <div class="text-sm w-32">Course Type</div>
-                    <div class="text-sm w-12">Cr</div>
-                    <div class="flex items-center flex-1 text-indigo-600">List of Courses <span class="ml-1 text-xs"> (Will be purely tentaive; You may not follow it during course allocation, if desired) </span></div>
-                    <div class="">Action</div>
+                    <div class="text-sm text-center w-16">Slot</div>
+                    <div class="text-sm flex-1">Course Type</div>
+                    <div class="text-sm text-center w-16">Cr</div>
+                    <div class="text-sm text-center w-16">Action</div>
+
+                    <!-- <div class="flex items-center flex-1 text-indigo-600">List of Courses <span class="ml-1 text-xs"> (Will be purely tentaive; You may not follow it during course allocation, if desired) </span></div>
+                    <div class="">Action</div> -->
                 </div>
                 @endif
                 @foreach($scheme->scheme_metas()->for($semester_no)->get() as $scheme_meta)
                 <div class="flex items-center w-full py-1 odd:bg-slate-100">
-                    <div class="text-sm w-12">{{$scheme_meta->slot}}</div>
-                    <div class="text-sm w-32">{{$scheme_meta->course_type->name}}</div>
-                    <div class="text-sm w-12">{{$scheme_meta->cr}}</div>
-                    <div class="flex flex-1 items-center space-x-4">
+                    <div class="text-sm text-center w-16">{{$scheme_meta->slot}}</div>
+                    <div class="text-sm flex-1">{{$scheme_meta->course_type->name}}</div>
+                    <div class="text-sm text-center w-16">{{$scheme_meta->cr}}</div>
 
-                        <a href="{{route('scheme-details.edit', $scheme_meta)}}" class="flex items-center btn-teal px-1 text-xs float-left">
-                            Add Course<i class="bi-plus-circle-dotted ml-1"></i>
-                        </a>
-                        @foreach($scheme->scheme_details()->for($semester_no)->havingSlot($scheme_meta->slot)->get() as $scheme_detail)
-                        <div>
-                            {{$scheme_detail->course->short}}
-                        </div>
-                        @endforeach
-                    </div>
-                    <!-- delete slot button -->
-                    <form action="{{route('scheme-meta.destroy',$scheme_meta->id)}}" method="POST" id='del_form{{$scheme_meta->id}}' class="mt-1 w-8">
+                    <form action="{{route('scheme-meta.destroy',$scheme_meta->id)}}" method="POST" id='del_form{{$scheme_meta->id}}' class="w-16 flex justify-center">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="py-0 text-xs" onclick="delme('{{$scheme_meta->id}}')"><i class="bi-trash3 text-red-500 ml-1"></i></button>
+                        <button type="submit" class="py-0 text-xs" onclick="delme('{{$scheme_meta->id}}')"><i class="bi bi-trash3 text-red-500 ml-1"></i></button>
                     </form>
                 </div>
                 @endforeach
@@ -90,34 +81,6 @@
                         </svg>
                     </a>
                 </div>
-
-                @foreach($scheme->scheme_details()->for($semester_no)->havingSlot(0)->get() as $scheme_detail)
-                <div class="flex items-center justify-between w-full even:bg-slate-100">
-                    <div class="text-sm w-1/6">{{$scheme_detail->course->code}} </div>
-                    <div class="text-sm w-1/3">{{$scheme_detail->course->name}} </div>
-                    <div class="text-sm w-1/3">{{$scheme_detail->course->course_type->name}} </div>
-                    <div class="text-xs text-slate-400">{{$scheme_detail->course->lblCr()}}</div>
-                    @role('super')
-                    <form action="{{route('scheme-details.destroy', $scheme_detail)}}" method="POST" id='del_form{{$scheme_detail->id}}' class="mt-1">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-transparent p-0 border-0 text-red-600 text-xs" onclick="delme('{{$scheme_detail->id}}')">
-                            <i class="bi bi-trash3"></i>
-                        </button>
-                    </form>
-                    @endrole
-                </div>
-                @endforeach
-
-                <!-- add courses to existing scheme at specific semester -->
-                <!-- <div class="w-full mt-2">
-                    <a href="{{route('scheme-details.edit', $semester_no)}}" class="flex items-center btn-teal text-sm float-left">
-                        Add Course
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
-                        </svg>
-                    </a>
-                </div> -->
 
             </div>
 

@@ -33,24 +33,22 @@ class CoursePlanController extends Controller
     {
         //
         $section = Section::find($sid);
-        return view('hod.courseplan.step2', compact('section'));
+        return view('hod.courseplan.show', compact('section'));
     }
 
     public function store(Request $request)
     {
         //append current semester id to request object
-
         $request->merge([
             'semester_id' => session('semester_id'),
-            'slot' => 0,
         ]);
 
         $request->validate([
             'semester_id' => 'required|numeric',
-            'scheme_detail_id' => 'numeric',
             'section_id' => 'required|numeric',
+            'slot' => 'required|numeric',
             'course_id' => 'required|numeric',
-            'semester_no' => 'required|numeric',
+
         ]);
 
         try {
@@ -93,15 +91,15 @@ class CoursePlanController extends Controller
         }
     }
 
-    public function courses($sid)
-    {
-        $section = Section::find($sid);
-        $semester_nos = collect();
-        for ($i = 1; $i <= $section->clas->program->min_t * 2; $i++) {
-            $semester_nos->push($i);
-        }
-        return view('hod.courseplan.courses', compact('section', 'semester_nos'));
-    }
+    // public function courses($sid)
+    // {
+    //     $section = Section::find($sid);
+    //     $semester_nos = collect();
+    //     for ($i = 1; $i <= $section->clas->program->min_t * 2; $i++) {
+    //         $semester_nos->push($i);
+    //     }
+    //     return view('hod.courseplan.courses', compact('section', 'semester_nos'));
+    // }
 
     // view available teachers for selected course
     public function teachers($id)
@@ -112,14 +110,14 @@ class CoursePlanController extends Controller
         $teachers = User::whereRelation('roles', 'name', 'teacher')->get();
         return view('hod.courseplan.teachers', compact('course_allocation', 'teachers'));
     }
-    public function optional($section_id, $schemedetail_id)
-    {
-        $section = Section::find($section_id);
-        $scheme_detail = SchemeDetail::find($schemedetail_id);
-        $courses = Course::where('course_type_id', $scheme_detail->course->course_type_id)->get();
+    // public function optional($section_id, $schemedetail_id)
+    // {
+    //     $section = Section::find($section_id);
+    //     $scheme_detail = SchemeDetail::find($schemedetail_id);
+    //     $courses = Course::where('course_type_id', $scheme_detail->course->course_type_id)->get();
 
-        return view('hod.courseplan.optional', compact('section', 'scheme_detail', 'courses'));
-    }
+    //     return view('hod.courseplan.optional', compact('section', 'scheme_detail', 'courses'));
+    // }
     public function replace($course_allocation_id)
     {
         $course_allocation = CourseAllocation::find($course_allocation_id);
@@ -138,6 +136,29 @@ class CoursePlanController extends Controller
 
         try {
             $course_allocation = CourseAllocation::find($request->course_allocation_id);
+            $course_allocation->update($request->all());
+            return redirect()->route('courseplan.show', $course_allocation->section)->with('success', "Successfully saved");
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            // something went wrong
+        }
+    }
+
+    public function courses($section_id, $slot, $coursetype_id)
+    {
+
+        $section = Section::find($section_id);
+        $courses = Course::where('course_type_id', $coursetype_id)->where('department_id', $section->clas->program->department_id);
+        return view('hod.courseplan.courses', compact('section', 'slot', 'courses'));
+    }
+    public function updateslot(Request $request, $id)
+    {
+        $request->validate([
+            'slot' => 'required|numeric',
+        ]);
+
+        try {
+            $course_allocation = CourseAllocation::find($id);
             $course_allocation->update($request->all());
             return redirect()->route('courseplan.show', $course_allocation->section)->with('success', "Successfully saved");
         } catch (Exception $e) {

@@ -13,7 +13,6 @@ class CourseAllocation extends Model
         'semester_no',
         'slot',
         'course_id',    //optional course id
-        'scheme_detail_id',
         'teacher_id',
         'semester_id',
 
@@ -84,5 +83,9 @@ class CourseAllocation extends Model
     public function scopeDuring($query, $semester_id)
     {
         return $query->where('semester_id', $semester_id);
+    }
+    public function scopeOn($query, $slot)
+    {
+        return $query->where('slot', $slot);
     }
 }

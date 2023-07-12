@@ -164,11 +164,13 @@ Route::group(['middleware' => ['role:hod', 'my_exception_handler']], function ()
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('courseplan', CoursePlanController::class);
 
-    Route::get('courseplan/{section}/courses', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
+    // Route::get('courseplan/{section}/courses', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
     Route::get('courseplan/{courseallocation}/teachers', [CoursePlanController::class, 'teachers'])->name('courseplan.teachers');
-    Route::get('courseplan/{section}/optional/{schemedetail}', [CoursePlanController::class, 'optional'])->name('courseplan.optional');
     Route::get('courseplan/{courseallocation}/replace', [CoursePlanController::class, 'replace'])->name('courseplan.replace');
     Route::post('courseplan/replace', [CoursePlanController::class, 'replaceTeacher'])->name('courseplan.replace.teacher');
+    Route::put('updateslot/{slot}', [CoursePlanController::class, 'updateslot'])->name('updateslot');
+
+    Route::get('courseplan/courses/{section}/{slot}/{coursetype}', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
 
     Route::resource('students', StudentController::class);
     Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
