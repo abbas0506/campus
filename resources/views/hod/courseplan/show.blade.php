@@ -27,8 +27,6 @@
             <div @if($semester->id==session('semester_id')) class="head active" @else class="head" @endif>
                 <h2 class="flex items-center">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
                     <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
-                    <span class="bx bx-book text-slate-400 ml-6"></span>
-                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->during($semester->id)->where('slot','!=',0)->count()}}</span>
                     <span class="bx bx-time-five ml-6 text-slate-400"></span>
                     <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->where('slot','!=',0)->sumOfCreditHrs($semester->id)}} </span>
                 </h2>
