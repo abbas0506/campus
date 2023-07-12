@@ -84,6 +84,10 @@ class CourseAllocation extends Model
     {
         return $query->where('semester_id', $semester_id);
     }
+    public function scopeTill($query, $semester_id)
+    {
+        return $query->where('semester_id', '<=', $semester_id);
+    }
     public function scopeOn($query, $slot)
     {
         return $query->where('slot', $slot);

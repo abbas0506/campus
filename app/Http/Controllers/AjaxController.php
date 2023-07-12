@@ -257,18 +257,4 @@ class AjaxController extends Controller
             'result' => $result,
         ]);
     }
-
-    public function switchSemester(Request $request)
-    {
-        $request->validate([
-            'semester_id' => 'required',
-        ]);
-
-        session([
-            'semester_id' => $request->semester_id,
-        ]);
-        return response()->json([
-            'msg' => 'ok',
-        ]);
-    }
 }

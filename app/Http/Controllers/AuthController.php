@@ -171,4 +171,15 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/');
     }
+    public function switchSemester(Request $request)
+    {
+        $request->validate([
+            'semester_id' => 'required|numeric',
+
+        ]);
+        session([
+            'semester_id' => $request->semester_id,
+        ]);
+        return redirect(session('current_role'));
+    }
 }

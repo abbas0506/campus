@@ -101,12 +101,25 @@ class CoursePlanController extends Controller
     //     return view('hod.courseplan.courses', compact('section', 'semester_nos'));
     // }
 
-    // view available teachers for selected course
-    public function teachers($id)
-    {
-        session(['course_allocation_id' => $id,]);
 
-        $course_allocation = CourseAllocation::find($id);
+    public function courses($section_id, $slot, $coursetype_id)
+    {
+        $section = Section::find($section_id);
+        $courses = '';
+        // if thesis or research
+        if ($coursetype_id == 4 || $coursetype_id == 7)
+            $courses = Course::where('department_id', $section->clas->program->department_id);
+        else
+            $courses = Course::where('course_type_id', $coursetype_id)->where('department_id', $section->clas->program->department_id);
+
+        return view('hod.courseplan.courses', compact('section', 'slot', 'courses'));
+    }
+
+    public function teachers($course_allocation_id)
+    {
+        session(['course_allocation_id' => $course_allocation_id,]);
+
+        $course_allocation = CourseAllocation::find($course_allocation_id);
         $teachers = User::whereRelation('roles', 'name', 'teacher')->get();
         return view('hod.courseplan.teachers', compact('course_allocation', 'teachers'));
     }
@@ -144,13 +157,6 @@ class CoursePlanController extends Controller
         }
     }
 
-    public function courses($section_id, $slot, $coursetype_id)
-    {
-
-        $section = Section::find($section_id);
-        $courses = Course::where('course_type_id', $coursetype_id)->where('department_id', $section->clas->program->department_id);
-        return view('hod.courseplan.courses', compact('section', 'slot', 'courses'));
-    }
     public function updateslot(Request $request, $id)
     {
         $request->validate([

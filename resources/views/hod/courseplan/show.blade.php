@@ -17,9 +17,7 @@
     @endphp
     <div class="flex items-center space-x-4">
         <p class="bg-teal-600 text-md font-semibold px-2 text-white">Scheme: {{$section->clas->scheme->title()}}</p>
-        <p class="flex items-center bg-orange-100 px-2">Scheduled:
-            <i class="bx bx-book ml-2"></i> <span class="font-semibold ml-2">{{$section->course_allocations->count()}} / {{$section->clas->scheme->scheme_details->count()}}</span>
-            <span class="mx-4">|</span>
+        <p class="flex items-center bg-orange-100 px-2">
             <i class="bx bx-time-five"></i> <span class="font-semibold ml-2">{{$section->cr()}} / {{$section->clas->scheme->creditHrsMax()}}</span>
         </p>
     </div>
@@ -30,9 +28,9 @@
                 <h2 class="flex items-center">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
                     <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
                     <span class="bx bx-book text-slate-400 ml-6"></span>
-                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->during($semester->id)->count()}}</span>
+                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->during($semester->id)->where('slot','!=',0)->count()}}</span>
                     <span class="bx bx-time-five ml-6 text-slate-400"></span>
-                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->sumOfCreditHrs($semester->id)}} </span>
+                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->where('slot','!=',0)->sumOfCreditHrs($semester->id)}} </span>
                 </h2>
                 <i class="bx bx-chevron-down text-lg"></i>
             </div>
@@ -67,7 +65,7 @@
                             @foreach($section->course_allocations()->during($semester->id)->on($meta->slot)->get() as $course_allocation)
                             <div class="flex w-full my-1">
                                 <div class="flex w-24">{{$course_allocation->course->code}}</div>
-                                <div class="flex flex-1">{{$course_allocation->course->short}}</div>
+                                <div class="flex flex-1">{{$course_allocation->course->name}}</div>
                                 <div class="flex flex-1">
                                     @if($course_allocation->teacher)
                                     {{$course_allocation->teacher->name}}
@@ -106,8 +104,9 @@
                 <!-- old courses allocations  without slot no -->
                 @foreach($section->course_allocations()->during($semester->id)->get() as $course_allocation)
                 <div class="flex items-center w-full even:bg-slate-100 py-1">
-                    <div class="flex w-36 text-sm">{{$course_allocation->course->code}}</div>
-                    <div class="flex flex-1 text-sm">{{$course_allocation->course->name}} <span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>
+                    <div class="flex w-36 text-xs">{{$course_allocation->course->code}}</div>
+                    <div class="flex flex-1 text-xs">{{$course_allocation->course->name}} <span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>
+                    <div class="flex w-36 text-xs">{{$course_allocation->course->course_type->name}}</div>
                     <div class="flex flex-1 text-xs text-slate-600">
                         <form action="{{route('updateslot', $course_allocation)}}" method="post" class="flex items-center space-x-2">
                             @csrf
@@ -119,7 +118,7 @@
 
 
                     </div>
-                    <div class="flex flex-1 text-sm">
+                    <div class="flex flex-1 text-xs">
                         <!-- if teacher name given, show name ... else show link icon -->
                         @if($course_allocation->teacher)
                         {{$course_allocation->teacher->name}}

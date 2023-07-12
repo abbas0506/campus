@@ -44,7 +44,7 @@ class Section extends Model
     }
     public function cr() //allocated till now
     {
-        $sum = $this->course_allocations->where('semester_id', '<=', session('semester_id'))->sum(function ($course_allocation) {
+        $sum = $this->course_allocations()->till(session('semester_id'))->where('slot', '>', 0)->get()->sum(function ($course_allocation) {
             return $course_allocation->course->creditHrs();
         });
         return $sum;
