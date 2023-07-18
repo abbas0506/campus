@@ -95,7 +95,7 @@ $roman = config('global.romans');
                     </tr>
                     <tr>
                         <td class="font-bold text-xs">Program:</td>
-                        <td class="text-xs">{{$course_allocation->scheme_detail->scheme->program->name}}</td>
+                        <td class="text-xs">{{$course_allocation->section->clas->program->name}}</td>
                         <td class="font-bold text-xs">Semester:</td>
                         <td class="text-xs">{{$roman[$course_allocation->section->clas->semesterNo($course_allocation->semester_id)-1]}}</td>
                         <td class="font-bold text-xs">Section:</td>

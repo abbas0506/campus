@@ -99,6 +99,7 @@
                 </div>
                 @endforeach
 
+                <div class="h-4 border-b border-dashed border-red-500 w-full "></div>
                 <!-- old courses allocations  without slot no -->
                 @foreach($section->course_allocations()->during($semester->id)->get() as $course_allocation)
                 <div class="flex items-center w-full even:bg-slate-100 py-1">
