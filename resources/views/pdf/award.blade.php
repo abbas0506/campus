@@ -115,7 +115,7 @@ $roman = config('global.romans');
             <table class="w-full mt-2">
                 <thead>
                     <tr class="border-b text-xs" style="background-color: #bbb;">
-                        <th class="text-center border xs w-36">Roll No.</th>
+                        <th class="text-center border w-32">Roll No.</th>
                         <th class="border w-36">Student Name</th>
 
                         @if($course_allocation->section->clas->program->level==21)
