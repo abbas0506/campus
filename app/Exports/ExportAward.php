@@ -41,7 +41,7 @@ class ExportAward implements FromCollection
         ]);
         $award->push((object)[
             'Porgram',
-            $this->course_allocation->scheme_detail->scheme->program->name,
+            $this->course_allocation->section->clas->program->name,
             '', '',
             'Semester',
             $roman[$this->course_allocation->section->clas->semesterNo($this->course_allocation->semester_id) - 1],
