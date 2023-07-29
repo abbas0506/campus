@@ -68,8 +68,6 @@
                 </select>
             </div>
         </div>
-
-
         <div class="flex items-center justify-end mt-4 py-2">
             <button type="submit" class="btn-indigo-rounded">Update</button>
         </div>

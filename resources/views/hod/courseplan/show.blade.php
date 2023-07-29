@@ -18,7 +18,7 @@
     <div class="flex items-center space-x-4">
         <p class="bg-teal-600 text-md font-semibold px-2 text-white">Scheme: {{$section->clas->scheme->title()}}</p>
         <p class="flex items-center bg-orange-100 px-2">
-            <i class="bx bx-time-five"></i> <span class="font-semibold ml-2">{{$section->cr()}} / {{$section->clas->scheme->slots->sum('cr')}} ({{$section->clas->scheme->creditHrsMax()}})</span>
+            <i class="bx bx-time-five"></i> <span class="font-semibold ml-2">{{$section->cr()}} / {{$section->clas->scheme->slots->sum('cr')}} ({{$section->clas->scheme->program->cr}})</span>
         </p>
     </div>
     <div class="flex flex-col accordion mt-4">
@@ -49,18 +49,16 @@
                     </div>
                 </div>
 
-                @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->get() as $meta)
+                @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->get() as $slot)
                 <div class="flex flex-col w-full even:bg-slate-100 py-1">
                     <div class="flex w-full">
-                        <div class="w-16 text-center">{{$meta->slot}}</div>
-                        <div class="w-24">{{$meta->course_type->name}}</div>
+                        <div class="w-16 text-center">{{$slot->slot_no}}</div>
+                        <div class="w-24">Course Type</div>
                         <div class="w-16 text-center my-1">
-                            <a href="{{route('courseplan.courses',[$section->id, $meta->slot, $meta->course_type_id])}}" class="btn-teal">
-                                <i class="bi bi-plus"></i>
-                            </a>
+                            <a href="http://" class="btn-teal"><i class="bi-plus"></i></a>
                         </div>
                         <div class="flex flex-col flex-1 justify-center">
-                            @foreach($section->course_allocations()->during($semester->id)->on($meta->slot)->get() as $course_allocation)
+                            @foreach($section->course_allocations()->during($semester->id)->on($slot->slot_no)->get() as $course_allocation)
                             <div class="flex w-full my-1">
                                 <div class="flex w-24">{{$course_allocation->course->code}}</div>
                                 <div class="flex flex-1">{{$course_allocation->course->name}}<span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>

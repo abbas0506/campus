@@ -4,6 +4,8 @@
 <div class="bread-crumb">{{$scheme->program->name}} / schemes / {{$scheme->subtitle()}}</div>
 
 <div class="flex items-center mt-8">
+    <a href="{{route('schemes.index')}}" class="link">Schemes</a>
+    <span class="chevron-right mx-1"></span>
     <h2>{{$scheme->program->short}}</h2>
     <span class="chevron-right mx-1"></span>
     <span>{{$scheme->subtitle()}}</span>
@@ -78,7 +80,7 @@
                     <div class="">Action</div> -->
                 </div>
                 @endif
-                @foreach($scheme->slots()->for($semester_no)->get()->sortBy('slot') as $slot)
+                @foreach($scheme->slots()->for($semester_no)->get()->sortBy('slot_no') as $slot)
                 <div class="flex items-center w-full py-1 odd:bg-slate-100">
                     <form action="{{route('slots.update', $slot)}}" method="post" class="flex items-center space-x-2 w-36">
                         @csrf
