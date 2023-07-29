@@ -2,7 +2,26 @@
 @section('page-content')
 <h1><a href="{{route('programs.index')}}">Study Scheme</a></h1>
 <div class="bread-crumb">{{$scheme->program->name}} / schemes / {{$scheme->subtitle()}}</div>
+
+<div class="flex items-center mt-8">
+    <h2>{{$scheme->program->short}}</h2>
+    <span class="chevron-right mx-1"></span>
+    <span>{{$scheme->subtitle()}}</span>
+</div>
+
 <div class="container mx-auto">
+
+
+    @if ($errors->any())
+    <div class="alert-danger text-sm w-full mb-3">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     @if(session('success'))
     <div class="flex alert-success items-center my-5">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
@@ -13,7 +32,7 @@
     @endif
 
     <div class="flex justify-between items-center mt-8">
-        <div class="flex items-center text-sm bg-teal-100 text-teal-600 font-semibold py-1 px-2">Cr Hrs: <span class="p-1 ml-2 mr-5 text-slate-600">{{$scheme->scheme_metas()->sum('cr')}} / {{$scheme->creditHrsMax()}}</span> Courses: <span class="px-2 py-1 text-slate-600">{{$scheme->scheme_details->count()}}</span> <span class="bx bx-check-double ml-2"></span></div>
+        <div class="flex items-center text-sm bg-teal-100 text-teal-600 font-semibold py-1 px-2">Cr Hrs: <span class="p-1 ml-2 mr-5 text-slate-600">{{$scheme->slots()->sum('cr')}} / {{$scheme->program->cr}}</span> Courses: <span class="px-2 py-1 text-slate-600">{{$scheme->scheme_details->count()}}</span> <span class="bx bx-check-double ml-2"></span></div>
         <!-- <form action="{{route('schemes.destroy',$scheme)}}" method="POST" id='del_form{{$scheme->id}}'> -->
         @if(Auth::user()->hasRole('super'))
         <form action="#" method="POST" id='del_form{{$scheme->id}}'>
@@ -38,7 +57,7 @@
             <div class="head">
                 <h2 class="">
                     Semester {{$roman[$semester_no-1]}}
-                    <span class="ml-6 text-xs font-thin"> <i class="bi bi-clock"></i> {{$scheme->scheme_metas()->for($semester_no)->sum('cr')}}</span>
+                    <span class="ml-6 text-xs font-thin"> <i class="bi bi-clock"></i> {{$scheme->slots()->for($semester_no)->sum('cr')}}</span>
                     <span class="ml-3 text-xs font-thin"><i class="bi bi-book"></i> {{$scheme->scheme_details()->for($semester_no)->count()}}</span>
                     @if($scheme->scheme_details()->for($semester_no)->count()>0)
                     <span class="bx bx-check-double ml-2"></span>
@@ -48,33 +67,53 @@
             </div>
             <div class="body">
                 <!-- show header only if some scheme meta entries exist  -->
-                @if($scheme->scheme_metas()->for($semester_no)->count()>0)
+                @if($scheme->slots()->for($semester_no)->count()>0)
                 <div class="flex items-center w-full font-medium border-b pb-1">
-                    <div class="text-sm text-center w-16">Slot</div>
-                    <div class="text-sm flex-1">Course Type</div>
+                    <div class="text-sm w-36">Slot</div>
                     <div class="text-sm text-center w-16">Cr</div>
+                    <div class="text-sm flex-1">Course Type</div>
                     <div class="text-sm text-center w-16">Action</div>
 
                     <!-- <div class="flex items-center flex-1 text-indigo-600">List of Courses <span class="ml-1 text-xs"> (Will be purely tentaive; You may not follow it during course allocation, if desired) </span></div>
                     <div class="">Action</div> -->
                 </div>
                 @endif
-                @foreach($scheme->scheme_metas()->for($semester_no)->get() as $scheme_meta)
+                @foreach($scheme->slots()->for($semester_no)->get()->sortBy('slot') as $slot)
                 <div class="flex items-center w-full py-1 odd:bg-slate-100">
-                    <div class="text-sm text-center w-16">{{$scheme_meta->slot}}</div>
-                    <div class="text-sm flex-1">{{$scheme_meta->course_type->name}}</div>
-                    <div class="text-sm text-center w-16">{{$scheme_meta->cr}}</div>
-
-                    <form action="{{route('scheme-meta.destroy',$scheme_meta->id)}}" method="POST" id='del_form{{$scheme_meta->id}}' class="w-16 flex justify-center">
+                    <form action="{{route('slots.update', $slot)}}" method="post" class="flex items-center space-x-2 w-36">
                         @csrf
-                        @method('DELETE')
-                        <button type="submit" class="py-0 text-xs" onclick="delme('{{$scheme_meta->id}}')"><i class="bi bi-trash3 text-red-500 ml-1"></i></button>
+                        @method('PATCH')
+                        <input type="number" name='slot_no' min='0' max="8" value="{{$slot->slot_no}}" class="w-6 mr-2">
+                        <button type="submit" class="btn-orange text-xs px-2 rounded-sm">Update</button>
                     </form>
+
+                    <div class="text-sm text-center w-16">{{$slot->cr}}</div>
+                    <div class="text-sm flex-1">
+                        @php $count=$slot->slot_options->count(); @endphp
+                        @foreach($slot->slot_options as $slot_option)
+                        {{$slot_option->course_type->name}}
+                        @php $count--; @endphp
+                        @if($count>0) / @endif
+                        @endforeach
+                    </div>
+                    <div class="flex items-center justify-center flex-wrap w-16 space-x-4 ">
+                        <a href="{{route('slots.edit',$slot)}}">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        @role('super')
+                        <form action="{{route('slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="py-0 text-xs" onclick="delme('{{$slot->id}}')"><i class="bi bi-trash3"></i></button>
+                        </form>
+                        @endrole
+                    </div>
+
                 </div>
                 @endforeach
 
                 <div class=" w-full border-t border-b border-dashed py-2">
-                    <a href="{{route('schemes.meta.create', [$scheme->id, $semester_no])}}" class="flex items-center btn-orange text-sm float-left">
+                    <a href="{{route('slots.create', [$scheme->id, $semester_no])}}" class="flex items-center btn-blue text-sm float-left">
                         Create Slot
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
@@ -82,6 +121,18 @@
                     </a>
                 </div>
 
+
+            </div>
+            <div class="text-sm text-red-800 px-2">
+                @foreach($scheme->scheme_details()->for($semester_no)->get() as $scheme_detail)
+                <div class="flex items-center even:bg-slate-100 space-x-4">
+                    <div class="w-24">{{ $scheme_detail->course->course_type->name}}</div>
+                    <div class="w-24">{{ $scheme_detail->course->code}}</div>
+                    <div class="flex-1">{{ $scheme_detail->course->name}}</div>
+                    <div class="w-8">{{$scheme_detail->course->Cr()}}</div>
+
+                </div>
+                @endforeach
             </div>
 
         </div>

@@ -19,11 +19,15 @@
         @apply bg-slate-100;
     }
     h1 {
-        @apply font-medium text-lg text-indigo-600 mb-1;
+        @apply font-semibold text-lg text-slate-800 mb-1;
     }
     h2 {
-        @apply font-medium text-slate-600 mb-1;
+        @apply font-semibold text-base text-slate-800;
     }
+    h3 {
+        @apply font-bold text-base;
+    }
+
     p {
         @apply leading-relaxed;
     }
@@ -197,6 +201,24 @@
         @apply grid grid-cols-3 text-sm text-slate-600 -translate-y-0 transition-all duration-500 ease-in-out;
     }
     .link {
-        @apply text-blue-600 hover:underline hover:cursor-pointer;
+        @apply text-blue-600 hover:underline hover:underline-offset-4 hover:cursor-pointer;
+    }
+    .chevron-right::after {
+        content: "\203A";
+    }
+    .bi-pencil-square {
+        @apply text-green-600 hover:text-green-800;
+    }
+    .bi-trash3,
+    .bi-x {
+        @apply text-red-600 hover:text-red-800;
+    }
+
+    .awesome-chk span {
+        @apply flex w-3 h-3 rounded-full bg-teal-500 transition-all duration-500 ease-in-out;
+    }
+
+    .awesome-chk input[type="checkbox"]:checked + label span {
+        @apply ring-2 ring-teal-800 ring-offset-2;
     }
 }

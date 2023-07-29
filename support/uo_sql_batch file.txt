@@ -2,11 +2,6 @@ insert into cms_v2.departments
 select * from cms.departments
 where cms.departments.id>1
 
-//update cms.users
-//set id=id+2
-//where id>1
-//order by id desc
-
 insert into cms_v2.users
 select * from cms.users where id>3
 
@@ -14,18 +9,6 @@ select * from cms.users where id>3
 
 insert into cms_v2.headships
 select * from cms.headships 
-
-//update cms.model_has_roles
-//set role_id=role_id+1
-//where role_id>2
-//order by role_id desc
-
-//update cms.model_has_roles
-//set model_id=model_id+2
-//where model_id>1
-//order by model_id desc
-
-
 
 insert into cms_v2.model_has_roles
 select * from cms.model_has_roles
@@ -49,6 +32,12 @@ select * from cms.courses
 
 insert into cms_v2.schemes
 select * from cms.schemes
+
+insert into cms_v3.slots(id,scheme_id, semester_no, slot_no,cr,created_at) 
+select id,scheme_id, semester_no,slot,cr,created_at from cms_v2.scheme_metas;
+
+insert into cms_v3.slot_options(slot_id, course_type_id,created_at) 
+select id,course_type_id,created_at from cms_v2.scheme_metas;
 
 insert into cms_v2.scheme_details
 select * from cms.scheme_details

@@ -24,7 +24,15 @@ class AjaxController extends Controller
         ]);
         $options = "<option value=''>Select a department</option>";
         $user = Auth::user();
-        if ($request->role == 'hod') {
+
+
+        if ($request->role == 'super') {
+            // return departments headed by the user
+            $departments = Department::all();
+            foreach ($departments as $department) {
+                $options .= "<option value='" . $department->id . "'>" . $department->name . "</option>";
+            }
+        } elseif ($request->role == 'hod') {
             // return departments headed by the user
             $headships = $user->headships;
             foreach ($headships as $headship) {

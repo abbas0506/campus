@@ -55,7 +55,7 @@
             @endif
 
             <select id="role" name="role" class="input-indigo  px-4 py-3 w-full mt-3 bg-transparent" onchange="loadDepartments()">
-                @if(Auth::user()->hasAnyRole('hod','teacher'))
+                @if(Auth::user()->hasAnyRole('hod','teacher','super'))
                 <option value="">- select -</option>
                 @endif
                 @foreach(Auth::user()->roles as $role)
@@ -113,7 +113,7 @@
         //token for ajax call
         var token = $("meta[name='csrf-token']").attr("content");
         var role = $('#role').val();
-        if (role == 'hod') {
+        if (role == 'hod' || role == 'super') {
             //fetch concerned department by role
             $.ajax({
                 type: 'POST',

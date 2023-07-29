@@ -10,8 +10,7 @@ class CourseAllocation extends Model
     use HasFactory;
     protected $fillable = [
         'section_id',
-        'semester_no',
-        'slot',
+        'slot_id',
         'course_id',    //optional course id
         'teacher_id',
         'semester_id',
@@ -22,10 +21,11 @@ class CourseAllocation extends Model
     {
         return $this->belongsTo(Section::class);
     }
-    public function scheme_detail()
-    {
-        return $this->belongsTo(SchemeDetail::class);
-    }
+    // will be implemented lated
+    // public function slot()
+    // {
+    //     return $this->belongsTo(Slot::class);
+    // }
     public function course()
     {
         return $this->belongsTo(Course::class);
@@ -34,18 +34,20 @@ class CourseAllocation extends Model
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
+    public function semester()
+    {
+        return $this->belongsTo(Course::class);
+    }
     public function internal()
     {
         return $this->section->clas->program->internal;
     }
+
     public function hod()
     {
         return $this->section->clas->program->department->headship->user;
     }
-    public function semester()
-    {
-        return $this->belongsTo(Semester::class);
-    }
+
     public function first_attempts()
     {
         return $this->hasMany(FirstAttempt::class);
@@ -70,10 +72,10 @@ class CourseAllocation extends Model
     {
         return Reappear::with('first_attempt')->where('course_allocation_id', $this->id)->get()->sortBy('first_attempt.student.rollno');
     }
-    public function scopeAllocated($query, $no)
-    {
-        return $query->where('semester_id', $no);
-    }
+    // public function scopeAllocated($query, $no)
+    // {
+    //     return $query->where('semester_id', $no);
+    // }
     public function scopeSumOfCreditHrs($query, $id)
     {
         return $query->where('semester_id', $id)->get()->sum(function ($allocation) {
@@ -88,8 +90,8 @@ class CourseAllocation extends Model
     {
         return $query->where('semester_id', '<=', $semester_id);
     }
-    public function scopeOn($query, $slot)
+    public function scopeOn($query, $slot_id)
     {
-        return $query->where('slot', $slot);
+        return $query->where('slot_id', $slot_id);
     }
 }

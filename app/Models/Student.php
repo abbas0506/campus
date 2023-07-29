@@ -139,4 +139,10 @@ class Student extends Model
         }
         return $subjects;
     }
+    public function currentlyEnrolledCourses($semester_id)
+    {
+    }
+    public function allEnrolledCourses()
+    {
+    }
 }

@@ -21,10 +21,14 @@ class Scheme extends Model
     {
         return $this->hasMany(Clas::class);
     }
-    public function scheme_metas()
+    public function slots()
     {
-        return $this->hasMany(SchemeMeta::class);
+        return $this->hasMany(Slot::class);
     }
+    // public function scheme_metas()
+    // {
+    //     return $this->hasMany(SchemeMeta::class);
+    // }
 
     public function semester()
     {

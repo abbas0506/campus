@@ -18,7 +18,7 @@
     <div class="flex items-center space-x-4">
         <p class="bg-teal-600 text-md font-semibold px-2 text-white">Scheme: {{$section->clas->scheme->title()}}</p>
         <p class="flex items-center bg-orange-100 px-2">
-            <i class="bx bx-time-five"></i> <span class="font-semibold ml-2">{{$section->cr()}} / {{$section->clas->scheme->creditHrsMax()}}</span>
+            <i class="bx bx-time-five"></i> <span class="font-semibold ml-2">{{$section->cr()}} / {{$section->clas->scheme->slots->sum('cr')}} ({{$section->clas->scheme->creditHrsMax()}})</span>
         </p>
     </div>
     <div class="flex flex-col accordion mt-4">
@@ -28,7 +28,7 @@
                 <h2 class="flex items-center">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
                     <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
                     <span class="bx bx-time-five ml-6 text-slate-400"></span>
-                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->where('slot','!=',0)->sumOfCreditHrs($semester->id)}} </span>
+                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->where('slot','!=',0)->sumOfCreditHrs($semester->id)}} / {{$section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->sum('cr') }}</span>
                 </h2>
                 <i class="bx bx-chevron-down text-lg"></i>
             </div>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
 
-                @foreach($section->clas->scheme->scheme_metas()->for($section->clas->semesterNo($semester->id))->get() as $meta)
+                @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->get() as $meta)
                 <div class="flex flex-col w-full even:bg-slate-100 py-1">
                     <div class="flex w-full">
                         <div class="w-16 text-center">{{$meta->slot}}</div>
@@ -111,11 +111,9 @@
                             @csrf
                             @method('PUT')
                             Slot:
-                            <input type="number" name='slot' value="{{$course_allocation->slot}}" class="w-8">
+                            <input type="number" name='slot' min='0' max="10" value="{{$course_allocation->slot}}" class="w-8">
                             <button type="submit" class="btn-orange">Update Slot</button>
                         </form>
-
-
                     </div>
                     <div class="flex flex-1 text-xs">
                         <!-- if teacher name given, show name ... else show link icon -->

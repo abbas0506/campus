@@ -5,13 +5,14 @@ namespace App\Http\Controllers\hod;
 use App\Http\Controllers\Controller;
 use App\Models\CourseType;
 use App\Models\Scheme;
-use App\Models\SchemeDetail;
-use App\Models\SchemeMeta;
-use Exception;
+use App\Models\Slot;
+use App\Models\SlotOption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
-class SchemeMetaController extends Controller
+
+class SlotController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,18 +33,18 @@ class SchemeMetaController extends Controller
     {
         //
         $scheme = Scheme::find($scheme_id);
-        $slot = SchemeMeta::where('scheme_id', $scheme_id)
+        $slot_no = Slot::where('scheme_id', $scheme_id)
             ->where('semester_no', $semester_no)
-            ->max('slot');
+            ->max('slot_no');
 
-        if ($slot)
-            $slot++;
+        if ($slot_no)
+            $slot_no++;
         else
-            $slot = 1;   //default start
+            $slot_no = 1;   //default start
 
         $course_types = CourseType::all();
 
-        return view('hod.schemes.meta.create', compact('scheme', 'semester_no', 'slot', 'course_types'));
+        return view('hod.schemes.slots.create', compact('scheme', 'semester_no', 'slot_no', 'course_types'));
     }
 
     /**
@@ -58,14 +59,30 @@ class SchemeMetaController extends Controller
         $request->validate([
             'scheme_id' => 'required|numeric',
             'semester_no' => 'required|numeric',
-            'slot' => 'required|numeric',
-            'course_type_id' => 'required|numeric',
+            'slot_no' => 'required|numeric',
+            'course_type_id' => 'required',
             'cr' => 'required|numeric',
         ]);
+
+        $course_type_ids = array();
+        $course_type_ids = $request->course_type_id;
+
         DB::beginTransaction();
         try {
 
-            $meta = SchemeMeta::create($request->all());
+            $slot = Slot::create([
+                'scheme_id' => $request->scheme_id,
+                'semester_no' => $request->semester_no,
+                'slot_no' => $request->slot_no,
+                'cr' => $request->cr,
+            ]);
+
+            foreach ($course_type_ids as $course_type_id) {
+                SlotOption::create([
+                    'slot_id' => $slot->id,
+                    'course_type_id' => $course_type_id,
+                ]);
+            }
 
             DB::commit();
             return redirect()->route('schemes.show', $request->scheme_id)->with('success', 'Successfully created');
@@ -78,10 +95,10 @@ class SchemeMetaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SchemeMeta  $schemeMeta
+     * @param  \App\Models\Slot  $slot
      * @return \Illuminate\Http\Response
      */
-    public function show(SchemeMeta $schemeMeta)
+    public function show(Slot $slot)
     {
         //
     }
@@ -89,32 +106,37 @@ class SchemeMetaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SchemeMeta  $schemeMeta
+     * @param  \App\Models\Slot  $slot
      * @return \Illuminate\Http\Response
      */
-    public function edit(SchemeMeta $schemeMeta)
+    public function edit(Slot $slot)
     {
         //
+        $course_type_ids = SlotOption::where('slot_id', $slot->id)->pluck('course_type_id')->toArray();
+
+        $missing_course_types = CourseType::whereNotIn('id', $course_type_ids)->get();
+
+        return view('hod.schemes.slots.edit', compact('slot', 'missing_course_types'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SchemeMeta  $schemeMeta
+     * @param  \App\Models\Slot  $slot
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Slot $slot)
     {
         //
         $request->validate([
-            'slot' => 'required|numeric',
+            'slot_no' => 'required|numeric',
         ]);
         DB::beginTransaction();
 
         try {
-            $scheme_meta = SchemeMeta::find($id);
-            $scheme_meta->update($request->all());
+
+            $slot->update($request->all());
 
             DB::commit();
             return redirect()->back()->with('success', 'Successfully updated');
@@ -127,36 +149,16 @@ class SchemeMetaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SchemeMeta  $schemeMeta
+     * @param  \App\Models\Slot  $slot
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Slot $slot)
     {
         //
-        $scheme_meta = SchemeMeta::find($id);
-        // dd($id);
-        DB::beginTransaction();
         try {
-            $scheme_id = $scheme_meta->scheme_id;
-            $semester_no = $scheme_meta->semester_no;
-            $slot = $scheme_meta->slot;
-
-            $scheme_details = SchemeDetail::where('scheme_id', $scheme_id)
-                ->where('semester_no', $semester_no)
-                ->where('slot', $slot)
-                ->get();
-
-            foreach ($scheme_details as $scheme_detail) {
-                $scheme_detail->slot = 0;
-                $scheme_detail->update();
-            }
-
-            $scheme_meta->delete();
-
-            DB::commit();
+            $slot->delete();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
-            DB::rollBack();
             return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
             // something went wrong
         }

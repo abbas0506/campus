@@ -37,4 +37,16 @@ class SchemeMeta extends Model
     {
         return $query->where('semester_no', $semester_no);
     }
+    public function sumOfCr($query)
+    {
+        return $query->sum('cr');
+    }
+    public function maxSlot($query)
+    {
+        return $query->max('slot');
+    }
+    public function minSlot($query)
+    {
+        return $query->min('slot');
+    }
 }
