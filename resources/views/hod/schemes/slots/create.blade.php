@@ -76,12 +76,6 @@
             @endforeach
         </div>
 
-        <!-- <label for="" class="">Choose course type </label>
-        <select id="" name="course_type_id" class="input-indigo p-2">
-            @foreach($course_types as $course_type)
-            <option value="{{$course_type->id}}">{{$course_type->name}}</option>
-            @endforeach
-        </select> -->
         <button type="submit" class="btn-indigo-rounded mt-4 w-24">Create</button>
 
     </form>
