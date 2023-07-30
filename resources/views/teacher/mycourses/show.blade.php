@@ -91,7 +91,9 @@
                         {{$first_attempt->student->father}}
                     </td>
                     <td class="text-center">Fresh</td>
+
                     <td>
+                        @role('super')
                         <form action="{{route('first_attempts.destroy',$first_attempt)}}" method="POST" id='del_form{{$first_attempt->student->id}}' class="flex items-center justify-center">
                             @csrf
                             @method('DELETE')
@@ -99,6 +101,7 @@
                                 <i class="bi bi-person-dash text-lg"></i>
                             </button>
                         </form>
+                        @endrole
                     </td>
                 </tr>
                 @endforeach
@@ -163,6 +166,7 @@
                     <td class="text-center">Reappear</td>
                     <td>
                         <div class="flex justify-center items-center py-2">
+                            @role('super')
                             <form action="{{route('reappears.destroy',$reappear)}}" method="POST" id='del_form{{$reappear->first_attempt->student->id}}' class="mt-1">
                                 @csrf
                                 @method('DELETE')
@@ -172,6 +176,7 @@
                                     </svg>
                                 </button>
                             </form>
+                            @endrole
                         </div>
                     </td>
                 </tr>

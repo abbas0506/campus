@@ -36,7 +36,7 @@
     <div class="flex justify-between items-center mt-8">
         <div class="flex items-center text-sm bg-teal-100 text-teal-600 font-semibold py-1 px-2">Cr Hrs: <span class="p-1 ml-2 mr-5 text-slate-600">{{$scheme->slots()->sum('cr')}} / {{$scheme->program->cr}}</span> Courses: <span class="px-2 py-1 text-slate-600">{{$scheme->scheme_details->count()}}</span> <span class="bx bx-check-double ml-2"></span></div>
         <!-- <form action="{{route('schemes.destroy',$scheme)}}" method="POST" id='del_form{{$scheme->id}}'> -->
-        @if(Auth::user()->hasRole('super'))
+        @role('super')
         <form action="#" method="POST" id='del_form{{$scheme->id}}'>
             @csrf
             @method('DELETE')
@@ -47,7 +47,7 @@
                 <span class="text-sm">Remove scheme</span>
             </button>
         </form>
-        @endif
+        @endrole
     </div>
 
     @php
