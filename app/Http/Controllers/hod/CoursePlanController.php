@@ -8,9 +8,11 @@ use Exception;
 
 use App\Models\Course;
 use App\Models\CourseAllocation;
+use App\Models\CourseType;
 use App\Models\Department;
 use App\Models\SchemeDetail;
 use App\Models\Section;
+use App\Models\Slot;
 use App\Models\User;
 
 class CoursePlanController extends Controller
@@ -22,7 +24,7 @@ class CoursePlanController extends Controller
         $department = Department::find(session('department_id'));
         $programs = $department->programs;
 
-        return view('hod.courseplan.step1', compact('programs'));
+        return view('hod.courseplan.index', compact('programs'));
     }
     public function create()
     {
@@ -46,18 +48,24 @@ class CoursePlanController extends Controller
         $request->validate([
             'semester_id' => 'required|numeric',
             'section_id' => 'required|numeric',
-            'slot' => 'required|numeric',
+            'slot_id' => 'required|numeric',
             'course_id' => 'required|numeric',
 
         ]);
 
         try {
             $course_allocation = CourseAllocation::create($request->all());
-            return redirect()->route('courseplan.show', $course_allocation->section)->with('success', "Successfully saved");
+            return redirect()->route('courseplan.edit', $request->section_id)->with('success', "Successfully saved");
         } catch (Exception $e) {
             echo $e->getMessage();
             // something went wrong
         }
+    }
+
+    public function edit($id)
+    {
+        $section = Section::find($id);
+        return view('hod.courseplan.edit', compact('section'));
     }
 
     public function update(Request $request, $id)
@@ -70,7 +78,7 @@ class CoursePlanController extends Controller
         try {
             $course_allocation = CourseAllocation::find($id);
             $course_allocation->update($request->all());
-            return redirect()->route('courseplan.show', $course_allocation->section)->with('success', "Successfully saved");
+            return redirect()->route('courseplan.edit', $course_allocation->section)->with('success', "Successfully saved");
         } catch (Exception $e) {
             echo $e->getMessage();
             // something went wrong
@@ -91,28 +99,21 @@ class CoursePlanController extends Controller
         }
     }
 
-    // public function courses($sid)
-    // {
-    //     $section = Section::find($sid);
-    //     $semester_nos = collect();
-    //     for ($i = 1; $i <= $section->clas->program->min_t * 2; $i++) {
-    //         $semester_nos->push($i);
-    //     }
-    //     return view('hod.courseplan.courses', compact('section', 'semester_nos'));
-    // }
-
-
-    public function courses($section_id, $slot, $coursetype_id)
+    public function courses($section_id, $slot_id)
     {
         $section = Section::find($section_id);
-        $courses = '';
-        // if thesis or research
-        if ($coursetype_id == 4 || $coursetype_id == 7)
-            $courses = Course::where('department_id', $section->clas->program->department_id);
-        else
-            $courses = Course::where('course_type_id', $coursetype_id)->where('department_id', $section->clas->program->department_id);
+        $slot = Slot::find($slot_id);
 
-        return view('hod.courseplan.courses', compact('section', 'slot', 'courses'));
+        try {
+
+            $coursetype_ids = $slot->slot_options->pluck('course_type_id')->toArray();
+            $courses = Course::whereIn('course_type_id', $coursetype_ids)
+                ->where('department_id', session('department_id'));
+            return view('hod.courseplan.courses', compact('section', 'courses', 'slot'));
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            // something went wrong
+        }
     }
 
     public function teachers($course_allocation_id)
@@ -123,14 +124,7 @@ class CoursePlanController extends Controller
         $teachers = User::whereRelation('roles', 'name', 'teacher')->get();
         return view('hod.courseplan.teachers', compact('course_allocation', 'teachers'));
     }
-    // public function optional($section_id, $schemedetail_id)
-    // {
-    //     $section = Section::find($section_id);
-    //     $scheme_detail = SchemeDetail::find($schemedetail_id);
-    //     $courses = Course::where('course_type_id', $scheme_detail->course->course_type_id)->get();
 
-    //     return view('hod.courseplan.optional', compact('section', 'scheme_detail', 'courses'));
-    // }
     public function replace($course_allocation_id)
     {
         $course_allocation = CourseAllocation::find($course_allocation_id);
@@ -150,23 +144,7 @@ class CoursePlanController extends Controller
         try {
             $course_allocation = CourseAllocation::find($request->course_allocation_id);
             $course_allocation->update($request->all());
-            return redirect()->route('courseplan.show', $course_allocation->section)->with('success', "Successfully saved");
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            // something went wrong
-        }
-    }
-
-    public function updateslot(Request $request, $id)
-    {
-        $request->validate([
-            'slot' => 'required|numeric',
-        ]);
-
-        try {
-            $course_allocation = CourseAllocation::find($id);
-            $course_allocation->update($request->all());
-            return redirect()->route('courseplan.show', $course_allocation->section)->with('success', "Successfully saved");
+            return redirect()->route('courseplan.edit', $course_allocation->section)->with('success', "Successfully saved");
         } catch (Exception $e) {
             echo $e->getMessage();
             // something went wrong

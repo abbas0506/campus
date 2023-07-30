@@ -60,7 +60,7 @@
                         @csrf
                         <input type="text" name='section_id' value="{{$section->id}}" hidden>
                         <input type="text" name='course_id' value="{{$course->id}}" hidden>
-                        <input type="text" name='slot' value="{{$slot}}" hidden>
+                        <input type="text" name='slot_id' value="{{$slot->id}}" hidden>
 
                         <button type="submit" class="btn-teal py-0" onclick="delme()">
                             <i class="bx bx-link"></i>

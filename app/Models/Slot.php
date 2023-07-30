@@ -26,4 +26,17 @@ class Slot extends Model
     {
         return $query->where('semester_no', $semester_no);
     }
+    public function lblCrsType()
+    {
+        $lbl = '';
+        $count = $this->slot_options->count();
+        foreach ($this->slot_options as $slot_option) {
+            $lbl .= $slot_option->course_type->name;
+            $count--;
+            if ($count > 0) {
+                $lbl .= " / ";
+            }
+        }
+        return $lbl;
+    }
 }

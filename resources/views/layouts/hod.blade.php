@@ -6,7 +6,7 @@
             <a href="{{url('hod')}}">
                 <img alt="logo" src="{{asset('/images/logo/logo.png')}}" class="w-20 md:w-24">
             </a>
-            <div class="text-base md:text-xl font-semibold">Examination System</div>
+            <div class="hidden md:flex text-base md:text-xl font-semibold">Examination System</div>
             <div class="px-4">|</div>
             <div class="text-sm flex items-center space-x-2">
                 <div>HoD {{Str::replace('Department of', '', App\Models\Department::find(session('department_id'))->name)}}</div>

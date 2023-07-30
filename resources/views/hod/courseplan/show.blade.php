@@ -28,65 +28,39 @@
                 <h2 class="flex items-center">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
                     <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
                     <span class="bx bx-time-five ml-6 text-slate-400"></span>
-                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->where('slot','!=',0)->sumOfCreditHrs($semester->id)}} / {{$section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->sum('cr') }}</span>
+                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->where('slot_id','!=',0)->sumOfCreditHrs($semester->id)}} / {{$section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->sum('cr') }}</span>
                 </h2>
                 <i class="bx bx-chevron-down text-lg"></i>
             </div>
             <div class="body">
-
                 <div class="flex w-full border-b text-xs font-semibold py-1">
                     <div class="w-16 text-center">Slot</div>
-                    <div class="w-24">Course Type</div>
-                    <div class="w-16 text-center">Action</div>
+                    <div class="w-40">Course Type</div>
                     <div class="flex flex-col flex-1">
                         <div class="flex w-full">
-                            <div class="flex w-24">Code</div>
+                            <div class="flex w-32">Code</div>
                             <div class="flex flex-1">Course</div>
                             <div class="flex flex-1">Teacher</div>
-                            <div class="w-24 text-center">Action</div>
                         </div>
 
                     </div>
                 </div>
 
                 @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->get() as $slot)
-                <div class="flex flex-col w-full even:bg-slate-100 py-1">
+                <div class="flex flex-col w-full even:bg-slate-100 py-1 text-xs">
                     <div class="flex w-full">
                         <div class="w-16 text-center">{{$slot->slot_no}}</div>
-                        <div class="w-24">Course Type</div>
-                        <div class="w-16 text-center my-1">
-                            <a href="http://" class="btn-teal"><i class="bi-plus"></i></a>
-                        </div>
+                        <div class="w-40">{{$slot->lblCrsType()}}</div>
                         <div class="flex flex-col flex-1 justify-center">
-                            @foreach($section->course_allocations()->during($semester->id)->on($slot->slot_no)->get() as $course_allocation)
+                            @foreach($section->course_allocations()->during($semester->id)->on($slot->id)->get() as $course_allocation)
                             <div class="flex w-full my-1">
-                                <div class="flex w-24">{{$course_allocation->course->code}}</div>
+                                <div class="flex w-32">{{$course_allocation->course->code}}</div>
                                 <div class="flex flex-1">{{$course_allocation->course->name}}<span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>
                                 <div class="flex flex-1">
                                     @if($course_allocation->teacher)
                                     {{$course_allocation->teacher->name}}
-                                    @elseif($semester->id==session('semester_id'))
-                                    <div class="flex items-center">
-                                        <a href="{{route('courseplan.teachers',$course_allocation)}}">
-                                            <i class="bx bx-paperclip text-indigo-600"></i>
-                                        </a>
-                                        <div class="text-xs text-slate-400 text-thin ml-2">(Assign Teacher)</div>
-                                    </div>
-                                    @endif
-                                </div>
-                                <div class="flex items-center justify-center w-24">
-                                    @if($semester->id==session('semester_id'))
-                                    @if($course_allocation->teacher)
-                                    <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
                                     @else
-                                    <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_elective_form{{$course_allocation->id}}'>
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn-red pb-1 px-2 text-xs" onclick="delElective('{{$course_allocation->id}}')">
-                                            Remove
-                                        </button>
-                                    </form>
-                                    @endif
+                                    <div class="text-slate-400">(blank)</div>
                                     @endif
                                 </div>
                             </div>
@@ -97,53 +71,11 @@
                 </div>
                 @endforeach
 
-                <div class="h-4 border-b border-dashed border-red-500 w-full "></div>
-                <!-- old courses allocations  without slot no -->
-                @foreach($section->course_allocations()->during($semester->id)->get() as $course_allocation)
-                <div class="flex items-center w-full even:bg-slate-100 py-1">
-                    <div class="flex w-36 text-xs">{{$course_allocation->course->code}}</div>
-                    <div class="flex flex-1 text-xs">{{$course_allocation->course->name}} <span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>
-                    <div class="flex w-36 text-xs">{{$course_allocation->course->course_type->name}}</div>
-                    <div class="flex flex-1 text-xs text-slate-600">
-                        <form action="{{route('updateslot', $course_allocation)}}" method="post" class="flex items-center space-x-2">
-                            @csrf
-                            @method('PUT')
-                            Slot:
-                            <input type="number" name='slot' min='0' max="10" value="{{$course_allocation->slot}}" class="w-8">
-                            <button type="submit" class="btn-orange">Update Slot</button>
-                        </form>
-                    </div>
-                    <div class="flex flex-1 text-xs">
-                        <!-- if teacher name given, show name ... else show link icon -->
-                        @if($course_allocation->teacher)
-                        {{$course_allocation->teacher->name}}
-                        @elseif($semester->id==session('semester_id'))
-                        <div class="flex items-center py-2">
-                            <a href="{{route('courseplan.teachers',$course_allocation)}}">
-                                <i class="bx bx-paperclip text-indigo-600"></i>
-                            </a>
-                            <div class="text-xs text-slate-400 text-thin ml-2">(Assign Teacher)</div>
-                        </div>
-
-                        @endif
-                    </div>
-                    <!-- show remove icon for each allocation -->
-                    @if($semester->id==session('semester_id'))
-                    @if($course_allocation->teacher)
-                    <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
-                    @else
-                    <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_elective_form{{$course_allocation->id}}'>
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn-red pb-1 px-2 text-xs" onclick="delElective('{{$course_allocation->id}}')">
-                            Remove
-                        </button>
-                    </form>
-                    @endif
-                    @endif
-
+                @if($semester->id==session('semester_id'))
+                <div class="flex w-full py-2">
+                    <a href="{{route('courseplan.edit',$section)}}" class="btn-teal flex items-center"><i class="bi-pencil text-[10px] mr-2"></i> Edit Course Plan </a>
                 </div>
-                @endforeach
+                @endif
 
             </div>
 

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('section_id');
             $table->unsignedInteger('semester_no');
-            $table->unsignedInteger('slot');
+            $table->unsignedInteger('slot_id');
             $table->unsignedBigInteger('scheme_detail_id');
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('teacher_id')->nullable(); //will be initialized at step 2 of course allocation

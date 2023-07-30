@@ -91,12 +91,7 @@
 
                     <div class="text-sm text-center w-16">{{$slot->cr}}</div>
                     <div class="text-sm flex-1">
-                        @php $count=$slot->slot_options->count(); @endphp
-                        @foreach($slot->slot_options as $slot_option)
-                        {{$slot_option->course_type->name}}
-                        @php $count--; @endphp
-                        @if($count>0) / @endif
-                        @endforeach
+                        {{$slot->lblCrsType()}}
                     </div>
                     <div class="flex items-center justify-center flex-wrap w-16 space-x-4 ">
                         <a href="{{route('slots.edit',$slot)}}">
