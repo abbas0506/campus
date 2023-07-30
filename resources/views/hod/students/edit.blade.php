@@ -37,33 +37,30 @@
         <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad" value="{{$student->name}}" required>
         <div class="flex flex-col md:flex-row md:space-x-8">
             <div class="flex flex-col flex-1 mt-3">
-                <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
-                <input type="text" id='cnic' name='cnic' value="{{$student->cnic}}" class="input-indigo" placeholder="Without dashes" required>
-            </div>
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="" class='mt-3'>Father</label>
+                <label for="" class=''>Father</label>
                 <input type="text" id='' name='father' class="input-indigo" placeholder="father name" value="{{$student->father}}" required>
             </div>
+            <div class="flex flex-col flex-1 mt-3">
+                <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
+                <input type="text" id='cnic' name='cnic' value="{{$student->cnic}}" class="input-indigo" placeholder="Without dashes">
+            </div>
+
         </div>
 
         <div class="flex flex-col md:flex-row md:space-x-8">
             <div class="flex flex-col flex-1 mt-3">
-                <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
-                <input type="text" id='cnic' name='cnic' value="{{$student->cnic}}" class="input-indigo" placeholder="Without dashes" required>
-            </div>
-            <div class="flex flex-col flex-1 mt-3">
                 <label for="">Phone <span id="phone_length" class="text-slate-500 text-xs ml-3">0/11</span></label>
-                <input type="text" id='phone' name='phone' value="{{$student->phone}}" class="input-indigo" placeholder="Without dash" required>
+                <input type="text" id='phone' name='phone' value="{{$student->phone}}" class="input-indigo" placeholder="Without dash">
             </div>
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Email</label>
-                <input type="text" id='email' name='email' value="{{$student->email}}" class="input-indigo" placeholder="email" required>
+                <input type="text" id='email' name='email' value="{{$student->email}}" class="input-indigo" placeholder="email">
             </div>
         </div>
 
         <div class="flex flex-col flex-1 mt-3">
             <label for="">Address</label>
-            <input type="text" id='address' name='address' value="{{$student->address}}" class="input-indigo" placeholder="address" required>
+            <input type="text" id='address' name='address' value="{{$student->address}}" class="input-indigo" placeholder="address">
         </div>
 
         <div class="border-b border-dashed border-slate-500 mt-3 h-4"></div>
@@ -88,7 +85,7 @@
 
 @endsection
 @section('script')
-<script>
+<script type="module">
     $('#cnic').on('input', function() {
         var cnic = $('#cnic').val()
         $('#cnic_length').html(cnic.length + "/13");

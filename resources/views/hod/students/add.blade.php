@@ -42,22 +42,22 @@
             </div>
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
-                <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Without dashes" required>
+                <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Without dashes">
             </div>
         </div>
         <div class="flex flex-col md:flex-row md:space-x-8">
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Phone <span id="phone_length" class="text-slate-500 text-xs ml-3">0/11</span></label>
-                <input type="text" id='phone' name='phone' class="input-indigo" placeholder="Without dash" required>
+                <input type="text" id='phone' name='phone' class="input-indigo" placeholder="Without dash">
             </div>
             <div class="flex flex-col flex-1 mt-3">
                 <label for="">Email</label>
-                <input type="text" id='email' name='email' class="input-indigo" placeholder="email" required>
+                <input type="text" id='email' name='email' class="input-indigo" placeholder="email">
             </div>
         </div>
 
         <label for="" class="mt-3">Address</label>
-        <input type="text" id='address' name='address' class="input-indigo" placeholder="address" required>
+        <input type="text" id='address' name='address' class="input-indigo" placeholder="address">
 
         <div class="border-b border-dashed border-slate-500 mt-3 h-4"></div>
 
@@ -80,7 +80,7 @@
 
 @endsection
 @section('script')
-<script>
+<script type="module">
     $('#cnic').on('input', function() {
         var cnic = $('#cnic').val()
         $('#cnic_length').html(cnic.length + "/13");

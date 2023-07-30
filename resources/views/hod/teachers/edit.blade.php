@@ -49,7 +49,7 @@
 @endsection
 
 @section('script')
-<script>
+<script type="module">
     $('#cnic').on('input', function() {
         var cnic = $('#cnic').val()
         $('#cnic_length').html(cnic.length + "/13");
