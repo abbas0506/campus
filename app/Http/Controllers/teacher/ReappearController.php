@@ -50,16 +50,7 @@ class ReappearController extends Controller
         ]);
         $course_allocation = CourseAllocation::find($request->course_allocation_id);
         $student = Student::where('rollno', $request->rollno)->first();
-
-        // echo $first_attempt->toJson();
-        // echo $student->first_attempts->first()->toJson();
         $first_attempt = $student->first_attempts->first();
-        // $first_attempt = FirstAttempt::where('student_id', $student->id)
-        //     ->where('course_allocation_id', $request->course_allocation_id)
-        //     ->first();
-
-        // echo $first_attempt->toJson();
-
 
         // stop if already registered in the same semester
         if ($first_attempt) {
@@ -79,7 +70,6 @@ class ReappearController extends Controller
                         $request->merge([
                             'first_attempt_id' => $first_attempt->id,
                             'semester_id' => $course_allocation->semester_id,
-                            'semester_no' => $course_allocation->semester_no,
                         ]);
                         Reappear::create($request->all());
                         return redirect()->back()->with('success', 'Successfully added');

@@ -10,7 +10,6 @@ class Reappear extends Model
     use HasFactory;
     protected $fillable = [
         'first_attempt_id',
-        'semester_no',
         'semester_id',
 
         'assignment',
