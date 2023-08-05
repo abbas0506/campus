@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
+            $table->string('email', 50)->nullable();
+            $table->string('password', 30)->nullable();
             $table->string('father', 100)->nullable();
             $table->string('cnic', 20)->nullable()->unique();
             $table->string('phone', 20)->nullable();
-            $table->string('email', 50)->nullable();
-            $table->string('password', 30)->nullable();
             $table->string('address', 150)->nullable();
-            $table->string('pic', 100)->default('default.png');
+            $table->string('image', 100)->default('default.png');
             $table->date('dob')->nullable();
             $table->enum('gender', ['M', 'F', 'T']);
             $table->string('regno', 40)->unique()->nullable();

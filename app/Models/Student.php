@@ -18,6 +18,7 @@ class Student extends Model
         'address',
         'dob',
         'gender',
+        'image',
 
         //root status
         'section_id',
