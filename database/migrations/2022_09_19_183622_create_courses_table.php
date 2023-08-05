@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('short');
-            $table->string('code')->nullable();
+            $table->string('code', 20)->nullable();
             $table->tinyInteger('cr_theory');
             $table->tinyInteger('cr_practical');
             $table->tinyInteger('marks_theory');
@@ -26,10 +26,8 @@ return new class extends Migration
             $table->unsignedBigInteger('course_type_id')->default(1);
             $table->timestamps();
 
-            $table->unique(['code', 'department_id']);
-
-            $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('course_type_id')->references('id')->on('course_types')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->foreign('course_type_id')->references('id')->on('course_types')->onDelete('cascade');
         });
     }
 
