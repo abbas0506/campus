@@ -45,13 +45,12 @@
             </table>
 
             <!-- on submit, allow student to reappear in current semester  -->
-            <form id='action_form' action="{{route('reappears.store')}}" method="post" class="flex flex-col justify-center items-center w-full " onsubmit="return validate(event)">
+            <form id='action_form' action="{{route('reappears.store')}}" method="post" class="flex flex-col justify-center items-center w-full hidden" onsubmit="return validate(event)">
                 @csrf
                 <div class="flex justify-end">
-                    <input type="text" id='current_course_allocation_id' name='current_course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
-                    <input type="text" id='previous_failure_attempt_id' name='previous_failure_attempt_id' value="0">
+                    <input type="text" id='course_allocation_id' name='course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
 
-                    <input type="text" name="rollno" class="">
+                    <input type="text" name="rollno" class="hidden">
                     <button type='submit' class="btn-red rounded mt-4">Enroll Now</button>
                 </div>
             </form>
@@ -100,7 +99,7 @@
     function searchReappearer() {
         var token = $("meta[name='csrf-token']").attr("content");
 
-        var current_course_allocation_id = $('#current_course_allocation_id').val();
+        var course_allocation_id = $('#course_allocation_id').val();
         var rollno = $('#rollno').val();
         if (rollno == '') {
             Swal.fire({
@@ -114,15 +113,13 @@
                 type: 'POST',
                 url: "{{url('searchReappearer')}}",
                 data: {
-                    "current_course_allocation_id": current_course_allocation_id,
+                    "course_allocation_id": course_allocation_id,
                     "rollno": rollno,
                     "_token": token,
 
                 },
                 success: function(response) {
                     $('#student_info').html(response.student_info)
-                    $('#previous_failure_attempt_id').val(response.previous_failure_attempt_id)
-
                     $('#tbody').html(response.result)
 
                     if (response.eligible == 1) {

@@ -45,33 +45,36 @@ class ReappearController extends Controller
     {
         //
         $request->validate([
-            'course_allocation_id' => 'required|numeric',
+            'current_course_allocation_id' => 'required|numeric',
+            'previous_failure_attempt_id' => 'required',
             'rollno' => 'required',
         ]);
-        $course_allocation = CourseAllocation::find($request->course_allocation_id);
-        $student = Student::where('rollno', $request->rollno)->first();
-        $first_attempt = $student->first_attempts->first();
+        $current_course_allocation = CourseAllocation::find($request->current_course_allocation_id);
+        // $student = Student::where('rollno', $request->rollno)->first();
+        // $first_attempt = $student->first_attempts->first();
 
+        $failure_attempt = FirstAttempt::find($request->previous_failure_attempt_id);
         // stop if already registered in the same semester
-        if ($first_attempt) {
-            $exists = Reappear::where('first_attempt_id', $first_attempt->id)
-                ->where('course_allocation_id', $course_allocation->id)
-                ->where('semester_id', $course_allocation->semester_id)
+        if ($failure_attempt) {
+            $exists = Reappear::where('first_attempt_id', $failure_attempt->id)
+                ->where('course_allocation_id', $current_course_allocation->id)
+                ->where('semester_id', $current_course_allocation->semester_id)
                 ->count();
             if ($exists > 0) {
                 return redirect()->back()->with('error', 'Already enrolled!');
             } else {
 
                 //if last cgp above 3.5 cant register 
-                if ($first_attempt->last_gpa() > 3.5) {
+                if ($failure_attempt->last_gpa() > 3.5) {
                     return redirect()->back()->with('error', 'CGP above 3.5, not eligible!');
                 } else {
                     try {
-                        $request->merge([
-                            'first_attempt_id' => $first_attempt->id,
-                            'semester_id' => $course_allocation->semester_id,
+                        Reappear::create([
+                            'first_attempt_id' => $failure_attempt->id,
+                            'semester_id' => $current_course_allocation->semester_id,
+                            'course_allocation_id' => $request->current_course_allocation_id,
                         ]);
-                        Reappear::create($request->all());
+                        // Reappear::create($request->all());
                         return redirect()->back()->with('success', 'Successfully added');
                     } catch (Exception $e) {
                         return redirect()->back()->withErrors($e->getMessage());

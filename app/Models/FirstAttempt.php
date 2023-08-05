@@ -13,7 +13,6 @@ class FirstAttempt extends Model
         'student_id',
         'semester_no',
         'semester_id',
-
         'assignment',
         'presentation',
         'midterm',

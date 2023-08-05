@@ -29,6 +29,38 @@
     </div>
     @endif
 
+    <div class="grid grid-cols-2 mt-8 gap-3 p-4 rounded-md border divide-y divide-x">
+
+        <h3>Slot</h3>
+        <h3>Course & Teacher</h3>
+        @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo(session('semester_id')))->get()->sortBy('slot_no') as $slot)
+        <div>
+            <div class="grid grid-cols-2">
+                <div>
+                    <h3>Slot # {{$slot->slot_no}}</h3>
+                </div>
+                <div class="">
+                    <div class="flex items-center">
+                        <div class="w-8"><i class="bi-clock"></i></div>
+                        <div>{{$slot->cr}}</div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-8"><i class="bi-book"></i></div>
+                        <div>{{$slot->lblCrsType()}}</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div>
+
+        </div>
+        @endforeach
+    </div>
+
+
 
 
     <div class="grid grid-cols-1 mt-8 gap-3 p-4 rounded-md border">
@@ -40,12 +72,12 @@
                 <h2>{{$slot->lblCrsType()}}</h2>
             </div>
             <div class="flex w-full py-2">
-                <a href="{{route('courseplan.courses',[$section,$slot])}}" class="btn-teal flex items-center text-sm"><i class="bi-plus text-[16px] mr-2"></i> New Course Allocation </a>
+                <a href="{{route('courseplan.courses',[$section,$slot])}}" class="btn-teal flex items-center text-sm"><i class="bi-plus text-[16px] mr-2"></i> Add Course </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 px-6 pb-4 space-y-2">
                 @foreach($section->course_allocations()->on($slot->id)->get() as $course_allocation)
                 <div class="flex items-center justify-between pr-4 ">
-                    {{$course_allocation->course->name}}
+                    {{$course_allocation->id}} {{$course_allocation->course->name}}
                 </div>
 
                 <div class="md:border-l md:pl-6 ">@if($course_allocation->teacher_id=='')
@@ -61,7 +93,7 @@
                     @endif
                 </div>
                 <div class="text-right">
-                    @if($course_allocation->teacher_id=='')
+                    @if($course_allocation->teacher_id=='' || $course_allocation->first_attempts->count()==0)
                     <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_form{{$course_allocation->id}}'>
                         @csrf
                         @method('DELETE')
@@ -69,10 +101,9 @@
                             Remove
                         </button>
                     </form>
-                    @else
-
+                    @endif
+                    @if($course_allocation->teacher_id!='')
                     <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
-
                     @endif
                 </div>
 
