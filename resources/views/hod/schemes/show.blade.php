@@ -34,7 +34,7 @@
     @endif
 
     <div class="flex justify-between items-center mt-8">
-        <div class="flex items-center text-sm bg-teal-100 text-teal-600 font-semibold py-1 px-2">Cr Hrs: <span class="p-1 ml-2 mr-5 text-slate-600">{{$scheme->slots()->sum('cr')}} / {{$scheme->program->cr}}</span> Courses: <span class="px-2 py-1 text-slate-600">{{$scheme->scheme_details->count()}}</span> <span class="bx bx-check-double ml-2"></span></div>
+        <div class="flex items-center text-sm bg-teal-100 text-teal-600 font-semibold py-1 px-2">Cr Hrs: <span class="p-1 ml-2 mr-5 text-slate-600">{{$scheme->slots()->sum('cr')}} / {{$scheme->program->cr}}</span> <span class="bx bx-check-double ml-2"></span></div>
         <!-- <form action="{{route('schemes.destroy',$scheme)}}" method="POST" id='del_form{{$scheme->id}}'> -->
         @role('super')
         <form action="#" method="POST" id='del_form{{$scheme->id}}'>
@@ -60,10 +60,6 @@
                 <h2 class="">
                     Semester {{$roman[$semester_no-1]}}
                     <span class="ml-6 text-xs font-thin"> <i class="bi bi-clock"></i> {{$scheme->slots()->for($semester_no)->sum('cr')}}</span>
-                    <span class="ml-3 text-xs font-thin"><i class="bi bi-book"></i> {{$scheme->scheme_details()->for($semester_no)->count()}}</span>
-                    @if($scheme->scheme_details()->for($semester_no)->count()>0)
-                    <span class="bx bx-check-double ml-2"></span>
-                    @endif
                 </h2>
                 <i class="bx bx-chevron-down text-lg"></i>
             </div>
@@ -119,17 +115,6 @@
                 </div>
 
 
-            </div>
-            <div class="text-sm text-red-800 px-2">
-                @foreach($scheme->scheme_details()->for($semester_no)->get() as $scheme_detail)
-                <div class="flex items-center even:bg-slate-100 space-x-4">
-                    <div class="w-24">{{ $scheme_detail->course->course_type->name}}</div>
-                    <div class="w-24">{{ $scheme_detail->course->code}}</div>
-                    <div class="flex-1">{{ $scheme_detail->course->name}}</div>
-                    <div class="w-8">{{$scheme_detail->course->Cr()}}</div>
-
-                </div>
-                @endforeach
             </div>
 
         </div>

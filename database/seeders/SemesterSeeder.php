@@ -34,9 +34,9 @@ class SemesterSeeder extends Seeder
         Semester::create(['semester_type_id' => 2, 'year' => 2021]);
 
         Semester::create(['semester_type_id' => 1, 'year' => 2022]);
-        Semester::create(['semester_type_id' => 2, 'year' => 2022, 'edit_till' => Carbon::parse('2022-10-20')]);
+        Semester::create(['semester_type_id' => 2, 'year' => 2022, 'status' => 1]);
 
-        Semester::create(['semester_type_id' => 1, 'year' => 2023]);
+        Semester::create(['semester_type_id' => 1, 'year' => 2023, 'status' => 1]);
         Semester::create(['semester_type_id' => 2, 'year' => 2023]);
 
         Semester::create(['semester_type_id' => 1, 'year' => 2024]);

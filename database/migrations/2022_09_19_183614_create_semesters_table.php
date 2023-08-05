@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('semester_type_id');
             $table->unsignedInteger('year');
-            $table->date('edit_till')->nullable(); //last date for fresh admission or extension
+            $table->boolean('status')->default(0);
             $table->timestamps();
 
             $table->unique(['semester_type_id', 'year']);
