@@ -11,13 +11,11 @@ class FirstAttempt extends Model
 
     protected $fillable = [
         'student_id',
-        'semester_no',
         'semester_id',
         'assignment',
         'presentation',
         'midterm',
         'summative',
-
         'course_allocation_id',
 
     ];

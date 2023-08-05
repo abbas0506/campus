@@ -45,23 +45,25 @@ insert into cms_v4.students
 select * from cms.students
 
 *****
+insert into slots(scheme_id,semester_no,slot_no,cr) values(1,1,1,1);
 update slots set id=0 where id=453;
 
-insert into cms_v4.course_allocations
-select * from cms.course_allocations;
+//insert into cms_v4.course_allocations
+//select * from cms.course_allocations;
+
+insert into cms_v4.course_allocations(id, course_id, section_id, semester_id, slot_id,teacher_id, result_submitted, result_forwared, created_at, updated_at)
+select id, course_id, section_id, semester_id, slot_id,teacher_id, 0, 0, created_at, updated_at from cms.course_allocations;
 
 delete from cms.first_attempts where isnull(course_allocation_id);
 
 //insert into cms_v4.first_attempts
 //select * from cms.first_attempts;
 
-delete from cms.first_attempts where course_allocation_id=710;
+insert into cms_v4.first_attempts(id,student_id,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at)
+select id,student_id,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at from cms.first_attempts;
 
-insert into cms_v4.first_attempts(id,student_id,semester_no,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at)
-select id,student_id,semester_no,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at from cms.first_attempts;
-
-insert into cms_v4.reappears
-select * from cms.reappears;
+insert into cms_v4.reappears(id, first_attempt_id, semester_id,course_allocation_id, assignment, presentation, midterm, summative, created_at, updated_at)
+select id, first_attempt_id, semester_id,course_allocation_id, assignment, presentation, midterm, summative, created_at, updated_at from cms.reappears;
 
 delete from course_allocations where isnull(teacher_id)
 
