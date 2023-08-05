@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('first_attempts', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('semester_no');
+            $table->unsignedInteger('semester_no');
 
             $table->unsignedInteger('assignment')->nullable()->default(0);
             $table->unsignedInteger('presentation')->nullable()->default(0);

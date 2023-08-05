@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('short');
             $table->string('code', 20)->nullable();
-            $table->tinyInteger('cr_theory');
-            $table->tinyInteger('cr_practical');
-            $table->tinyInteger('marks_theory');
-            $table->tinyInteger('marks_practical');
+            $table->unsignedInteger('cr_theory');
+            $table->unsignedInteger('cr_practical');
+            $table->unsignedInteger('marks_theory');
+            $table->unsignedInteger('marks_practical');
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('course_type_id')->default(1);
             $table->timestamps();
