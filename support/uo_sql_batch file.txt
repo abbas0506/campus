@@ -18,6 +18,11 @@ select * from cms.course_types
 insert into cms_v4.programs
 select * from cms.programs
 
+//Courses
+insert into cms_v4.courses(id,name,short,code,cr_theory,cr_practical,marks_theory,marks_practical,department_id,course_type_id,created_at,updated_at)
+select id,name,short,code,cr_theory,cr_practical,marks_theory,marks_practical,department_id,course_type_id,created_at,updated_at
+from cms.courses;
+
 insert into cms_v4.courses
 select * from cms.courses
 
@@ -40,7 +45,7 @@ insert into cms_v4.students
 select * from cms.students
 
 *****
-delete from cms.course_allocations where course_id=706;
+update slots set id=0 where id=453;
 
 insert into cms_v4.course_allocations
 select * from cms.course_allocations;
