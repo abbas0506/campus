@@ -1,78 +1,61 @@
-insert into cms_v2.departments
+insert into cms_v4.departments
 select * from cms.departments
 where cms.departments.id>1
 
-insert into cms_v2.users
+insert into cms_v4.users
 select * from cms.users where id>3
 
-//clean model_has roles
-
-insert into cms_v2.headships
+insert into cms_v4.headships
 select * from cms.headships 
 
-insert into cms_v2.model_has_roles
+insert into cms_v4.model_has_roles
 select * from cms.model_has_roles
 where model_id>3
 
-insert into cms_v2.course_types
+insert into cms_v4.course_types
 select * from cms.course_types
 
-//insert into cms_v1.programs(id,name,short,cr,min_t,max_t,department_id,internal_id, created_at) 
-//select id,name,short,cr,min_t,max_t,department_id,internal_id, created_at from cms.programs;
-
-insert into cms_v2.programs
+insert into cms_v4.programs
 select * from cms.programs
 
-insert into cms_v2.courses
+insert into cms_v4.courses
 select * from cms.courses
 
-//insert into cms_v2.semesters
-//select * from cms.semesters
-//where id>13
-
-insert into cms_v2.schemes
+insert into cms_v4.schemes
 select * from cms.schemes
 
-insert into cms_v3.slots(id,scheme_id, semester_no, slot_no,cr,created_at) 
-select id,scheme_id, semester_no,slot,cr,created_at from cms_v2.scheme_metas;
+insert into cms_v4.slots 
+select * from cms.slots;
 
-insert into cms_v3.slot_options(slot_id, course_type_id,created_at) 
-select id,course_type_id,created_at from cms_v2.scheme_metas;
+insert into cms_v4.slot_options 
+select * from cms.slot_options;
 
-insert into cms_v2.scheme_details
-select * from cms.scheme_details
-
-//insert into cms_v2.scheme_details(id, scheme_id, semester_no, course_id, created_at,updated_at)
-//select id, scheme_id, semester_no, course_id, created_at,updated_at from cms.scheme_details
-
-insert into cms_v2.clas
+insert into cms_v4.clas
 select * from cms.clas
 
-insert into cms_v2.sections
+insert into cms_v4.sections
 select * from cms.sections
 
-insert into cms_v2.students
+insert into cms_v4.students
 select * from cms.students
 
-//insert into cms_v1.students(id,name,father,email,address,gender,regno,rollno,section_id,created_at)
-//select id,name,father,email,address,gender,regno,rollno,section_id,created_at from cms.students;
-
+*****
 delete from cms.course_allocations where course_id=706;
 
-insert into cms_v2.course_allocations
+insert into cms_v4.course_allocations
 select * from cms.course_allocations;
 
 delete from cms.first_attempts where isnull(course_allocation_id);
 
-//insert into cms_v2.first_attempts
+//insert into cms_v4.first_attempts
 //select * from cms.first_attempts;
 
 delete from cms.first_attempts where course_allocation_id=710;
 
-insert into cms_v2.first_attempts(id,student_id,semester_no,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at)
+insert into cms_v4.first_attempts(id,student_id,semester_no,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at)
 select id,student_id,semester_no,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at from cms.first_attempts;
 
-insert into cms_v2.reappears
+insert into cms_v4.reappears
 select * from cms.reappears;
 
 delete from course_allocations where isnull(teacher_id)
