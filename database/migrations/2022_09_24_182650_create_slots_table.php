@@ -21,11 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('cr');
             $table->timestamps();
 
-            $table->foreign('scheme_id')
-                ->references('id')
-                ->on('schemes')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreign('scheme_id')->references('id')->on('schemes')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
