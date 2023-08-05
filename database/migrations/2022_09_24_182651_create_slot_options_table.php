@@ -21,23 +21,9 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('slot_id')
-                ->references('id')
-                ->on('slots')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('course_type_id')
-                ->references('id')
-                ->on('course_types')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('course_id')
-                ->references('id')
-                ->on('courses')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreign('slot_id')->references('id')->on('slots')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('course_type_id')->references('id')->on('course_types')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

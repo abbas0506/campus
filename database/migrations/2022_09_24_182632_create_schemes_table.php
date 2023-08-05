@@ -17,20 +17,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('program_id');
             $table->unsignedBigInteger('wef_semester_id'); //with effect form
-            $table->unique(['wef_semester_id', 'program_id'], 'semester_program_unique'); //composite pk
             $table->timestamps();
 
-            $table->foreign('program_id')
-                ->references('id')
-                ->on('programs')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->unique(['wef_semester_id', 'program_id'], 'semester_program_unique'); //composite pk
 
-            $table->foreign('wef_semester_id')
-                ->references('id')
-                ->on('semesters')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreign('program_id')->references('id')->on('programs')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('wef_semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -21,10 +21,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['semester_type_id', 'year']);
-            $table->foreign('semester_type_id')
-                ->references('id')
-                ->on('semester_types')
-                ->onDelete('cascade');  //cascade delete
+            $table->foreign('semester_type_id')->references('id')->on('semester_types')->onDelete('cascade');  //cascade delete
         });
     }
 

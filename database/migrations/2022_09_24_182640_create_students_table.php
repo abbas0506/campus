@@ -31,11 +31,8 @@ return new class extends Migration
             $table->unsignedBigInteger('section_id');
             $table->unsignedBigInteger('status_id')->default(1);
 
-            $table->foreign('section_id')
-                ->references('id')
-                ->on('sections')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreign('section_id')->references('id')->on('sections')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });

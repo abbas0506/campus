@@ -25,35 +25,11 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('program_id')
-                ->references('id')
-                ->on('programs')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('shift_id')
-                ->references('id')
-                ->on('shifts')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('first_semester_id')
-                ->references('id')
-                ->on('semesters')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('last_semester_id')
-                ->references('id')
-                ->on('semesters')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('scheme_id')
-                ->references('id')
-                ->on('schemes')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreign('program_id')->references('id')->on('programs')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('shift_id')->references('id')->on('shifts')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('first_semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('last_semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('scheme_id')->references('id')->on('schemes')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

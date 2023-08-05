@@ -17,13 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('clas_id');  //root
-            $table->unique(['name', 'clas_id']); //composite pk
+            $table->unique(['name', 'clas_id']); //disallow same section name within a class
             $table->timestamps();
 
-            $table->foreign('clas_id')
-                ->references('id')
-                ->on('clas')
-                ->onDelete('cascade');
+            $table->foreign('clas_id')->references('id')->on('clas')->onDelete('cascade');
         });
     }
 

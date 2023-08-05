@@ -23,27 +23,15 @@ return new class extends Migration
             $table->boolean('result_submitted')->default(0);   //by teacher
             $table->boolean('result_forwared')->default(0);   //by hod
 
-            $table->unique(['section_id', 'course_id'], 'section_course_unique');
+            $table->unique(['section_id', 'course_id'], 'section_course_unique'); //disallow same course allocation twice in a section
 
             $table->timestamps();
 
-            $table->foreign('section_id')
-                ->references('id')
-                ->on('sections')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('course_id')
-                ->references('id')
-                ->on('courses')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('teacher_id')
-                ->references('id')
-                ->on('users')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreign('section_id')->references('id')->on('sections')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('slot_id')->references('id')->on('slots')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

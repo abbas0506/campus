@@ -18,26 +18,18 @@ return new class extends Migration
             $table->string('name');
             $table->string('short');
             $table->string('code')->nullable();
-            $table->unsignedBigInteger('course_type_id')->default(1);
-            $table->unsignedInteger('cr_theory');
-            $table->unsignedInteger('cr_practical');
-            $table->unsignedInteger('marks_theory');
-            $table->unsignedInteger('marks_practical');
+            $table->tinyInteger('cr_theory');
+            $table->tinyInteger('cr_practical');
+            $table->tinyInteger('marks_theory');
+            $table->tinyInteger('marks_practical');
             $table->unsignedBigInteger('department_id');
-            $table->unique(['code', 'department_id']);
+            $table->unsignedBigInteger('course_type_id')->default(1);
             $table->timestamps();
 
-            $table->foreign('department_id')
-                ->references('id')
-                ->on('departments')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->unique(['code', 'department_id']);
 
-            $table->foreign('course_type_id')
-                ->references('id')
-                ->on('course_types')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('course_type_id')->references('id')->on('course_types')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
