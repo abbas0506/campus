@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('slot_id');
             $table->unsignedBigInteger('course_type_id');
             $table->unsignedBigInteger('course_id')->nullable();
-
             $table->timestamps();
 
             $table->foreign('slot_id')->references('id')->on('slots')->onUpdate('cascade')->onDelete('cascade');
