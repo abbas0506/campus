@@ -5,7 +5,10 @@
 @tailwind utilities;
 
 @layer base {
-    tr th {
+    table tr td {
+        @apply py-1;
+    }
+    /* tr th {
         @apply py-2 px-3 text-sm text-gray-600  bg-blue-50 text-center border;
     }
     tr td {
@@ -17,7 +20,7 @@
 
     .tr:nth-child(even) {
         @apply bg-slate-100;
-    }
+    } */
     h1 {
         @apply font-semibold text-lg text-slate-800 mb-1;
     }

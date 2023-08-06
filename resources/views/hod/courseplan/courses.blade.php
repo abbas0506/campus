@@ -33,47 +33,50 @@
     </div>
     @endif
 
-    <div class="flex w-full mt-8">
-        <span class="bg-teal-100 px-3 py-1">Courses</span>
+    <div class="mt-8 bg-blue-200 text-slate-800 p-2 rounded-t-lg font-semibold">Courses Selection</div>
+    <div class="px-4 border-x">
+        <table class="table-auto w-full">
+            <thead>
+                <tr>
+                    <th class="text-left">Code</th>
+                    <th class="text-left">Type</th>
+                    <th class="text-left">Name</th>
+                    <th class="text-left">Cr. hr</th>
+
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($courses->get()->sortBy('course_type_id') as $course)
+                <tr class="tr text-sm odd:bg-slate-100">
+                    <td>{{$course->code}}</td>
+                    <td>{{$course->course_type->name}}</td>
+                    <td>{{$course->name}}</td>
+                    <td>{{($course->lblCr())}}</td>
+
+                    <td>
+                        @if($section->has_course($course->id))
+                        <!-- dont show link btn -->
+                        @else
+                        <form action="{{route('courseplan.store')}}" method="POST" id='del_form' class="flex items-center justify-center">
+                            @csrf
+                            <input type="text" name='section_id' value="{{$section->id}}" hidden>
+                            <input type="text" name='course_id' value="{{$course->id}}" hidden>
+                            <input type="text" name='slot_id' value="{{$slot->id}}" hidden>
+
+                            <button type="submit" class="btn-teal py-0 flex items-center" onclick="delme()">
+                                Select
+                            </button>
+                        </form>
+                        @endif
+
+                    </td>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
     </div>
-    <table class="table-auto w-full mt-4">
-        <thead>
-            <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($courses->get()->sortBy('code') as $course)
-            <tr class="tr">
-                <td class="text-center">{{$course->code}}</td>
-                <td>{{$course->name}}</td>
-                <td class="text-center">{{$course->course_type->name}}</td>
-
-                <td class="">
-                    @if($section->has_course($course->id))
-                    <!-- dont show link btn -->
-                    @else
-                    <form action="{{route('courseplan.store')}}" method="POST" id='del_form' class="py-2 flex items-center justify-center">
-                        @csrf
-                        <input type="text" name='section_id' value="{{$section->id}}" hidden>
-                        <input type="text" name='course_id' value="{{$course->id}}" hidden>
-                        <input type="text" name='slot_id' value="{{$slot->id}}" hidden>
-
-                        <button type="submit" class="btn-teal py-0" onclick="delme()">
-                            <i class="bx bx-link"></i>
-                        </button>
-                    </form>
-                    @endif
-
-                </td>
-            </tr>
-            @endforeach
-
-        </tbody>
-    </table>
 </div>
 <script type="text/javascript">
     function search(event) {

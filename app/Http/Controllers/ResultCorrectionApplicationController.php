@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ThesisAlternative;
+use App\Models\ResultCorrectionApplication;
 use Illuminate\Http\Request;
 
-class ThesisAlternativeController extends Controller
+class ResultCorrectionApplicationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ThesisAlternativeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ThesisAlternative  $thesisAlternative
+     * @param  \App\Models\ResultCorrectionApplication  $resultCorrectionApplication
      * @return \Illuminate\Http\Response
      */
-    public function show(ThesisAlternative $thesisAlternative)
+    public function show(ResultCorrectionApplication $resultCorrectionApplication)
     {
         //
     }
@@ -52,10 +52,10 @@ class ThesisAlternativeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ThesisAlternative  $thesisAlternative
+     * @param  \App\Models\ResultCorrectionApplication  $resultCorrectionApplication
      * @return \Illuminate\Http\Response
      */
-    public function edit(ThesisAlternative $thesisAlternative)
+    public function edit(ResultCorrectionApplication $resultCorrectionApplication)
     {
         //
     }
@@ -64,10 +64,10 @@ class ThesisAlternativeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ThesisAlternative  $thesisAlternative
+     * @param  \App\Models\ResultCorrectionApplication  $resultCorrectionApplication
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ThesisAlternative $thesisAlternative)
+    public function update(Request $request, ResultCorrectionApplication $resultCorrectionApplication)
     {
         //
     }
@@ -75,10 +75,10 @@ class ThesisAlternativeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ThesisAlternative  $thesisAlternative
+     * @param  \App\Models\ResultCorrectionApplication  $resultCorrectionApplication
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ThesisAlternative $thesisAlternative)
+    public function destroy(ResultCorrectionApplication $resultCorrectionApplication)
     {
         //
     }

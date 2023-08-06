@@ -65,47 +65,41 @@
             </div>
             <div class="body">
                 <!-- show header only if some scheme meta entries exist  -->
-                @if($scheme->slots()->for($semester_no)->count()>0)
-                <div class="flex items-center w-full font-medium border-b pb-1">
-                    <div class="text-sm w-36">Slot</div>
-                    <div class="text-sm text-center w-16">Cr</div>
-                    <div class="text-sm flex-1">Course Type</div>
-                    <div class="text-sm text-center w-16">Action</div>
+                <table class="table-auto table-borderless w-full">
+                    <thead>
+                        <tr>
+                            <th>Slot</th>
+                            <th class="text-left">Course Type</th>
+                            <th>Cr. Hr</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($scheme->slots()->for($semester_no)->get()->sortBy('slot_no') as $slot)
+                        <tr class="even:bg-slate-100">
+                            <td class="text-center">{{$slot->slot_no}}</td>
+                            <td>{{$slot->lblCrsType()}}</td>
+                            <td class="text-center">{{$slot->cr}}</td>
+                            <td>
+                                <div class="flex items-center justify-center space-x-4 ">
+                                    <a href="{{route('slots.edit',$slot)}}">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    @role('super')
+                                    <form action="{{route('slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="py-0 text-xs" onclick="delme('{{$slot->id}}')"><i class="bi bi-trash3"></i></button>
+                                    </form>
+                                    @endrole
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
-                    <!-- <div class="flex items-center flex-1 text-indigo-600">List of Courses <span class="ml-1 text-xs"> (Will be purely tentaive; You may not follow it during course allocation, if desired) </span></div>
-                    <div class="">Action</div> -->
-                </div>
-                @endif
-                @foreach($scheme->slots()->for($semester_no)->get()->sortBy('slot_no') as $slot)
-                <div class="flex items-center w-full py-1 odd:bg-slate-100">
-                    <form action="{{route('slots.update', $slot)}}" method="post" class="flex items-center space-x-2 w-36">
-                        @csrf
-                        @method('PATCH')
-                        <input type="number" name='slot_no' min='0' max="8" value="{{$slot->slot_no}}" class="w-6 mr-2">
-                        <button type="submit" class="btn-orange text-xs px-2 rounded-sm">Update</button>
-                    </form>
-
-                    <div class="text-sm text-center w-16">{{$slot->cr}}</div>
-                    <div class="text-sm flex-1">
-                        {{$slot->lblCrsType()}}
-                    </div>
-                    <div class="flex items-center justify-center flex-wrap w-16 space-x-4 ">
-                        <a href="{{route('slots.edit',$slot)}}">
-                            <i class="bi bi-pencil-square"></i>
-                        </a>
-                        @role('super')
-                        <form action="{{route('slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="py-0 text-xs" onclick="delme('{{$slot->id}}')"><i class="bi bi-trash3"></i></button>
-                        </form>
-                        @endrole
-                    </div>
-
-                </div>
-                @endforeach
-
-                <div class=" w-full border-t border-b border-dashed py-2">
+                <div class=" w-full mt-3">
                     <a href="{{route('slots.create', [$scheme->id, $semester_no])}}" class="flex items-center btn-blue text-sm float-left">
                         Create Slot
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-2">
@@ -113,8 +107,6 @@
                         </svg>
                     </a>
                 </div>
-
-
             </div>
 
         </div>

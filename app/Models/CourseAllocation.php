@@ -14,8 +14,16 @@ class CourseAllocation extends Model
         'course_id',    //optional course id
         'teacher_id',
         'semester_id',
-        'result_submitted',
-        'result_forwarded',
+
+        'lecture_no',
+        'room_no',
+        'starts_at',
+        'ends_at',
+
+        'submitted_at',
+        'verfied_at',
+        'internal_id',  //verified by
+        'hod_id',       //forwarded by
 
     ];
 

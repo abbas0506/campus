@@ -45,35 +45,54 @@ insert into cms_v4.students
 select * from cms.students
 
 *****
-insert into slots(scheme_id,semester_no,slot_no,cr) values(1,1,1,1);
-update slots set id=0 where id=453;
+//insert into slots(scheme_id,semester_no,slot_no,cr) values(1,1,1,1);
+//update slots set id=0 where id=453;
 
 //insert into cms_v4.course_allocations
 //select * from cms.course_allocations;
 
-insert into cms_v4.course_allocations(id, course_id, section_id, semester_id, slot_id,teacher_id, result_submitted, result_forwared, created_at, updated_at)
-select id, course_id, section_id, semester_id, slot_id,teacher_id, 0, 0, created_at, updated_at from cms.course_allocations WHERE slot_id not in (2,3,4,5,6,179,300,359);
+delete from cms.course_allocations 
+where id in(
+select id from cms.course_allocations where slot_id in(0,2,3,4,5,6,179,300,359));
 
+
+insert into cms_v4.course_allocations(id, course_id, section_id, semester_id, slot_id,teacher_id, created_at, updated_at)
+select id, course_id, section_id, semester_id, slot_id,teacher_id, created_at, updated_at from cms.course_allocations;
+
+//insert into cms_v4.course_allocations(id, course_id, section_id, semester_id, slot_id,teacher_id, created_at, updated_at)
+//select id, course_id, section_id, semester_id, slot_id,teacher_id, created_at, updated_at from cms.course_allocations WHERE slot_id not in (2,3,4,5,6,179,300,359);
 //1000 rows to test
-delete from cms.first_attempts 
-where course_allocation_id in(
-select id from course_allocations where slot_id in(2,3,4,5,6,179,300,359));
+
+//delete from cms.first_attempts 
+//where course_allocation_id in(
+//select id from course_allocations where slot_id in(2,3,4,5,6,179,300,359));
 
 //insert into cms_v4.first_attempts
 //select * from cms.first_attempts;
+
 
 insert into cms_v4.first_attempts(id,student_id,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at)
 select id,student_id,semester_id,assignment,presentation,midterm,summative,course_allocation_id,created_at from cms.first_attempts;
 
 //1 row affected
-delete from cms.reappears 
-where course_allocation_id in(
-select id from course_allocations where slot_id in(2,3,4,5,6,179,300,359));
+//delete from cms.reappears 
+//where course_allocation_id in(
+//select id from course_allocations where slot_id in(2,3,4,5,6,179,300,359));
 
 insert into cms_v4.reappears(id, first_attempt_id, semester_id,course_allocation_id, assignment, presentation, midterm, summative, created_at, updated_at)
 select id, first_attempt_id, semester_id,course_allocation_id, assignment, presentation, midterm, summative, created_at, updated_at from cms.reappears;
 
 
+affected persons after implementing cms_v4 - slot addition
+cms_v3 data
+select case when semester_id=13 then 'F22' else 'S23'end as semester, programs.name as program, case when clas.shift_id=1 then 'M' else 'S' end as shift, sections.name as section, users.name as teacher, courses.name as course from course_allocations
+inner join users on users.id=course_allocations.teacher_id
+inner join sections on course_allocations.section_id=sections.id
+INNER join clas on clas.id=sections.clas_id
+inner join programs on clas.program_id=programs.id
+inner join courses on courses.id=course_allocations.course_id
+where slot_id in(2,3,4,5,6,179,300,359)
+order by semester_id;
 
 
 

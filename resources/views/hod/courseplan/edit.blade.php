@@ -29,90 +29,63 @@
     </div>
     @endif
 
-    <div class="grid grid-cols-2 mt-8 gap-3 p-4 rounded-md border divide-y divide-x">
 
-        <h3>Slot</h3>
-        <h3>Course & Teacher</h3>
+    <div class="flex flex-col gap-y-4">
         @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo(session('semester_id')))->get()->sortBy('slot_no') as $slot)
-        <div>
-            <div class="grid grid-cols-2">
-                <div>
-                    <h3>Slot # {{$slot->slot_no}}</h3>
+        <div class="gap-y-4">
+            <div class="bg-slate-200 px-2 py-1 rounded-t-lg">
+                <div class="flex items-center">
+                    <h3 class="w-24">Slot # {{$slot->slot_no}}</h3>
+                    <h3>{{$slot->lblCrsType()}} ({{$slot->cr}})</h3>
                 </div>
-                <div class="">
-                    <div class="flex items-center">
-                        <div class="w-8"><i class="bi-clock"></i></div>
-                        <div>{{$slot->cr}}</div>
+            </div>
+            <div class="border border-dashed p-2">
+                <div class="md:pl-24">
+                    @foreach($section->course_allocations()->on($slot->id)->get() as $course_allocation)
+                    <div class="flex flex-col lg:flex-row gap-2 py-1 w-full border-b">
+                        <div class="flex flex-1 text-slate-800 space-x-2">
+                            <div>{{$course_allocation->course->code}}</div>
+                            <div class="flex-1">{{$course_allocation->course->name}}</div>
+                            <div>
+                                <!-- delete button -->
+                                @if($course_allocation->teacher_id=='' || $course_allocation->first_attempts->count()==0)
+                                <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_form{{$course_allocation->id}}'>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="" onclick="delme('{{$course_allocation->id}}')">
+                                        <i class="bi-trash3"></i>
+                                    </button>
+                                </form>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="flex flex-1 justify-between text-slate-800">
+                            <div>{{ $course_allocation->teacher->name ?? ''}}</div>
+                            <div>
+                                <!-- teacher -->
+                                @if($course_allocation->teacher_id!='')
+                                <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
+                                @else
+                                <a href="{{route('courseplan.teachers',$course_allocation)}}" class="flex items-center text-sm link">
+                                    (Assign Teacher)
+                                </a>
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex items-center">
-                        <div class="w-8"><i class="bi-book"></i></div>
-                        <div>{{$slot->lblCrsType()}}</div>
-                    </div>
-
+                    @endforeach
                 </div>
-
+                <div class="flex lg:pl-24 text-sm mt-2">
+                    <a href="{{route('courseplan.courses',[$section,$slot])}}" class="bg-teal-300 px-2 flex items-center text-sm">
+                        Select Course
+                    </a>
+                </div>
             </div>
 
         </div>
-        <div>
 
-        </div>
         @endforeach
     </div>
-
-
-
-
-    <div class="grid grid-cols-1 mt-8 gap-3 p-4 rounded-md border">
-        @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo(session('semester_id')))->get()->sortBy('slot_no') as $slot)
-        <div class="border-b border-slate-200">
-            <div class="flex items-center space-x-6 pb-4 border-b border-dashed">
-                <div class="flex items-center justify-center w-8 h-8 bg-teal-100 ring-1 ring-teal-200 ring-offset-2 text-slate-800">{{$slot->slot_no}}</div>
-                <h2 class=""><i class="bi-clock"></i> {{$slot->cr}}</h2>
-                <h2>{{$slot->lblCrsType()}}</h2>
-            </div>
-            <div class="flex w-full py-2">
-                <a href="{{route('courseplan.courses',[$section,$slot])}}" class="btn-teal flex items-center text-sm"><i class="bi-plus text-[16px] mr-2"></i> Add Course </a>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 px-6 pb-4 space-y-2">
-                @foreach($section->course_allocations()->on($slot->id)->get() as $course_allocation)
-                <div class="flex items-center justify-between pr-4 ">
-                    {{$course_allocation->id}} {{$course_allocation->course->name}}
-                </div>
-
-                <div class="md:border-l md:pl-6 ">@if($course_allocation->teacher_id=='')
-                    <div class="flex items-center">
-                        <a href="{{route('courseplan.teachers',$course_allocation)}}">
-                            <i class="bi-link-45deg text-indigo-600 text-[20px]"></i>
-                        </a>
-                        <div class="text-xs text-slate-400 text-thin ml-2">(Assign Teacher)</div>
-                    </div>
-
-                    @else
-                    {{$course_allocation->teacher->name}}
-                    @endif
-                </div>
-                <div class="text-right">
-                    @if($course_allocation->teacher_id=='' || $course_allocation->first_attempts->count()==0)
-                    <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_form{{$course_allocation->id}}'>
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn-red pb-1 px-2 text-xs" onclick="delme('{{$course_allocation->id}}')">
-                            Remove
-                        </button>
-                    </form>
-                    @endif
-                    @if($course_allocation->teacher_id!='')
-                    <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
-                    @endif
-                </div>
-
-                @endforeach
-            </div>
-        </div>
-        @endforeach
-    </div>
-
 </div>
 <script type="text/javascript">
     function delme(formid) {

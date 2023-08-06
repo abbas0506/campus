@@ -18,6 +18,11 @@ return new class extends Migration
             $table->unsignedBigInteger('slot_option_id');
             $table->unsignedBigInteger('alternative1_id');
             $table->unsignedBigInteger('alternative2_id');
+            $table->unsignedBigInteger('alternative3_id');
+            $table->tinyInteger('alternative1_cr')->default(0);
+            $table->tinyInteger('alternative2_cr')->default(0);
+            $table->tinyInteger('alternative3_cr')->default(0);
+
             $table->timestamps();
 
             $table->foreign('slot_option_id')->references('id')->on('slot_options')->onUpdate('cascade')->onDelete('cascade');
