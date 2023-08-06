@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('first_attempts', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedInteger('semester_no');
             $table->unsignedInteger('assignment')->nullable()->default(0);
             $table->unsignedInteger('presentation')->nullable()->default(0);
             $table->unsignedInteger('midterm')->nullable()->default(0);
             $table->unsignedInteger('summative')->nullable()->default(0);
+            $table->boolean('editable')->default(1);    //before final submission will be editable, or may be unlocked by hod personally
 
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('semester_id');
