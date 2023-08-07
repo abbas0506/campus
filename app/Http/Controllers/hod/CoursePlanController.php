@@ -34,40 +34,8 @@ class CoursePlanController extends Controller
     public function show($sid)
     {
         //
-
-
-
         $section = Section::find($sid);
         return view('hod.courseplan.show', compact('section'));
-        // foreach ($section->semesters() as $semester) {
-        //     $i = $section->clas->semesterNo($semester->id);
-        //     echo $section->id . ", " . $semester->short() . " slot no: " . $i . "<br>";
-        //     foreach ($section->clas->scheme->slots()->for($i)->get() as $slot) {
-        //         echo $slot->id . "  ";
-        //     }
-        //     echo "<br>";
-        // }
-
-        // foreach ($section->semesters() as $semester) {
-
-        //     echo "<b>semester: " . $semester->title() . 'No.: ' . $section->clas->semesterNo($semester->id) . "</b><br>";
-        //     foreach ($section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->get() as $slot) {
-
-        //         echo "Slot No " . $slot->slot_no . "- Cr: " . $slot->cr . "<br>";
-        //         foreach ($section->course_allocations()->during($semester->id)->on($slot->id)->get() as $course_allocation) {
-        //             echo "code: " . $course_allocation->course->code . ", Course:" . $course_allocation->course->name . ",Cr:" . $course_allocation->course->lblCr();
-
-        //             echo "Teacher:" . $course_allocation->teacher->name;
-        //         }
-        //     }
-        // }
-
-        // foreach ($section->clas->scheme->slots()->for(8)->get() as $slot) {
-        //     echo $slot->lblCrsType() . ", " . $slot->slot_no . "<br>";
-        //     foreach ($section->course_allocations()->get() as $course_allocation) {
-        //         echo $course_allocation->semester_id . ",  ", $course_allocation->course->name . ",  " . $course_allocation->slot_id . "<br>";
-        //     }
-        // }
     }
 
     public function store(Request $request)
