@@ -26,7 +26,7 @@
     <div class="text-xs text-gray-500 ml-4"><i class="bx bxs-hand-right text-indigo-600 mr-2"></i>Click on + icon to add new scheme</div>
 </div>
 
-<table class="table-auto w-full">
+<table class="table-auto table-bordered w-full">
     <thead>
         <tr>
             <th>Program Name</th>
@@ -36,7 +36,7 @@
     <tbody>
 
         @foreach($programs->sortBy('level') as $program)
-        <tr class="tr">
+        <tr class="tr even:slate-100">
             <td>{{$program->short}}</td>
             <td>
                 <div class="flex items-center space-x-2">
