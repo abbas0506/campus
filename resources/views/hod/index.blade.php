@@ -3,13 +3,13 @@
 <div class="flex flex-col justify-center items-center w-full h-full">
     <div class="flex flex-col items-center justify-center w-3/4">
 
-        <div class="bg-red-200 p-4 rounded-lg mb-4 text-sm">
+        <div class="bg-red-200 p-4 rounded-lg mb-4">
             <h2>Software Update Alert V4.0 (07.08.23) </h2>
             <p class="mt-2 leading-relaxed">Respected HOD, software is going through evolutionary phase, with only intention to make your life easier than ever before. Your co-operation in this regard will be a matter of relief for development team.</p>
             <p>Please note following ...</p>
             <ul class="list-disc pl-4">
                 <li>Only current semester data is available. If any course allocation is found missing, it is only because of its inconsitency with currently adopted scheme pattern. You may re-allocate the course</li>
-                <li>Award.pdf is temporarily not available for maintenance purpose. </li>
+                <li>Award.pdf, gazzette and cumulative sheets are temporarily not available for maintenance purpose. However, you may perform other activities as per routine </li>
                 <li>Your previous data is intact. In case of any unavoidable situation, it can be re-produced in .excel form</li>
                 <li>In case of any inconvenience, feel free to contact @developer 03000373004. (*preferably through whatsapp message)</li>
             </ul>
