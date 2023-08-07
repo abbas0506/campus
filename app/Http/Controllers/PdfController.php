@@ -14,7 +14,7 @@ class PdfController extends Controller
     public function award($id)
     {
 
-        echo "Award.pdf is temporarily not available for maintenance purpose. You may alternatively download excel file";
+        echo "Award.pdf is temporarily not available for maintenance purpose.";
         // $course_allocation = CourseAllocation::find($id);
         // $pdf = PDF::loadView('pdf.award', compact('course_allocation'))->setPaper('a4', 'portrait');
         // $pdf->set_option("isPhpEnabled", true);
