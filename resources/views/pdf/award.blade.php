@@ -9,7 +9,7 @@
     <link href="{{public_path('css/pdf_tw.css')}}" rel="stylesheet">
     <style>
         @page {
-            margin: 50px 50px 220px 80px;
+            margin: 50px 50px 220px 50px;
         }
 
         .footer {
@@ -20,6 +20,15 @@
             background-color: white;
             height: 50px;
         }
+
+        .page-break {
+            page-break-after: always;
+
+        }
+
+        /* table {
+            page-break-inside: avoid !important;
+        } */
     </style>
 </head>
 @php
@@ -41,7 +50,7 @@ $roman = config('global.romans');
                     <td>__________________</td>
                 </tr>
                 <tr class="text-xs text-center">
-                    <td class="font-bold ">{{$course_allocation->teacher->name}}</td>
+                    <td class="font-bold ">{{$course_allocation->teacher->name ?? ''}}</td>
                     <td class="font-bold ">@if($course_allocation->internal()!='')
                         {{$course_allocation->internal()->name}}
                         @else
@@ -134,9 +143,10 @@ $roman = config('global.romans');
                     </tr>
                 </thead>
                 <tbody>
+                    @php $i=1; @endphp
                     @foreach($course_allocation->first_attempts_sorted() as $first_attempt)
                     <tr class="tr border-b text-xs">
-                        <td class="text-center border">{{$first_attempt->student->rollno}}</td>
+                        <td class="text-center border">{{$i++}}-{{$first_attempt->student->rollno}}</td>
                         <td class="pl-1 border">{{$first_attempt->student->name}}</td>
                         <td class='text-center border'>{{$first_attempt->assignment}}</td>
                         <!-- dont show for phd -->
@@ -151,6 +161,9 @@ $roman = config('global.romans');
                         <td class='text-center border'>{{$first_attempt->grade()}}</td>
                         <td class='text-center border'>{{$first_attempt->status()}}</td>
                     </tr>
+                    <!-- @if($i==30)
+                    <div class="page-break"></div>
+                    @endif -->
                     @endforeach
 
                     @if($course_allocation->reappears->count()>0)
@@ -175,6 +188,7 @@ $roman = config('global.romans');
                         <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->grade()}}</td>
                         <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->status()}}</td>
                     </tr>
+
                     @endforeach
                     @endif
                     <tr>

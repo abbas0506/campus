@@ -45,7 +45,7 @@ $roman = config('global.romans');
                 <div class="w-1/6">{{$course_allocation->course->code}}</div>
                 <div class="w-1/3">{{$course_allocation->course->name}}</div>
                 <div class="w-1/3 text-slate-600 font-thin">{{$course_allocation->course->course_type->name}}</div>
-                <div class="w-1/3 text-slate-600 font-thin"><i class="bx bx-user"></i> ({{$course_allocation->teacher->name}})</div>
+                <div class="w-1/3 text-slate-600 font-thin"><i class="bx bx-user"></i> ({{$course_allocation->teacher->name ?? ''}})</div>
             </div>
             @endforeach
             <div class="w-full mt-2">

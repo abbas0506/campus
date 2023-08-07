@@ -34,8 +34,20 @@ class CoursePlanController extends Controller
     public function show($sid)
     {
         //
+
+
+
         $section = Section::find($sid);
         return view('hod.courseplan.show', compact('section'));
+
+
+
+        // foreach ($section->clas->scheme->slots()->for(8)->get() as $slot) {
+        //     echo $slot->lblCrsType() . ", " . $slot->slot_no . "<br>";
+        //     foreach ($section->course_allocations()->get() as $course_allocation) {
+        //         echo $course_allocation->semester_id . ",  ", $course_allocation->course->name . ",  " . $course_allocation->slot_id . "<br>";
+        //     }
+        // }
     }
 
     public function store(Request $request)

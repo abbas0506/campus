@@ -46,7 +46,7 @@ $roman = config('global.romans');
             <div class="flex items-center justify-between w-full mb-1">
                 <div class="w-1/4">{{$course_allocation->course->code}}</div>
                 <div class="w-1/3">{{$course_allocation->course->name}}</div>
-                <div class="w-1/3 text-xs text-slate-400"><i class="bx bx-user"></i> ({{$course_allocation->teacher->name}})</div>
+                <div class="w-1/3 text-xs text-slate-400"><i class="bx bx-user"></i> ({{$course_allocation->teacher->name ?? ''}})</div>
                 @if($course_allocation->teacher)
 
                 <a href="{{route('ce.award.export', $course_allocation)}}" target="_blank" class="flex items-center">

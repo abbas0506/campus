@@ -18,7 +18,7 @@
     <div class="flex items-center space-x-4">
         <p class="bg-teal-600 text-md font-semibold px-2 text-white">Scheme: {{$section->clas->scheme->title()}}</p>
         <p class="flex items-center bg-orange-100 px-2">
-            <i class="bx bx-time-five"></i> <span class="font-semibold ml-2">{{$section->cr()}} / {{$section->clas->scheme->slots->sum('cr')}} ({{$section->clas->scheme->program->cr}})</span>
+            <i class="bx bx-time-five"></i> <span class="font-semibold ml-2">{{$section->course_allocations()->allocatedCr()}} / {{$section->clas->scheme->slots->sum('cr')}} ({{$section->clas->scheme->program->cr}})</span>
         </p>
     </div>
     <div class="flex flex-col accordion mt-4">
@@ -28,7 +28,7 @@
                 <h2 class="flex items-center">Semester {{$roman[$semester->id-$section->clas->first_semester_id]}}
                     <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
                     <span class="bx bx-time-five ml-6 text-slate-400"></span>
-                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->where('slot_id','!=',0)->sumOfCreditHrs($semester->id)}} / {{$section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->sum('cr') }}</span>
+                    <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->during($semester->id)->allocatedCr()}} / {{$section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->sum('cr') }}</span>
                 </h2>
                 <i class="bx bx-chevron-down text-lg"></i>
             </div>
@@ -38,7 +38,7 @@
                     <div class="w-40">Course Type</div>
                     <div class="flex flex-col flex-1">
                         <div class="flex w-full">
-                            <div class="flex w-32">Code</div>
+                            <div class="flex w-24">Code</div>
                             <div class="flex flex-1">Course</div>
                             <div class="flex flex-1">Teacher</div>
                         </div>
@@ -50,15 +50,15 @@
                 <div class="flex flex-col w-full even:bg-slate-100 py-1 text-xs">
                     <div class="flex w-full">
                         <div class="w-16 text-center">{{$slot->slot_no}}</div>
-                        <div class="w-40">{{$slot->lblCrsType()}}</div>
+                        <div class="w-40">{{$slot->lblCrsType()}} ({{$slot->cr}})</div>
                         <div class="flex flex-col flex-1 justify-center">
                             @foreach($section->course_allocations()->during($semester->id)->on($slot->id)->get() as $course_allocation)
                             <div class="flex w-full my-1">
-                                <div class="flex w-32">{{$course_allocation->course->code}}</div>
+                                <div class="flex w-24">{{$course_allocation->course->code}} </div>
                                 <div class="flex flex-1">{{$course_allocation->course->name}}<span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>
                                 <div class="flex flex-1">
                                     @if($course_allocation->teacher)
-                                    {{$course_allocation->teacher->name}}
+                                    {{$course_allocation->teacher->name ?? ''}}
                                     @else
                                     <div class="text-slate-400">(blank)</div>
                                     @endif

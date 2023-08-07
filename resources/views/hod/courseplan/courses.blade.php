@@ -33,11 +33,11 @@
     </div>
     @endif
 
-    <div class="mt-8 bg-blue-200 text-slate-800 p-2 rounded-t-lg font-semibold">Courses Selection</div>
-    <div class="px-4 border-x">
+    <div class="mt-8 bg-slate-100 text-slate-800 px-2 py-1 rounded-t-lg font-semibold">Courses Selection</div>
+    <div class="px-4 py-2 border-x">
         <table class="table-auto w-full">
             <thead>
-                <tr>
+                <tr class="text-sm">
                     <th class="text-left">Code</th>
                     <th class="text-left">Type</th>
                     <th class="text-left">Name</th>

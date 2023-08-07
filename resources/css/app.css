@@ -28,9 +28,11 @@
         @apply font-semibold text-base text-slate-800;
     }
     h3 {
-        @apply font-bold text-base;
+        @apply font-semibold text-sm text-slate-800;
     }
-
+    h4 {
+        @apply font-semibold text-xs text-slate-800;
+    }
     p {
         @apply leading-relaxed;
     }

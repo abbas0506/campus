@@ -32,10 +32,10 @@ class CourseAllocation extends Model
         return $this->belongsTo(Section::class);
     }
     // will be implemented lated
-    // public function slot()
-    // {
-    //     return $this->belongsTo(Slot::class);
-    // }
+    public function slot()
+    {
+        return $this->belongsTo(Slot::class);
+    }
     public function course()
     {
         return $this->belongsTo(Course::class);
@@ -103,5 +103,10 @@ class CourseAllocation extends Model
     public function scopeOn($query, $slot_id)
     {
         return $query->where('slot_id', $slot_id);
+    }
+    public function scopeAllocatedCr($query)
+    {
+        $slot_ids = $query->pluck('slot_id')->toArray();
+        return Slot::whereIn('id', array_unique($slot_ids))->sum('cr');
     }
 }

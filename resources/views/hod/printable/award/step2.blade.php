@@ -36,29 +36,34 @@ $roman = config('global.romans');
                 <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
                 <span class="text-xs text-slate-600 bx bx-book ml-6"></span>
                 <span class="text-xs text-slate-600 ml-1">
-                    {{$section->course_allocations()->during($semester->id)->count()}}
+                    {{$section->course_allocations()->has('first_attempts')->during($semester->id)->count()}}/{{$section->course_allocations()->during($semester->id)->count()}}
                 </span>
             </h2>
             <i class="bx bx-chevron-down text-lg"></i>
         </div>
         <div class="body">
-            @foreach($section->course_allocations()->during($semester->id)->get() as $course_allocation)
-            <div class="flex items-center justify-between w-full mb-1">
-                <div class="w-1/4">{{$course_allocation->course->code}}</div>
-                <div class="w-1/3">{{$course_allocation->course->name}}</div>
-                <div class="w-1/3 text-xs text-slate-400"><i class="bx bx-user"></i> ({{$course_allocation->teacher->name}})</div>
-                @if($course_allocation->teacher)
 
-                <a href="{{route('hod.award.export', $course_allocation)}}" target="_blank" class="flex items-center">
-                    <i class="bi-file-earmark-excel text-teal-600"></i>
-                </a>
-                <a href="{{route('hod.award.pdf', $course_allocation)}}" target="_blank" class="flex items-center">
-                    <i class="bi-file-earmark-pdf text-red-600"></i>
-                </a>
-                @endif
-            </div>
-
-            @endforeach
+            <table class="table-auto w-full">
+                <tbody>
+                    @foreach($section->course_allocations()->during($semester->id)->has('first_attempts')->get() as $course_allocation)
+                    <tr>
+                        <td>{{$course_allocation->course->code ?? ''}}</td>
+                        <td>{{$course_allocation->course->name ?? ''}}</td>
+                        <td>{{$course_allocation->teacher->name ?? ''}}</td>
+                        <td>
+                            <div class="flex items-center">
+                                <a href="{{route('hod.award.export', $course_allocation)}}" target="_blank" class="mr-3">
+                                    <i class="bi-file-earmark-excel text-teal-600"></i>
+                                </a>
+                                <a href="{{route('hod.award.pdf', $course_allocation)}}" target="_blank" class="">
+                                    <i class="bi-file-earmark-pdf text-red-600"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
     @endforeach

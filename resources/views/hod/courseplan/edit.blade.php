@@ -21,7 +21,7 @@
     @endif
 
     @if(session('success'))
-    <div class="flex alert-success items-center mt-8">
+    <div class="flex alert-success items-center mt-4">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
         </svg>
@@ -33,14 +33,14 @@
     <div class="flex flex-col gap-y-4">
         @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo(session('semester_id')))->get()->sortBy('slot_no') as $slot)
         <div class="gap-y-4">
-            <div class="bg-slate-200 px-2 py-1 rounded-t-lg">
+            <div class="bg-slate-100 px-2 py-1 rounded-t-lg">
                 <div class="flex items-center">
                     <h3 class="w-24">Slot # {{$slot->slot_no}}</h3>
                     <h3>{{$slot->lblCrsType()}} ({{$slot->cr}})</h3>
                 </div>
             </div>
             <div class="border border-dashed p-2">
-                <div class="md:pl-24">
+                <div class="md:pl-24 text-sm">
                     @foreach($section->course_allocations()->on($slot->id)->get() as $course_allocation)
                     <div class="flex flex-col lg:flex-row gap-2 py-1 w-full border-b">
                         <div class="flex flex-1 text-slate-800 space-x-2">
@@ -53,7 +53,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="" onclick="delme('{{$course_allocation->id}}')">
-                                        <i class="bi-trash3"></i>
+                                        <i class="bi-trash3 text-[12px]"></i>
                                     </button>
                                 </form>
                                 @endif
