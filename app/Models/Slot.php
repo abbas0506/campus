@@ -22,6 +22,10 @@ class Slot extends Model
     {
         return $this->hasMany(SlotOption::class);
     }
+    public  function course_allocations()
+    {
+        return $this->hasMany(CourseAllocation::class);
+    }
     public function scopeFor($query, $semester_no)
     {
         return $query->where('semester_no', $semester_no);

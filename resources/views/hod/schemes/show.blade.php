@@ -85,7 +85,7 @@
                                     <a href="{{route('slots.edit',$slot)}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    @role('super')
+                                    @if(!$slot->course_allocations()->exists() || Auth::user()->hasRole('super'))
                                     <form action="{{route('slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
                                         @csrf
                                         @method('DELETE')
