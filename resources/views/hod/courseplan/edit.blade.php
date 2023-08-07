@@ -45,7 +45,7 @@
                     <div class="flex flex-col lg:flex-row gap-2 py-1 w-full border-b">
                         <div class="flex flex-1 text-slate-800 space-x-2">
                             <div>{{$course_allocation->course->code}}</div>
-                            <div class="flex-1">{{$course_allocation->course->name}}</div>
+                            <div class="">{{$course_allocation->course->name}}</div>
                             <div>
                                 <!-- delete button -->
                                 @if($course_allocation->teacher_id=='' || $course_allocation->first_attempts->count()==0)
@@ -66,7 +66,7 @@
                                 @if($course_allocation->teacher_id!='')
                                 <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
                                 @else
-                                <a href="{{route('courseplan.teachers',$course_allocation)}}" class="flex items-center text-sm link">
+                                <a href="{{route('courseplan.teachers',$course_allocation)}}" class="flex items-center text-xs link">
                                     (Assign Teacher)
                                 </a>
                                 @endif

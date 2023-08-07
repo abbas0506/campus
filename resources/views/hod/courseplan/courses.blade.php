@@ -33,50 +33,49 @@
     </div>
     @endif
 
-    <div class="mt-8 bg-slate-100 text-slate-800 px-2 py-1 rounded-t-lg font-semibold">Courses Selection</div>
-    <div class="px-4 py-2 border-x">
-        <table class="table-auto w-full">
-            <thead>
-                <tr class="text-sm">
-                    <th class="text-left">Code</th>
-                    <th class="text-left">Type</th>
-                    <th class="text-left">Name</th>
-                    <th class="text-left">Cr. hr</th>
+    <div class="mt-8 bg-sky-300 text-slate-800 px-2 py-1 rounded-t-lg font-semibold">Courses Selection</div>
 
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($courses->get()->sortBy('course_type_id') as $course)
-                <tr class="tr text-sm odd:bg-slate-100">
-                    <td>{{$course->code}}</td>
-                    <td>{{$course->course_type->name}}</td>
-                    <td>{{$course->name}}</td>
-                    <td>{{($course->lblCr())}}</td>
+    <table class="table-auto w-full mt-4">
+        <thead>
+            <tr class="text-sm">
+                <th class="text-left">Code</th>
+                <th class="text-left">Type</th>
+                <th class="text-left">Name</th>
+                <th class="text-left">Cr. hr</th>
 
-                    <td>
-                        @if($section->has_course($course->id))
-                        <!-- dont show link btn -->
-                        @else
-                        <form action="{{route('courseplan.store')}}" method="POST" id='del_form' class="flex items-center justify-center">
-                            @csrf
-                            <input type="text" name='section_id' value="{{$section->id}}" hidden>
-                            <input type="text" name='course_id' value="{{$course->id}}" hidden>
-                            <input type="text" name='slot_id' value="{{$slot->id}}" hidden>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($courses->get()->sortBy('course_type_id') as $course)
+            <tr class="tr">
+                <td>{{$course->code}}</td>
+                <td>{{$course->course_type->name}}</td>
+                <td>{{$course->name}}</td>
+                <td>{{($course->lblCr())}}</td>
 
-                            <button type="submit" class="btn-teal py-0 flex items-center" onclick="delme()">
-                                Select
-                            </button>
-                        </form>
-                        @endif
+                <td>
+                    @if($section->has_course($course->id))
+                    <!-- dont show link btn -->
+                    @else
+                    <form action="{{route('courseplan.store')}}" method="POST" id='del_form' class="flex items-center justify-center">
+                        @csrf
+                        <input type="text" name='section_id' value="{{$section->id}}" hidden>
+                        <input type="text" name='course_id' value="{{$course->id}}" hidden>
+                        <input type="text" name='slot_id' value="{{$slot->id}}" hidden>
 
-                    </td>
-                </tr>
-                @endforeach
+                        <button type="submit" class="btn-teal py-0 flex items-center" onclick="delme()">
+                            Select
+                        </button>
+                    </form>
+                    @endif
 
-            </tbody>
-        </table>
-    </div>
+                </td>
+            </tr>
+            @endforeach
+
+        </tbody>
+    </table>
 </div>
 <script type="text/javascript">
     function search(event) {

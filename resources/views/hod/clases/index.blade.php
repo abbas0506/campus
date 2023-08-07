@@ -83,7 +83,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-10 gap-2">
                         @foreach($clas->sections as $section)
                         <a href="{{route('sections.show',$section)}}" class='flex justify-center items-center bg-teal-100 hover:bg-teal-600 hover:text-slate-100 w-16'>
-                            {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
+                            {{$section->id}}{{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                         </a>
                         @endforeach
                         <form action="{{route('sections.store')}}" method="post" class='flex justify-center items-center border border-dashed border-slate-200 bg-teal-50 text-teal-800 hover:bg-teal-100 w-16'>

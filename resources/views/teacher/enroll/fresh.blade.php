@@ -163,18 +163,20 @@
                         success: function(response) {
                             //
 
-                            Swal.fire({
-                                icon: 'success',
-                                title: response.msg,
-                            });
-                            //refresh content after deletion
-                            location.reload();
+                            alert(response.msg)
+                            // Swal.fire({
+                            //     icon: 'success',
+                            //     title: response.msg,
+                            // });
+                            // //refresh content after deletion
+                            // location.reload();
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: errorThrown
-                            });
+                            alert(response.mg)
+                            // Swal.fire({
+                            //     icon: 'warning',
+                            //     title: errorThrown
+                            // });
                         }
                     }); //ajax end
                 }

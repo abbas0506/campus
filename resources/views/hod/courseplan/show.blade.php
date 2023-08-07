@@ -49,7 +49,7 @@
                 @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->get() as $slot)
                 <div class="flex flex-col w-full even:bg-slate-100 py-1 text-xs">
                     <div class="flex w-full">
-                        <div class="w-16 text-center">{{$slot->slot_no}}</div>
+                        <div class="w-16 text-center">{{$slot->slot_no}} </div>
                         <div class="w-40">{{$slot->lblCrsType()}} ({{$slot->cr}})</div>
                         <div class="flex flex-col flex-1 justify-center">
                             @foreach($section->course_allocations()->during($semester->id)->on($slot->id)->get() as $course_allocation)

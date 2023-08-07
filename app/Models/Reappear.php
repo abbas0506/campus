@@ -11,7 +11,6 @@ class Reappear extends Model
     protected $fillable = [
         'first_attempt_id',
         'semester_id',
-
         'assignment',
         'presentation',
         'midterm',

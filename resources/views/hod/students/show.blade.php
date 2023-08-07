@@ -6,10 +6,13 @@
 
 <div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-2">
     <i class="bi bi-person-circle text-slate-600 bx-md"></i>
-    <div class="text-xl text-orange-500 leading-relaxed">{{$student->name}} @if($student->gender=='m') s/o @else d/o @endif {{$student->father}}</div>
+    <div class="text-xl text-orange-500 leading-relaxed">{{$student->name}} @if($student->gender=='M') s/o @else d/o @endif {{$student->father}}</div>
     <div class="text-sm text-slate-600">{{$student->section->clas->short()}}</div>
 </div>
+
+
 <div class="flex flex-row space-x-8 mt-12 w-full">
+    <a href="{{route('students.edit',$student)}}" class='link'>Edit Profile</a>
     <div class="flex flex-col border border-dashed p-4 rounded-lg w-1/3">
         <div class="flex items-center text-sm">
             <div class="font-semibold w-24">Roll No:</div>
