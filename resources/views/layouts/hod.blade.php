@@ -9,7 +9,7 @@
             <div class="hidden md:flex text-base md:text-xl font-semibold">Examination System</div>
             <div class="px-4">|</div>
             <div class="text-sm flex items-center space-x-2">
-                <div>HoD {{Str::replace('Department of', '', App\Models\Department::find(session('department_id'))->name)}}</div>
+                <div>HOD {{Str::replace('Department of', '', App\Models\Department::find(session('department_id'))->name)}}</div>
                 <i class="bi bi-chevron-compact-right"></i>
                 <!-- <a href="{{url('/')}}" class="text-blue-600 hover:text-blue-800 text-xs">Change</a> -->
                 <form action="{{route('switch.semester')}}" method="post" id='switchSemesterForm'>
