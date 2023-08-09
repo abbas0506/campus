@@ -11,6 +11,7 @@
         <div>Search</div>
     </div>
 
+    <!-- search -->
     <div class="flex items-center mt-8">
         <input type="text" id='searchby' placeholder="Search by name or roll no." class="search-indigo w-full md:w-1/2">
         <div class="flex justify-center items-center btn-teal w-8 h-8 rounded-full" onclick='search()'><i class="bx bx-search"></i></div>

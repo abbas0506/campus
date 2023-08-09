@@ -50,15 +50,11 @@
         @apply p-4 md:p-12 min-w-full;
     }
     .bread-crumb {
-        @apply flex items-center space-x-1 text-sm;
+        @apply flex flex-wrap items-center space-x-1 text-sm;
     }
     .bread-crumb a {
         @apply text-blue-600;
     }
-    /* .bread-crumb a::after {
-        content: "\203A";
-        font-size: 16px;
-    } */
     .chevron-right::after {
         content: "\203A";
     }

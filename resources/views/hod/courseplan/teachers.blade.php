@@ -1,22 +1,19 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1><a href="{{url('courseplan')}}">Course Allocation | Step IV</a></h1>
-<div class="bread-crumb">
-    <span class="text-slate-400">{{$course_allocation->section->title()}}</span>
-    -- {{$course_allocation->course->name}} / Assign teacher
-</div>
+<div class="container">
+    <h2>Teacher Allocation</h2>
+    <div class="bread-crumb">
+        <a href="/">Home</a>
+        <div>/</div>
+        <a href="{{url('courseplan')}}">Course Allocation</a>
+        <div>/</div>
+        <div>Teachers</div>
+    </div>
 
-
-<div class="container mx-auto mt-8">
-
-    <div class="flex items-end">
-        <div class="flex relative ">
-            <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-            </svg>
-        </div>
-
+    <!-- search -->
+    <div class="flex relative w-full md:w-1/3 mt-8">
+        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
+        <i class="bx bx-search absolute top-2 right-2"></i>
     </div>
 
     <!-- page message -->
@@ -26,54 +23,50 @@
     <x-message></x-message>
     @endif
 
-    <!-- records found -->
-    <div class="flex items-center mt-4 mb-2">
+    <h1 class='text-red-600 mt-8'>{{$course_allocation->section->title()}} <span class="bi-chevron-right text-sm"></span> {{$course_allocation->course->name}}</h1>
 
-        <div class=" bg-teal-100 text-slate-800 px-2"><span class="bx bx-group px-2"></span>Available Teachers: ({{$teachers->count()}})</div>
+    <div class="overflow-x-auto mt-8">
+        <label>{{$teachers->count()}} records in view</label>
+        <table class="table-fixed w-full mt-1">
+            <thead>
+                <tr>
+                    <th class="w-16">Action</th>
+                    <th class="w-64">Teacher</th>
+                    <th class="w-60">Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($teachers->sortBy('name') as $teacher)
+                <tr class="tr">
+                    <td>
+                        <form action="{{route('courseplan.update', $course_allocation->id)}}" method="POST" id='assign_form{{$teacher->id}}' class="flex items-center justify-center">
+                            @csrf
+                            @method('PATCH')
+                            <input type="text" name='teacher_id' value="{{$teacher->id}}" hidden>
+                            <button type="submit" class="btn-teal py-0" onclick="assign('{{$teacher->id}}')">
+                                <i class="bx bx-link"></i>
+                            </button>
+                        </form>
+                    </td>
+                    <td>{{$teacher->name}}</td>
+                    <td>{{Str::replace('Department of ','',$teacher->department->name)}}</td>
+
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
     </div>
-
-
-    <table class="table-auto w-full">
-        <thead>
-            <tr>
-                <th>Teacher / CNIC</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($teachers->sortBy('name') as $teacher)
-            <tr class="tr">
-                <td>
-                    <div class="text-slate-800">{{$teacher->name}}</div>
-                    <div class="text-sm text-gray-500">{{$teacher->cnic}}</div>
-                </td>
-                <td>
-                    <div class="text-sm text-gray-500">{{$teacher->email}}</div>
-                </td>
-                <td>
-                    <form action="{{route('courseplan.update', $course_allocation->id)}}" method="POST" id='assign_form{{$teacher->id}}' class="flex items-center justify-center">
-                        @csrf
-                        @method('PATCH')
-                        <input type="text" name='teacher_id' value="{{$teacher->id}}" hidden>
-                        <button type="submit" class="btn-teal py-0" onclick="assign('{{$teacher->id}}')">
-                            <i class="bx bx-link"></i>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-
-        </tbody>
-    </table>
 </div>
+@endsection
+@section('script')
 <script type="text/javascript">
     function search(event) {
         var searchtext = event.target.value.toLowerCase();
         $('.tr').each(function() {
             if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) ||
-                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
+                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) ||
+                    $(this).children().eq(2).prop('outerText').toLowerCase().includes(searchtext)
                 )) {
                 $(this).addClass('hidden');
             } else {
@@ -81,20 +74,6 @@
             }
         });
     }
-
-    // function filter() {
-    //     var searchtext = $('#department_filter option:selected').text().toLowerCase();
-    //     $('.tr').each(function() {
-    //         if (!(
-    //                 $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) ||
-    //                 $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
-    //             )) {
-    //             $(this).addClass('hidden');
-    //         } else {
-    //             $(this).removeClass('hidden');
-    //         }
-    //     });
-    // }
 
     function assign(formid) {
 

@@ -132,7 +132,7 @@ class CoursePlanController extends Controller
             ->get()
             ->whereNotIn('id', $course_allocation->teacher_id);
 
-        return view('hod.courseplan.replace', compact('course_allocation', 'teachers'));
+        return view('hod.courseplan.teachers', compact('course_allocation', 'teachers'));
     }
     public function replaceTeacher(Request $request)
     {

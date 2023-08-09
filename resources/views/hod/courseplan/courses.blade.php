@@ -1,17 +1,20 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1><a href="{{url('courseplan')}}">Course Allocation | Step III-A</a></h1>
 
-<div class="container mx-auto mt-8">
+<div class="container">
+    <h2>Course Selection</h2>
+    <div class="bread-crumb">
+        <a href="/">Home</a>
+        <div>/</div>
+        <a href="{{url('courseplan')}}">Course Allocation</a>
+        <div>/</div>
+        <div>Courses</div>
+    </div>
 
-    <div class="flex items-end">
-        <div class="flex relative ">
-            <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-            </svg>
-        </div>
-
+    <!-- search -->
+    <div class="flex relative w-full md:w-1/3 mt-8">
+        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
+        <i class="bx bx-search absolute top-2 right-2"></i>
     </div>
 
     <!-- page message -->
@@ -21,49 +24,50 @@
     <x-message></x-message>
     @endif
 
-    <div class="mt-8 bg-sky-300 text-slate-800 px-2 py-1 rounded-t-lg font-semibold">Courses Selection</div>
+    <!-- <div class="mt-8 bg-sky-300 text-slate-800 px-2 py-1 rounded-t-lg font-semibold">Courses Selection</div> -->
 
-    <table class="table-auto w-full mt-4">
-        <thead>
-            <tr class="text-sm">
-                <th class="text-left">Code</th>
-                <th class="text-left">Type</th>
-                <th class="text-left">Name</th>
-                <th class="text-left">Cr. hr</th>
+    <h1 class='text-red-600 mt-8'>{{$section->title()}}</h1>
+    <div class="overflow-x-auto">
+        <table class="table-fixed w-full mt-4">
+            <thead>
+                <tr>
+                    <th class="w-24">Action</th>
+                    <th class="w-32">Code</th>
+                    <th class="w-96">Name</th>
+                    <th class="w-32">Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($courses->get()->sortBy('course_type_id') as $course)
+                <tr class="tr">
+                    <td>
+                        @if($section->has_course($course->id))
+                        <!-- dont show link btn -->
+                        @else
+                        <form action="{{route('courseplan.store')}}" method="POST" id='del_form' class="flex items-center justify-center">
+                            @csrf
+                            <input type="text" name='section_id' value="{{$section->id}}" hidden>
+                            <input type="text" name='course_id' value="{{$course->id}}" hidden>
+                            <input type="text" name='slot_id' value="{{$slot->id}}" hidden>
 
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($courses->get()->sortBy('course_type_id') as $course)
-            <tr class="tr">
-                <td>{{$course->code}}</td>
-                <td>{{$course->course_type->name}}</td>
-                <td>{{$course->name}}</td>
-                <td>{{($course->lblCr())}}</td>
+                            <button type="submit" class="btn-teal py-0 flex items-center" onclick="delme()">
+                                Select
+                            </button>
+                        </form>
+                        @endif
 
-                <td>
-                    @if($section->has_course($course->id))
-                    <!-- dont show link btn -->
-                    @else
-                    <form action="{{route('courseplan.store')}}" method="POST" id='del_form' class="flex items-center justify-center">
-                        @csrf
-                        <input type="text" name='section_id' value="{{$section->id}}" hidden>
-                        <input type="text" name='course_id' value="{{$course->id}}" hidden>
-                        <input type="text" name='slot_id' value="{{$slot->id}}" hidden>
+                    </td>
+                    <td class="text-center">{{$course->code}}</td>
+                    <td>{{$course->name}} <span class="text-slate-500 text-xs">{{($course->lblCr())}}</span></td>
+                    <td class="text-center">{{$course->course_type->name}}</td>
 
-                        <button type="submit" class="btn-teal py-0 flex items-center" onclick="delme()">
-                            Select
-                        </button>
-                    </form>
-                    @endif
+                </tr>
+                @endforeach
 
-                </td>
-            </tr>
-            @endforeach
+            </tbody>
+        </table>
+    </div>
 
-        </tbody>
-    </table>
 </div>
 <script type="text/javascript">
     function search(event) {
@@ -71,7 +75,7 @@
         $('.tr').each(function() {
             if (!(
                     $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) ||
-                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
+                    $(this).children().eq(2).prop('outerText').toLowerCase().includes(searchtext)
                 )) {
                 $(this).addClass('hidden');
             } else {
@@ -84,7 +88,8 @@
         var searchtext = $('#department_filter option:selected').text().toLowerCase();
         $('.tr').each(function() {
             if (!(
-                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
+                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) ||
+                    $(this).children().eq(2).prop('outerText').toLowerCase().includes(searchtext)
                 )) {
                 $(this).addClass('hidden');
             } else {
