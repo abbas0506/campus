@@ -1,36 +1,23 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1><a href="{{url('courseplan')}}" class="link">Course Allocation</a> | Edit</h1>
-<div class="flex">
-    <div class="flex items-center mt-1">
-        <h2 class="">{{$section->title()}}</h2>
-        <i class="bi-chevron-right text-[12px] mx-1"></i>
-        <h2>{{$section->clas->scheme->subtitle()}}</h2>
+<div class="container">
+    <h2>Edit Course Allocation</h2>
+    <div class="bread-crumb">
+        <a href="/">Home</a>
+        <div>/</div>
+        <a href="{{url('courseplan')}}">Course Allocation</a>
+        <div>/</div>
+        <div>Edit</div>
     </div>
-</div>
-<div class="container mx-auto mt-8">
 
-    @if ($errors->any())
-    <div class="alert-danger mt-8">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    <!-- page message -->
+    @if($errors->any())
+    <x-message :errors='$errors'></x-message>
+    @else
+    <x-message></x-message>
     @endif
 
-    @if(session('success'))
-    <div class="flex alert-success items-center mt-4">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-        </svg>
-        {{session('success')}}
-    </div>
-    @endif
-
-
-    <div class="flex flex-col gap-y-4">
+    <div class="flex flex-col gap-y-4 mt-8">
         @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo(session('semester_id')))->get()->sortBy('slot_no') as $slot)
         <div class="gap-y-4">
             <div class="bg-slate-100 px-2 py-1 rounded-t-lg">
@@ -43,10 +30,10 @@
                 <div class="md:pl-24 text-sm">
                     @foreach($section->course_allocations()->on($slot->id)->get() as $course_allocation)
                     <div class="flex flex-col lg:flex-row gap-2 py-1 w-full border-b">
-                        <div class="flex flex-1 text-slate-800 space-x-2">
-                            <div>{{$course_allocation->course->code}}</div>
+                        <div class="flex flex-1 text-slate-800">
+                            <div class="w-24 shrink-0">{{$course_allocation->course->code}}</div>
                             <div class="">{{$course_allocation->course->name}}</div>
-                            <div>
+                            <div class="ml-2">
                                 <!-- delete button -->
                                 @if($course_allocation->teacher_id=='' || $course_allocation->first_attempts->count()==0)
                                 <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_form{{$course_allocation->id}}'>

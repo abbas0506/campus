@@ -22,10 +22,10 @@
     <form action="{{route('departments.store')}}" method='post' class="flex flex-col w-full mt-16">
         @csrf
         <label for="">Full Name</label>
-        <input type="text" id='' name='name' class="input-indigo" placeholder="Department of Analytical Chemistry">
+        <input type="text" id='' name='name' class="custom-input" placeholder="Department of Analytical Chemistry">
 
         <label for="" class='mt-3'>Display Name <span class="text-sm text-orange-700">(to be displayed on final degree)</span></label>
-        <input type="text" id='' name='title' class="input-indigo" placeholder="Department of Chemistry">
+        <input type="text" id='' name='title' class="custom-input" placeholder="Department of Chemistry">
 
         <div class="flex items-center justify-end mt-4 py-2">
             <button type="submit" class="btn-indigo-rounded">Save</button>

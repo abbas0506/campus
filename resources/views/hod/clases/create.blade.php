@@ -8,7 +8,7 @@
         <div>/</div>
         <a href="{{url('clases')}}">Classes & Sections</a>
         <div>/</div>
-        <div>Edit</div>
+        <div>New</div>
     </div>
 
     <div class="md:w-3/4 mx-auto mt-8">
@@ -30,19 +30,18 @@
         <x-message></x-message>
         @endif
 
-        <h1 class='text-red-600 mt-8'>{{$clas->program->short}} <i class="bx bx-chevron-right"></i>New Class</h1>
+        <h1 class='text-red-600 mt-8'>{{$program->short}} <i class="bx bx-chevron-right"></i>New Class</h1>
 
-        <form action="{{route('clases.update',$clas)}}" method='post' class="mt-8" onsubmit="return validate(event)">
+        <form action="{{route('clases.store')}}" method='post' class="mt-8" onsubmit="return validate(event)">
             @csrf
-            @method('PATCH')
-            <input type="text" name="program_id" value="{{$clas->program->id}}" hidden>
+            <input type="text" name="program_id" value="{{$program->id}}" hidden>
 
             <div class="grid grid-cols-1 md:grid-cols-2 mt-5 gap-4">
-                <div class="w-full">
+                <div>
                     <label>First Semester (class started on)</label>
                     <select id='first_semester_id' name="first_semester_id" class="custom-input">
                         @foreach($semesters as $semester)
-                        <option value="{{$semester->id}}" @selected($semester->id==$clas->first_semester_id)>{{$semester->short()}}</option>
+                        <option value="{{$semester->id}}" @selected($semester->id==session('semester_id'))>{{$semester->short()}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -50,32 +49,58 @@
                     <label>Choose Shift</label>
                     <select name="shift_id" class="custom-input">
                         @foreach($shifts as $shift)
-                        <option value="{{$shift->id}}" @selected($shift->id==$clas->shift_id)>{{$shift->name}}</option>
+                        <option value="{{$shift->id}}">{{$shift->name}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
                     <label>Study Scheme for this class?</label>
                     <select id='scheme_id' name="scheme_id" class="custom-input">
-                        @foreach($clas->program->schemes as $scheme)
-                        <option value="{{$scheme->id}}" @selected($scheme->id==$clas->scheme_id)>{{$scheme->subtitle()}}</option>
+                        @foreach($program->schemes as $scheme)
+                        <option value="{{$scheme->id}}">{{$scheme->subtitle()}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
                     <label>Intake Semester</label>
                     <select id='semester_no' name="semester_no" class="custom-input">
-                        <option value="1" @selected($clas->semester_no==1)>1st Semester</option>
-                        <option value="5" @selected($clas->semester_no==5)>5th Semester</option>
+                        <option value="1">1st Semester</option>
+                        <option value="5">5th Semester</option>
                     </select>
                 </div>
             </div>
 
-            <button type="submit" class="btn-indigo-rounded mt-6">Update Now</button>
+            <button type="submit" class="btn-indigo-rounded mt-6">Create Now</button>
 
         </form>
 
     </div>
 </div>
 
+@endsection
+@section('script')
+<script lang="javascript">
+    function validate(event) {
+        var validated = true;
+        var semester_no = $('#semester_no').val()
+        var scheme_id = $('#scheme_id').val()
+
+
+        if (semester_no == '' || scheme_id == '') {
+
+            event.preventDefault();
+            validated = false;
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Required input missing!',
+                showConfirmButton: false,
+                timer: 1500,
+            })
+
+        }
+        return validated;
+
+    }
+</script>
 @endsection

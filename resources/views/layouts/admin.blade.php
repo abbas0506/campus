@@ -1,5 +1,5 @@
 @extends('layouts.basic')
-@section('content')
+@section('body')
 <!-- header -->
 <x-header></x-header>
 

@@ -65,7 +65,7 @@ class ProgramController extends Controller
                 ->where('department_id', $request->department_id)
                 ->first();
             if ($exists) {
-                return redirect()->back()->with('error', 'Program ' . $exists->name . ' already exists!');
+                return redirect()->back()->with('warning', 'Program ' . $exists->name . ' already exists!');
             } else {
                 Program::create($request->all());
                 return redirect()->route('programs.index')->with('success', 'Successfully created');
@@ -128,7 +128,7 @@ class ProgramController extends Controller
                 ->where('department_id', $request->department_id)
                 ->first();
             if ($exists) {
-                return redirect()->back()->with('error', 'Program ' . $exists->name . ' already exists!');
+                return redirect()->back()->with('warning', 'Program ' . $exists->name . ' already exists!');
             } else {
                 $program = Program::findOrFail($id);
                 $program->update($request->all());

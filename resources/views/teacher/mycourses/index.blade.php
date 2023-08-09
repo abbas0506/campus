@@ -7,6 +7,7 @@
         {{$course_allocations->count()}} courses found
     </div>
 </div>
+
 @if(session('success'))
 <div class="flex alert-success items-center mt-8">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">

@@ -22,16 +22,16 @@
     <form action="{{route('headships.store')}}" method='post' class="flex flex-col w-full md:w-3/4 mx-auto mt-4">
         @csrf
         <label for="">HoD Name</label>
-        <input type="text" id='name' name='name' class="input-indigo" placeholder="Enter name">
+        <input type="text" id='name' name='name' class="custom-input" placeholder="Enter name">
 
         <label for="" class='mt-3'>Email</label>
-        <input type="text" id='email' name='email' class="input-indigo" placeholder="Enter email address">
+        <input type="text" id='email' name='email' class="custom-input" placeholder="Enter email address">
 
         <label for="" class='mt-3'>Phone</label>
-        <input type="text" id='phone' name='phone' class="input-indigo" placeholder="Enter phone">
+        <input type="text" id='phone' name='phone' class="custom-input" placeholder="Enter phone">
 
         <label for="" class='mt-3'>CNIC <span id="cnic_length" class="text-slate-500 text-sm ml-3">0/13</span></label>
-        <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Without dashes">
+        <input type="text" id='cnic' name='cnic' class="custom-input" placeholder="Without dashes">
 
         <input type="text" name="department_id" value="{{$selected_department->id}}" hidden>
         <div class="flex items-center justify-end mt-4 py-2">

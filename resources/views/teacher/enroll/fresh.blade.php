@@ -13,22 +13,23 @@
 <div class="container w-full mx-auto mt-12">
 
     @if ($errors->any())
-    <div class="alert-danger mt-8">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <div class="alert-danger mt-8 md:mx-24">
+        <div class="w-10">
+            <i class="bi-emoji-frown text-[24px]"></i>
+        </div>
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     </div>
     @endif
-
     @if(session('success'))
-    <div class="flex alert-success items-center mt-8">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-        </svg>
-
-        {{session('success')}}
+    <div class="alert-success mb-8">
+        <i class="bi-emoji-smile text-[24px] mr-4"></i>
+        {{ session('success') }}
     </div>
     @endif
 

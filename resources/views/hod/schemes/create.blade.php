@@ -20,22 +20,20 @@
         </div>
     </div>
 
-    @if ($errors->any())
-    <div class="alert-danger mt-5">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    <!-- page message -->
+    @if($errors->any())
+    <x-message :errors='$errors'></x-message>
+    @else
+    <x-message></x-message>
     @endif
+
     <form action="{{route('schemes.store')}}" method='post' class="flex flex-col w-full text-left mt-12">
         @csrf
         <label for="" class="text-md font-bold">{{$program->short}}<span class="text-sm text-red-700 ml-2 font-thin">(program for which scheme is being defined)</span></label>
         <input id="" name="program_id" value="{{$program->id}}" class="hidden">
 
         <label for="" class="mt-3">This scheme will be effective from <span class='text-xs text-slate-600'>(S=Spring, F=Fall)</span></label>
-        <select id="" name="wef_semester_id" class="input-indigo p-2">
+        <select id="" name="wef_semester_id" class="custom-input p-2">
             @foreach($semesters as $semester)
             <option value="{{$semester->id}}">{{$semester->short()}}</option>
             @endforeach

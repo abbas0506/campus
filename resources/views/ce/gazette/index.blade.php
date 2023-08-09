@@ -24,14 +24,14 @@
             @method('POST')
 
             <label for="" class="text-base text-gray-700 text-left w-full">Semester</label>
-            <select id="semester_id" name="semester_id" class="input-indigo px-4 py-3 w-full mb-3">
+            <select id="semester_id" name="semester_id" class="custom-input px-4 py-3 w-full mb-3">
                 @foreach($semesters->sortDesc() as $semester)
                 <option value="{{$semester->id}}">{{$semester->short()}}</option>
                 @endforeach
             </select>
 
             <label for="" class="text-base text-gray-700 text-left w-full">Select a department</label>
-            <select id="department_id" name="department_id" class="input-indigo px-4 py-3 w-full" required>
+            <select id="department_id" name="department_id" class="custom-input px-4 py-3 w-full" required>
                 <option value="">Select a department</option>
                 @foreach($departments as $department)
                 <option value="{{$department->id}}">{{$department->name}}</option>

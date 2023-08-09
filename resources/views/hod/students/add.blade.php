@@ -1,83 +1,88 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1><a href="{{route('sections.show',$section)}}"> Students</a></h1>
-<div class="flex items-center justify-between flex-wrap">
+<div class="container">
+    <h2>New Student</h2>
     <div class="bread-crumb">
-        {{$section->title()}} / <span class="font-bold pl-1">New student</span>
+        <a href="/">Home</a>
+        <div>/</div>
+        <a href="{{route('clases.index')}}">Classes & Sections</a>
+        <div>/</div>
+        <div>New Student</div>
+    </div>
+
+    <div class="md:w-3/4 mx-auto mt-8">
+
+        <!-- page message -->
+        @if($errors->any())
+        <x-message :errors='$errors'></x-message>
+        @else
+        <x-message></x-message>
+        @endif
+
+        <h1 class='text-red-600 mt-8'>{{$section->title()}} </h1>
+        <form action="{{route('students.store')}}" method='post' class="flex flex-col w-full mt-8">
+            @csrf
+            <input type="text" name="section_id" value="{{$section->id}}" hidden>
+
+            <div class="flex items-center space-x-4">
+                <div class="flex item-center">
+                    <input type="radio" name='gender' value="M" checked>
+                    <label class="ml-3">Male</label>
+                </div>
+                <div class="flex item-center">
+                    <input type="radio" name='gender' value="F">
+                    <label class="ml-3">Female</label>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
+                <div class="md:col-span-2">
+                    <label class='mt-8'>Student Name</label>
+                    <input type="text" id='' name='name' class="custom-input" placeholder="Student name" value="" required>
+                </div>
+                <div>
+                    <label class=''>Father</label>
+                    <input type="text" id='' name='father' class="custom-input" placeholder="father name" value="">
+                </div>
+                <div>
+                    <label>CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
+                    <input type="text" id='cnic' name='cnic' value="" class="custom-input" placeholder="Without dashes">
+                </div>
+                <div>
+                    <label>Phone <span id="phone_length" class="text-slate-500 text-xs ml-3">0/11</span></label>
+                    <input type="text" id='phone' name='phone' value="" class="custom-input" placeholder="Without dash">
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="text" id='email' name='email' value="" class="custom-input" placeholder="email">
+                </div>
+                <div class="md:col-span-2">
+                    <label>Address</label>
+                    <input type="text" id='address' name='address' value="" class="custom-input" placeholder="address">
+                </div>
+                <div class="md:col-span-2 border-b border-dashed border-slate-200 mt-3 h-4">
+                    <!-- divider -->
+                </div>
+                <div>
+                    <label>Roll No</label>
+                    <input type="text" name="rollno" class="custom-input" placeholder="Roll No." value="" required>
+                </div>
+                <div>
+                    <label>Reg. No</label>
+                    <input type="text" name="regno" class="custom-input" placeholder="Registration No." value="">
+                </div>
+
+            </div>
+
+            <div class="flex">
+                <button type="submit" class="btn-teal rounded py-2 mt-4">Create Now</button>
+            </div>
+
+        </form>
+
+
     </div>
 </div>
-
-<div class="container md:w-3/4 mx-auto px-5">
-
-    @if ($errors->any())
-    <div class="alert-danger mt-8">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-    <form action="{{route('students.store')}}" method='post' class="flex flex-col w-full">
-        @csrf
-        <input type="text" name="section_id" value="{{$section->id}}" hidden>
-        <div class="flex space-x-4 mt-12">
-            <div class="flex item-center">
-                <input type="radio" name='gender' value="M" checked>
-                <label for="" class="ml-3">Male</label>
-            </div>
-            <div class="flex item-center">
-                <input type="radio" name='gender' value="F">
-                <label for="" class="ml-3">Female</label>
-            </div>
-        </div>
-
-        <label for="" class='mt-8'>Student Name</label>
-        <input type="text" id='' name='name' class="input-indigo" placeholder="Sajjad Ahmad" required>
-
-        <div class="flex flex-col md:flex-row md:space-x-8">
-            <div class="flex flex-col flex-1">
-                <label for="" class='mt-3'>Father</label>
-                <input type="text" id='' name='father' class="input-indigo" placeholder="father name" required>
-            </div>
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
-                <input type="text" id='cnic' name='cnic' class="input-indigo" placeholder="Without dashes">
-            </div>
-        </div>
-        <div class="flex flex-col md:flex-row md:space-x-8">
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="">Phone <span id="phone_length" class="text-slate-500 text-xs ml-3">0/11</span></label>
-                <input type="text" id='phone' name='phone' class="input-indigo" placeholder="Without dash">
-            </div>
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="">Email</label>
-                <input type="text" id='email' name='email' class="input-indigo" placeholder="email">
-            </div>
-        </div>
-
-        <label for="" class="mt-3">Address</label>
-        <input type="text" id='address' name='address' class="input-indigo" placeholder="address">
-
-        <div class="border-b border-dashed border-slate-500 mt-3 h-4"></div>
-
-        <div class="flex flex-col md:flex-row md:space-x-8">
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="">Roll No</label>
-                <input type="text" name="rollno" class="input-indigo" placeholder="Roll No." required>
-            </div>
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="">Reg. No</label>
-                <input type="text" name="regno" class="input-indigo" placeholder="Registration No.">
-            </div>
-        </div>
-        <div class="flex items-center justify-end mt-4 py-2">
-            <button type="submit" class="btn-indigo-rounded">Save</button>
-        </div>
-    </form>
-
-</div>
-
 @endsection
 @section('script')
 <script type="module">

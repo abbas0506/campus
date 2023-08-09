@@ -17,7 +17,7 @@
     <form action="{{route('coursetypes.store')}}" method='post' class="flex flex-col w-full md:w-2/3">
         @csrf
         <label for="">Course Type</label>
-        <input type="text" id='' name='name' class="input-indigo mt-2" placeholder="Course type name">
+        <input type="text" id='' name='name' class="custom-input mt-2" placeholder="Course type name">
 
         <div class="flex items-center justify-end mt-4 py-2">
             <button type="submit" class="btn-indigo-rounded">Save</button>

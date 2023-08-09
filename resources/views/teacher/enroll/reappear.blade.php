@@ -18,7 +18,7 @@
         <div class="flex justify-center items-center w-full h-full">
             <div class="flex flex-col w-full">
                 <label for="">Roll No.</label>
-                <input type="text" id='rollno' class="flex-1 input-indigo py-1 px-4" placeholder="Enter student's roll no.">
+                <input type="text" id='rollno' class="flex-1 custom-input py-1 px-4" placeholder="Enter student's roll no.">
                 <button type='button' class="btn-teal mt-3" onclick="searchReappearer()">Fetch Record</button>
             </div>
         </div>

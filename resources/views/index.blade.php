@@ -1,6 +1,6 @@
 @extends('layouts.basic')
 
-@section('content')
+@section('body')
 <div class="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-blue-100 to-blue-400">
 
     <div class="flex flex-col items-center w-full px-5 md:w-1/3">
@@ -26,11 +26,11 @@
                 <div class="flex flex-col w-full items-start">
                     <div class="flex items-center w-full relative">
                         <i class="bi bi-envelope-at absolute left-2 text-slate-600"></i>
-                        <input type="text" id="email" name="email" class="w-full input-indigo px-8" placeholder="Type your email here">
+                        <input type="text" id="email" name="email" class="w-full custom-input px-8" placeholder="Type your email here">
                     </div>
                     <div class="flex items-center w-full mt-3 relative">
                         <i class="bi bi-key absolute left-2 text-slate-600 -rotate-[45deg]"></i>
-                        <input type="password" id="password" name="password" class="w-full input-indigo px-8" placeholder="default password: password">
+                        <input type="password" id="password" name="password" class="w-full custom-input px-8" placeholder="default password: password">
                         <!-- eye -->
                         <i class="bi bi-eye-slash absolute right-2 eye-slash" onclick="showpw()"></i>
                         <i class="bi bi-eye absolute right-2 eye hidden" onclick="hidepw()"></i>
@@ -54,7 +54,7 @@
             <label for="">You will proceed as</label>
             @endif
 
-            <select id="role" name="role" class="input-indigo  px-4 py-3 w-full mt-3 bg-transparent" onchange="loadDepartments()">
+            <select id="role" name="role" class="custom-input  px-4 py-3 w-full mt-3 bg-transparent" onchange="loadDepartments()">
                 @if(Auth::user()->hasAnyRole('hod','teacher','super'))
                 <option value="">- select -</option>
                 @endif
@@ -65,14 +65,14 @@
             <div id='deptt_container' class="hidden">
                 <div class="mt-3">
                     <label for="" class="text-base text-gray-700 text-left">Department</label>
-                    <select id="department_id" name="department_id" class="input-indigo px-4 py-3 w-full">
+                    <select id="department_id" name="department_id" class="custom-input px-4 py-3 w-full">
 
                     </select>
                 </div>
             </div>
             <div id='semester_container' class="mt-3 hidden">
                 <label for="" class="text-base text-gray-700 text-left w-full">Semester</label>
-                <select id="semester_id" name="semester_id" class="input-indigo px-4 py-3 w-full">
+                <select id="semester_id" name="semester_id" class="custom-input px-4 py-3 w-full">
                     <option value="">Select a semester</option>
                     @foreach($semesters as $semester)
                     <option value="{{$semester->id}}">{{$semester->short()}}</option>

@@ -1,6 +1,6 @@
 @extends('layouts.basic')
 
-@section('content')
+@section('body')
 
 <div class="flex flex-col-reverse md:flex-row items-center w-screen md:h-screen">
     <div class="flex flex-col md:w-1/2 text-center md:text-left md:pl-36">
@@ -22,7 +22,7 @@
             <div class="flex flex-col w-full items-start">
                 <div class="w-full">
                     <label for="hero-field" class="leading-7 text-sm text-gray-600">Verification Code</label>
-                    <input type="text" id="id" name="two_step_code" class="w-full input-indigo" placeholder="- - - -">
+                    <input type="text" id="id" name="two_step_code" class="w-full custom-input" placeholder="- - - -">
                 </div>
                 <button type='submit' class="w-full md:w-1/4 mt-4 btn-indigo">Verify</button>
             </div>

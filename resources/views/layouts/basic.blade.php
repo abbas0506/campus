@@ -24,11 +24,15 @@
 </head>
 
 <body>
+    @yield('header')
+    @yield('sidebar')
+    @yield('body')
 
-    @yield('content')
     <script src="{{asset('js/sweetalert2@10.js')}}"></script>
     <script type="module" src="{{asset('js/collapsible.js')}}"></script>
+
     @yield('script')
+    @yield('footer')
 </body>
 
 </html>

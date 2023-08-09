@@ -27,6 +27,38 @@ class StudentController extends Controller
         //
         $department = Department::find(session('department_id'));
         return view('hod.students.index', compact('department'));
+
+        // $result = '';
+        // $searchby = 'samra';
+        // try {
+        //     $students = Student::where('rollno', 'like', '%' . $searchby . '%')
+        //         ->orWhere('name', 'like', '%' . $searchby . '%')
+        //         ->whereRelation('section.clas.program', 'department_id', session('department_id'))
+        //         ->get();
+
+
+        //     echo "<table>" .
+        //         "<tbody>";
+
+
+
+        //     foreach ($students as $student) {
+
+        //         $result .=
+        //             "<tr>" .
+        //             "<td><a href='/students/" . $student->id . "' class='link'>" . $student->rollno . "</a></td>" .
+        //             "<td>" . $student->name ?? '' . "</td>" .
+        //             "<td>" . $student->father ?? ''  . "</td>" .
+        //             "<td>" . $student->section->clas->title() . "</td>" .
+        //             "</tr>";
+        //     }
+        //     echo $result;
+
+        //     echo "</tbody>" .
+        //         "</table>";
+        // } catch (Exception $e) {
+        //     echo $e->getMessage();
+        // }
     }
 
     /**

@@ -61,12 +61,12 @@ class ReappearController extends Controller
                 ->where('semester_id', $current_course_allocation->semester_id)
                 ->count();
             if ($exists > 0) {
-                return redirect()->back()->with('error', 'Already enrolled!');
+                return redirect()->back()->with('warning', 'Already enrolled!');
             } else {
 
                 //if last cgp above 3.5 cant register 
                 if ($failure_attempt->last_gpa() > 3.5) {
-                    return redirect()->back()->with('error', 'CGP above 3.5, not eligible!');
+                    return redirect()->back()->with('warning', 'CGP above 3.5, not eligible!');
                 } else {
                     try {
                         Reappear::create([
@@ -83,7 +83,7 @@ class ReappearController extends Controller
                 }
             }
         } else {
-            return redirect()->back()->with('error', 'Data not found!');
+            return redirect()->back()->with('warning', 'Data not found!');
         }
     }
 

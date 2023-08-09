@@ -74,7 +74,7 @@ class ClasController extends Controller
                 ->where('first_semester_id', $request->first_semester_id)
                 ->first();
             if ($exists) {
-                return redirect()->back()->with('error', 'Class ' . $exists->title() . ' already exists! Please review your input carefully.');
+                return redirect()->back()->with('warning', 'Class ' . $exists->title() . ' already exists! Please review your input carefully.');
             } else {
                 $clas = Clas::create($request->all());
 
@@ -152,15 +152,13 @@ class ClasController extends Controller
                 ->first();
 
             if ($exists) {
-                return redirect()->back()->with('error', 'Class ' . $exists->short() . ' already exists! You may promote/demote it.');
+                return redirect()->back()->with('warning', 'Class ' . $exists->short() . ' already exists! You may promote/demote it.');
             } else {
-                // $clas = Clas::findOrFail($id);
                 $clas->update($request->all());
                 return redirect()->route('clases.index')->with('success', 'Successfully updated');;
             }
         } catch (Exception $ex) {
-            return redirect()->back()
-                ->withErrors($ex->getMessage());
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 
@@ -190,7 +188,7 @@ class ClasController extends Controller
         $schemes = Scheme::all();
         $semesters = Semester::till(session('semester_id'))->get();
 
-        return view('hod.clases.append', compact('program', 'shifts', 'schemes', 'semesters'));
+        return view('hod.clases.create', compact('program', 'shifts', 'schemes', 'semesters'));
     }
 
     public function revert(Request $request)

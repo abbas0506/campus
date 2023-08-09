@@ -1,6 +1,6 @@
 @extends('layouts.basic')
 
-@section('content')
+@section('body')
 <x-header></x-header>
 <div class="flex flex-col w-screen h-screen justify-center items-center">
 
@@ -33,11 +33,11 @@
             <form action="{{url('changepw')}}" method="post" class="flex flex-col w-full md:w-3/4 md:mx-auto bg-white p-5" onsubmit="return validate(event)">
                 @csrf
                 <label for="">Old Password</label>
-                <input type="text" id="oldpw" name="oldpw" class="w-full input-indigo" placeholder="Enter your login id" required>
+                <input type="text" id="oldpw" name="oldpw" class="w-full custom-input" placeholder="Enter your login id" required>
                 <label for="" class="mt-3">New Password</label>
-                <input type="password" id="newpw" name="newpw" class="w-full input-indigo" placeholder="Enter your login id" required>
+                <input type="password" id="newpw" name="newpw" class="w-full custom-input" placeholder="Enter your login id" required>
                 <label for="" class="mt-3">Confirm Password</label>
-                <input type="password" id="confirmpw" class="w-full input-indigo" placeholder="Enter your login id" required>
+                <input type="password" id="confirmpw" class="w-full custom-input" placeholder="Enter your login id" required>
 
                 <div class="flex space-x-4">
 

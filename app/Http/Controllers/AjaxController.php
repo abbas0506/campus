@@ -173,31 +173,27 @@ class AjaxController extends Controller
             'searchby' => 'required',
         ]);
 
-        // $students = Student::where('rollno', $request->searchby)->get();
-
-        $studentsByRollNo = Student::where('rollno', 'like', '%' . $request->searchby . '%')
-            ->whereRelation('section.clas.program', 'department_id', session('department_id'));
-
-        $studentsByName = Student::where('name', 'like', '%' . $request->searchby . '%')
-            ->whereRelation('section.clas.program', 'department_id', session('department_id'));
-        $students = $studentsByRollNo->union($studentsByName)->get();
+        $searchby = $request->searchby;
+        $students = Student::where('rollno', 'like', '%' . $searchby . '%')
+            ->orWhere('name', 'like', '%' . $searchby . '%')
+            ->whereRelation('section.clas.program', 'department_id', session('department_id'))
+            ->get();
 
         $result = '';
-        $roman = config('global.romans');
-        //if student found, fetch student history and check whether he/she has ever failed in the same course
-
+        //return data
         foreach ($students as $student) {
-            //look for only same course
-
-            //if student failed, then look into reappear attempts
             $result .=
-
-                "<div class='flex flex-row w-full py-1'>" .
-                "<a href='/students/" . $student->id . "' class='link w-1/4'>" . $student->rollno . "</a>" .
-                "<div class='w-1/4'>" . $student->name . "</div>" .
-                "<div class='w-1/4'>" . $student->father . "</div>" .
-                "<div class='w-1/4'>" . $student->section->clas->title() . "</div>" .
-                "</div>";
+                "<tr>" .
+                "<td><a href='/students/" . $student->id . "' class='link'>" . $student->rollno . "</a></td>" .
+                "<td>" . $student->name . "</td>" .
+                "<td>" . $student->father . "</td>" .
+                "</tr>";
+        }
+        if ($result == '') {
+            $result .=
+                "<tr>" .
+                "<td colspan=4> No record found </td>" .
+                "</tr>";
         }
         //student data found
         return response()->json([

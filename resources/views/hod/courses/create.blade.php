@@ -5,14 +5,11 @@
 <div class="bread-crumb">New course</div>
 
 <div class="container md:w-3/4 mx-auto px-5">
-    @if ($errors->any())
-    <div class="alert-danger mt-8">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    <!-- page message -->
+    @if($errors->any())
+    <x-message :errors='$errors'></x-message>
+    @else
+    <x-message></x-message>
     @endif
 
     <div class="flex items-center space-x-2 mt-4">
@@ -40,38 +37,38 @@
         </div>
 
         <label for="" class="mt-4">Full Name</label>
-        <input type="text" id='full_name' name='name' class="input-indigo" placeholder="Object Oriented Programming" required>
+        <input type="text" id='full_name' name='name' class="custom-input" placeholder="Object Oriented Programming" required>
 
         <div class="flex flex-col md:flex-row md:items-center md:space-x-8">
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Short Name <span class="text-sm">(if any, otherwise same as full name)</span></label>
-                <input type="text" id='short_name' name='short' class="input-indigo" placeholder="OOP" required>
+                <input type="text" id='short_name' name='short' class="custom-input" placeholder="OOP" required>
             </div>
             <div class="flex flex-col">
                 <label for="" class='mt-3'>Course Code</label>
-                <input type="text" id='code' name='code' class="input-indigo" placeholder="ZOOL-B-009">
+                <input type="text" id='code' name='code' class="custom-input" placeholder="ZOOL-B-009">
             </div>
         </div>
 
         <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Cr Hrs (Theory)</label>
-                <input id="" type='number' name="cr_theory" class="input-indigo p-1 pl-2" placeholder="Crdit Hrs" value='4' required>
+                <input id="" type='number' name="cr_theory" class="custom-input p-1 pl-2" placeholder="Crdit Hrs" value='4' required>
             </div>
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Cr Hrs (Practical)</label>
-                <input id="" type='number' name="cr_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value='0' min=0 required>
+                <input id="" type='number' name="cr_practical" class="custom-input p-1 pl-2" placeholder="0 if no practical" value='0' min=0 required>
             </div>
         </div>
         <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
 
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Marks (Theory)</label>
-                <input type='number' id="" name="marks_theory" class="input-indigo p-1 pl-2" placeholder="Marks" value='100' required>
+                <input type='number' id="" name="marks_theory" class="custom-input p-1 pl-2" placeholder="Marks" value='100' required>
             </div>
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Marks (Practical)</label>
-                <input type='number' id="" name="marks_practical" class="input-indigo p-1 pl-2" placeholder="0 if no practical" value='0' min=0 required>
+                <input type='number' id="" name="marks_practical" class="custom-input p-1 pl-2" placeholder="0 if no practical" value='0' min=0 required>
             </div>
         </div>
 

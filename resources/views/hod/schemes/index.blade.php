@@ -12,15 +12,13 @@
     </div>
 </div>
 
-@if(session('success'))
-<div class="alert-success mt-8">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-    </svg>
-
-    {{session('success')}}
-</div>
+<!-- page message -->
+@if($errors->any())
+<x-message :errors='$errors'></x-message>
+@else
+<x-message></x-message>
 @endif
+
 <div class="flex items-center mt-8 mb-1">
     <div class="text-sm  text-gray-500">{{$programs->count()}} records found <span class='text-xs text-slate-600 ml-4 bg-teal-100 px-2'>(S=Spring, F=Fall)</span></div>
     <div class="text-xs text-gray-500 ml-4"><i class="bx bxs-hand-right text-indigo-600 mr-2"></i>Click on + icon to add new scheme</div>

@@ -53,7 +53,7 @@
         <input type="hidden" name="slot_no" value="{{$slot_no}}">
 
         <label for="" class="mt-3">Credit hrs. </label>
-        <select id="" name="cr" class="input-indigo p-2">
+        <select id="" name="cr" class="custom-input p-2">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3" selected>3</option>

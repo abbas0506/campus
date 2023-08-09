@@ -42,32 +42,30 @@
             </div>
             <div class="body">
 
+                <div class="flex w-full border-b text-xs font-semibold py-1">
+                    <div class="w-16 text-center">Slot</div>
+                    <div class="w-40">Course Type</div>
+                    <div class="flex flex-col flex-1">
+                        <div class="flex w-full">
+                            <div class="flex w-24">Code</div>
+                            <div class="flex flex-1">Course</div>
+                            <div class="flex flex-1">Teacher</div>
+                        </div>
 
-
-                <div class="flex flex-col w-full even:bg-slate-100 py-1 text-xs overflow-x-auto">
-                    <div class="flex w-full border-b text-xs font-semibold py-1">
-                        <div class="w-16 shrink-0 text-center">Slot</div>
-                        <div class="w-40 shrink-0">Course Type</div>
-                        <!-- <div class="flex flex-col flex-1">
-                            <div class="flex w-full"> -->
-                        <div class="shrink-0 w-24">Code</div>
-                        <div class="shrink-0 w-64">Course</div>
-                        <div class="shrink-0 w-64">Teacher</div>
-                        <!-- </div>
-
-                        </div> -->
                     </div>
-                    @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->get() as $slot)
+                </div>
 
+                @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->get() as $slot)
+                <div class="flex flex-col w-full even:bg-slate-100 py-1 text-xs">
                     <div class="flex">
-                        <div class="shrink-0 w-16 text-center">{{$slot->slot_no}} </div>
-                        <div class="shrink-0 w-40">{{$slot->lblCrsType()}} ({{$slot->cr}})</div>
-                        <div class="flex flex-col justify-center">
+                        <div class="w-16 text-center">{{$slot->slot_no}} </div>
+                        <div class="w-40">{{$slot->lblCrsType()}} ({{$slot->cr}})</div>
+                        <div class="flex flex-col flex-1 justify-center">
                             @foreach($section->course_allocations()->during($semester->id)->on($slot->id)->get() as $course_allocation)
                             <div class="flex w-full my-1">
-                                <div class="shrink-0 w-24">{{$course_allocation->course->code}} </div>
-                                <div class="shrink-0 w-64">{{$course_allocation->course->name}}<span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>
-                                <div class="shrink-0 w-64">
+                                <div class="flex w-24">{{$course_allocation->course->code}} </div>
+                                <div class="flex flex-1">{{$course_allocation->course->name}}<span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>
+                                <div class="flex flex-1">
                                     @if($course_allocation->teacher)
                                     {{$course_allocation->teacher->name ?? ''}}
                                     @else
@@ -78,10 +76,9 @@
                             @endforeach
 
                         </div>
-
                     </div>
-                    @endforeach
                 </div>
+                @endforeach
 
                 @if($semester->id==session('semester_id'))
                 <div class="flex w-full py-2">

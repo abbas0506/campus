@@ -4,22 +4,11 @@
 <div class="bread-crumb">{{$program->short}} / edit </div>
 <div class="container md:w-3/4 mx-auto px-5">
 
-    @if ($errors->any())
-    <div class="alert-danger mt-8">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-    @if(session('error'))
-    <div class="flex items-center alert-danger mt-8">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-        </svg>
-        {{session('error')}}
-    </div>
+    <!-- page message -->
+    @if($errors->any())
+    <x-message :errors='$errors'></x-message>
+    @else
+    <x-message></x-message>
     @endif
 
     <form action="{{route('programs.update',$program)}}" method='post' class="flex flex-col w-full mt-12">
@@ -36,24 +25,24 @@
         </div>
         <div class="flex flex-col mt-4">
             <label for="">Full Name <span class="text-red-600"> *(as per scheme of study)</span></label>
-            <input type="text" id='' name='name' class="input-indigo" placeholder="Bachelor of Science in Computer Science" value="{{$program->name}}" required>
+            <input type="text" id='' name='name' class="custom-input" placeholder="Bachelor of Science in Computer Science" value="{{$program->name}}" required>
         </div>
 
         <div class="flex items-center space-x-4 ">
             <div class="flex flex-col grow">
                 <label for="" class='mt-3'>Short Name <span class="text-sm">(if any)</span></label>
-                <input type="text" id='' name='short' class="input-indigo" placeholder="For example: BSCS" value="{{$program->short}}">
+                <input type="text" id='' name='short' class="custom-input" placeholder="For example: BSCS" value="{{$program->short}}">
             </div>
             <div class="flex flex-col">
                 <label for="" class='mt-3'>Cr. Hrs <span class="text-xs font-thin">(degree requirement)</span></label>
-                <input type="number" id='' name='cr' class="input-indigo" placeholder="Credit hrs" value="{{$program->cr}}" required>
+                <input type="number" id='' name='cr' class="custom-input" placeholder="Credit hrs" value="{{$program->cr}}" required>
             </div>
         </div>
 
         <div class="flex space-x-4">
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Min Duration <span class="text-sm">(Years)</span></label>
-                <select id="" name="min_t" class="input-indigo p-2" required>
+                <select id="" name="min_t" class="custom-input p-2" required>
                     @foreach($durations as $duration)
                     <option value="{{$duration}}" @if($program->min_t==$duration) selected @endif>{{$duration}}</option>
                     @endforeach
@@ -61,7 +50,7 @@
             </div>
             <div class="flex flex-col flex-1">
                 <label for="" class='mt-3'>Max Duration <span class="text-sm">(Years)</span></label>
-                <select id="" name="max_t" class="input-indigo p-2" required>
+                <select id="" name="max_t" class="custom-input p-2" required>
                     @foreach($durations as $duration)
                     <option value="{{$duration}}" @if($program->max_t==$duration) selected @endif>{{$duration}}</option>
                     @endforeach
