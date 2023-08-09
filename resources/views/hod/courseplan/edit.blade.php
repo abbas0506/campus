@@ -51,7 +51,7 @@
                             <div>
                                 <!-- teacher -->
                                 @if($course_allocation->teacher_id!='')
-                                <a href="{{route('courseplan.replace',$course_allocation->id)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
+                                <a href="{{route('courseplan.teachers',$course_allocation)}}" class="btn-blue text-xs pb-1 px-2">Replace</a>
                                 @else
                                 <a href="{{route('courseplan.teachers',$course_allocation)}}" class="flex items-center text-xs link">
                                     (Assign Teacher)

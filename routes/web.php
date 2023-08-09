@@ -173,12 +173,7 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
     Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('courseplan', CoursePlanController::class);
 
-    // Route::get('courseplan/{section}/courses', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
     Route::get('courseplan/{courseallocation}/teachers', [CoursePlanController::class, 'teachers'])->name('courseplan.teachers');
-    Route::get('courseplan/{courseallocation}/replace', [CoursePlanController::class, 'replace'])->name('courseplan.replace');
-    Route::post('courseplan/replace', [CoursePlanController::class, 'replaceTeacher'])->name('courseplan.replace.teacher');
-    Route::put('updateslot/{slot}', [CoursePlanController::class, 'updateslot'])->name('updateslot');
-
     Route::get('courseplan/courses/{section}/{slot}', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
 
     Route::resource('students', StudentController::class);

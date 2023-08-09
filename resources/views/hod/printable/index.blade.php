@@ -22,12 +22,6 @@
                 <div class="mt-2">Cumulative</div>
                 <div class="text-sm font-thin text-slate-600 hidden">10</div>
             </a>
-            <!-- <a href="{{url('teachers')}}" class="flex flex-col justify-center items-center h-32 w-40 rounded-lg bg-sky-200">
-                <i class="bx bxs-group text-2xl"></i>
-                <div class="mt-2">Teachers</div>
-                <div class="text-sm font-thin text-slate-600 hidden">10</div>
-            </a> -->
-
         </div>
     </div>
 

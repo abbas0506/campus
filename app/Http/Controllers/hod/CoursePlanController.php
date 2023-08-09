@@ -118,36 +118,10 @@ class CoursePlanController extends Controller
 
     public function teachers($course_allocation_id)
     {
-        session(['course_allocation_id' => $course_allocation_id,]);
-
-        $course_allocation = CourseAllocation::find($course_allocation_id);
-        $teachers = User::whereRelation('roles', 'name', 'teacher')->get();
-        return view('hod.courseplan.teachers', compact('course_allocation', 'teachers'));
-    }
-
-    public function replace($course_allocation_id)
-    {
         $course_allocation = CourseAllocation::find($course_allocation_id);
         $teachers = User::whereRelation('roles', 'name', 'teacher')
             ->get()
-            ->whereNotIn('id', $course_allocation->teacher_id);
-
+            ->whereNotIn('id', $course_allocation->teacher_id);;
         return view('hod.courseplan.teachers', compact('course_allocation', 'teachers'));
-    }
-    public function replaceTeacher(Request $request)
-    {
-        $request->validate([
-            'course_allocation_id' => 'required|numeric',
-            'teacher_id' => 'required|numeric',
-        ]);
-
-        try {
-            $course_allocation = CourseAllocation::find($request->course_allocation_id);
-            $course_allocation->update($request->all());
-            return redirect()->route('courseplan.edit', $course_allocation->section)->with('success', "Successfully saved");
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            // something went wrong
-        }
     }
 }
