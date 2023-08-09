@@ -37,7 +37,6 @@ use App\Http\Controllers\hod\ClassReversionController;
 use App\Http\Controllers\hod\CoursePlanController;
 use App\Http\Controllers\hod\CumulativeController;
 use App\Http\Controllers\hod\InternalController;
-use App\Http\Controllers\hod\SchemeMetaController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SlotController;
 use App\Http\Controllers\hod\SlotOptionController;
@@ -158,21 +157,13 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
     Route::resource('schemes', SchemeController::class);
     Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
 
-    Route::get('schemes/meta/create/{scheme}/{semester}', [SchemeMetaController::class, 'create'])->name('schemes.meta.create');
     Route::get('schemes/slot/create/{scheme}/{semester}', [SlotController::class, 'create'])->name('slots.create');
-
-    Route::resource('scheme-meta', SchemeMetaController::class)->except('create');
 
     Route::resource('slots', SlotController::class)->except('create');
     Route::resource('slot-options', SlotOptionController::class)->except('index', 'create');
-
     Route::get('showCoursesForSlotOption/{slotoption}', [SlotOptionController::class, 'showCourses'])->name('showCoursesForSlotOption');
-    // Route::post('schemes/meta/store', [SchemeMetaController::class, 'store'])->name('schemes.meta.store');
-    // Route::delete('schemes/meta/destroy', [SchemeMetaController::class, 'destroy'])->name('schemes.meta.destroy');
 
-    Route::resource('scheme-details', SchemeDetailController::class);
     Route::resource('courseplan', CoursePlanController::class);
-
     Route::get('courseplan/{courseallocation}/teachers', [CoursePlanController::class, 'teachers'])->name('courseplan.teachers');
     Route::get('courseplan/courses/{section}/{slot}', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
 

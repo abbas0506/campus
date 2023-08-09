@@ -32,7 +32,7 @@
             <li>
                 <a href="{{url('hod/printable')}}" class="flex items-center p-2">
                     <i class="bi bi-printer"></i>
-                    <span class="ml-3">Print / Soft Copy</span>
+                    <span class="ml-3">Print / Download</span>
                 </a>
             </li>
             <li class="md:hidden">
