@@ -54,9 +54,9 @@
         </a>
     </div>
 
-    <div class="grid grid-cols-3 mt-8 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
         <!-- middle panel  -->
-        <div class="col-span-2">
+        <div class="md:col-span-2">
             <!-- update news  -->
             <div class="p-4 bg-red-50">
 
