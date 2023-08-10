@@ -1,84 +1,81 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<h1>List of Available Courses</h1>
-@php
-$roman = config('global.romans');
-@endphp
-<div class="flex items-center mt-3">
-    <h2>{{$slot_option->slot->scheme->program->short}}</h2>
-    <span class="chevron-right mx-1"></span>
-    <a href="{{route('schemes.show', $slot_option->slot->scheme)}}" class="flex items-center text-blue-600 link">
-        {{$slot_option->slot->scheme->subtitle()}}
-        ({{$roman[$slot_option->slot->semester_no-1]}})
-    </a>
-</div>
-<h2 class="mt-2">Slot # {{$slot_option->slot->slot_no}}</h2>
-<div class="container mx-auto mt-8">
+<div class="container">
+    <h2>Course Fixation on Slot</h2>
+    <div class="bread-crumb">
+        <a href="/">Home</a>
+        <div>/</div>
+        <a href="{{route('schemes.index')}}">Programs & Schemes</a>
+        <div>/</div>
+        <a href="{{route('schemes.show', $slot_option->slot->scheme)}}">{{$slot_option->slot->scheme->subtitle()}}</a>
+        <div>/</div>
+        <div>Courses</div>
+    </div>
 
-    <div class="flex items-end">
-        <div class="flex relative ">
-            <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
-            <i class="bi-search absolute top-2 right-2"></i>
+    @php
+    $roman = config('global.romans');
+    @endphp
+
+
+
+    <h1 class="text-red-600 mt-8">Slot # {{$slot_option->slot->slot_no}}</h1>
+    <div class="flex items-center">
+        <h2>{{$slot_option->slot->scheme->program->short}}</h2>
+        <span class="chevron-right mx-1"></span>
+        <div class="flex items-center text-blue-600 link">
+            {{$slot_option->slot->scheme->subtitle()}}
+            ({{$roman[$slot_option->slot->semester_no-1]}})
+            </a>
         </div>
-
     </div>
 
-    @if ($errors->any())
-    <div class="alert-danger mt-8">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <!-- search -->
+    <div class="flex relative w-full md:w-1/3 mt-8">
+        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
+        <i class="bx bx-search absolute top-2 right-2"></i>
     </div>
-    @endif
 
-    @if(session('success'))
-    <div class="flex alert-success items-center mt-8">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-        </svg>
-        {{session('success')}}
+    <div class="overflow-x-auto mt-4">
+        <table class="table-fixed borderless w-full">
+            <thead>
+                <tr>
+                    <th class="w-24">Code</th>
+                    <th class="w-60">Name</th>
+                    <th class="w-24">Type</th>
+                    <th class="w-24">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($courses->sortBy('code') as $course)
+                <tr class="tr">
+                    <td class="text-center">{{$course->code}}</td>
+                    <td>{{$course->name}}</td>
+                    <td class="text-center">{{$course->course_type->name}}</td>
+
+                    <td class="">
+
+                        <form action="{{route('slot-options.update',$slot_option)}}" method="POST" class="py-2 flex items-center justify-center">
+                            @csrf
+                            @method('PATCH')
+                            <input type="text" name="course_id" value="{{$course->id}}" class="hidden">
+                            <button type="submit" class="btn-teal py-0">
+                                <i class="bx bx-link"></i>
+                            </button>
+                        </form>
+
+
+                    </td>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
     </div>
-    @endif
 
-
-    <table class="table-auto w-full mt-4">
-        <thead>
-            <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($courses->sortBy('code') as $course)
-            <tr class="tr">
-                <td class="text-center">{{$course->code}}</td>
-                <td>{{$course->name}}</td>
-                <td class="text-center">{{$course->course_type->name}}</td>
-
-                <td class="">
-
-                    <form action="{{route('slot-options.update',$slot_option)}}" method="POST" class="py-2 flex items-center justify-center">
-                        @csrf
-                        @method('PATCH')
-                        <input type="text" name="course_id" value="{{$course->id}}" class="hidden">
-                        <button type="submit" class="btn-teal py-0">
-                            <i class="bx bx-link"></i>
-                        </button>
-                    </form>
-
-
-                </td>
-            </tr>
-            @endforeach
-
-        </tbody>
-    </table>
 </div>
+@endsection
+@section('script')
 <script type="text/javascript">
     function search(event) {
         var searchtext = event.target.value.toLowerCase();

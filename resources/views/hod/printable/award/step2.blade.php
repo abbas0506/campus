@@ -14,7 +14,7 @@
 
 
     <div class="flex flex-col md:flex-row md:items-center gap-x-2 mt-8">
-        <i class="bi bi-info-circle px-2 text-2xl"></i>
+        <i class="bi bi-info-circle pr-2 text-2xl"></i>
         <ul class="text-sm text-slate-600">
             <li>You can download .xslx or .pdf versions of the awards lists. </li>
             <li>Here, only that courses is visibe whose result has been submitted by corresponding teacher. </li>

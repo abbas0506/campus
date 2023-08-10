@@ -36,6 +36,7 @@ use App\Http\Controllers\hod\ClassPromotionController;
 use App\Http\Controllers\hod\ClassReversionController;
 use App\Http\Controllers\hod\CoursePlanController;
 use App\Http\Controllers\hod\CumulativeController;
+use App\Http\Controllers\hod\HodController;
 use App\Http\Controllers\hod\InternalController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SlotController;
@@ -138,8 +139,8 @@ Route::group(['middleware' => ['role:controller']], function () {
 });
 
 Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], function () {
-    Route::get('hod', [DashboardController::class, 'hod']);
-    Route::get('super', [DashboardController::class, 'hod']);
+    Route::get('hod', [HodController::class, 'index']);
+    Route::get('super', [HodController::class, 'index']);
     Route::resource('programs', ProgramController::class);
     Route::resource('clases', ClasController::class);
     Route::get('clases/append/{pid}', [ClasController::class, 'append'])->name('clases.append');

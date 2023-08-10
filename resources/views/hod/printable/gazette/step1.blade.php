@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 <div class="container">
-    <h2>Print Award List</h2>
+    <h2>Print Gazette</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>

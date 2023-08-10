@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 <div class="container">
-    <h2>Print Award List</h2>
+    <h2>Print Gazette</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
@@ -32,7 +32,7 @@
         </a>
     </div>
     <!-- section students -->
-    <div class="overflow-x-auto w-full">
+    <div class="overflow-x-auto w-full mt-4">
         <table class="table-fixed w-full">
             <thead>
                 <tr class="text-xs ">

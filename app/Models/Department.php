@@ -30,6 +30,10 @@ class Department extends Model
     {
         return $this->headship->user;
     }
+    public function schemes()
+    {
+        return Scheme::whereRelation('program', 'department_id', $this->id)->get();
+    }
     public function teachers()
     {
         return User::whereRelation('roles', 'name', 'teacher')->where('department_id', $this->id)->get();

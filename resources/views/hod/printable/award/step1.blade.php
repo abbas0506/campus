@@ -9,10 +9,8 @@
         <div>/</div>
         <div>Award</div>
     </div>
-
-
     <div class="flex flex-col md:flex-row md:items-center gap-x-2 mt-8">
-        <i class="bi bi-info-circle px-2 text-2xl"></i>
+        <i class="bi bi-info-circle pr-2 text-2xl"></i>
         <ul class="text-xs">
             <li>Click on any program, sections will appear</li>
             <li>Click on any section to see or print award lists of the section</li>
@@ -20,9 +18,7 @@
     </div>
     <!-- records found -->
     <div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$programs->count()}} programs found</div>
-
     <div class="flex flex-col accordion">
-
         @foreach($programs->sortBy('level') as $program)
         <div class="collapsible">
             <div class="head">
@@ -54,19 +50,11 @@
                             @endforeach
                         </div>
                     </div>
-
                 </div>
-
-
-
-
                 @endforeach
             </div>
         </div>
-
         @endforeach
-
     </div>
-
 </div>
 @endsection

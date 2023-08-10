@@ -1,50 +1,54 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<h1><a href="{{route('programs.index')}}">Programs</a></h1>
-<div class="bread-crumb">{{$program->short}} / New scheme</div>
-
-<div class="flex flex-col md:w-3/5 m-auto text-center mt-12">
-    <div class="flex items-center flex-row">
-        <div class="h-16 w-16 sm:mr-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-            </svg>
-
-
-        </div>
-        <div class="flex-grow sm:text-left text-center sm:mt-0">
-            <h2>Choose Semester (w.e.f)</h2>
-            <p class="text-sm">This scheme will be effective from the semster, you choose for this purpose. If semesters' list is empty, please contact admin.</p>
-            <p class="text-sm"></p>
-        </div>
+<div class="container">
+    <h2>Schemes</h2>
+    <div class="bread-crumb">
+        <a href="/">Home</a>
+        <div>/</div>
+        <a href="{{route('schemes.index')}}">Program & Schemes</a>
+        <div>/</div>
+        <div>New</div>
     </div>
 
-    <!-- page message -->
-    @if($errors->any())
-    <x-message :errors='$errors'></x-message>
-    @else
-    <x-message></x-message>
-    @endif
 
-    <form action="{{route('schemes.store')}}" method='post' class="flex flex-col w-full text-left mt-12">
-        @csrf
-        <label for="" class="text-md font-bold">{{$program->short}}<span class="text-sm text-red-700 ml-2 font-thin">(program for which scheme is being defined)</span></label>
-        <input id="" name="program_id" value="{{$program->id}}" class="hidden">
-
-        <label for="" class="mt-3">This scheme will be effective from <span class='text-xs text-slate-600'>(S=Spring, F=Fall)</span></label>
-        <select id="" name="wef_semester_id" class="custom-input p-2">
-            @foreach($semesters as $semester)
-            <option value="{{$semester->id}}">{{$semester->short()}}</option>
-            @endforeach
-        </select>
-
-
-        <div class="flex items-center justify-end mt-4 py-2">
-            <button type="submit" class="btn-indigo-rounded">Next</button>
+    <div class="w-full md:w-3/4 mx-auto mt-12">
+        <!-- help -->
+        <div class="flex flex-row items-center gap-x-4">
+            <i class="bi-info-circle text-2xl pr-4"></i>
+            <div class="flex-grow text-left sm:mt-0">
+                <ul class="text-sm">
+                    <li>If semesters' list is empty, please contact admin.</li>
+                </ul>
+            </div>
         </div>
 
-    </form>
+        <!-- page message -->
+        @if($errors->any())
+        <x-message :errors='$errors'></x-message>
+        @else
+        <x-message></x-message>
+        @endif
+
+        <form action="{{route('schemes.store')}}" method='post' class="flex flex-col w-full text-left mt-8">
+            @csrf
+            <h1 class="text-red-600">{{$program->short}}<span class="text-sm text-red-700 ml-2 font-thin">(program for which scheme is being defined)</span></h1>
+            <input id="" name="program_id" value="{{$program->id}}" class="hidden">
+
+            <label for="" class="mt-3">This scheme will be effective from <span class='text-xs text-slate-600'>(S=Spring, F=Fall)</span></label>
+            <select id="" name="wef_semester_id" class="custom-input p-2">
+                @foreach($semesters as $semester)
+                <option value="{{$semester->id}}">{{$semester->short()}}</option>
+                @endforeach
+            </select>
+
+
+            <div class="flex mt-4">
+                <button type="submit" class="btn-teal rounded p-2 w-24">Next</button>
+            </div>
+
+        </form>
+    </div>
 
 </div>
 

@@ -38,21 +38,4 @@ class DashboardController extends Controller
         return view('admin.index', compact('labels', 'programs', 'courses', 'clases', 'sections', 'students'));
         // return view('admin.index', compact('labels', 'programs', 'courses', 'teachers', 'clases', 'sections', 'students'));
     }
-
-    public function hod()
-    {
-        $department = Department::find(session('department_id'));
-
-        $labels = collect(['Programs', 'Courses', 'Teachers', 'Classes', 'Sections', 'Students']);
-
-        $data = collect();
-        $data->add($department->programs->count());
-        $data->add($department->courses->count());
-        $data->add($department->teachers()->count());
-        $data->add($department->clases()->count());
-        $data->add($department->sections()->count());
-        $data->add($department->students()->count());
-
-        return view('hod.index', compact('labels', 'data'));
-    }
 }

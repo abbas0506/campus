@@ -1,10 +1,15 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1><a href="{{route('courses.index')}}">Courses</a></h1>
+<div class="container">
+    <h2>Courses</h2>
+    <div class="bread-crumb">
+        <a href="/">Home</a>
+        <div>/</div>
+        <a href="{{route('courses.index')}}">Courses</a>
+        <div>/</div>
+        <div>New</div>
+    </div>
 
-<div class="bread-crumb">New course</div>
-
-<div class="container md:w-3/4 mx-auto px-5">
     <!-- page message -->
     @if($errors->any())
     <x-message :errors='$errors'></x-message>
@@ -12,73 +17,62 @@
     <x-message></x-message>
     @endif
 
-    <div class="flex items-center space-x-2 mt-4">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-        </svg>
-        <ul class="text-xs">
-            <li>Be careful while selecting course type. Course type once selected, can't be modified</li>
-            <li>Course code is compulsory only for compulsory courses, others as per rule</li>
-        </ul>
+    <div class="w-full md:w-3/4 mx-auto mt-8">
+
+        <form action="{{route('courses.store')}}" method='post' class="mt-4" onsubmit="return validate(event)">
+            @csrf
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <label>Course Type</label>
+                <div class="md:col-span-2">
+                    <select name="course_type_id" id="" class="custom-input md:w-1/2">
+                        @foreach($course_types as $course_type)
+                        <option value="{{$course_type->id}}">{{$course_type->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label>Full Name</label>
+                    <input type="text" id='full_name' name='name' class="custom-input" placeholder="Software Engineering" value="">
+                </div>
+
+                <div>
+                    <label>Short Name <span class="text-sm">(if any)</span></label>
+                    <input type="text" id='short_name' name='short' class="custom-input" placeholder="For example: SE" value="">
+                </div>
+
+                <div>
+                    <label>Course Code</label>
+                    <input type="text" id='code' name='code' class="custom-input" placeholder="ZOOL-B-009" value="">
+                </div>
+                <div>
+                    <label>Cr Hrs (Theory)</label>
+                    <input id="" type='number' name="cr_theory" class="custom-input" placeholder="Crdit Hrs" value="" required>
+                </div>
+                <div>
+                    <label>Cr Hrs (Practical)</label>
+                    <input id="" type='number' name="cr_practical" class="custom-input" placeholder="0 if no practical" value="" min=0 required>
+                </div>
+                <div>
+                    <label>Marks (Theory)</label>
+                    <input type='number' id="" name="marks_theory" class="custom-input" placeholder="Marks" value="" min=0 required>
+                </div>
+                <div>
+                    <label>Marks (Practical)</label>
+                    <input type='number' id="" name="marks_practical" class="custom-input" placeholder="0 if no practical" value="" min=0 required>
+                </div>
+                <div>
+
+                </div>
+
+            </div>
+            <div class="flex mt-4">
+                <button type="submit" class="btn-teal rounded p-2">Create Now</button>
+            </div>
+        </form>
+
     </div>
-
-    <form action="{{route('courses.store')}}" method='post' class="flex flex-col w-full mt-4" onsubmit="return validate(event)">
-        @csrf
-
-        <div class="flex flex-row items-center">
-            <div class="w-1 h-1 bg-red-500 animate-ping"></div>
-            <label for="" class='mx-3 text-sm text-orange-600'>Course Type:</label>
-            <select id="course_type" name="course_type_id" class="py-1 outline-none" required>
-                <option value="">Select a type</option>
-                @foreach($course_types as $course_type)
-                <option value="{{$course_type->id}}" class="text-gray-800 ">{{$course_type->name}}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <label for="" class="mt-4">Full Name</label>
-        <input type="text" id='full_name' name='name' class="custom-input" placeholder="Object Oriented Programming" required>
-
-        <div class="flex flex-col md:flex-row md:items-center md:space-x-8">
-            <div class="flex flex-col flex-1">
-                <label for="" class='mt-3'>Short Name <span class="text-sm">(if any, otherwise same as full name)</span></label>
-                <input type="text" id='short_name' name='short' class="custom-input" placeholder="OOP" required>
-            </div>
-            <div class="flex flex-col">
-                <label for="" class='mt-3'>Course Code</label>
-                <input type="text" id='code' name='code' class="custom-input" placeholder="ZOOL-B-009">
-            </div>
-        </div>
-
-        <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
-            <div class="flex flex-col flex-1">
-                <label for="" class='mt-3'>Cr Hrs (Theory)</label>
-                <input id="" type='number' name="cr_theory" class="custom-input p-1 pl-2" placeholder="Crdit Hrs" value='4' required>
-            </div>
-            <div class="flex flex-col flex-1">
-                <label for="" class='mt-3'>Cr Hrs (Practical)</label>
-                <input id="" type='number' name="cr_practical" class="custom-input p-1 pl-2" placeholder="0 if no practical" value='0' min=0 required>
-            </div>
-        </div>
-        <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
-
-            <div class="flex flex-col flex-1">
-                <label for="" class='mt-3'>Marks (Theory)</label>
-                <input type='number' id="" name="marks_theory" class="custom-input p-1 pl-2" placeholder="Marks" value='100' required>
-            </div>
-            <div class="flex flex-col flex-1">
-                <label for="" class='mt-3'>Marks (Practical)</label>
-                <input type='number' id="" name="marks_practical" class="custom-input p-1 pl-2" placeholder="0 if no practical" value='0' min=0 required>
-            </div>
-        </div>
-
-        <div class="flex items-center justify-end mt-4 py-2">
-            <button type="submit" class="btn-indigo-rounded">Save</button>
-        </div>
-    </form>
-
 </div>
-
 @endsection
 @section('script')
 <script>

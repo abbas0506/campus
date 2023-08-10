@@ -1,18 +1,15 @@
 @extends('layouts.hod')
 @section('page-content')
-<h1><a href="{{route('programs.index')}}">Study Scheme</a></h1>
-<div class="bread-crumb">{{$scheme->program->name}} / schemes / {{$scheme->subtitle()}}</div>
 
-<div class="flex items-center mt-8">
-    <a href="{{route('schemes.index')}}" class="link">Schemes</a>
-    <span class="chevron-right mx-1"></span>
-    <h2>{{$scheme->program->short}}</h2>
-    <span class="chevron-right mx-1"></span>
-    <span>{{$scheme->subtitle()}}</span>
-</div>
+<div class="container">
+    <h2>Schemes</h2>
+    <div class="bread-crumb">
+        <a href="/">Home</a>
+        <div>/</div>
+        <div>Program & Schemes</div>
+    </div>
 
-<div class="container mx-auto">
-
+    <h1 class="text-red-600 mt-8">{{$scheme->program->short}} <span class="chevron-right mx-1"></span> {{$scheme->subtitle()}}</h1>
 
     <!-- page message -->
     @if($errors->any())
@@ -21,18 +18,15 @@
     <x-message></x-message>
     @endif
 
-    <div class="flex justify-between items-center mt-8">
-        <div class="flex items-center text-sm bg-teal-100 text-teal-600 font-semibold py-1 px-2">Cr Hrs: <span class="p-1 ml-2 mr-5 text-slate-600">{{$scheme->slots()->sum('cr')}} / {{$scheme->program->cr}}</span> <span class="bx bx-check-double ml-2"></span></div>
-        <!-- <form action="{{route('schemes.destroy',$scheme)}}" method="POST" id='del_form{{$scheme->id}}'> -->
+    <div class="flex flex-wrap justify-between items-center gap-2 mt-8">
+        <div class="flex items-center text-sm bg-teal-100 text-teal-600 font-semibold p-1">Cr Hrs: &nbsp <span class="mr-3 text-slate-600">{{$scheme->slots()->sum('cr')}} / {{$scheme->program->cr}}</span> <span class="bx bx-check-double ml-2"></span></div>
         @role('super')
         <form action="#" method="POST" id='del_form{{$scheme->id}}'>
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn-red flex items-center justify-center" onclick="delme('{{$scheme->id}}')">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                </svg>
-                <span class="text-sm">Remove scheme</span>
+            <button type="submit" class="btn-red flex items-center justify-center space-x-2 text-sm" onclick="delme('{{$scheme->id}}')">
+                <i class="bi-trash3 text-slate-200 "></i>
+                <span>Remove</span>
             </button>
         </form>
         @endrole
@@ -52,40 +46,41 @@
                 <i class="bx bx-chevron-down text-lg"></i>
             </div>
             <div class="body">
-                <!-- show header only if some scheme meta entries exist  -->
-                <table class="table-auto table-borderless w-full">
-                    <thead>
-                        <tr>
-                            <th>Slot</th>
-                            <th class="text-left">Course Type</th>
-                            <th>Cr. Hr</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($scheme->slots()->for($semester_no)->get()->sortBy('slot_no') as $slot)
-                        <tr class="even:bg-slate-100">
-                            <td class="text-center">{{$slot->slot_no}}</td>
-                            <td>{{$slot->lblCrsType()}}</td>
-                            <td class="text-center">{{$slot->cr}}</td>
-                            <td>
-                                <div class="flex items-center justify-center space-x-4 ">
-                                    <a href="{{route('slots.edit',$slot)}}">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    @if(!$slot->course_allocations()->exists() || Auth::user()->hasRole('super'))
-                                    <form action="{{route('slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="py-0 text-xs" onclick="delme('{{$slot->id}}')"><i class="bi bi-trash3"></i></button>
-                                    </form>
-                                    @endrole
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="overflow-x-auto w-full">
+                    <table class="table-fixed borderless w-full">
+                        <thead>
+                            <tr>
+                                <th class="w-10">Slot</th>
+                                <th class="text-left w-48">Course Type</th>
+                                <th class="w-16">Cr. Hr</th>
+                                <th class="w-16">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($scheme->slots()->for($semester_no)->get()->sortBy('slot_no') as $slot)
+                            <tr class="even:bg-slate-100">
+                                <td class="text-center">{{$slot->slot_no}}</td>
+                                <td>{{$slot->lblCrsType()}}</td>
+                                <td class="text-center">{{$slot->cr}}</td>
+                                <td>
+                                    <div class="flex items-center justify-center space-x-4 ">
+                                        <a href="{{route('slots.edit',$slot)}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        @if(!$slot->course_allocations()->exists() || Auth::user()->hasRole('super'))
+                                        <form action="{{route('slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="py-0 text-xs" onclick="delme('{{$slot->id}}')"><i class="bi bi-trash3"></i></button>
+                                        </form>
+                                        @endrole
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class=" w-full mt-3">
                     <a href="{{route('slots.create', [$scheme->id, $semester_no])}}" class="flex items-center btn-blue text-sm float-left">

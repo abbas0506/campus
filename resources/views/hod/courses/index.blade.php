@@ -1,21 +1,19 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<h1>Courses</h1>
-<div class="bread-crumb">Courses / all</div>
-<div class="flex items-center justify-between flex-wrap mt-4">
-    <div class="relative">
-        <input type="text" placeholder="Search here" class="search-indigo w-full md:w-80" oninput="search(event)">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-        </svg>
+<div class="container">
+    <h2>Courses</h2>
+    <div class="bread-crumb">
+        <a href="/">Home</a>
+        <div>/</div>
+        <div>Courses</div>
     </div>
-    <a href="{{route('courses.create')}}" class="btn-indigo">
-        Add New
-    </a>
-</div>
 
-<div class="container mt-6">
+    <!-- search -->
+    <div class="flex relative w-full md:w-1/3 mt-8">
+        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
+        <i class="bx bx-search absolute top-2 right-2"></i>
+    </div>
 
     <!-- page message -->
     @if($errors->any())
@@ -24,77 +22,87 @@
     <x-message></x-message>
     @endif
 
-    <div class="flex flex-wrap items-center space-x-2 text-sm mb-2">
-        <div class="relative">
-            <label id='lbl_all' class="checked-label active" onclick="filter(event)">
-                <i class="bx bx-book mr-1"></i>
-                {{$courses->count()}}
-            </label>
-            <span class="bullet"></span>
+    <div class="flex flex-wrap items-center justify-between mt-4">
+        <div class="text-sm  text-gray-500" id='lbl_filteredBy'>{{$courses->count()}} records found</div>
+        <div class="flex items-center space-x-4">
+            <div onclick="toggleFilterSection()" class="hover:cursor-pointer"><i class="bi-filter pr-2"></i>Filter</div>
+            <a href="{{route('courses.create')}}" class="btn-indigo">
+                Add New
+            </a>
         </div>
-
-        @foreach($course_types as $course_type)
-        <div class="relative">
-            <label id='lbl_{{$course_type->id}}' class="checked-label" onclick="filter(event)">
-                {{$course_type->name}}: <span class="ml-1"></span>{{$course_type->courses()->type($course_type->id)->deptt(session('department_id'))->count()}}
-            </label>
-            <div class="bullet"></div>
-        </div>
-        @endforeach
     </div>
 
+    <div id="filterSection" class="hidden border border-slate-200 p-4 mt-4">
+        <div class="grid grid-col-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <div id='all' class="filterOption active" onclick="filter('all')">
+                <span class="desc">All</span>
+                <span class="ml-1 text-sm text-slate-600">
+                    ({{$courses->count()}})
+                </span>
+            </div>
+            @foreach($course_types as $course_type)
 
-    <table class="table-auto w-full">
-        <thead>
-            <tr class="border-b border-slate-200">
-                <th>Code</th>
-                <th>Course Name</th>
-                <th class="text-center">Type</th>
-                <th class="text-center">Cr Hrs.</th>
-                <th class="text-center">Marks</th>
-                <th class='text-center'>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach($courses->sortByDesc('id') as $course)
-            <tr class="tr border-b ">
-                <td class="text-center">{{$course->code}}</td>
-                <td class="">
-                    <div>{{$course->name}}</div>
-                    <div class="text-slate-400">{{$course->short}}</div>
-                </td>
-                <td class="hidden">{{$course->course_type->id}}</td>
-                <td class="text-center">{{$course->course_type->name}}</td>
-
-                <td class="text-center">{{$course->creditHrsLabel()}}</td>
-                <td class="text-center">
-                    {{$course->marks_theory}} + {{$course->marks_practical}}
-                </td>
-
-                <td>
-                    <div class="flex justify-center items-center space-x-3">
-                        <a href="{{route('courses.edit', $course)}}">
-                            <i class="bi bi-pencil-square text-green-600"></i>
-                        </a>
-                        @role('super')
-                        <form action="{{route('courses.destroy',$course)}}" method="POST" id='del_form{{$course->id}}'>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$course->id}}')">
-                                <i class="bi bi-trash3 text-red-600"></i>
-                            </button>
-                        </form>
-                        @endrole
-                    </div>
-                </td>
-            </tr>
+            <div id='{{$course_type->id}}' class="filterOption" onclick="filter('{{$course_type->id}}')">
+                <span class="desc">{{$course_type->name}}</span>
+                <span class="ml-1 text-sm text-slate-600">
+                    ({{App\Models\Course::type($course_type->id)->deptt(session('department_id'))->count()}})
+                </span>
+            </div>
             @endforeach
+        </div>
+    </div>
+    <div class="overflow-x-auto mt-4">
+        <table class="table-fixed w-full">
+            <thead>
+                <tr class="border-b border-slate-200">
+                    <th class="w-24">Code</th>
+                    <th class="w-60">Course Name</th>
+                    <th class="w-32">Type</th>
+                    <th class="w-24">Cr Hrs.</th>
+                    <th class="w-24">Marks</th>
+                    <th class='w-24'>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
 
-        </tbody>
-    </table>
+                @foreach($courses->sortByDesc('id') as $course)
+                <tr class="tr border-b ">
+                    <td class="text-center">{{$course->code}}</td>
+                    <td class="">
+                        <div>{{$course->name}}</div>
+                        <div class="text-slate-400">{{$course->short}}</div>
+                    </td>
+                    <td class="hidden">{{$course->course_type->id}}</td>
+                    <td class="text-center">{{$course->course_type->name}}</td>
+
+                    <td class="text-center">{{$course->creditHrsLabel()}}</td>
+                    <td class="text-center">
+                        {{$course->marks_theory}} + {{$course->marks_practical}}
+                    </td>
+
+                    <td>
+                        <div class="flex justify-center items-center space-x-3">
+                            <a href="{{route('courses.edit', $course)}}">
+                                <i class="bi bi-pencil-square text-green-600"></i>
+                            </a>
+                            @role('super')
+                            <form action="{{route('courses.destroy',$course)}}" method="POST" id='del_form{{$course->id}}'>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$course->id}}')">
+                                    <i class="bi bi-trash3 text-red-600"></i>
+                                </button>
+                            </form>
+                            @endrole
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+    </div>
 </div>
-
 @endsection
 @section('script')
 <script>
@@ -133,18 +141,24 @@
         });
     }
 
-    function filter(event) {
-        var searchtext = event.target.id.replace('lbl_', '');
-        $('.checked-label').each(function() {
-            if ($(this).attr('id') != event.target.id)
+
+    function filter(id) {
+        //drop prefix courses_ from the id of course types to be filtered
+        $('.filterOption').each(function() {
+
+            // alert($(this).attr('id'))
+            if ($(this).attr('id') != id)
                 $(this).removeClass('active')
             else {
+                $('#lbl_filteredBy').html($(this).html());
                 if (!$(this).hasClass('active')) {
                     $(this).addClass('active')
                 }
             }
-        });
 
+
+        });
+        searchtext = id;
 
         if (searchtext == 'all') {
             //remove filter
@@ -169,9 +183,9 @@
         }
     }
 
-    // $(".checked-label").click(function() {
-    //     $(this).toggleClass("active");
-    // });
+    function toggleFilterSection() {
+        $('#filterSection').slideToggle().delay(500);
+    }
 </script>
 
 @endsection
