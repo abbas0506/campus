@@ -49,12 +49,10 @@ class ReappearController extends Controller
             'previous_failure_attempt_id' => 'required',
             'rollno' => 'required',
         ]);
-        $current_course_allocation = CourseAllocation::find($request->current_course_allocation_id);
-        // $student = Student::where('rollno', $request->rollno)->first();
-        // $first_attempt = $student->first_attempts->first();
 
+        $current_course_allocation = CourseAllocation::find($request->current_course_allocation_id);
         $failure_attempt = FirstAttempt::find($request->previous_failure_attempt_id);
-        // stop if already registered in the same semester
+        // stop if already registered in same course and same semester
         if ($failure_attempt) {
             $exists = Reappear::where('first_attempt_id', $failure_attempt->id)
                 ->where('course_allocation_id', $current_course_allocation->id)

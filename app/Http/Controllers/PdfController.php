@@ -14,13 +14,13 @@ class PdfController extends Controller
     public function award($id)
     {
 
-        echo "Award.pdf is temporarily not available for maintenance purpose.";
-        // $course_allocation = CourseAllocation::find($id);
-        // $pdf = PDF::loadView('pdf.award', compact('course_allocation'))->setPaper('a4', 'portrait');
-        // $pdf->set_option("isPhpEnabled", true);
+        // echo "Award.pdf is temporarily not available for maintenance purpose.";
+        $course_allocation = CourseAllocation::find($id);
+        $pdf = PDF::loadView('pdf.award', compact('course_allocation'))->setPaper('a4', 'portrait');
+        $pdf->set_option("isPhpEnabled", true);
 
-        // $file = "Award " . $course_allocation->course->code . ".pdf";
-        // return $pdf->stream($file);
+        $file = "Award " . $course_allocation->course->code . ".pdf";
+        return $pdf->stream($file);
     }
 
     public function gazette($id)

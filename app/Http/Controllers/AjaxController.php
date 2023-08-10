@@ -114,15 +114,17 @@ class AjaxController extends Controller
         $eligible = 0;
         $student_info = 'Student not found';
         $result = '';
+        $previous_attempt_id = '';
 
         $roman = config('global.romans');
+
         //if student found, fetch student history and check whether he/she has ever failed in the same course
         if ($student) {
             $student_info = $student->name . ($student->gender == 'M' ? ' s/o ' : ' d/o ') . $student->father;
 
             //get previous semesters data
             $previous_attempts = $student->first_attempts->where('semester_id', '<', $current_course_allocation->semester_id);
-            $previous_attempt_id = '';
+
             foreach ($previous_attempts as $previous_attempt) {
                 //look for only same course
                 if ($current_course_allocation->course->id == $previous_attempt->course_allocation->course->id) {
@@ -130,7 +132,7 @@ class AjaxController extends Controller
                     $result .= "<tr>" .
 
                         "<td class='text-center'>" . $previous_attempt->semester->short() . "</td>" .
-                        "<td class='text-center'>" . $roman[$previous_attempt->semester_no - 1] . "</td>" .
+                        // "<td class='text-center'>" . $roman[$previous_attempt->semester_no - 1] . "</td>" .
                         "<td class='text-center'>" . $previous_attempt->total() . "/100" . "</td>" .
                         "<td class='text-center'>" . $previous_attempt->gpa() . "</td>" .
                         "<td class='text-center'>" . $previous_attempt->grade() . "</td>" .
@@ -140,7 +142,7 @@ class AjaxController extends Controller
                     foreach ($previous_attempt->reappears->where('semester_id', '<', $current_course_allocation->semester_id) as $reappear) {
                         $result .= "<tr>" .
                             '<td>' . $reappear->semester->short() . '</td>' .
-                            '<td>' . $roman[$previous_attempt->semester_no - 1] . '</td>' .
+                            // '<td>' . $roman[$previous_attempt->semester_no - 1] . '</td>' .
                             '<td>' . $reappear->total() . '/100' . '</td>' .
                             '<td>' . $reappear->gpa() . '</td>' .
                             '<td>' . $reappear->grade() . '</td>' .
@@ -149,9 +151,9 @@ class AjaxController extends Controller
 
                     //student data found
                     $eligible = 1;
+                    $previous_attempt_id = $previous_attempt->id;
                     break;
                 }
-                $previous_attempt_id = $previous_attempt->id;
             }
             if ($eligible == 0)
                 $result .= "<tr>" .

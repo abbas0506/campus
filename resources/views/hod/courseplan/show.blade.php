@@ -65,7 +65,7 @@
                         <div class="flex flex-col justify-center">
                             @foreach($section->course_allocations()->during($semester->id)->on($slot->id)->get() as $course_allocation)
                             <div class="flex w-full my-1">
-                                <div class="shrink-0 w-24">{{$course_allocation->course->code}} </div>
+                                <div class="shrink-0 w-24">{{$course_allocation->id}}{{$course_allocation->course->code}} </div>
                                 <div class="shrink-0 w-64">{{$course_allocation->course->name}}<span class="ml-3 text-slate-400">{{$course_allocation->course->lblCr()}}</span></div>
                                 <div class="shrink-0 w-64">
                                     @if($course_allocation->teacher)

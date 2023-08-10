@@ -11,6 +11,14 @@
     <div class="text-sm">{{$course_allocation->section->title()}}</div>
 </div>
 
+
+<!-- page message -->
+@if($errors->any())
+<x-message :errors='$errors'></x-message>
+@else
+<x-message></x-message>
+@endif
+
 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 mt-16">
     <div class="p-5 border relative">
         <div class="absolute top-0 left-0 bg-orange-100 text-xs px-2">Step 1</div>
@@ -34,7 +42,6 @@
                 <thead>
                     <tr class="border-b border-slate-200 w-full">
                         <th class="text-sm font-medium">Semester</th>
-                        <th class="text-sm font-medium">No.</th>
                         <th class="text-sm font-medium">Marks</th>
                         <th class="text-sm font-medium">GP</th>
                         <th class="text-sm font-medium">Grade</th>
@@ -48,10 +55,9 @@
             <form id='action_form' action="{{route('reappears.store')}}" method="post" class="flex flex-col justify-center items-center w-full " onsubmit="return validate(event)">
                 @csrf
                 <div class="flex justify-end">
-                    <input type="text" id='current_course_allocation_id' name='current_course_allocation_id' value="{{$course_allocation->id}}" class="hidden">
-                    <input type="text" id='previous_failure_attempt_id' name='previous_failure_attempt_id' value="0">
-
-                    <input type="text" name="rollno" class="">
+                    <input type="text" id='current_course_allocation_id' name='current_course_allocation_id' value="{{$course_allocation->id}}" hidden>
+                    <input type="text" id='previous_failure_attempt_id' name='previous_failure_attempt_id' value="0" hidden>
+                    <input type="text" name="rollno" class="" hidden>
                     <button type='submit' class="btn-red rounded mt-4">Enroll Now</button>
                 </div>
             </form>
@@ -124,7 +130,7 @@
                     $('#previous_failure_attempt_id').val(response.previous_failure_attempt_id)
 
                     $('#tbody').html(response.result)
-
+                    alert(response.previous_failure_attempt_id)
                     if (response.eligible == 1) {
                         $('#action_form').slideDown()
                         $("[name='rollno']").val(rollno)
