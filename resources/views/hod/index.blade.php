@@ -4,7 +4,7 @@
     <!--welcome  -->
     <div class="flex items-center">
         <div class="flex-1">
-            <h2>Welcome dear {{ Auth::user()->name }}!</h2>
+            <h2>Welcome {{ Auth::user()->name }}!</h2>
             <div class="bread-crumb">
                 <div>HOD</div>
                 <div>/</div>
