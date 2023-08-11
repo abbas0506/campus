@@ -23,11 +23,14 @@
 
         .page-break {
             page-break-after: always;
-
         }
 
         /* table {
-            page-break-inside: avoid !important;
+           page-break-inside: inherit !important;
+        } */
+
+        /* table tbody tr {
+            display: block !important;
         } */
     </style>
 </head>
@@ -120,7 +123,8 @@ $roman = config('global.romans');
                     </tr>
                 </tbody>
             </table>
-
+            @php $i=1; @endphp
+            @foreach($course_allocation->first_attempts_sorted()->chunk(30) as $chunk)
             <table class="w-full mt-2">
                 <thead>
                     <tr class="border-b text-xs" style="background-color: #bbb;">
@@ -143,8 +147,8 @@ $roman = config('global.romans');
                     </tr>
                 </thead>
                 <tbody>
-                    @php $i=1; @endphp
-                    @foreach($course_allocation->first_attempts_sorted() as $first_attempt)
+
+                    @foreach($chunk as $first_attempt)
                     <tr class="tr border-b text-xs">
                         <td class="text-center border">{{$i++}}-{{$first_attempt->student->rollno}}</td>
                         <td class="pl-1 border">{{$first_attempt->student->name}}</td>
@@ -161,16 +165,43 @@ $roman = config('global.romans');
                         <td class='text-center border'>{{$first_attempt->grade()}}</td>
                         <td class='text-center border'>{{$first_attempt->status()}}</td>
                     </tr>
-                    <!-- @if($i==30)
-                    <div class="page-break"></div>
-                    @endif -->
+
                     @endforeach
-
-                    @if($course_allocation->reappears->count()>0)
-
                     <tr>
-                        <td class="text-xs py-2">* Reappearing</td>
+                        <td class="text-xs py-2" colspan="11">Fresh:{{$course_allocation->first_attempts->count()}}, Reappear: {{$course_allocation->reappears->count()}}, Total: {{$course_allocation->strength()}} </td>
                     </tr>
+                </tbody>
+            </table>
+            @if($i%30!=1)
+            @break
+            @endif
+            <div class="page-break"></div>
+
+            @endforeach
+
+            <!-- <div class="page-break"></div> -->
+            @if($course_allocation->reappears->count()>0)
+
+            <div class="text-xs py-2">* Reappearing</div>
+
+            <table class="w-full mt-2">
+                <thead>
+                    <tr class="border-b text-xs" style="background-color: #bbb;">
+                        <th class="text-center border w-32">Roll No.</th>
+                        <th class="border w-36">Student Name</th>
+                        <th class="text-center border w-12">Asgn etc. <br>20%</th>
+                        <th class="text-center border w-8">Pres<br>10%</th>
+                        <th class='text-center border w-8'>Mid<br> 30%</th>
+                        <th class='text-center border w-12'>Fmt.<br>50%</th>
+                        <th class='text-center border w-12'>Smt.<br>50%</th>
+                        <th class='text-center border w-12'>Total</th>
+                        <th class='text-center border w-8'>GP</th>
+                        <th class='text-center border w-8'>Grade</th>
+                        <th class='text-center border w-8'>Rem.</th>
+                    </tr>
+                </thead>
+                <tbody>
+
                     @foreach($course_allocation->reappears_sorted() as $reappear)
                     <tr class="tr border-b text-xs">
                         <td class="text-center border">{{$reappear->first_attempt->student->rollno}}</td>
@@ -190,13 +221,10 @@ $roman = config('global.romans');
                     </tr>
 
                     @endforeach
-                    @endif
-                    <tr>
-                        <td class="text-xs py-2" colspan="11">Fresh:{{$course_allocation->first_attempts->count()}}, Reappear: {{$course_allocation->reappears->count()}}, Total: {{$course_allocation->strength()}} </td>
-                    </tr>
+
                 </tbody>
             </table>
-
+            @endif
     </main>
     <script type="text/php">
         if (isset($pdf) ) {
