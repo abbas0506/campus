@@ -9,16 +9,29 @@
     <link href="{{public_path('css/pdf_tw.css')}}" rel="stylesheet">
     <style>
         @page {
-            margin: 50px 50px 220px 80px;
+            margin: 50px;
         }
 
         .footer {
             position: fixed;
-            bottom: -70px;
+            bottom: 50px;
             left: 30px;
             right: 0px;
             background-color: white;
             height: 50px;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
+
+        .data tr th,
+        .data tr td {
+            font-size: 10px;
+            text-align: center;
+            padding-bottom: 4px;
+            border: 0.5px solid;
+
         }
     </style>
 </head>
@@ -41,7 +54,7 @@ $roman = config('global.romans');
                     <td>__________________</td>
                 </tr>
                 <tr class="text-xs text-center">
-                    <td class="font-bold ">{{$course_allocation->teacher->name}}</td>
+                    <td class="font-bold ">{{$course_allocation->teacher->name ?? ''}}</td>
                     <td class="font-bold ">@if($course_allocation->internal()!='')
                         {{$course_allocation->internal()->name}}
                         @else
@@ -111,78 +124,111 @@ $roman = config('global.romans');
                     </tr>
                 </tbody>
             </table>
-
-            <table class="w-full mt-2">
+            @php $i=1; @endphp
+            @foreach($course_allocation->first_attempts_sorted()->chunk(30) as $chunk)
+            <table class="w-full mt-2 data">
                 <thead>
-                    <tr class="border-b text-xs" style="background-color: #bbb;">
-                        <th class="text-center border w-32">Roll No.</th>
-                        <th class="border w-36">Student Name</th>
+                    <tr style="background-color: #bbb;">
+                        <th class="w-4">#</th>
+                        <th class="w-32">Roll No.</th>
+                        <th class="w-36">Student Name</th>
 
                         @if($course_allocation->section->clas->program->level==21)
-                        <th class="text-center border w-12">Asgn etc. <br>20%</th>
+                        <th class="w-12">Asgn etc. <br>20%</th>
                         @else
-                        <th class="text-center border w-8">Assign <br>10%</th>
-                        <th class="text-center border w-8">Pres<br>10%</th>
+                        <th class="w-8">Assign <br>10%</th>
+                        <th class="w-8">Pres<br>10%</th>
                         @endif
-                        <th class='text-center border w-8'>Mid<br> 30%</th>
-                        <th class='text-center border w-12'>Fmt.<br>50%</th>
-                        <th class='text-center border w-12'>Smt.<br>50%</th>
-                        <th class='text-center border w-12'>Total</th>
-                        <th class='text-center border w-8'>GP</th>
-                        <th class='text-center border w-8'>Grade</th>
-                        <th class='text-center border w-8'>Rem.</th>
+                        <th class='w-8'>Mid<br> 30%</th>
+                        <th class='w-10'>Fmt.<br>50%</th>
+                        <th class='w-10'>Smt.<br>50%</th>
+                        <th class='w-10'>Total</th>
+                        <th class='w-8'>GP</th>
+                        <th class='w-8'>Grade</th>
+                        <th class='w-8'>Rem.</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($course_allocation->first_attempts_sorted() as $first_attempt)
-                    <tr class="tr border-b text-xs">
-                        <td class="text-center border">{{$first_attempt->student->rollno}}</td>
-                        <td class="pl-1 border">{{$first_attempt->student->name}}</td>
-                        <td class='text-center border'>{{$first_attempt->assignment}}</td>
+
+                    @foreach($chunk as $first_attempt)
+                    <tr>
+                        <td>{{$i}}</td>
+                        <td>{{$first_attempt->student->rollno}}</td>
+                        <td class="pl-1" style="text-align: left !important;">{{$first_attempt->student->name}}</td>
+                        <td>{{$first_attempt->assignment}}</td>
                         <!-- dont show for phd -->
                         @if($course_allocation->section->clas->program->level!=21)
-                        <td class='text-center border'>{{$first_attempt->presentation}}</td>
+                        <td>{{$first_attempt->presentation}}</td>
                         @endif
-                        <td class='text-center border'>{{$first_attempt->midterm}}</td>
-                        <td class='text-center border'>{{$first_attempt->formative()}}</td>
-                        <td class='text-center border'>{{$first_attempt->summative}}</td>
-                        <td class='text-center border' style="background-color: #ddd;">{{$first_attempt->total()}}</td>
-                        <td class='text-center border'>{{$first_attempt->gpa()}}</td>
-                        <td class='text-center border'>{{$first_attempt->grade()}}</td>
-                        <td class='text-center border'>{{$first_attempt->status()}}</td>
+                        <td>{{$first_attempt->midterm}}</td>
+                        <td>{{$first_attempt->formative()}}</td>
+                        <td>{{$first_attempt->summative}}</td>
+                        <td style="background-color: #ddd;">{{$first_attempt->total()}}</td>
+                        <td>{{$first_attempt->gpa()}}</td>
+                        <td>{{$first_attempt->grade()}}</td>
+                        <td>{{$first_attempt->status()}}</td>
                     </tr>
+                    @php $i++; @endphp
                     @endforeach
 
-                    @if($course_allocation->reappears->count()>0)
-
-                    <tr>
-                        <td class="text-xs py-2">* Reappearing</td>
-                    </tr>
-                    @foreach($course_allocation->reappears_sorted() as $reappear)
-                    <tr class="tr border-b text-xs">
-                        <td class="text-center border">{{$reappear->first_attempt->student->rollno}}</td>
-                        <td class="border pl-1">{{$reappear->first_attempt->student->name}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->assignment}}</td>
-                        <!-- dont show for phd -->
-                        @if($course_allocation->section->clas->program->level!=21)
-                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->presentation}}</td>
-                        @endif
-                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->midterm}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->formative()}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->summative}}</td>
-                        <td class='text-center border' style="background-color: #ddd;">{{$reappear->first_attempt->best_attempt()->total()}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->gpa()}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->grade()}}</td>
-                        <td class='text-center border'>{{$reappear->first_attempt->best_attempt()->status()}}</td>
-                    </tr>
-                    @endforeach
-                    @endif
-                    <tr>
-                        <td class="text-xs py-2" colspan="11">Fresh:{{$course_allocation->first_attempts->count()}}, Reappear: {{$course_allocation->reappears->count()}}, Total: {{$course_allocation->strength()}} </td>
-                    </tr>
                 </tbody>
             </table>
+            <div class="text-xs py-2">
+                Fresh:{{$course_allocation->first_attempts->count()}}, Reappear: {{$course_allocation->reappears->count()}}, Total: {{$course_allocation->strength()}} </td>
+            </div>
+            @if($i%30!=1)
+            @break
+            @endif
+            <div class="page-break"></div>
 
+            @endforeach
+
+            <!-- <div class="page-break"></div> -->
+            @if($course_allocation->reappears->count()>0)
+
+            <div class="text-xs py-2">* Reappearing</div>
+
+            <table class="w-full mt-2 data">
+                <thead>
+                    <tr style="background-color: #bbb;">
+                        <th class="w-32">Roll No.</th>
+                        <th class="w-36">Student Name</th>
+                        <th class="w-12">Asgn etc. <br>20%</th>
+                        <th class="w-8">Pres<br>10%</th>
+                        <th class='w-8'>Mid<br> 30%</th>
+                        <th class='w-12'>Fmt.<br>50%</th>
+                        <th class='w-12'>Smt.<br>50%</th>
+                        <th class='w-12'>Total</th>
+                        <th class='w-8'>GP</th>
+                        <th class='w-8'>Grade</th>
+                        <th class='w-8'>Rem.</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach($course_allocation->reappears_sorted() as $reappear)
+                    <tr>
+                        <td>{{$reappear->first_attempt->student->rollno}}</td>
+                        <td class="pl-1" style="text-align: left !important;">{{$reappear->first_attempt->student->name}}</td>
+                        <td>{{$reappear->first_attempt->best_attempt()->assignment}}</td>
+                        <!-- dont show for phd -->
+                        @if($course_allocation->section->clas->program->level!=21)
+                        <td>{{$reappear->first_attempt->best_attempt()->presentation}}</td>
+                        @endif
+                        <td>{{$reappear->first_attempt->best_attempt()->midterm}}</td>
+                        <td>{{$reappear->first_attempt->best_attempt()->formative()}}</td>
+                        <td>{{$reappear->first_attempt->best_attempt()->summative}}</td>
+                        <td style="background-color: #ddd;">{{$reappear->first_attempt->best_attempt()->total()}}</td>
+                        <td>{{$reappear->first_attempt->best_attempt()->gpa()}}</td>
+                        <td>{{$reappear->first_attempt->best_attempt()->grade()}}</td>
+                        <td>{{$reappear->first_attempt->best_attempt()->status()}}</td>
+                    </tr>
+
+                    @endforeach
+
+                </tbody>
+            </table>
+            @endif
     </main>
     <script type="text/php">
         if (isset($pdf) ) {

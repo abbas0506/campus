@@ -18,7 +18,7 @@ class PdfController extends Controller
         $pdf = PDF::loadView('pdf.award', compact('course_allocation'))->setPaper('a4', 'portrait');
         $pdf->set_option("isPhpEnabled", true);
 
-        $file = "Award " . $course_allocation->course->code . ".pdf";
+        $file = "Award " . $course_allocation->course->code . "-" . $course_allocation->section->title() . ".pdf";
         return $pdf->stream($file);
     }
 
