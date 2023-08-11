@@ -66,6 +66,7 @@
                     <li>*Responsiveness -- means that you may use application on mobile screen as well. If table size does not fit mobile screen, you may scroll from left-right</li>
                     <li>Page navigation -- each page contains page navigation links to go back in blue color under each page title</li>
                     <li>Dashboard -- layout has been improved, but still not fully functional</li>
+                    <li>*Award List -- working now with 30 rows per page</li>
                 </ul>
             </div>
 
