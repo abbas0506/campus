@@ -60,13 +60,13 @@
             <!-- update news  -->
             <div class="p-4 bg-red-50">
 
-                <h2>Software Update Alert V4.0.1 (10.08.23) </h2>
+                <h2>Software Update Alert V4.2 (11.08.23) </h2>
                 <p class="mt-2 leading-relaxed">Respected HODs, please note that following features have been added into this version</p>
                 <ul class="list-disc pl-4">
-                    <li>*Responsiveness -- means that you may use application on mobile screen as well. If table size does not fit mobile screen, you may scroll from left-right</li>
-                    <li>Page navigation -- each page contains page navigation links to go back in blue color under each page title</li>
-                    <li>Dashboard -- layout has been improved, but still not fully functional</li>
                     <li>*Award List -- working now with 30 rows per page</li>
+                    <li>*Responsiveness -- means that you may use application on mobile screen as well. If table size does not fit mobile screen, you may scroll from left-right</li>
+                    <li>*Page navigation -- each page contains page navigation links to go back in blue color under each page title</li>
+                    <li>*Dashboard -- layout has been improved, but still not fully functional</li>
                 </ul>
             </div>
 
