@@ -35,6 +35,18 @@
                             <div class="">{{$course_allocation->course->name}}</div>
                             <div class="ml-2">
                                 <!-- delete button -->
+
+                                <!-- super can delete even if allocation has some associated results as well -->
+                                @role('super')
+                                <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_form{{$course_allocation->id}}'>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="" onclick="delme('{{$course_allocation->id}}')">
+                                        <i class="bi-trash3 text-[12px]"></i>
+                                    </button>
+                                </form>
+                                @else
+                                <!-- hod can only delete if allocation has no assoicated results -->
                                 @if($course_allocation->teacher_id=='' || $course_allocation->first_attempts->count()==0)
                                 <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_form{{$course_allocation->id}}'>
                                     @csrf
@@ -44,6 +56,7 @@
                                     </button>
                                 </form>
                                 @endif
+                                @endrole
                             </div>
                         </div>
                         <div class="flex flex-1 justify-between text-slate-800">

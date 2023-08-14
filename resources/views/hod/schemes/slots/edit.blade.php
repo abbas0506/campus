@@ -18,13 +18,13 @@
     @endphp
 
     <div class="w-full md:w-3/4 mx-auto mt-12">
-        <h1 class="text-red-600">Slot # {{$slot->slot_no}}</h1>
+        <h1 class="text-red-600">Slot # {{$slot->slot_no}} <span class="text-slate-500 text-sm"> (Cr: {{$slot->cr}})</span></h1>
         <div class="flex items-center">
             <h2>{{$slot->scheme->program->short}}</h2>
             <span class="chevron-right mx-1"></span>
             <a href="{{route('schemes.show', $slot->scheme)}}" class="flex items-center text-blue-600 link">
                 {{$slot->scheme->subtitle()}}
-                ({{$roman[$slot->semester_no-1]}})
+                (Semester-{{$roman[$slot->semester_no-1]}})
             </a>
         </div>
 

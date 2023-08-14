@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\teacher;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
 use App\Models\FirstAttempt;
 use App\Models\Reappear;
+use App\Models\Shift;
 use App\Models\Student;
+use Database\Seeders\CourseSeeder;
 
 class MyCoursesController extends Controller
 {
@@ -21,9 +24,8 @@ class MyCoursesController extends Controller
     {
         //
         $teacher = Auth::user();
-        $course_allocations = $teacher->course_allocations()->during(session('semester_id'))->get();
-
-        return view('teacher.mycourses.index', compact('course_allocations'));
+        $shifts = Shift::all();
+        return view('teacher.mycourses.index', compact('teacher', 'shifts'));
     }
 
     /**

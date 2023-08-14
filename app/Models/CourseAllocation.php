@@ -106,7 +106,27 @@ class CourseAllocation extends Model
     }
     public function scopeAllocatedCr($query)
     {
+        // w.r.t slot credits
         $slot_ids = $query->pluck('slot_id')->toArray();
         return Slot::whereIn('id', array_unique($slot_ids))->sum('cr');
+    }
+    public function scopeSumOfCr($query)
+    {
+        return $query->join('slots', 'course_allocations.slot_id', '=', 'slots.id')->sum('cr');
+    }
+    public function scopeJoinClas($query)
+    {
+        //sort by program id
+        return $query->join('sections', 'course_allocations.section_id', '=', 'sections.id')
+            ->join('clas', 'sections.clas_id', '=', 'clas.id');
+    }
+
+    public function scopeOrderByProgram($query)
+    {
+        return $query->orderBy('clas.program_id');
+    }
+    public function scopeFilterByShift($query, $shift)
+    {
+        return $query->where('clas.shift_id', $shift);
     }
 }

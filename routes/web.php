@@ -55,6 +55,7 @@ use App\Http\Controllers\teacher\ReappearFormativeController;
 use App\Http\Controllers\teacher\ReappearSummativeController;
 use App\Http\Controllers\teacher\SummativeController;
 use App\Http\Controllers\teacher\EnrollmentController;
+use App\Http\Controllers\teacher\TeacherController as TeacherTeacherController;
 use App\Models\Semester;
 
 /*
@@ -194,7 +195,8 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
 });
 
 Route::group(['middleware' => ['role:teacher', 'my_exception_handler']], function () {
-    Route::get('teacher', [MyCoursesController::class, 'index']);
+
+    Route::get('teacher', [TeacherTeacherController::class, 'index']);
     Route::resource('mycourses', MyCoursesController::class);
     Route::resource('formative', FormativeController::class);
     Route::resource('summative', SummativeController::class);

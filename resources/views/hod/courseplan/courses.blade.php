@@ -50,8 +50,8 @@
                             <input type="text" name='course_id' value="{{$course->id}}" hidden>
                             <input type="text" name='slot_id' value="{{$slot->id}}" hidden>
 
-                            <button type="submit" class="btn-teal py-0 flex items-center" onclick="delme()">
-                                Select
+                            <button type="submit" class="btn-teal py-1 flex items-center" onclick="delme()">
+                                <i class="bx bx-link"></i>
                             </button>
                         </form>
                         @endif

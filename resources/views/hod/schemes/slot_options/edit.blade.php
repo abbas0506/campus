@@ -19,13 +19,13 @@
 
 
 
-    <h1 class="text-red-600 mt-8">Slot # {{$slot_option->slot->slot_no}}</h1>
+    <h1 class="text-red-600 mt-8">Slot # {{$slot_option->slot->slot_no}} <span class="text-slate-500 text-sm"> (Cr: {{$slot_option->slot->cr}})</span></h1>
     <div class="flex items-center">
         <h2>{{$slot_option->slot->scheme->program->short}}</h2>
         <span class="chevron-right mx-1"></span>
         <div class="flex items-center text-blue-600 link">
             {{$slot_option->slot->scheme->subtitle()}}
-            ({{$roman[$slot_option->slot->semester_no-1]}})
+            (Semester-{{$roman[$slot_option->slot->semester_no-1]}})
             </a>
         </div>
     </div>
@@ -40,21 +40,16 @@
         <table class="table-fixed borderless w-full">
             <thead>
                 <tr>
-                    <th class="w-24">Code</th>
+                    <th class="w-16">Action</th>
+                    <th class="w-20">Code</th>
                     <th class="w-60">Name</th>
                     <th class="w-24">Type</th>
-                    <th class="w-24">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($courses->sortBy('code') as $course)
                 <tr class="tr">
-                    <td class="text-center">{{$course->code}}</td>
-                    <td>{{$course->name}}</td>
-                    <td class="text-center">{{$course->course_type->name}}</td>
-
                     <td class="">
-
                         <form action="{{route('slot-options.update',$slot_option)}}" method="POST" class="py-2 flex items-center justify-center">
                             @csrf
                             @method('PATCH')
@@ -63,9 +58,10 @@
                                 <i class="bx bx-link"></i>
                             </button>
                         </form>
-
-
                     </td>
+                    <td class="text-center">{{$course->code}}</td>
+                    <td>{{$course->name}} <span class="text-slate-500 text-xs">{{($course->lblCr())}}</span></td>
+                    <td class="text-center">{{$course->course_type->name}}</td>
                 </tr>
                 @endforeach
 
@@ -81,8 +77,8 @@
         var searchtext = event.target.value.toLowerCase();
         $('.tr').each(function() {
             if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) ||
-                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
+                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) ||
+                    $(this).children().eq(2).prop('outerText').toLowerCase().includes(searchtext)
                 )) {
                 $(this).addClass('hidden');
             } else {

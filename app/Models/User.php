@@ -69,10 +69,24 @@ class User extends Authenticatable
     }
     public function course_allocations()
     {
-        return $this->hasMany(CourseAllocation::class, 'teacher_id')->where('semester_id', session('semester_id'));
+        return $this->hasMany(CourseAllocation::class, 'teacher_id')
+            ->where('semester_id', session('semester_id'));
     }
     public function teaching_departments()
     {
         return Department::whereRelation('courses.course_allocations', 'teacher_id', $this->id)->get();
+    }
+    public function allocations()
+    {
+        $allocations = CourseAllocation::where('teacher_id', $this->id)
+            ->where('semester_id', session('semester_id'))
+            ->join('sections', 'course_allocations.section_id', '=', 'sections.id')
+            ->join('clas', 'sections.clas_id', '=', 'clas.id')
+            ->join('shifts', 'clas.shift_id', '=', 'shifts.id')
+            ->join('slots', 'course_allocations.slot_id', '=', 'slots.id')
+            ->orderBy('clas.program_id')
+            ->select('course_allocations.*', 'shifts.short', 'slots.cr');
+
+        return $allocations;
     }
 }
