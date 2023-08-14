@@ -16,6 +16,7 @@ class AssessmentController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
@@ -49,10 +50,19 @@ class AssessmentController extends Controller
     {
         //
         $course_allocation = CourseAllocation::find($id);
-        if ($course_allocation->section->clas->program->level == 21)
-            return view('teacher.assessment.phd.show', compact('course_allocation'));
-        else
-            return view('teacher.assessment.bsms.show', compact('course_allocation'));
+
+        $formative_assessments = CourseAllocation::join('first_attempts')
+            ->selectRaw('select');
+
+
+        return view('teacher.assessment.show', compact('course_allocation'));
+
+
+
+        // if ($course_allocation->section->clas->program->level == 21)
+        //     return view('teacher.assessment.phd.show', compact('course_allocation'));
+        // else
+        //     return view('teacher.assessment.bsms.show', compact('course_allocation'));
     }
 
     /**
