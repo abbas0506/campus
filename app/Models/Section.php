@@ -56,10 +56,7 @@ class Section extends Model
         });
         return $sum;
     }
-    public function currentSemester()
-    {
-        return $this->clas->semester_no;
-    }
+
     public function semesters()
     {
         return Semester::whereBetween('id', [$this->clas->first_semester_id, session('semester_id')])->get();

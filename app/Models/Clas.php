@@ -95,7 +95,8 @@ class Clas extends Model
     }
     public function semesterNo($semester_id)
     {
-        return $semester_id - $this->first_semester_id + 1;
+        // current semester gap + initial offset i.e intake semester
+        return $semester_id - $this->first_semester_id + $this->semester_no;
     }
     public function semesters()
     {

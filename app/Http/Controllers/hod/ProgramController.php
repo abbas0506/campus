@@ -138,7 +138,7 @@ class ProgramController extends Controller
                 $programs = Program::all();
                 foreach ($programs as $program) {
                     foreach ($program->clases as $clas) {
-                        $clas->last_semester_id = $clas->first_semester_id + intval($program->min_t * 2) - $clas->semester_no;
+                        $clas->last_semester_id = $clas->first_semester_id + intval($program->min_t * 2) - 1;
                         $clas->update();
                     }
                 }

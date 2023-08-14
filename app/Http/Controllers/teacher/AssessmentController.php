@@ -51,11 +51,12 @@ class AssessmentController extends Controller
         //
         $course_allocation = CourseAllocation::find($id);
 
-        // $formative_assessments = CourseAllocation::join('first_attempts')
-        //     ->selectRaw('select');
+        $formative_assessments = CourseAllocation::join('first_attempts', 'course_allocations.id', 'first_attempts.course_allocation_id')
+            ->selectRaw('case when (assignment+presentation+midterm+summative) >80 then A+ else A end as grade')->get();
 
+        echo $formative_assessments;
 
-        return view('teacher.assessment.show', compact('course_allocation'));
+        // return view('teacher.assessment.show', compact('course_allocation'));
 
 
 
