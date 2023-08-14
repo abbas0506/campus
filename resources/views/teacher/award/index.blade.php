@@ -1,30 +1,74 @@
 @extends('layouts.teacher')
 @section('page-content')
-
-<div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-4">
-    <i class="bi bi-printer text-[40px] text-slate-600"></i>
-    <div class="font-semibold text-slate-700 text-lg leading-relaxed">Award Lists / Assessment Sheets</div>
-    <div class="text-slate-700">({{App\Models\Semester::find(session('semester_id'))->title()}} )</div>
-</div>
-
-<div class="w-full mt-12">
-    <!-- sort courses section wise -->
-    @foreach($course_allocations as $course_allocation)
-    <div class="flex flex-row justify-between p-2  even:bg-slate-100 border-b border-dashed">
-        <div class="flex flex-col flex-1 py-1">
-            <div class="">{{$course_allocation->course->name}}</div>
-            <div class="text-xs">{{$course_allocation->section->title()}}</div>
-        </div>
-        <div class="flex items-center text-slate-600 text-xs mr-5">
-            <i class="bx bx-group bx-xs text-slate-600"></i>
-            <div class="xs">{{$course_allocation->first_attempts->count()+$course_allocation->reappears->count()}}</div>
-        </div>
-        <a href="{{route('teacher.award',$course_allocation->id)}}" target="_blank" class="flex flex-col justify-center items-center">
-            <i class="bi bi-printer text-blue-600"></i>
-        </a>
+<div class="container">
+    <h2>Award Lists</h2>
+    <div class="bread-crumb">
+        <a href="/">Home</a>
+        <div>/</div>
+        <div>Award Lists</div>
     </div>
 
-    @endforeach
+    <div class="w-full mt-12">
+
+        @foreach($shifts as $shift)
+        <div class="collapsible">
+            <div class="head">
+                <h2 class="flex items-center space-x-2 ">
+                    {{$shift->name}}
+                    <span class="text-xs ml-4 text-slate-600">{{$teacher->allocations()->where('short',$shift->short)->count()}}</span>
+                    <span class="text-xs text-slate-600">({{$teacher->allocations()->where('short',$shift->short)->sum('cr')}})</span>
+                </h2>
+                <i class="bx bx-chevron-down text-lg"></i>
+            </div>
+            <div class="body">
+                <div class="overflow-x-auto w-full">
+                    <table class="table-fixed borderless w-full">
+                        <thead>
+                            <tr>
+                                <th class="w-8">#</th>
+                                <th class="w-24">Code</th>
+                                <th class="w-60 text-left">Course</th>
+                                <th class="w-8">Cr</th>
+                                <th class="w-48">Class & Section</th>
+                                <th class="w-16">Fresh</th>
+                                <th class="w-16">Re</th>
+                                <th class="w-16">Result</th>
+                                <th class="w-16">Action</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @php $i=1; @endphp
+                            @foreach($teacher->allocations()->get()->where('short',$shift->short) as $course_allocation)
+                            <tr>
+                                <td class="text-center">{{$i++}}</td>
+                                <td class="text-center">
+                                    <a href="{{route('mycourses.show',$course_allocation->id)}}" class="link">
+                                        {{$course_allocation->course->code}}
+                                    </a>
+                                </td>
+                                <td>{{$course_allocation->course->name}} <span class="text-slate-400 text-sm">{{$course_allocation->course->lblCr()}}</span> </td>
+                                <td>{{$course_allocation->slot->cr}}</td>
+                                <td>{{$course_allocation->section->title()}}</td>
+                                <td class="text-center">{{$course_allocation->first_attempts()->count()}}</td>
+                                <td class="text-center">{{$course_allocation->reappears()->count()}}</td>
+                                <td class="text-center">%</td>
+                                <td class="text-center">
+                                    <a href="{{route('teacher.award',$course_allocation->id)}}" target="_blank" class="flex flex-col justify-center items-center">
+                                        <i class="bi bi-printer text-blue-600"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        @endforeach
+
+    </div>
 </div>
 
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\teacher;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
+use App\Models\Shift;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
@@ -14,9 +15,11 @@ class AwardController extends Controller
     public function index()
     {
         $teacher = Auth::user();
-        $course_allocations = $teacher->course_allocations()->during(session('semester_id'))->get();
+        $shifts = Shift::all();
 
-        return view('teacher.award.index', compact('course_allocations'));
+        // $course_allocations = $teacher->course_allocations()->during(session('semester_id'))->get();
+
+        return view('teacher.award.index', compact('teacher', 'shifts'));
     }
 
     public function pdf($id)

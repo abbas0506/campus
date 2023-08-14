@@ -16,24 +16,25 @@
 
     <!-- pallets -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        <a href="" class="pallet-box">
-            <div class="flex-1">
-                <div class="title">Lecture Schedule</div>
-                <div class="h2">?</div>
-            </div>
-            <div class="ico bg-teal-100">
-                <i class="bi bi-calendar2-event text-teal-600"></i>
-            </div>
-        </a>
-        <a href="" class="pallet-box">
+        <a href="{{route('mycourses.index')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Courses</div>
-                <div class="h2">?</div>
+                <div class="h2">{{$user->allocations()->count()}}</div>
             </div>
             <div class="ico bg-green-100">
                 <i class="bi bi-book text-green-600"></i>
             </div>
         </a>
+        <a href="{{route('mycourses.index')}}" class="pallet-box">
+            <div class="flex-1">
+                <div class="title">Credit Hrs</div>
+                <div class="h2">{{$user->allocations()->sum('cr')}}</div>
+            </div>
+            <div class="ico bg-teal-100">
+                <i class="bi bi-clock text-teal-600"></i>
+            </div>
+        </a>
+
         <a href="" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Students</div>
@@ -60,8 +61,8 @@
             <!-- update news  -->
             <div class="p-4 bg-red-50">
 
-                <h2>Software Update Alert V4.2 (11.08.23) </h2>
-                <p class="mt-2 leading-relaxed">Respected HODs, please note that following features have been added into this version</p>
+                <h2>Software Update Alert V4.3 (14.08.23) </h2>
+                <p class="mt-2 leading-relaxed">Respected Teacher, please note that following features have been added into this version</p>
                 <ul class="list-disc pl-4">
                     <li>*Award List -- working now with 30 rows per page</li>
                     <li>*Responsiveness -- means that you may use application on mobile screen as well. If table size does not fit mobile screen, you may scroll from left-right</li>
@@ -97,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-4 bg-white p-4">
+            <!-- <div class="mt-4 bg-white p-4">
                 <div class="flex items-center space-x-2">
                     <i class="bi-gear text-lg"></i>
                     <h2>Config for Once</h2>
@@ -134,7 +135,7 @@
                     <div></div>
                 </div>
 
-            </div>
+            </div> -->
 
         </div>
     </div>

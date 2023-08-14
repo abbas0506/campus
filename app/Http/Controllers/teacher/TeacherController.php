@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -15,7 +16,8 @@ class TeacherController extends Controller
     public function index()
     {
         //
-        return view('teacher.index');
+        $user = Auth::user();
+        return view('teacher.index', compact('user'));
     }
 
     /**
