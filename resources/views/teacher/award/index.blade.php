@@ -8,6 +8,14 @@
         <div>Award Lists</div>
     </div>
 
+    <div class="flex flex-col md:flex-row md:items-center gap-x-2 mt-8">
+        <i class="bi bi-info-circle text-2xl w-8"></i>
+        <ul class="text-sm">
+            <li>Courses are being shown only from selected semester ({{App\Models\Semester::find(session('semester_id'))->title()}}) </li>
+            <li>If you dont see any course, contact respective department's HOD for course allocation.</li>
+        </ul>
+    </div>
+
     <div class="w-full mt-12">
 
         @foreach($shifts as $shift)
