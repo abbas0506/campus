@@ -17,6 +17,7 @@
     <x-message></x-message>
     @endif
 
+    <h1 class='text-red-600 mt-8'>{{$section->title()}}</h1>
     <div class="flex flex-col gap-y-4 mt-8">
         @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo(session('semester_id')))->get()->sortBy('slot_no') as $slot)
         <div class="gap-y-4">
