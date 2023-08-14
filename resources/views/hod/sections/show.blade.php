@@ -11,6 +11,7 @@
         <div>View</div>
     </div>
 
+    <h1 class='text-red-600 mt-8'>{{$section->title()}}</h1>
     <div class="flex mt-8">
         <div class="relative">
             <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
