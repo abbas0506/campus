@@ -115,7 +115,7 @@
                 <div class="flex items-center justify-between mt-2 text-sm">
                     <div class="flex items-center">
                         <i class="bi-book w-8"></i>
-                        <a href="{{url('coruses')}}" class="link">Courses</a>
+                        <a href="{{url('courses')}}" class="link">Courses</a>
                     </div>
                     <div>{{$department->courses->count()}}</div>
                 </div>
