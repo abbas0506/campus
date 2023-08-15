@@ -16,7 +16,7 @@
 
     <!-- pallets -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        <a href="" class="pallet-box">
+        <a href="{{url('students')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Students</div>
                 <div class="h2">{{$department->students()->count()}}</div>
@@ -25,7 +25,7 @@
                 <i class="bi bi-person-circle text-green-600"></i>
             </div>
         </a>
-        <a href="" class="pallet-box">
+        <a href="{{url('teachers')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Teachers</div>
                 <div class="h2">{{$department->teachers()->count()}} </div>
@@ -74,37 +74,12 @@
         <!-- middle panel end -->
         <!-- right side bar starts -->
         <div class="">
-
-            <div class="p-4 bg-sky-100">
-                <h2>Profile</h2>
-                <div class="flex flex-col">
-                    <div class="flex text-sm mt-4">
-                        <div class="w-8"><i class="bi-person"></i></div>
-                        <div>{{ Auth::user()->name }}</div>
-                    </div>
-                    <div class="flex text-sm mt-2">
-                        <div class="w-8"><i class="bi-envelope-at"></i></div>
-                        <div>{{ Auth::user()->email }}</div>
-                    </div>
-                    <div class="flex text-sm mt-2">
-                        <div class="w-8"><i class="bi-phone"></i></div>
-                        <div>{{ Auth::user()->phone }}</div>
-                    </div>
-                    <div class="divider border-blue-200 mt-4"></div>
-                    <div class="flex text-sm mt-4">
-                        <div class="w-8"><i class="bi-key"></i></div>
-                        <a href="" class="link">Change Password</a>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-4 bg-white p-4">
+            <div class="bg-sky-100 p-4">
                 <div class="flex items-center space-x-2">
                     <i class="bi-gear text-lg"></i>
                     <h2>Config for Once</h2>
                 </div>
-
-                <div class="divider mt-4"></div>
-
+                <div class="divider mt-4 border-sky-200"></div>
                 <div class="flex items-center justify-between mt-2 text-sm">
                     <div class="flex items-center">
                         <i class="bi bi-award w-8"></i>
@@ -134,6 +109,29 @@
                     <div>{{$department->teachers()->count()}}</div>
                 </div>
 
+            </div>
+
+            <div class="mt-4 bg-white p-4">
+                <h2>Profile</h2>
+                <div class="flex flex-col">
+                    <div class="flex text-sm mt-4">
+                        <div class="w-8"><i class="bi-person"></i></div>
+                        <div>{{ Auth::user()->name }}</div>
+                    </div>
+                    <div class="flex text-sm mt-2">
+                        <div class="w-8"><i class="bi-envelope-at"></i></div>
+                        <div>{{ Auth::user()->email }}</div>
+                    </div>
+                    <div class="flex text-sm mt-2">
+                        <div class="w-8"><i class="bi-phone"></i></div>
+                        <div>{{ Auth::user()->phone }}</div>
+                    </div>
+                    <div class="divider border-blue-200 mt-4"></div>
+                    <div class="flex text-sm mt-4">
+                        <div class="w-8"><i class="bi-key"></i></div>
+                        <a href="" class="link">Change Password</a>
+                    </div>
+                </div>
             </div>
 
         </div>

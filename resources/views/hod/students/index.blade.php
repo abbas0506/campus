@@ -11,8 +11,16 @@
         <div>Search</div>
     </div>
 
+    <div class="flex flex-row md:items-center gap-x-2 mt-8">
+        <i class="bi bi-info-circle text-2xl"></i>
+        <ul class="text-sm ml-4">
+            <li>By default, search criteria is very flexible. </li>
+            <li>You may type part of name or roll no and click on serach button</li>
+        </ul>
+    </div>
+    <h2 class="text-red-600 mt-8 ">Students: {{$department->students()->count()}}</h2>
     <!-- search -->
-    <div class="flex items-center mt-8">
+    <div class="flex items-center mt-4">
         <input type="text" id='searchby' placeholder="Search by name or roll no." class="search-indigo w-full md:w-1/2">
         <div class="flex justify-center items-center btn-teal w-8 h-8 rounded-full" onclick='search()'><i class="bx bx-search"></i></div>
     </div>

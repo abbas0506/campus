@@ -43,8 +43,8 @@
                 <tr class="tr">
                     <td>{{$teacher->name}}</td>
                     <td class="text-center">{{$teacher->phone}}</td>
-                    <td class="flex justify-center w-24 shrink-0">
-                        <div class="flex items-center space-x-3 justify-center">
+                    <td class="shrink-0">
+                        <div class="flex items-center justify-center space-x-3">
                             <a href="{{route('teachers.edit', $teacher)}}">
                                 <i class="bi-pencil-square"></i>
                             </a>
