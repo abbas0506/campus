@@ -64,7 +64,7 @@ class ClasController extends Controller
         //derive last semester of the class
 
         $request->merge([
-            'last_semester_id' => $request->first_semester_id + intval($program->min_t * 2) - $request->semester_no,
+            'last_semester_id' => $request->first_semester_id + intval($program->min_t * 2) - 1,
         ]);
 
         DB::beginTransaction();
@@ -142,7 +142,7 @@ class ClasController extends Controller
             //derive last semester id
             $clas = Clas::find($id);
             $request->merge([
-                'last_semester_id' => $request->first_semester_id + intval($clas->program->min_t * 2) - $request->semester_no,
+                'last_semester_id' => $request->first_semester_id + intval($clas->program->min_t * 2) - 1,
             ]);
 
             $exists = Clas::where('program_id', $clas->program_id)
