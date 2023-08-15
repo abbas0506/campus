@@ -52,18 +52,4 @@ class Program extends Model
         }
         return $series;
     }
-    // public function promotable_clases()
-    // {
-    //     return $this->hasMany(Clas::class)
-    //         ->where('semester_no', '<=', $this->min_t * 2)
-    //         ->orderBy('shift_id')
-    //         ->orderBy('semester_no'); //currently active;
-    // }
-    // public function revertible_clases()
-    // {
-    //     return $this->hasMany(Clas::class)
-    //         ->whereBetween('semester_no', [2, $this->min_t * 2 + 1])
-    //         ->orderBy('shift_id')
-    //         ->orderBy('semester_no'); //currently active;
-    // }
 }

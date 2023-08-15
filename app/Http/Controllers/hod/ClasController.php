@@ -132,7 +132,6 @@ class ClasController extends Controller
             'first_semester_id' => 'required',
             'shift_id' => 'required|numeric',
             'scheme_id' => 'required|numeric',
-            'semester_no' => 'required|numeric',
             'first_semester_id' => 'required|numeric',
         ]);
 
@@ -146,7 +145,6 @@ class ClasController extends Controller
 
             $exists = Clas::where('program_id', $clas->program_id)
                 ->where('shift_id', $request->shift_id)
-                ->where('semester_no', $request->semester_no)
                 ->where('first_semester_id', $request->frist_semester_id)
                 ->first();
 

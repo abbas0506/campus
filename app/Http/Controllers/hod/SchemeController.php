@@ -74,12 +74,7 @@ class SchemeController extends Controller
     {
         //
         session(['scheme' => $scheme]);
-
-        $semester_nos = collect();
-        for ($i = 1; $i <= $scheme->program->min_t * 2; $i++) {
-            $semester_nos->add($i);
-        }
-        return view('hod.schemes.show', compact('scheme', 'semester_nos'));
+        return view('hod.schemes.show', compact('scheme'));
     }
 
     /**

@@ -43,4 +43,12 @@ class Scheme extends Model
     {
         return $this->program->cr;
     }
+    public function semester_nos()
+    {
+        $collection = collect();
+        for ($i = $this->program->intake; $i < $this->program->intake + $this->program->min_t * 2; $i++) {
+            $collection->add($i);
+        }
+        return $collection;
+    }
 }

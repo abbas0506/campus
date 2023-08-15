@@ -61,4 +61,11 @@ class Section extends Model
     {
         return Semester::whereBetween('id', [$this->clas->first_semester_id, session('semester_id')])->get();
     }
+    // public function semester_nos()
+    // {
+    //     $semester_nos = collect();
+    //     for ($i = $this->clas->program->intake; $i < $this->clas->program->intake + $this->clas->program->min_t * 2; $i++) {
+    //         $semester_nos->add($i);
+    //     }
+    // }
 }

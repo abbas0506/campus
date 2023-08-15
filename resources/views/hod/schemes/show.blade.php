@@ -36,7 +36,7 @@
     $roman=config('global.romans');
     @endphp
     <div class="flex flex-col accordion mt-4">
-        @foreach($semester_nos as $semester_no)
+        @foreach($scheme->semester_nos() as $semester_no)
         <div class="collapsible">
             <div class="head">
                 <h2 class="">

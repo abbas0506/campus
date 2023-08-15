@@ -75,11 +75,9 @@
 <script lang="javascript">
     function validate(event) {
         var validated = true;
-        var semester_no = $('#semester_no').val()
         var scheme_id = $('#scheme_id').val()
 
-
-        if (semester_no == '' || scheme_id == '') {
+        if (scheme_id == '') {
 
             event.preventDefault();
             validated = false;
