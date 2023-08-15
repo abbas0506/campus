@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('cr');  //compulsory to pass
             $table->unsignedFloat('min_t'); //in years
             $table->unsignedFloat('max_t'); //in years
+            $table->unsignedInteger('intake')->default(1); //intake semester
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('internal_id')->nullable();
             $table->timestamps();

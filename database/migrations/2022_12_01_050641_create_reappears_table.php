@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('reappears', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('semester_no');
             $table->unsignedInteger('assignment')->nullable()->default(0);
             $table->unsignedInteger('presentation')->nullable()->default(0);
             $table->unsignedInteger('midterm')->nullable()->default(0);

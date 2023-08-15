@@ -56,6 +56,7 @@ class ProgramController extends Controller
             'cr' => 'required|numeric',
             'min_t' => 'required|numeric',
             'max_t' => 'required|numeric',
+            'intake' => 'required|numeric',
             'department_id' => 'required|numeric',
 
         ]);
@@ -119,6 +120,7 @@ class ProgramController extends Controller
             'cr' => 'required|numeric',
             'min_t' => 'required|numeric',
             'max_t' => 'required|numeric',
+            'intake' => 'required|numeric',
         ]);
 
         DB::beginTransaction();

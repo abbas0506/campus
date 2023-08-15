@@ -56,7 +56,6 @@ class ClasController extends Controller
             'program_id' => 'required|numeric',
             'shift_id' => 'required|numeric',
             'scheme_id' => 'required|numeric',
-            'semester_no' => 'required|numeric',    //intake semester
             'first_semester_id' => 'required|numeric',
 
         ]);
@@ -189,33 +188,5 @@ class ClasController extends Controller
         $semesters = Semester::till(session('semester_id'))->get();
 
         return view('hod.clases.create', compact('program', 'shifts', 'schemes', 'semesters'));
-    }
-
-    public function revert(Request $request)
-    {
-        $request->validate([
-            'ids_array' => 'required',
-        ]);
-
-        $ids = array();
-        $ids = $request->ids_array;
-        DB::beginTransaction();
-        try {
-            if ($ids) {
-                foreach ($ids as $id) {
-                    $clas = Clas::find($id);
-                    //demoting below 1st semester is illegal
-                    if ($clas->semester_no > 1) {
-                        $clas->semester_no = $clas->semester_no - 1;
-                        $clas->update();
-                    }
-                }
-            }
-            DB::commit();
-            return response()->json(['msg' => "Successful"]);
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return response()->json(['msg' => $ex->getMessage()]);
-        }
     }
 }

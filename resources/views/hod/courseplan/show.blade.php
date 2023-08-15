@@ -33,7 +33,7 @@
         @foreach($section->semesters() as $semester)
         <div class="collapsible">
             <div @if($semester->id==session('semester_id')) class="head active" @else class="head" @endif>
-                <h2 class="flex items-center">Semester {{$roman[$semester->id-$section->clas->first_semester_id+$section->clas->semester_no-1]}}
+                <h2 class="flex items-center">Semester {{$roman[$semester->id-$section->clas->first_semester_id+$section->clas->program->intake-1]}}
                     <span class="text-sm text-slate-600"> :: {{$semester->short()}}</span>
                     <span class="bx bx-time-five ml-6 text-slate-400"></span>
                     <span class="text-xs text-slate-600 ml-2">{{$section->course_allocations()->during($semester->id)->allocatedCr()}} / {{$section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->sum('cr') }}</span>

@@ -58,6 +58,13 @@
                         @endforeach
                     </select>
                 </div>
+                <div>
+                    <label>Intake Semester</label>
+                    <select id='intake' name="intake" class="custom-input">
+                        <option value="1" @selected($porgram->intake==1)>1st Semester</option>
+                        <option value="5" @selected($program->intake==5)>5th Semester</option>
+                    </select>
+                </div>
             </div>
 
             <button type="submit" class="btn-teal rounded w-32 p-2 mt-4">Update Now</button>

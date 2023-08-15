@@ -56,7 +56,6 @@ class FirstAttemptController extends Controller
                     //register students for this course
                     FirstAttempt::create([
                         'student_id' => $id,
-                        'semester_no' => $course_allocation->section->clas->semester_no,
                         'semester_id' => $course_allocation->semester_id,
                         'course_allocation_id' => $request->course_allocation_id,
                     ]);

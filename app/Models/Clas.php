@@ -12,10 +12,8 @@ class Clas extends Model
         'program_id',
         'shift_id',
         'scheme_id',
-        'semester_no',  //intake semester no
         'first_semester_id',
-        'last_semester_id',
-        'status',       //0, finished
+        'last_semester_id', //calculated from program duration, to maintain status of class
     ];
 
     public function program()
@@ -96,7 +94,7 @@ class Clas extends Model
     public function semesterNo($semester_id)
     {
         // current semester gap + initial offset i.e intake semester
-        return $semester_id - $this->first_semester_id + $this->semester_no;
+        return $semester_id - $this->first_semester_id + $this->program->intake;
     }
     public function semesters()
     {

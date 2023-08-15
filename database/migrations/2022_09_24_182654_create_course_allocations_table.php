@@ -22,20 +22,27 @@ return new class extends Migration
             $table->unsignedBigInteger('semester_id');  //for which course are being allocated
             $table->date('result_due_date')->nullable();
 
+            $table->timestamp('submitted_at')->nullable();
+            $table->timestamp('verified_at')->nullable();
+            $table->timestamp('approved_at')->nullable();
+
+            $table->unsignedBigInteger('verifier_id')->nullable();
+            $table->unsignedBigInteger('approver_id')->nullable();
+
             $table->tinyInteger('lecture_no')->default(0);   //for time table
             $table->tinyInteger('room_no')->default(0);
             $table->time('starts_at')->nullable();
             $table->time('ends_at')->nullable();
-
-            $table->unique(['section_id', 'course_id'], 'section_course_unique'); //disallow same course allocation twice in a section
-
             $table->timestamps();
 
+            $table->unique(['section_id', 'course_id'], 'section_course_unique'); //disallow same course allocation twice in a section
             $table->foreign('section_id')->references('id')->on('sections')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('slot_id')->references('id')->on('slots')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('teacher_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('verifier_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('approver_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

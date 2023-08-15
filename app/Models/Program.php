@@ -15,6 +15,7 @@ class Program extends Model
         'cr',   //total credits to pass
         'min_t',
         'max_t',
+        'intake', //intake semester no
         'department_id',
         'internal_id',  //any teacher working as internal examiner
     ];
@@ -36,7 +37,6 @@ class Program extends Model
     }
     public function sections()
     {
-        // return $this->hasMany(Section::class);
         return Section::whereRelation('clas', 'program_id', $this->id)->get();
     }
 
@@ -47,23 +47,23 @@ class Program extends Model
     public function semester_nos()
     {
         $series = collect();
-        for ($i = 1; $i <= $this->min_t * 2; $i++) {
+        for ($i = $this->intake; $i <= $this->min_t * 2; $i++) {
             $series->add($i);
         }
         return $series;
     }
-    public function promotable_clases()
-    {
-        return $this->hasMany(Clas::class)
-            ->where('semester_no', '<=', $this->min_t * 2)
-            ->orderBy('shift_id')
-            ->orderBy('semester_no'); //currently active;
-    }
-    public function revertible_clases()
-    {
-        return $this->hasMany(Clas::class)
-            ->whereBetween('semester_no', [2, $this->min_t * 2 + 1])
-            ->orderBy('shift_id')
-            ->orderBy('semester_no'); //currently active;
-    }
+    // public function promotable_clases()
+    // {
+    //     return $this->hasMany(Clas::class)
+    //         ->where('semester_no', '<=', $this->min_t * 2)
+    //         ->orderBy('shift_id')
+    //         ->orderBy('semester_no'); //currently active;
+    // }
+    // public function revertible_clases()
+    // {
+    //     return $this->hasMany(Clas::class)
+    //         ->whereBetween('semester_no', [2, $this->min_t * 2 + 1])
+    //         ->orderBy('shift_id')
+    //         ->orderBy('semester_no'); //currently active;
+    // }
 }

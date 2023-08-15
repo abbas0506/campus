@@ -106,8 +106,8 @@ class Student extends Model
     {
         $status = '';
         $required_cgpa = 2.0;
-        if ($this->section->clas->semester_no == 1) $required_cgpa = 1.7;
-        else if ($this->section->clas->semester_no == 2) $required_cgpa = 1.8;
+        if ($this->section->clas->semesterNo(session('semester_id')) == 1) $required_cgpa = 1.7;
+        else if ($this->section->clas->semesterNo(session('semester_id')) == 2) $required_cgpa = 1.8;
 
         if ($this->cgpa() >= $required_cgpa) $status = 'Promoted';
         else $status = 'Ceased';

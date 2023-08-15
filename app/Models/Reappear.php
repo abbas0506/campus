@@ -11,12 +11,11 @@ class Reappear extends Model
     protected $fillable = [
         'first_attempt_id',
         'semester_id',
+        'course_allocation_id',
         'assignment',
         'presentation',
         'midterm',
         'summative',
-
-        'course_allocation_id', //2 year old course allocations will be purged
 
     ];
     public function first_attempt()
