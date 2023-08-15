@@ -61,13 +61,6 @@
                         @endforeach
                     </select>
                 </div>
-                <div>
-                    <label>Intake Semester</label>
-                    <select id='semester_no' name="semester_no" class="custom-input">
-                        <option value="1">1st Semester</option>
-                        <option value="5">5th Semester</option>
-                    </select>
-                </div>
             </div>
 
             <button type="submit" class="btn-indigo-rounded mt-6">Create Now</button>
