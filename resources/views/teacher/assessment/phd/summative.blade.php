@@ -7,9 +7,9 @@
         <div>/</div>
         <a href="{{route('mycourses.index')}}">My Courses</a>
         <div>/</div>
-        <a href="{{route('assessment.show',$course_allocation)}}">Results</a>
+        <a href="{{route('mycourses.show',$course_allocation)}}">{{$course_allocation->course->code}}</a>
         <div>/</div>
-        <div>Edit</div>
+        <div>Summative</div>
     </div>
 
     <div class="mt-4">

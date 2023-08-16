@@ -60,7 +60,7 @@
                                 <td>{{$course_allocation->section->title()}}</td>
                                 <td class="text-center">{{$course_allocation->first_attempts()->count()}}</td>
                                 <td class="text-center">{{$course_allocation->reappears()->count()}}</td>
-                                <td class="text-center">%</td>
+                                <td class="text-center">{{$course_allocation->status()}}</td>
                                 <td class="text-center">
                                     <a href="{{route('teacher.award',$course_allocation->id)}}" target="_blank" class="flex flex-col justify-center items-center">
                                         <i class="bi bi-printer text-blue-600"></i>

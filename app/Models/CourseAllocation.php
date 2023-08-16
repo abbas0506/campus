@@ -129,4 +129,12 @@ class CourseAllocation extends Model
     {
         return $query->where('clas.shift_id', $shift);
     }
+    public function status()
+    {
+
+        if ($this->approved_at) return "Approved";
+        else if ($this->verified_at) return "Verified";
+        else if ($this->submitted_at) return "Submitted";
+        else return "Pending";
+    }
 }

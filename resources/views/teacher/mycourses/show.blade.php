@@ -14,20 +14,57 @@
             <h1 class="text-red-600">{{$course_allocation->course->name}}</h1>
             <div class="text-sm">{{$course_allocation->section->title()}}</div>
         </div>
-        <div class="md:w-60">
-            <a href="{{route('assessment.show', $course_allocation)}}" class="pallet-box border">
+        <div class="md:w-60 hover:cursor-pointer" onclick="toggleResultBar()">
+            <!-- <div class="md:w-60 hover:cursor-pointer"> -->
+            <!-- <a href="{{route('assessment.show',$course_allocation)}}" class="pallet-box border"> -->
+            <div class="pallet-box border">
                 <div class="flex-1">
-                    <div class="title">Result Submission</div>
-                    <h2>0%</h2>
+                    <div class="title">Result Status</div>
+                    <h2>@if($course_allocation->submitted_at!='') Submitted @else Pending @endif </h2>
                 </div>
                 <div class="ico ml-8 bg-blue-100">
-                    <i class="bx bx-pencil text-blue-600 text-2xl"></i>
+                    @if($course_allocation->submitted_at!='')
+                    <i class="bi-lock text-red-600 text-2xl"></i>
+                    @else
+                    <i class="bi-unlock text-blue-600 text-2xl"></i>
+                    @endif
                 </div>
-            </a>
+            </div>
         </div>
-
+    </div>
+    <div id='result_bar' class="overflow-x-auto w-full mt-4 hidden">
+        <table class="table-fixed w-full">
+            <thead>
+                <tr class="border-b border-slate-200">
+                    <th class="w-24">Assessment</th>
+                    <th class="w-8">Pass Ratio</th>
+                    <th class="w-16">Avg Marks</th>
+                    <th class="w-12">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center">
+                    <td class="font-semibold">Formative</td>
+                    <td>%</td>
+                    <td>%</td>
+                    <td>
+                        <a href="{{route('formative.edit', $course_allocation)}}"><i class="bi-pencil-square"></i></a>
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <td class="font-semibold text-center">Summative</td>
+                    <td>%</td>
+                    <td>%</td>
+                    <td>
+                        <a href="{{route('summative.edit', $course_allocation)}}"><i class="bi-pencil-square"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
+
+
     <div class="mt-8">
         <!-- search -->
         <div class="flex relative w-full md:w-1/3 mt-8">
@@ -233,6 +270,10 @@
                 $("#tab_fresh").slideDown();
                 $("#tab_reappear").slideUp();
             }
+        }
+
+        function toggleResultBar() {
+            $('#result_bar').slideToggle().delay(500);
         }
     </script>
 
