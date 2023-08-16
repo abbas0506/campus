@@ -59,14 +59,14 @@
         <div class="md:col-span-2">
             <!-- update news  -->
             <div class="p-4 bg-red-50">
-
-                <h2>Software Update Alert V4.2 (11.08.23) </h2>
-                <p class="mt-2 leading-relaxed">Respected HODs, please note that following features have been added into this version</p>
-                <ul class="list-disc pl-4">
-                    <li>*Award List -- working now with 30 rows per page</li>
-                    <li>*Responsiveness -- means that you may use application on mobile screen as well. If table size does not fit mobile screen, you may scroll from left-right</li>
-                    <li>*Page navigation -- each page contains page navigation links to go back in blue color under each page title</li>
-                    <li>*Dashboard -- layout has been improved, but still not fully functional</li>
+                <h2>Important Features of ES V5.0 </h2>
+                <ul class="list-disc pl-4 text-sm">
+                    <li><u>Responsive</u> - app is easy to use on small screens as well </li>
+                    <li><u>Single login</u> - for all of your authorized departments.</li>
+                    <li><u>Dashboard</u> - provides you quick access to your profile info, passowrd change option and other needful pages like config for once, course allcation, printable etc. </li>
+                    <li><u>Page navigation</u> - links help you to navigate across pages. (highlighted in blue color)</li>
+                    <li><u>Award lists</u> - are available in .xlsx and .pdf formats. Pdf version consists of 30 students per page. </li>
+                    <li><u>Upcoming</u> - soon you will be able to see results submission progress of all the teachers of your department, course profile (by whom the course is being taught) and teacher profile (list of allocated courses and workload in credit hours)</li>
                 </ul>
             </div>
 
