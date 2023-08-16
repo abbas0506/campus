@@ -95,48 +95,10 @@
                     <div class="divider border-blue-200 mt-4"></div>
                     <div class="flex text-sm mt-4">
                         <div class="w-8"><i class="bi-key"></i></div>
-                        <a href="" class="link">Change Password</a>
+                        <a href="{{route('teacher.changepw')}}" class="link">Change Password</a>
                     </div>
                 </div>
             </div>
-            <!-- <div class="mt-4 bg-white p-4">
-                <div class="flex items-center space-x-2">
-                    <i class="bi-gear text-lg"></i>
-                    <h2>Config for Once</h2>
-                </div>
-
-                <div class="divider mt-4"></div>
-
-                <div class="flex items-center justify-between mt-2 text-sm">
-                    <div class="flex items-center">
-                        <i class="bi bi-award w-8"></i>
-                        <a href="{{url('programs')}}" class="link">Programs</a>
-                    </div>
-                    <div></div>
-                </div>
-                <div class="flex items-center justify-between mt-2 text-sm">
-                    <div class="flex items-center">
-                        <i class="bi-book w-8"></i>
-                        <a href="{{url('coruses')}}" class="link">Courses</a>
-                    </div>
-                    <div></div>
-                </div>
-                <div class="flex items-center justify-between mt-2 text-sm">
-                    <div class="flex items-center">
-                        <i class="bi-database-gear w-8"></i>
-                        <a href="{{url('schemes')}}" class="link">Schemes</a>
-                    </div>
-                    <div></div>
-                </div>
-                <div class="flex items-center justify-between mt-2 text-sm">
-                    <div class="flex items-center">
-                        <i class="bi-person-workspace w-8"></i>
-                        <a href="{{url('teachers')}}" class="link">Teachers</a>
-                    </div>
-                    <div></div>
-                </div>
-
-            </div> -->
 
         </div>
     </div>

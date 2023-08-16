@@ -86,7 +86,7 @@ Route::get('/{url?}', function () {
 })->where('url', ('login|signin|index'));
 
 Route::view('changepw', 'changepw');
-Route::post('changepw', [UserController::class, 'changepw']);
+Route::patch('changepw/{id}', [AuthController::class, 'update']);
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify/step2', [AuthController::class, 'verify_step2']);
@@ -142,13 +142,10 @@ Route::group(['middleware' => ['role:controller']], function () {
 Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], function () {
     Route::get('hod', [HodController::class, 'index']);
     Route::get('super', [HodController::class, 'index']);
+    Route::view('hod/change/pw', 'hod.changepw')->name('hod.changepw');
     Route::resource('programs', ProgramController::class);
     Route::resource('clases', ClasController::class);
     Route::get('clases/append/{pid}', [ClasController::class, 'append'])->name('clases.append');
-
-    Route::resource('promotions', ClassPromotionController::class)->only('index', 'store');
-    Route::resource('reversions', ClassReversionController::class)->only('index', 'store');
-
     Route::resource('sections', SectionController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('teachers', TeacherController::class);
@@ -197,6 +194,7 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
 Route::group(['middleware' => ['role:teacher', 'my_exception_handler']], function () {
 
     Route::get('teacher', [TeacherTeacherController::class, 'index']);
+    Route::view('teacher/change/pw', 'teacher.changepw')->name('teacher.changepw');
     Route::resource('mycourses', MyCoursesController::class);
     Route::resource('formative', FormativeController::class);
     Route::resource('summative', SummativeController::class);

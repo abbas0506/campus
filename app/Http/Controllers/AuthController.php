@@ -144,7 +144,7 @@ class AuthController extends Controller
                 return redirect()->back()->with('success', 'successfuly changed');
             } else {
                 //password not found
-                return redirect()->back()->withErrors("Password not found");;
+                return redirect()->back()->with('warning', 'Oops, something wrong!');;
             }
         } catch (Exception $e) {
             return redirect()->back()

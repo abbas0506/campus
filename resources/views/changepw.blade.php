@@ -30,18 +30,22 @@
 
         <div class="flex flex-col flex-1">
 
-            <form action="{{url('changepw')}}" method="post" class="flex flex-col w-full md:w-3/4 md:mx-auto bg-white p-5" onsubmit="return validate(event)">
+            <form action="{{url('changepw', Auth::user()->id)}}" method="post" class="flex flex-col w-full md:w-3/4 md:mx-auto bg-white p-5" onsubmit="return validate(event)">
                 @csrf
+                @method('PATCH')
                 <label for="">Old Password</label>
-                <input type="text" id="oldpw" name="oldpw" class="w-full custom-input" placeholder="Enter your login id" required>
+                <input type="text" id="current" name="current" class="w-full custom-input" placeholder="Enter your login id" required>
                 <label for="" class="mt-3">New Password</label>
-                <input type="password" id="newpw" name="newpw" class="w-full custom-input" placeholder="Enter your login id" required>
+                <input type="password" id="new" name="new" class="w-full custom-input" placeholder="Enter your login id" required>
                 <label for="" class="mt-3">Confirm Password</label>
                 <input type="password" id="confirmpw" class="w-full custom-input" placeholder="Enter your login id" required>
 
                 <div class="flex space-x-4">
 
-                    <a href="{{Str::lower(session('current_role'))}}" class="w-full mt-6 btn-teal p-2 text-center">Go Back</a>
+                    <a @if(Auth::user()->hasRole('hod'))
+                        href="{{url('hod')}}"
+                        @endif
+                        class="w-full mt-6 btn-teal p-2 text-center">Go Back</a>
                     <button type="submit" class="w-full mt-6 btn-indigo p-2">Change Password</button>
                 </div>
             </form>
@@ -62,7 +66,7 @@
 <script lang="javascript">
     function validate(event) {
         var validated = true;
-        if ($('#newpw').val() != $('#confirmpw').val()) {
+        if ($('#new').val() != $('#confirmpw').val()) {
             validated = false;
             event.preventDefault();
             Swal.fire({

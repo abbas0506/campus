@@ -129,7 +129,7 @@
                     <div class="divider border-blue-200 mt-4"></div>
                     <div class="flex text-sm mt-4">
                         <div class="w-8"><i class="bi-key"></i></div>
-                        <a href="" class="link">Change Password</a>
+                        <a href="{{route('hod.changepw')}}" class="link">Change Password</a>
                     </div>
                 </div>
             </div>
