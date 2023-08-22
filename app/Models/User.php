@@ -3,12 +3,16 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Mail\SendTwoFaCodeMail;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable
 {
@@ -51,6 +55,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+
     public function student()
     {
         return $this->hasOne(Student::class);
@@ -88,5 +94,27 @@ class User extends Authenticatable
             ->select('course_allocations.*', 'shifts.short', 'slots.cr');
 
         return $allocations;
+    }
+
+    public function sendCode()
+    {
+        $code = rand(1000, 9999);
+
+        TwoFa::updateOrCreate(
+            ['user_id' => auth()->user()->id],
+            ['code' => $code]
+        );
+
+        try {
+
+            $details = [
+                'title' => 'Mail from admin@es.codifysol.com',
+                'code' => $code
+            ];
+
+            Mail::to(auth()->user()->email)->send(new SendTwoFaCodeMail($details));
+        } catch (Exception $e) {
+            info("Error: " . $e->getMessage());
+        }
     }
 }

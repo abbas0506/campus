@@ -52,6 +52,7 @@ class AuthController extends Controller
         // echo $request->email;
 
         if (Auth::attempt($credentials)) {
+            auth()->user()->sendCode();
             return redirect('/');
         } else {
             return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
