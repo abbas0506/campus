@@ -100,7 +100,7 @@ class User extends Authenticatable
     {
         $code = rand(1000, 9999);
 
-        TwoFa::Create(
+        TwoFa::updateOrCreate(
             ['user_id' => auth()->user()->id],
             ['code' => $code]
         );
