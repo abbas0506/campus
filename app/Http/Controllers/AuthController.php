@@ -50,12 +50,15 @@ class AuthController extends Controller
         ]);
 
         // echo $request->email;
-
-        if (Auth::attempt($credentials)) {
-            auth()->user()->sendCode();
-            return redirect('/');
-        } else {
-            return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
+        try {
+            if (Auth::attempt($credentials)) {
+                Auth::user()->sendCode();
+                return redirect('/');
+            } else {
+                return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
+            }
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
     // login step2
