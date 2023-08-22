@@ -5,11 +5,10 @@
 
 <div class="container w-full mx-auto mt-8">
     <div class="flex items-center flex-wrap justify-between">
-        <div class="flex relative ">
-            <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute right-1 top-3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-            </svg>
+        <!-- search -->
+        <div class="flex relative w-full md:w-1/3 mt-8">
+            <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
+            <i class="bx bx-search absolute top-2 right-2"></i>
         </div>
         <form method='post' action="{{route('semesters.store')}}">
             @csrf
