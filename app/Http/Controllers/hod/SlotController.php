@@ -85,7 +85,7 @@ class SlotController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('schemes.show', $request->scheme_id)->with('success', 'Successfully created');
+            return redirect()->route('schemes.show', $request->scheme_id)->with(['success' => 'Successfully created', 'active_semester_no' => $request->semester_no]);
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());

@@ -37,8 +37,17 @@
     @endphp
     <div class="flex flex-col accordion mt-4">
         @foreach($scheme->semester_nos() as $semester_no)
+        @php
+        $active='';
+        if(session('active_semester_no')!=null){
+        if(session('active_semester_no')==$semester_no){
+        $active='active';
+        }
+        }
+
+        @endphp
         <div class="collapsible">
-            <div class="head">
+            <div class="head {{$active}}">
                 <h2 class="">
                     Semester {{$roman[$semester_no-1]}}
                     <span class="ml-6 text-xs font-thin"> <i class="bi bi-clock"></i> {{$scheme->slots()->for($semester_no)->sum('cr')}}</span>

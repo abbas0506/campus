@@ -29,9 +29,9 @@
         <h1 class="text-red-600 mt-2">Slot # {{$slot->slot_no}} ___ <i class="bi-clock"></i> {{$slot->cr}}</h1>
 
         <div class="flex flex-col md:flex-row md:items-center gap-x-2 mt-8">
-            <i class="bi bi-info-circle"></i>
-            <ul class="text-xs">
-                <li>Class will be deleted only if it has no student (i.e. empty class)</li>
+            <i class="bi bi-info-circle text-2xl"></i>
+            <ul class="text-sm ml-4">
+                <li>You can add or remove course types from the slot </li>
                 <li>Section delete option is not available on this page. It is available on section page itself. (click on section label)</li>
             </ul>
         </div>
@@ -43,11 +43,14 @@
         @endif
 
         <h2 class="flex items-center mt-8">
-            <div class="flex justify-center items-center w-7 h-7 bg-teal-100 rounded-full ring-1 ring-teal-200 ring-offset-2 mr-4"><i class="bi-plus-slash-minus text-[16px]"></i> </div>Add or Remove Course Types
+            <div class="flex justify-center items-center w-7 h-7 bg-teal-100 rounded-full ring-1 ring-teal-200 ring-offset-2 mr-4"><i class="bi-hand-index rotate-180 text-[16px]"></i> </div>Currently Associated Course Types
         </h2>
         <div class="grid grid-cols-1 p-6 rounded-md border mt-4 text-slate-600">
-            <div class="grid grid-cols-1 md:grid-cols-3  gap-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2  gap-y-4">
+                <div>Course Type</div>
+                <div>Exact Course (optional)</div>
                 @foreach($slot->slot_options as $slot_option)
+
                 <div class="flex space-x-2 items-center awesome-chk">
                     <h2>{{$slot_option->course_type->name}}</h2>
                     <form action="{{route('slot-options.destroy',$slot_option)}}" method="POST" id='del_form{{$slot_option->id}}'>
@@ -77,7 +80,7 @@
                 </div>
 
                 <div class="flex mt-4">
-                    <button type="submit" class="btn-blue rounded">Add Now</button>
+                    <button type="submit" class="btn-blue rounded">Associate another course type</button>
                 </div>
 
             </form>

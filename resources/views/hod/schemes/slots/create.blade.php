@@ -46,7 +46,7 @@
             <input type="hidden" name="slot_no" value="{{$slot_no}}">
 
             <label for="" class="mt-3">Credit hrs. </label>
-            <select id="" name="cr" class="custom-input p-2">
+            <select id="" name="cr" class="custom-input md:w-1/3 p-2">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3" selected>3</option>
@@ -55,7 +55,7 @@
                 <option value="6">6</option>
             </select>
 
-            <label for="" class='mt-3 font-semibold'>Note: You may associate more than one course types with current slot </label>
+            <label for="" class='mt-3 font-semibold'>Note: You may associate multiple course types with current slot. </label>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-y-2 text-sm mt-3">
                 @foreach($course_types as $course_type)
                 <div class="flex space-x-2 items-center awesome-chk">
