@@ -118,7 +118,7 @@ class User extends Authenticatable
                 $message->subject($code);
             });
         } catch (Exception $e) {
-            info("Error: " . $e->getMessage());
+            echo $e->getMessage();
         }
     }
 }
