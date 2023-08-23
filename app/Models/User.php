@@ -107,10 +107,10 @@ class User extends Authenticatable
 
         try {
 
-            $details = [
-                'title' => 'Mail from admin@es.codifysol.com',
-                'code' => $code
-            ];
+            // $details = [
+            //     'title' => 'Mail from admin@es.codifysol.com',
+            //     'code' => $code
+            // ];
 
             // Mail::to(auth()->user()->email)->send(new SendTwoFaCodeMail($details));
             Mail::raw('User authentication code', function ($message) use ($code) {

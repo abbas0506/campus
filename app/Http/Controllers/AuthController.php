@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\Semester;
+use App\Models\TwoFa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -54,18 +55,8 @@ class AuthController extends Controller
         try {
             if (Auth::attempt($credentials)) {
                 Auth::user()->sendCode();
-                // Mail::raw('Helo it is msg from admin', function ($message) {
-                //     //    $message->from('john@johndoe.com', 'John Doe');
-                //     //    $message->sender('john@johndoe.com', 'John Doe');
-                //     $message->to('abbas.sscs@gmail.com', 'admin');
-                //     //    $message->cc('john@johndoe.com', 'John Doe');
-                //     //    $message->bcc('john@johndoe.com', 'John Doe');
-                //     //    $message->replyTo('john@johndoe.com', 'John Doe');
-                //     $message->subject('Code');
-                //     //    $message->priority(3);
-                //     //    $message->attach('pathToFile');
-                // });
-                return redirect('/');
+
+                return redirect('two/fa');
             } else {
                 return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
             }
@@ -106,11 +97,29 @@ class AuthController extends Controller
     }
 
 
-    public function verify_step2(Request $request)
+    public function twoFA(Request $request)
     {
         //get 2nd factor secret code sent to gmail
         //if matched, redirect to user dashboard
+        $request->validate([
+            'code' => 'required',
+        ]);
 
+        $find = TwoFa::where('user_id', auth()->user()->id)
+            ->where('code', $request->code)
+            ->where('updated_at', '>=', now()->subMinutes(2))
+            ->first();
+
+        if (!is_null($find)) {
+
+            session([
+                'user_2fa' => auth()->user()->id,
+            ]);
+
+            return redirect()->route('/');
+        }
+
+        return back()->with('error', 'You entered wrong code.');
     }
 
     /**

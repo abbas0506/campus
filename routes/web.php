@@ -87,9 +87,10 @@ Route::get('/{url?}', function () {
 
 Route::view('changepw', 'changepw');
 Route::patch('changepw/{id}', [AuthController::class, 'update']);
+Route::view('two/fa', 'two_fa');
 
 Route::post('login', [AuthController::class, 'login']);
-Route::post('verify/step2', [AuthController::class, 'verify_step2']);
+Route::post('two/fa', [AuthController::class, 'twoFA']);
 Route::post('login/as', [AuthController::class, 'loginAs'])->name('login.as');
 Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
 Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
