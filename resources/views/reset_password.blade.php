@@ -3,19 +3,18 @@
 @section('body')
 <div class="flex flex-col w-screen h-screen justify-center items-center">
 
-    <!-- page message -->
-    @if($errors->any())
-    <x-message :errors='$errors'></x-message>
-    @else
-    <x-message></x-message>
-    @endif
-
     <div class="flex space-x-16 w-3/4">
         <div class="flex justify-center items-center">
             <img src="{{asset('/images/lock.png')}}" alt="lock" class="w-64 h-64">
         </div>
 
         <div class="flex flex-col flex-1">
+            <!-- page message -->
+            @if($errors->any())
+            <x-message :errors='$errors'></x-message>
+            @else
+            <x-message></x-message>
+            @endif
 
             <form action="{{route('resetpassword.update', $user)}}" method="post" class="flex flex-col w-full md:w-3/4 md:mx-auto bg-white p-5" onsubmit="return validate(event)">
                 @csrf
