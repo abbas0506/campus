@@ -207,4 +207,7 @@ class AuthController extends Controller
         ]);
         return redirect(session('current_role'));
     }
+    public function resetPassword(Request $request, $id)
+    {
+    }
 }
