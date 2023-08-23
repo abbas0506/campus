@@ -113,10 +113,10 @@ class User extends Authenticatable
             ];
 
             // Mail::to(auth()->user()->email)->send(new SendTwoFaCodeMail($details));
-            Mail::raw('Authenticatioin code for current login', function ($message) use ($code) {
+            Mail::raw('User authentication code', function ($message) use ($code) {
                 //    $message->from('john@johndoe.com', 'John Doe');
                 //    $message->sender('john@johndoe.com', 'John Doe');
-                $message->to(auth()->user()->email, "Dear " . auth()->user()->name);
+                $message->to(auth()->user()->email, "email");
                 //    $message->cc('john@johndoe.com', 'John Doe');
                 //    $message->bcc('john@johndoe.com', 'John Doe');
                 //    $message->replyTo('john@johndoe.com', 'John Doe');
