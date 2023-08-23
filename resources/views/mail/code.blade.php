@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <h1>{{ $details['title'] }}</h1>
+    <h2>{{ $details['title'] }}</h2>
     <p>Your code is : {{ $details['code'] }}</p>
 
     <p>Thank you</p>
