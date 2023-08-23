@@ -21,8 +21,9 @@ class ResetPasswordController extends Controller
     public function index()
     {
         //send password reset code
-
-        return view('reset_password');
+        if (session('user_id'))
+            $user = User::find(session('user_id'));
+        return view('reset_password', compact('user'));
     }
 
     /**
@@ -99,7 +100,7 @@ class ResetPasswordController extends Controller
 
                 $user->password = Hash::make($request->new);
                 $user->update();
-                return redirect('/')->with('success', 'successfuly changed');
+                return redirect()->back()->with('success', 'successfuly changed');
             } catch (Exception $e) {
                 return redirect()->back()
                     ->withErrors($e->getMessage());
@@ -109,7 +110,7 @@ class ResetPasswordController extends Controller
             return redirect('/');
         }
 
-        return back()->with('warning', 'You entered wrong code.');
+        return redirect()->back()->with('warning', 'You entered wrong code.');
     }
 
     /**
@@ -143,7 +144,7 @@ class ResetPasswordController extends Controller
                     $message->subject($code);
                 });
 
-                return redirect()->route('resetpassword.index');
+                return redirect()->route('resetpassword.index')->with('user_id', $user->id);
             } catch (Exception $e) {
                 echo $e->getMessage();
             }

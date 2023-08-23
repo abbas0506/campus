@@ -17,7 +17,7 @@
 
         <div class="flex flex-col flex-1">
 
-            <form action="{{url('reset/password', 1)}}" method="post" class="flex flex-col w-full md:w-3/4 md:mx-auto bg-white p-5" onsubmit="return validate(event)">
+            <form action="{{route('resetpassword.update', $user)}}" method="post" class="flex flex-col w-full md:w-3/4 md:mx-auto bg-white p-5" onsubmit="return validate(event)">
                 @csrf
                 @method('PATCH')
                 <label for="" class="mt-3">New Password</label>
