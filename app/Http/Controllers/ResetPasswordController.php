@@ -22,7 +22,6 @@ class ResetPasswordController extends Controller
     {
         //send password reset code
 
-        Auth::user()->sendCode();
         return view('reset_password');
     }
 
