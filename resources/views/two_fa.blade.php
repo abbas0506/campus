@@ -19,7 +19,7 @@
             @csrf
             <div class="flex flex-col w-full items-start">
                 <div class="w-full">
-                    <label for="hero-field" class="leading-7 text-sm text-gray-600">Verification Code</label>
+                    <label for="" class="">Verification Code</label>
                     <input type="text" id="id" name="code" class="w-full custom-input pl-4" placeholder="- - - -">
                 </div>
                 <button type='submit' class="w-full md:w-1/4 mt-4 btn-indigo">Verify</button>

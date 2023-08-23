@@ -35,8 +35,10 @@
                         <i class="bi bi-eye-slash absolute right-2 eye-slash" onclick="showpw()"></i>
                         <i class="bi bi-eye absolute right-2 eye hidden" onclick="hidepw()"></i>
                     </div>
-
                     <button type="submit" class="w-full mt-6 btn-indigo p-2">Login</button>
+                    <div class="mt-2">
+                        <a href="{{url('forgot/password')}}" class="link text-slate-800">Forgot password?</a>
+                    </div>
                 </div>
             </form>
         </div>

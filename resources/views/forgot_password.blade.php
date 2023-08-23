@@ -1,0 +1,60 @@
+@extends('layouts.basic')
+
+@section('body')
+<div class="flex flex-col w-screen h-screen justify-center items-center">
+
+    <!-- page message -->
+    @if($errors->any())
+    <x-message :errors='$errors'></x-message>
+    @else
+    <x-message></x-message>
+    @endif
+
+    <div class="w-1/2">
+        <div class="flex justify-center items-center">
+            <img src="{{asset('/images/lock.png')}}" alt="lock" class="w-64 h-64">
+        </div>
+
+        <form action="{{route('resetpassword.sendcode')}}" method="post" class="flex flex-col w-full md:w-3/4 md:mx-auto bg-white p-5" onsubmit="return validate(event)">
+            @csrf
+            <label for="" class="mt-3">Your Email</label>
+            <input type="text" name="email" class="custom-input" placeholder="Enter your email" required>
+
+            <div class="flex space-x-4">
+                <button type="submit" class="w-full mt-6 btn-indigo p-2">Send Code</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<script type="module">
+    $('#toggle-current-user-dropdown').click(function() {
+        $("#current-user-dropdown").toggle();
+    });
+    $('#menu').click(function() {
+        $("#sidebar").toggle();
+    });
+</script>
+@endsection
+@section('script')
+<script lang="javascript">
+    function validate(event) {
+        var validated = true;
+        if ($('#new').val() != $('#confirmpw').val()) {
+            validated = false;
+            event.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Confirm password not matched',
+                showConfirmButton: false,
+                timer: 1500,
+            })
+
+        }
+
+        return validated;
+        // return false;
+
+    }
+</script>
+@endsection

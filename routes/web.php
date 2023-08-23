@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\HeadshipController;
 use App\Http\Controllers\Admin\UserAccessController;
 use App\Http\Controllers\Admin\CourseTypeController;
-
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ce\AwardController as CeAwardController;
 use App\Http\Controllers\ce\FinalGazetteController;
 use App\Http\Controllers\ce\GazetteController as CeGazetteController;
@@ -88,9 +88,13 @@ Route::get('/{url?}', function () {
 Route::view('changepw', 'changepw');
 Route::patch('changepw/{id}', [AuthController::class, 'update']);
 Route::view('two/fa', 'two_fa');
+Route::view('forgot/password', 'forgot_password');
+Route::resource('resetpassword', ResetPasswordController::class);
+Route::post('resetpassword/sendcode', [ResetPasswordController::class, 'sendCode'])->name('resetpassword.sendcode');
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('two/fa', [AuthController::class, 'twoFA']);
+
 Route::post('login/as', [AuthController::class, 'loginAs'])->name('login.as');
 Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
 Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
