@@ -53,18 +53,18 @@ class AuthController extends Controller
         // echo $request->email;
         try {
             if (Auth::attempt($credentials)) {
-                // Auth::user()->sendCode();
-                Mail::raw('Helo it is msg from admin', function ($message) {
-                    //    $message->from('john@johndoe.com', 'John Doe');
-                    //    $message->sender('john@johndoe.com', 'John Doe');
-                    $message->to('abbas.sscs@gmail.com', 'admin');
-                    //    $message->cc('john@johndoe.com', 'John Doe');
-                    //    $message->bcc('john@johndoe.com', 'John Doe');
-                    //    $message->replyTo('john@johndoe.com', 'John Doe');
-                    $message->subject('Code');
-                    //    $message->priority(3);
-                    //    $message->attach('pathToFile');
-                });
+                Auth::user()->sendCode();
+                // Mail::raw('Helo it is msg from admin', function ($message) {
+                //     //    $message->from('john@johndoe.com', 'John Doe');
+                //     //    $message->sender('john@johndoe.com', 'John Doe');
+                //     $message->to('abbas.sscs@gmail.com', 'admin');
+                //     //    $message->cc('john@johndoe.com', 'John Doe');
+                //     //    $message->bcc('john@johndoe.com', 'John Doe');
+                //     //    $message->replyTo('john@johndoe.com', 'John Doe');
+                //     $message->subject('Code');
+                //     //    $message->priority(3);
+                //     //    $message->attach('pathToFile');
+                // });
                 return redirect('/');
             } else {
                 return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
