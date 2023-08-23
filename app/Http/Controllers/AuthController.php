@@ -116,10 +116,10 @@ class AuthController extends Controller
                 'user_2fa' => auth()->user()->id,
             ]);
 
-            return redirect()->route('/');
+            return redirect('/');
         }
 
-        return back()->with('error', 'You entered wrong code.');
+        return back()->with('warning', 'You entered wrong code.');
     }
 
     /**
