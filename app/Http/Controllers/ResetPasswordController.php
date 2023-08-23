@@ -140,6 +140,10 @@ class ResetPasswordController extends Controller
                 ['code' => $code]
             );
 
+            session([
+                'user_id' => $user->id,
+            ]);
+
             try {
 
                 Mail::raw('Password reset code', function ($message) use ($code, $email) {
@@ -147,7 +151,7 @@ class ResetPasswordController extends Controller
                     $message->subject($code);
                 });
 
-                return redirect()->route('resetpassword.index')->with('user_id', $user->id);
+                return redirect()->route('resetpassword.index');
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
