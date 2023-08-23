@@ -17,8 +17,7 @@
     $roman = config('global.romans');
     @endphp
 
-    <div class="w-full md:w-3/4 mx-auto mt-12">
-        <h1 class="text-red-600">Slot # {{$slot->slot_no}} <span class="text-slate-500 text-sm"> (Cr: {{$slot->cr}})</span></h1>
+    <div class="mt-12">
         <div class="flex items-center">
             <h2>{{$slot->scheme->program->short}}</h2>
             <span class="chevron-right mx-1"></span>
@@ -27,7 +26,15 @@
                 (Semester-{{$roman[$slot->semester_no-1]}})
             </a>
         </div>
+        <h1 class="text-red-600 mt-2">Slot # {{$slot->slot_no}} ___ <i class="bi-clock"></i> {{$slot->cr}}</h1>
 
+        <div class="flex flex-col md:flex-row md:items-center gap-x-2 mt-8">
+            <i class="bi bi-info-circle"></i>
+            <ul class="text-xs">
+                <li>Class will be deleted only if it has no student (i.e. empty class)</li>
+                <li>Section delete option is not available on this page. It is available on section page itself. (click on section label)</li>
+            </ul>
+        </div>
         <!-- page message -->
         @if($errors->any())
         <x-message :errors='$errors'></x-message>

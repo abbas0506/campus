@@ -13,27 +13,22 @@
         <div>New Slot</div>
     </div>
 
-    <div class="w-full md:w-3/4 mx-auto mt-12">
-        <div class="flex items-center flex-row">
-            <div class="h-16 w-16 sm:mr-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-                </svg>
-            </div>
-            <div class="flex-grow sm:text-left text-center sm:mt-0">
-                <h2 class="text-red-800 animate-pulse">Remember!</h2>
-                <p class="text-sm underline underline-offset-4 text-orange-600">Crdit hrs will not be editable later.</p>
-            </div>
-        </div>
-
-        @php
-        $roman = config('global.romans');
-        @endphp
+    @php
+    $roman = config('global.romans');
+    @endphp
 
 
-        <h1 class=" text-red-600 mt-8">Slot # {{$slot_no}}</h1>
-        <h2>{{$scheme->program->short}} / {{$scheme->subtitle()}}({{$roman[$semester_no-1]}})</h2>
+    <h2 class="mt-12">{{$scheme->program->short}} / {{$scheme->subtitle()}}({{$roman[$semester_no-1]}})</h2>
+    <h1 class=" text-red-600 mt-1">Slot # {{$slot_no}}</h1>
+    <div class="flex flex-col md:flex-row md:items-center gap-x-2 mt-8">
+        <i class="bi bi-info-circle text-2xl"></i>
+        <ul class="text-sm ml-4">
+            <li>Please associate exact course types to this slot as per concerned scheme</li>
+            <li>Be carefull while selecting credit hrs for the slot as it will not be editable later</li>
+        </ul>
+    </div>
 
+    <div class="mt-8">
 
         <!-- page message -->
         @if($errors->any())
@@ -60,8 +55,8 @@
                 <option value="6">6</option>
             </select>
 
-            <label for="" class='mt-3 font-semibold'>Course Type (choose atleast one)</label>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-y-2 text-sm mt-3">
+            <label for="" class='mt-3 font-semibold'>Note: You may associate more than one course types with current slot </label>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-y-2 text-sm mt-3">
                 @foreach($course_types as $course_type)
                 <div class="flex space-x-2 items-center awesome-chk">
                     <input type="checkbox" id='chk-{{$course_type->id}}' name='course_type_id[]' value="{{$course_type->id}}" class="chk hidden">
