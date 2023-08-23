@@ -116,7 +116,7 @@ class User extends Authenticatable
             Mail::raw('Authenticatioin code for current login', function ($message) use ($code) {
                 //    $message->from('john@johndoe.com', 'John Doe');
                 //    $message->sender('john@johndoe.com', 'John Doe');
-                $message->to('abbas.sscs@gmail.com', 'admin');
+                $message->to(auth()->user()->email, "Dear " . auth()->user()->name);
                 //    $message->cc('john@johndoe.com', 'John Doe');
                 //    $message->bcc('john@johndoe.com', 'John Doe');
                 //    $message->replyTo('john@johndoe.com', 'John Doe');
