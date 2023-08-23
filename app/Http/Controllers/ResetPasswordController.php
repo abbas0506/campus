@@ -83,15 +83,14 @@ class ResetPasswordController extends Controller
             'code' => 'required',
         ]);
 
-
-        $matched = TwoFa::where('user_id', $id)
+        $user = User::find($id);
+        $matched = TwoFa::where('user_id', $user->id)
             ->where('code', $request->code)
             ->where('updated_at', '>=', now()->subMinutes(2))
             ->first();
 
         if ($matched) {
 
-            $user = Auth::user();
             //change password process
             $request->validate([
                 'new' => 'required',
