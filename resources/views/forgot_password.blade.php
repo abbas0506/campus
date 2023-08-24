@@ -1,11 +1,10 @@
 @extends('layouts.basic')
 
 @section('body')
-<div class="flex flex-col w-screen h-screen justify-center items-center">
-
-
-    <div class="w-1/2">
+<div class="flex flex-col w-screen h-screen justify-center items-center ">
+    <div class="md:w-1/3">
         <div class="flex justify-center items-center">
+            <!-- <i class="bi-shield-shaded text-8xl"></i> -->
             <img src="{{asset('/images/lock.png')}}" alt="lock" class="w-64 h-64">
         </div>
         <!-- page message -->
@@ -15,11 +14,11 @@
         <x-message></x-message>
         @endif
 
-        <form action="{{route('resetpassword.sendcode')}}" method="post" class="flex flex-col w-full md:w-3/4 md:mx-auto bg-white p-5" onsubmit="return validate(event)">
+        <form action="{{route('resetpassword.sendcode')}}" method="post" class="flex flex-col" onsubmit="return validate(event)">
             @csrf
             <label for="" class="mt-3">Your Email</label>
             <input type="text" name="email" class="custom-input" placeholder="Enter your email" required>
-
+            <div class="text-xs mt-1">Secret code will be sent to only registered email account. The code will remain valid for five minutes.</div>
             <div class="flex space-x-4">
                 <button type="submit" class="w-full mt-6 btn-indigo p-2">Send Code</button>
             </div>
