@@ -23,7 +23,7 @@
                 <input type="text" name="code" class="custom-input pl-4" placeholder="- - - -" value="" autocomplete="off">
                 <p class="text-xs mt-1">4 digits verification code has been sent to your email account. Please visit your inbox / spam folder. </p>
                 <div class="flex space-x-4 mt-6">
-                    <a href="{{url('/')}}" type="submit" class="w-1/2 btn-orange p-2 text-center">Cancel</a>
+                    <a href="{{url('/')}}" type="submit" class="w-1/2 btn-orange p-2 text-center">Go Back</a>
                     <button type="submit" class="w-1/2 btn-indigo p-2">Reset Password</button>
                 </div>
             </form>

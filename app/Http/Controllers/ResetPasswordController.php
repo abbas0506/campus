@@ -129,36 +129,36 @@ class ResetPasswordController extends Controller
     public function sendCode(Request $request)
     {
 
-        return redirect()->route('resetpassword.index');
-        // $request->validate([
-        //     'email' => 'required|email',
-        // ]);
-        // $email = $request->email;
-        // $user = User::where('email', $request->email)->first();
-        // if ($user) {
-        //     $code = rand(1000, 9999);
-        //     TwoFa::updateOrCreate(
-        //         ['user_id' => $user->id],
-        //         ['code' => $code]
-        //     );
 
-        //     session([
-        //         'user_id' => $user->id,
-        //     ]);
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+        $email = $request->email;
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            $code = rand(1000, 9999);
+            TwoFa::updateOrCreate(
+                ['user_id' => $user->id],
+                ['code' => $code]
+            );
 
-        //     try {
+            session([
+                'user_id' => $user->id,
+            ]);
 
-        //         Mail::raw('Password reset code', function ($message) use ($code, $email) {
-        //             $message->to($email);
-        //             $message->subject($code);
-        //         });
+            try {
 
-        //         return redirect()->route('resetpassword.index');
-        //     } catch (Exception $e) {
-        //         echo $e->getMessage();
-        //     }
-        // } else {
-        //     return redirect()->back()->with('warning', 'The email does not exist in record');
-        // }
+                Mail::raw('Password reset code', function ($message) use ($code, $email) {
+                    $message->to($email);
+                    $message->subject($code);
+                });
+
+                return redirect()->route('resetpassword.index');
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+        } else {
+            return redirect()->back()->with('warning', 'The email does not exist in record');
+        }
     }
 }
