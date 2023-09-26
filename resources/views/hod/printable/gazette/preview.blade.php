@@ -35,22 +35,22 @@
     <div class="overflow-x-auto w-full mt-4">
         <table class="table-fixed w-full">
             <thead>
-                <tr class="text-xs ">
-                    <th class="w-16 ">Sr No</th>
-                    <th class="w-40">Roll No</th>
-                    <th class="w-40">Reg. No</th>
-                    <th class="w-60 text-left">Student Name</th>
-                    <th class="w-60 text-left">Father Name</th>
-                    <th class="w-24">Total</th>
+                <tr>
+                    <th class="w-12">Sr No</th>
+                    <th class="w-36">Roll No</th>
+                    <th class="w-32">Reg. No</th>
+                    <th class="w-48 text-left">Student Name</th>
+                    <th class="w-48 text-left">Father Name</th>
+                    <th class="w-20">Total</th>
                     <th class="w-24">Status</th>
-                    <th class="w-32">Failing Subject</th>
+                    <th class="w-24">Remarks</th>
                     <th class="w-32">Failing Subject</th>
                 </tr>
             </thead>
             <tbody>
                 @php $sr=0;@endphp
                 @foreach($section->students as $student)
-                <tr class="tr text-xs text-center">
+                <tr class="tr text-xs">
                     <td>{{++$sr}}</td>
                     <td>{{$student->rollno}}</td>
                     <td>{{$student->regno}}</td>

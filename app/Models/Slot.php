@@ -43,4 +43,8 @@ class Slot extends Model
         }
         return $lbl;
     }
+    public function scopeTill($query, $semester_no)
+    {
+        return $query->where('semester_no', '<=', $semester_no);
+    }
 }

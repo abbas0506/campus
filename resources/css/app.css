@@ -8,14 +8,18 @@
     body {
         @apply max-w-screen-2xl;
     }
+    tr {
+        @apply text-sm text-center;
+    }
     tr th {
-        @apply px-2 text-sm text-gray-600 border bg-blue-50 text-center;
+        @apply px-2 text-gray-600 border bg-blue-50 text-center;
     }
     tr td {
-        @apply p-2 text-sm text-gray-600 border;
+        @apply p-2 text-gray-600 border;
     }
+
     td table tbody tr td {
-        @apply p-1 text-sm text-gray-600 border-none;
+        @apply p-1 text-gray-600 border-none;
     }
 
     table.borderless thead tr th,

@@ -37,12 +37,12 @@
     </div>
 
     <div class="overflow-x-auto mt-4">
-        <table class="table-fixed borderless w-full">
+        <table class="table-fixed w-full">
             <thead>
                 <tr>
                     <th class="w-16">Action</th>
                     <th class="w-20">Code</th>
-                    <th class="w-60">Name</th>
+                    <th class="w-60 text-left">Name</th>
                     <th class="w-24">Type</th>
                 </tr>
             </thead>
@@ -59,9 +59,9 @@
                             </button>
                         </form>
                     </td>
-                    <td class="text-center">{{$course->code}}</td>
-                    <td>{{$course->name}} <span class="text-slate-500 text-xs">{{($course->lblCr())}}</span></td>
-                    <td class="text-center">{{$course->course_type->name}}</td>
+                    <td>{{$course->code}}</td>
+                    <td class="text-left">{{$course->name}} <span class="text-slate-500 text-xs">{{($course->lblCr())}}</span></td>
+                    <td>{{$course->course_type->name}}</td>
                 </tr>
                 @endforeach
 

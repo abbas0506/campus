@@ -87,10 +87,10 @@
                 <tr class="text-sm font-bold">
                     <td class="px-8 text-right border border-solid" colspan="2"> Total</td>
                     <td class="text-center border border-solid">
-                        <div class="border-b">{{$student->credits_attempted()}}</div>
+                        <div class="border-b">{{$student->credits_covered()}}</div>
                     </td>
                     <td class="border border-solid">
-                        <div class="text-center border-b border-0 border-solid">{{$student->overall_obtained()}}/{{$student->overall_total_marks()}}</div>
+                        <div class="text-center border-b border-0 border-solid">{{$student->sum_of_obtained()}}/{{$student->total_marks_covered()}}</div>
                         <div class="text-center">{{$student->overall_percentage()}}%</div>
                     </td>
                     <td class="text-center border border-solid">CGPA</td>

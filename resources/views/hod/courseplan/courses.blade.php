@@ -38,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($courses->get()->sortBy('course_type_id') as $course)
+                @foreach($related_courses->sortBy('course_type_id') as $course)
                 <tr class="tr">
                     <td>
                         @if($section->has_course($course->id))

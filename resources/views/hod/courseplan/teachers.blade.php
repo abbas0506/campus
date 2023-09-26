@@ -31,8 +31,9 @@
             <thead>
                 <tr>
                     <th class="w-16">Action</th>
-                    <th class="w-64">Teacher</th>
-                    <th class="w-60">Department</th>
+                    <th class="w-48">Teacher</th>
+                    <th class="w-32">Phone/CNIC</th>
+                    <th class="w-48">Department</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,8 +49,9 @@
                             </button>
                         </form>
                     </td>
-                    <td>{{$teacher->name}}</td>
-                    <td>{{Str::replace('Department of ','',$teacher->department->name)}}</td>
+                    <td class="text-left">{{$teacher->name}}<br><span class="text-slate-400">{{$teacher->email}}</span></td>
+                    <td class="text-left">{{$teacher->phone}}<br><span class="text-slate-400">{{$teacher->cnic}}</span></td>
+                    <td class="text-left">{{Str::replace('Department of ','',$teacher->department->name)}}</td>
 
                 </tr>
                 @endforeach

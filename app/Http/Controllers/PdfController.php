@@ -25,11 +25,11 @@ class PdfController extends Controller
 
     public function gazette($id)
     {
-        echo "Gazzette is temporarily not available for maintenance purpose.";
-        // $section = Section::find($id);
-        // $pdf = PDF::loadView('pdf.gazette', compact('section'))->setPaper('a4', 'landscape');
+        // echo "Gazzette is temporarily not available for maintenance purpose.";
+        $section = Section::find($id);
+        $pdf = PDF::loadView('pdf.gazette', compact('section'))->setPaper('a4', 'landscape');
 
-        // return $pdf->stream();
+        return $pdf->stream();
     }
 
     public function previewCumulative($section_id, $semester_no)

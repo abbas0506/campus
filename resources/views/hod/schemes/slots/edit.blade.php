@@ -31,8 +31,8 @@
         <div class="flex flex-col md:flex-row md:items-center gap-x-2 mt-8">
             <i class="bi bi-info-circle text-2xl"></i>
             <ul class="text-sm ml-4">
-                <li>You can add or remove course types from the slot </li>
-                <li>Section delete option is not available on this page. It is available on section page itself. (click on section label)</li>
+                <li>Please specify which type of course will be taught on this slot</li>
+                <li>You can specify single or multiple course types against the slot </li>
             </ul>
         </div>
         <!-- page message -->
@@ -42,74 +42,84 @@
         <x-message></x-message>
         @endif
 
-        <h2 class="flex items-center mt-8">
-            <div class="flex justify-center items-center w-7 h-7 bg-teal-100 rounded-full ring-1 ring-teal-200 ring-offset-2 mr-4"><i class="bi-hand-index rotate-180 text-[16px]"></i> </div>Currently Associated Course Types
-        </h2>
-        <div class="grid grid-cols-1 p-6 rounded-md border mt-4 text-slate-600">
-            <div class="grid grid-cols-1 md:grid-cols-2  gap-y-4">
-                <div>Course Type</div>
-                <div>Exact Course (optional)</div>
-                @foreach($slot->slot_options as $slot_option)
-
-                <div class="flex space-x-2 items-center awesome-chk">
-                    <h2>{{$slot_option->course_type->name}}</h2>
-                    <form action="{{route('slot-options.destroy',$slot_option)}}" method="POST" id='del_form{{$slot_option->id}}'>
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="py-0 text-xs" onclick="delme('{{$slot_option->id}}')"><i class="bi bi-x text-[16px]"></i></button>
-                    </form>
-                </div>
-                @endforeach
-            </div>
-            <div class="border-b my-4"></div>
-
-            <form action="{{route('slot-options.store')}}" method='post'>
+        <h2 class="flex items-center justify-between mt-8">
+            <div class="flex justify-center items-center w-7 h-7 bg-teal-100 rounded-full ring-1 ring-teal-200 ring-offset-2 mr-4"><i class="bi-hand-index rotate-180 text-[16px]"></i></div>
+            <div>Slot Detail</div>
+            @if(!$slot->course_allocations()->exists() || Auth::user()->hasRole('super'))
+            <form action="{{route('slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
                 @csrf
-                <input type="hidden" name="slot_id" value="{{$slot->id}}">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-y-4">
-                    @foreach($missing_course_types as $course_type)
-                    <div class="flex space-x-2 items-center awesome-chk">
-                        <input type="checkbox" id='chk-{{$course_type->id}}' name='course_type_id[]' value="{{$course_type->id}}" class="chk hidden">
-                        <label for="chk-{{$course_type->id}}">
-                            <!-- bullet from app.css -->
-                            <span></span>
-                        </label>
-                        <div>{{$course_type->name}}</div>
-                    </div>
-                    @endforeach
-                </div>
-
-                <div class="flex mt-4">
-                    <button type="submit" class="btn-blue rounded">Associate another course type</button>
-                </div>
-
+                @method('DELETE')
+                <button type="submit" class="btn-red py-0 text-xs" onclick="delme('{{$slot->id}}')">Remove Slot</button>
             </form>
-        </div>
+            @endrole
+        </h2>
 
-        <h2 class="flex items-center mt-8"><i class="bi-link-45deg text-[24px] mr-4"></i> Bind specific course with current slot (optional) </h2>
-        <div class="grid grid-cols-2 p-6 gap-y-4 mt-4 rounded-lg border">
-            <h3>Course Type</h3>
-            <h3>Course</h3>
-            @foreach($slot->slot_options as $slot_option)
-            <div>{{$slot_option->course_type->name}}</div>
-            <div>
-                @if(!$slot_option->course)
-                <a href="{{route('slot-options.edit', $slot_option)}}" class="flex items-center link"><i class="bi-link-45deg text-[24px]"></i> <span class="text-xs text-slate-600">(select course)</span></a>
-                @else
-                <div class="flex items-center space-x-4">
-                    <a href="{{route('slot-options.edit', $slot_option)}}" class="link">{{$slot_option->course->name}}</a>
-                    <form action="{{route('slot-options.update',$slot_option)}}" method="POST" class="">
-                        @csrf
-                        @method('PATCH')
-                        <input type="text" name="course_id" value="" class="hidden">
-                        <button type="submit" class="">
-                            <i class="bi-x"></i>
-                        </button>
-                    </form>
+        <div class="overflow-x-auto mt-4">
+            <table class="table-fixed w-full">
+                <thead>
+                    <tr>
+                        <th class="w-48">Course Type</th>
+                        <th class="w-48">Course Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($slot->slot_options as $slot_option)
+                    <tr>
+                        <td class="text-left">
+                            <div class="flex justify-between flex-nowrap">
+                                <div>
+                                    {{$slot_option->course_type->name}}
+                                </div>
+                                <div>
+                                    <form action="{{route('slot-options.destroy',$slot_option)}}" method="POST" id='del_form{{$slot_option->id}}'>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="py-0 text-xs text-red-600" onclick="delme('{{$slot_option->id}}')">Remove</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            @if(!$slot_option->course)
+                            <a href="{{route('slot-options.edit', $slot_option)}}" class="flex items-center justify-center link"><i class="bi-link-45deg text-[24px]"></i> <span class="text-xs text-slate-600">(select course)</span></a>
+                            @else
+                            <div class="flex items-center justify-center space-x-4">
+                                <a href="{{route('slot-options.edit', $slot_option)}}" class="link">{{$slot_option->course->name}}</a>
+                                <form action="{{route('slot-options.update',$slot_option)}}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="text" name="course_id" value="" class="hidden">
+                                    <button type="submit" class="">
+                                        <i class="bi-x"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-2">
+            <div class="collapsible">
+                <div class="head">
+                    <div>Add a course type to this slot</div>
+                    <div><i class="bi-plus"></i></div>
                 </div>
-                @endif
+                <div class="body">
+                    <div class="flex flex-wrap gap-4">
+                        @foreach($missing_course_types as $course_type)
+                        <form action="{{route('slot-options.store')}}" method='post'>
+                            @csrf
+                            <input type="hidden" name="slot_id" value="{{$slot->id}}">
+                            <input type="hidden" name="course_type_id" value="{{$course_type->id}}">
+                            <button type="submit" class="btn-blue">{{ $course_type->name }}</button>
+                        </form>
+                        @endforeach
+                    </div>
+                </div>
             </div>
-            @endforeach
         </div>
 
     </div>

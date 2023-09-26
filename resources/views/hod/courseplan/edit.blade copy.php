@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container bg-slate-100">
+<div class="container">
     <h2>Edit Course Allocation</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
@@ -17,45 +17,9 @@
     <x-message></x-message>
     @endif
 
-    <h1 class='text-red-600 mt-8'>{{$course_allocation->section->title()}}</h1>
-    <h2 class='text-slate-600 mt-2'>Slot # {{$course_allocation->slot->slot_no}}</h2>
-    @if($course_allocation->course()->exists())
-    <div class="p-4 border border-dashed bg-white relative mt-4">
-        <a href="" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
-        <label for="" class="text-xs">Course Name</label>
-        <div>{{$course_allocation->course->name}}</div>
-    </div>
-    <div class="p-4 border border-dashed bg-white relative mt-4">
-        <a href="" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
-        <label for="" class="text-xs">Allocated Teacher</label>
-        <div>{{$course_allocation->teacher->name ?? '(blank)'}}</div>
-    </div>
-    @else
-
-    @foreach($course_allocation->slot->slot_options as $slot_option)
-    <div class="flex flex-col p-4 border border-dashed bg-white relative mt-4">
-        @if($slot_option->course()->exists())
-        <div>{{$slot_option->course->name}}</div>
-        @else
-        @foreach($slot_option->availableCourses() as $course)
-        <div>{{$course->name}}</div>
-        @endforeach
-        @endif
-    </div>
-    <!-- <div class="flex flex-row">
-            <div class="w-1/2 text-left">{{$slot_option->course_type->name}} <span class="text-xs text-slate-400">({{$course_allocation->slot->cr}})</span></div>
-            <div class="w-1/2 text-left">{{$slot_option->course->name ?? ''}}</div>
-        </div>
-        <div>{{$slot_option->availableCourses()->count()}}</div> -->
-    @endforeach
-
-
-    @endif
-
-
-
+    <h1 class='text-red-600 mt-8'>{{$section->title()}}</h1>
     <div class="flex flex-col gap-y-4 mt-8">
-        @foreach($course_allocation->section->clas->scheme->slots()->for($course_allocation->section->clas->semesterNo(session('semester_id')))->get()->sortBy('slot_no') as $slot)
+        @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo(session('semester_id')))->get()->sortBy('slot_no') as $slot)
         <div class="gap-y-4">
             <div class="bg-slate-100 px-2 py-1 rounded-t-lg">
                 <div class="flex items-center">
@@ -65,11 +29,11 @@
             </div>
             <div class="border border-dashed p-2">
                 <div class="md:pl-24 text-sm">
-                    @foreach($course_allocation->section->course_allocations()->on($slot->id)->get() as $course_allocation)
+                    @foreach($section->course_allocations()->on($slot->id)->get() as $course_allocation)
                     <div class="flex flex-col lg:flex-row gap-2 py-1 w-full border-b">
                         <div class="flex flex-1 text-slate-800">
-                            <div class="w-24 shrink-0">{{$course_allocation->course->code ?? ''}}</div>
-                            <div class="">{{$course_allocation->course->name ?? ''}}</div>
+                            <div class="w-24 shrink-0">{{$course_allocation->course->code}}</div>
+                            <div class="">{{$course_allocation->course->name}}</div>
                             <div class="ml-2">
                                 <!-- delete button -->
 
@@ -113,7 +77,7 @@
                     @endforeach
                 </div>
                 <div class="flex lg:pl-24 text-sm mt-2">
-                    <a href="{{route('courseplan.courses',[$course_allocation->section,$slot])}}" class="bg-teal-300 px-2 flex items-center text-sm">
+                    <a href="{{route('courseplan.courses',[$section,$slot])}}" class="bg-teal-300 px-2 flex items-center text-sm">
                         Select Course
                     </a>
                 </div>

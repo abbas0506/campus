@@ -104,7 +104,7 @@
             <!-- course total ends -->
             <div class="text-center w-8 border-l">
                 @if($attempt)
-                {{$student->overall_obtained()}}
+                {{$student->sum_of_obtained()}}
                 @endif
             </div>
             <div class="text-center w-8">

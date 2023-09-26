@@ -31,7 +31,7 @@ class CourseAllocation extends Model
     {
         return $this->belongsTo(Section::class);
     }
-    // will be implemented lated
+    // will be implemented later
     public function slot()
     {
         return $this->belongsTo(Slot::class);
@@ -93,6 +93,10 @@ class CourseAllocation extends Model
         });
     }
     public function scopeDuring($query, $semester_id)
+    {
+        return $query->where('semester_id', $semester_id);
+    }
+    public function scopeFor($query, $semester_id)
     {
         return $query->where('semester_id', $semester_id);
     }

@@ -42,16 +42,26 @@ class Section extends Model
         // if course already scheduled, return true
         return $this->course_allocations()->where('course_id', $course_id)->count() > 0 ? true : false;
     }
-    public function cr() //allocated till now
+    // public function cr() //allocated till current semester
+    // {
+    //     $sum = $this->course_allocations()->till(session('semester_id'))->where('slot_id', '>', 0)->get()->sum(function ($course_allocation) {
+    //         return $course_allocation->course->creditHrs();
+    //     });
+    //     return $sum;
+    // }
+
+    public function completed_cr() //completed till current semester no
     {
-        $sum = $this->course_allocations()->till(session('semester_id'))->where('slot_id', '>', 0)->get()->sum(function ($course_allocation) {
-            return $course_allocation->course->creditHrs();
+        $semester_no = $this->clas->semesterNo(session('semester_id'));
+        $completed = $this->clas->scheme->slots()->till($semester_no)->get()->sum(function ($slot) {
+            return $slot->cr;
         });
-        return $sum;
+        return $completed;
     }
+
     public function total_marks() //w.r.t course allocations
     {
-        $sum = $this->course_allocations->where('semester_id', '<=', session('semester_id'))->sum(function ($course_allocation) {
+        $sum = $this->course_allocations()->till(session('semester_id'))->get()->sum(function ($course_allocation) {
             return $course_allocation->course->marks_theory + $course_allocation->course->marks_practical;
         });
         return $sum;

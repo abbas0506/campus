@@ -62,14 +62,14 @@ class Student extends Model
     {
         return $this->hasMany(FirstAttempt::class);
     }
-    public function credits_attempted()
+    public function credits_covered()
     {
-        $sum = $this->first_attempts->where('semester_id', '<=', session('semester_id'))->sum(function ($attempt) {
-            return $attempt->course_allocation->course->creditHrs();
+        $sum = $this->first_attempts()->till(session('semester_id'))->get()->sum(function ($attempt) {
+            return $attempt->course_allocation->course->cr();
         });
         return $sum;
     }
-    public function overall_obtained()
+    public function sum_of_obtained()
     {
         //exclude the marks of subjects that have been failed
         $sum = $this->first_attempts->sum(function ($attempt) {
@@ -79,7 +79,7 @@ class Student extends Model
         });
         return $sum;
     }
-    public function overall_total_marks()
+    public function total_marks_covered()
     {
         $sum = $this->first_attempts->sum(function ($attempt) {
             return $attempt->course_allocation->course->marks();
@@ -88,16 +88,16 @@ class Student extends Model
     }
     public function overall_percentage()
     {
-        if ($this->overall_total_marks() == 0) return '-';
-        else return round($this->overall_obtained() / $this->overall_total_marks() * 100, 2);
+        if ($this->total_marks_covered() == 0) return '-';
+        else return round($this->sum_of_obtained() / $this->total_marks_covered() * 100, 2);
     }
     public function cgpa()
     {
         $sum = $this->first_attempts->sum(function ($attempt) {
-            return $attempt->course_allocation->course->creditHrs() * $attempt->best_attempt()->gpa();
+            return $attempt->course_allocation->course->cr() * $attempt->best_attempt()->gpa();
         });
-        if ($this->credits_attempted() == 0) $cgpa = 0;
-        else $cgpa = round($sum / $this->credits_attempted(), 2);
+        if ($this->credits_covered() == 0) $cgpa = 0;
+        else $cgpa = round($sum / $this->credits_covered(), 2);
         return $cgpa;
     }
 

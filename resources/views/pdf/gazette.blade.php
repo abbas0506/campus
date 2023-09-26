@@ -64,7 +64,7 @@ $roman = config('global.romans');
                     <th rowspan="3" class="text-center border">Failing Subject</th>
                 </tr>
                 <tr>
-                    <th colspan=2 class="border text-center">Cr. Hrs {{$section->cr()}}</th>
+                    <th colspan=2 class="border text-center">Cr. Hrs {{$section->completed_cr()}}</th>
                 </tr>
                 <tr>
                     <th class="text-center border">Obtained / {{$section->total_marks()}}</th>

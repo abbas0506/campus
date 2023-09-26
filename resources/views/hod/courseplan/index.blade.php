@@ -58,9 +58,18 @@
                     <div class="md:pl-4">
                         <div class="flex flex-wrap gap-2">
                             @foreach($clas->sections as $section)
+                            @if($section->students()->exists())
                             <a href="{{route('courseplan.show',$section)}}" class='pallet-teal'>
                                 {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                             </a>
+                            @else
+                            <a href="{{route('courseplan.show',$section)}}" class='pallet-teal'>
+                                {{$section->name}} <span class="ml-1 text-xs">{{$section->id}}({{$section->students->count()}})</span>
+                            </a>
+                            <!-- <div class='bg-teal-100 w-16 text-center'>
+                                {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
+                            </div> -->
+                            @endif
                             @endforeach
                         </div>
                     </div>

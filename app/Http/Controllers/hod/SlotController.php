@@ -156,8 +156,9 @@ class SlotController extends Controller
     {
         //
         try {
+            $scheme = $slot->scheme;
             $slot->delete();
-            return redirect()->back()->with('success', 'Successfully deleted');
+            return redirect()->route('schemes.show', $scheme)->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
             // something went wrong
