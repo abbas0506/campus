@@ -66,7 +66,7 @@
                         <tbody>
                             @foreach($scheme->slots()->for($semester_no)->get()->sortBy('slot_no') as $slot)
                             <tr class="even:bg-slate-100">
-                                <td class="py-0">
+                                <td class="text-center py-0">
                                     <a href="{{route('slots.edit',$slot)}}" class="link">
                                         {{$slot->slot_no}}
                                     </a>

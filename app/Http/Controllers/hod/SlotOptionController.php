@@ -54,12 +54,12 @@ class SlotOptionController extends Controller
         DB::beginTransaction();
         try {
 
-            foreach ($course_type_ids as $course_type_id) {
-                SlotOption::create([
-                    'slot_id' => $request->slot_id,
-                    'course_type_id' => $course_type_id,
-                ]);
-            }
+            // foreach ($course_type_ids as $course_type_id) {
+            SlotOption::create([
+                'slot_id' => $request->slot_id,
+                'course_type_id' => $request->course_type_id,
+            ]);
+            // }
 
             DB::commit();
             return redirect()->route('slots.edit', $slot)->with('success', 'Successfully added');
