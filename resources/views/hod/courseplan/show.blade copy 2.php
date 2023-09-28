@@ -50,38 +50,30 @@
                         <div class="shrink-0 w-64">Teacher</div>
                     </div>
 
-                    <div class="mt-1 ">
-                        @foreach($section->clas->scheme->slots()->for($section->clas->semesterNo($semester->id))->get()->sortBy('slot_no') as $slot)
-                        <div class="flex py-1 odd:bg-slate-100">
-                            <div class="flex items-center justify-center">
-                                @if($semester->id==session('semester_id'))
-                                <a href="#" class="shrink-0 w-16 text-center link">{{$slot->slot_no}}</a>
+                    <div class="flex flex-col justify-center mt-1">
+                        @foreach($section->course_allocations()->for($semester->id)->get() as $course_allocation)
+                        <div class="flex w-full">
+                            @if($semester->id==session('semester_id'))
+                            <!-- <a href="{{route('courseplan.courses',[$section,$course_allocation->slot_id])}}" class="shrink-0 w-16 text-center link">{{$course_allocation->slot->slot_no}}</a> -->
+                            <a href="{{route('courseplan.edit',$course_allocation)}}" class="shrink-0 w-16 text-center link">{{$course_allocation->slot->slot_no}}</a>
+                            @else
+                            <div class="shrink-0 w-16 text-center">{{$course_allocation->slot->slot_no}}</div>
+                            @endif
+                            <div class="shrink-0 w-48 text-left">{{$course_allocation->slot->lblCrsType()}}</div>
+                            @if($course_allocation->course()->exists())
+                            <div class="shrink-0 w-32">{{ $course_allocation->course->course_type->name }} <span class="text-slate-500 text-xs">({{($course_allocation->slot->cr)}})</span> </div>
+                            <div class="shrink-0 w-24">{{ $course_allocation->course->code }} </div>
+                            <div class="shrink-0 w-64">{{ $course_allocation->course->name }}<span class="ml-3 text-slate-400"></span></div>
+                            <div class="shrink-0 w-64">
+                                @if($course_allocation->teacher()->exists())
+                                {{$course_allocation->teacher->name}}
                                 @else
-                                <div class="shrink-0 w-16 text-center">{{$slot->slot_no}}</div>
+                                blank
                                 @endif
                             </div>
 
-                            <div>
-                                @foreach($slot->slot_options as $slot_option)
-                                <div class="flex">
-                                    <div class="w-32">{{$slot_option->course_type->name}} <span class="text-slate-500 text-xs">({{($slot->cr)}})</span></div>
-                                    @foreach($section->course_allocations()->during($semester->id)->on($slot->id)->get() as $course_allocation)
-                                    @if($course_allocation->course()->exists())
-                                    @if($course_allocation->course->course_type_id==$slot_option->course_type_id)
-                                    <div class="w-24">{{$course_allocation->course->code}}</div>
-                                    <div class="w-64">{{$course_allocation->course->name}}</div>
-                                    <div class="w-64">{{$course_allocation->teacher->name ?? ''}}</div>
-                                    @endif
-                                    @endif
-                                    @endforeach
-                                </div>
-                                @endforeach
-                            </div>
+                            @endif
                         </div>
-
-
-
-
                         @endforeach
 
                     </div>

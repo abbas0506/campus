@@ -64,7 +64,7 @@
                             </a>
                             @else
                             <a href="{{route('courseplan.show',$section)}}" class='pallet-teal'>
-                                {{$section->name}} <span class="ml-1 text-xs">{{$section->id}}({{$section->students->count()}})</span>
+                                {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                             </a>
                             <!-- <div class='bg-teal-100 w-16 text-center'>
                                 {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>

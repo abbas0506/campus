@@ -9,8 +9,6 @@
         <div>/</div>
         <div>Step II</div>
     </div>
-
-
     <!-- page message -->
     @if($errors->any())
     <x-message :errors='$errors'></x-message>

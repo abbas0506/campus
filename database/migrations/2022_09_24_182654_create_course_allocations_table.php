@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('section_id');
             $table->unsignedBigInteger('slot_id');
-            $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('course_id')->nullable(); //may be decided later
             $table->unsignedBigInteger('teacher_id')->nullable(); //will be initialized at step 2 of course allocation
             $table->unsignedBigInteger('semester_id');  //for which course are being allocated
             $table->date('result_due_date')->nullable();
@@ -35,7 +35,7 @@ return new class extends Migration
             $table->time('ends_at')->nullable();
             $table->timestamps();
 
-            $table->unique(['section_id', 'course_id'], 'section_course_unique'); //disallow same course allocation twice in a section
+            // $table->unique(['section_id', 'course_id'], 'section_course_unique'); //disallow same course allocation twice in a section
             $table->foreign('section_id')->references('id')->on('sections')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('slot_id')->references('id')->on('slots')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');

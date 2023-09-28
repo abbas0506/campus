@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container bg-slate-100">
+<div class="container">
     <h2>Edit Course Allocation</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
@@ -56,29 +56,40 @@
     @else
 
     @foreach($course_allocation->slot->slot_options as $slot_option)
-    <div class="flex flex-col p-4 border border-dashed bg-white relative mt-4">
-        @if($slot_option->course()->exists())
-        <div>{{$slot_option->course->name}}</div>
-        @else
-        @foreach($slot_option->availableCourses() as $course)
-
-        @if($course_allocation->section->has_course($course->id))
-        <!-- dont show link btn -->
-        @else
-        <div class="flex space-x-2 mt-1">
-            <form action="{{route('courseplan.update',$course_allocation)}}" method="POST" id='del_form' class="flex items-center justify-center">
-                @csrf
-                @method('PATCH')
-                <input type="text" name='course_id' value="{{$course->id}}" hidden>
-                <button type="submit" class="btn-teal py-1 flex items-center">
-                    <i class="bx bx-link"></i>
-                </button>
-            </form>
-            <div>{{$course->name}}</div>
+    <div class="collapsible">
+        <div class="head">
+            <h2>{{$slot_option->course_type->name}}</h2>
+            <i class="bx bx-chevron-down text-lg"></i>
         </div>
-        @endif
-        @endforeach
-        @endif
+        <div class="body">
+            <div class="flex flex-col p-4 border border-dashed bg-white relative w-full">
+                @if($slot_option->course()->exists())
+                <div>{{$slot_option->course->name}}</div>
+                @else
+                @foreach($slot_option->availableCourses() as $course)
+
+                @if($course_allocation->section->has_course($course->id))
+                <!-- dont show link btn -->
+                @else
+
+                <div class="flex space-x-2 mt-1">
+                    <form action="{{route('courseplan.update',$course_allocation)}}" method="POST" id='del_form' class="flex items-center justify-center">
+                        @csrf
+                        @method('PATCH')
+                        <input type="text" name='course_id' value="{{$course->id}}" hidden>
+                        <button type="submit" class="btn-teal py-1 flex items-center">
+                            <i class="bx bx-link"></i>
+                        </button>
+                    </form>
+                    <div>{{$course->code}}</div>
+                    <div>{{$course->name}}</div>
+                </div>
+                @endif
+                @endforeach
+                @endif
+
+            </div>
+        </div>
 
     </div>
     <!-- <div class="flex flex-row">

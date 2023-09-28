@@ -1,55 +1,56 @@
-insert into cms_v5.departments
+insert into cms_v6.departments
 select * from cms.departments
 where cms.departments.id>1
 
-insert into cms_v5.users
+insert into cms_v6.users
 select * from cms.users where id>3
 
-insert into cms_v5.headships
+insert into cms_v6.headships
 select * from cms.headships 
 
-insert into cms_v5.model_has_roles
+insert into cms_v6.model_has_roles
 select * from cms.model_has_roles
 where model_id>3
 
-insert into cms_v5.course_types
+insert into cms_v6.course_types
 select * from cms.course_types
 
-insert into cms_v5.programs(id,name,short,cr,department_id,internal_id,level,min_t,max_t, created_at, updated_at)
-select id,name,short,cr,department_id,internal_id,level,min_t,max_t,created_at, updated_at from cms.programs;
+insert into cms_v6.programs
+select * from cms.programs
 
 //Courses
-insert into cms_v5.courses
+insert into cms_v6.courses
 select * from cms.courses;
 
-insert into cms_v5.schemes
+insert into cms_v6.schemes
 select * from cms.schemes
 
-insert into cms_v5.slots 
+insert into cms_v6.slots 
 select * from cms.slots;
 
-insert into cms_v5.slot_options 
+insert into cms_v6.slot_options 
 select * from cms.slot_options;
 
-insert into cms_v5.clas(id,program_id,scheme_id,shift_id,first_semester_id,last_semester_id,created_at,updated_at)
-select id,program_id,scheme_id,shift_id,first_semester_id,last_semester_id,created_at,updated_at from cms.clas;
+insert into cms_v6.clas 
+select * from cms.clas;
 
-insert into cms_v5.sections
+insert into cms_v6.sections
 select * from cms.sections
 
-insert into cms_v5.students
+insert into cms_v6.students
 select * from cms.students
 
-insert into cms_v5.course_allocations(id,section_id,slot_id,course_id,teacher_id,semester_id,created_at,updated_at)
-select id,section_id,slot_id,course_id,teacher_id,semester_id,created_at,updated_at from cms.course_allocations;
+insert into cms_v6.course_allocations
+select * from cms.course_allocations;
 
+insert into cms_v6.first_attempts
+select * from cms.first_attempts;
 
-insert into cms_v5.first_attempts(id,student_id,course_allocation_id,semester_id,assignment,presentation,midterm,summative,created_at,updated_at)
-select id,student_id,course_allocation_id,semester_id,assignment,presentation,midterm,summative,created_at,updated_at from cms.first_attempts;
+insert into cms_v6.reappears
+select * from cms.reappears;
 
-
-insert into cms_v5.reappears(id, first_attempt_id, semester_id,course_allocation_id, assignment, presentation, midterm, summative, created_at, updated_at)
-select id, first_attempt_id, semester_id,course_allocation_id, assignment, presentation, midterm, summative, created_at, updated_at from cms.reappears;
+//insert into cms_v6.reappears(id, first_attempt_id, semester_id,course_allocation_id, assignment, presentation, midterm, summative, created_at, updated_at)
+//select id, first_attempt_id, semester_id,course_allocation_id, assignment, presentation, midterm, summative, created_at, updated_at from cms.reappears;
 
 
 

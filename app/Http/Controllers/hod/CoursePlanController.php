@@ -34,26 +34,28 @@ class CoursePlanController extends Controller
 
     public function show($sid)
     {
-        //
         $section = Section::find($sid);
         if (!$section->course_allocations()->for(session('semester_id'))->exists()) {
-            // auto create course allocation plan
+            //if empty, auto create course allocation plan according to related scheme
             DB::beginTransaction();
             try {
                 $semester_no = $section->clas->semesterNo(session('semester_id'));
                 // retrieve all slots for current semester
                 foreach ($section->clas->scheme->slots()->for($semester_no)->get()->sortBy('slot_no') as $slot) {
-                    // if slot has some fixed subject association, upaate course allocaitons as it is
-                    $course_id = null;
-                    if ($slot->slot_options->count() == 1)
-                        $course_id = $slot->slot_options->first()->course_id;
+                    //if slot has fixed course, save as it is
+                    foreach ($slot->slot_options as $slot_option) {
+                        if ($slot_option->course()->exists())
+                            $course_id = $slot_option->course_id;
+                        else
+                            $course_id = null;
 
-                    CourseAllocation::create([
-                        'semester_id' => session('semester_id'),
-                        'section_id' => $section->id,
-                        'slot_id' => $slot->id,
-                        'course_id' => $course_id,
-                    ]);
+                        CourseAllocation::create([
+                            'semester_id' => session('semester_id'),
+                            'section_id' => $section->id,
+                            'slot_id' => $slot->id,
+                            'course_id' => $course_id,
+                        ]);
+                    }
                 }
                 DB::commit();
             } catch (Exception $ex) {
