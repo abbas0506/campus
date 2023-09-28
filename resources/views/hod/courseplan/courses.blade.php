@@ -26,7 +26,7 @@
 
     <!-- <div class="mt-8 bg-sky-300 text-slate-800 px-2 py-1 rounded-t-lg font-semibold">Courses Selection</div> -->
 
-    <h1 class='text-red-600 mt-8'>{{$section->title()}}</h1>
+    <h1 class='text-red-600 mt-8'>{{$course_allocation->section->title()}}</h1>
     <div class="overflow-x-auto">
         <table class="table-fixed w-full mt-4">
             <thead>
@@ -38,18 +38,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($related_courses->sortBy('course_type_id') as $course)
+                @foreach($available_courses->sortBy('course_type_id') as $course)
                 <tr class="tr">
                     <td>
-                        @if($section->has_course($course->id))
+                        @if($course_allocation->section->has_course($course->id))
                         <!-- dont show link btn -->
                         @else
-                        <form action="{{route('courseplan.store')}}" method="POST" id='del_form' class="flex items-center justify-center">
+                        <form action="{{route('courseplan.update',$course_allocation)}}" method="POST" id='del_form' class="flex items-center justify-center">
                             @csrf
-                            <input type="text" name='section_id' value="{{$section->id}}" hidden>
+                            @method('PATCH')
                             <input type="text" name='course_id' value="{{$course->id}}" hidden>
-                            <input type="text" name='slot_id' value="{{$slot->id}}" hidden>
-
                             <button type="submit" class="btn-teal py-1 flex items-center" onclick="delme()">
                                 <i class="bx bx-link"></i>
                             </button>

@@ -21,12 +21,35 @@
     <h2 class='text-slate-600 mt-2'>Slot # {{$course_allocation->slot->slot_no}}</h2>
     @if($course_allocation->course()->exists())
     <div class="p-4 border border-dashed bg-white relative mt-4">
-        <a href="" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
+        <div class="absolute top-2 right-2 flex flex-row items-center space-x-2">
+            @role('super')
+            <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_form{{$course_allocation->id}}'>
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="" onclick="delme('{{$course_allocation->id}}')">
+                    <i class="bx bx-trash hover:text-red-600"></i>
+                </button>
+            </form>
+            @else
+            <!-- hod can only delete if allocation has no assoicated results -->
+            @if($course_allocation->teacher_id=='' || $course_allocation->first_attempts->count()==0)
+            <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_form{{$course_allocation->id}}'>
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="" onclick="delme('{{$course_allocation->id}}')">
+                    <i class="bx bx-trash hover:text-red-600"></i>
+                </button>
+            </form>
+            @endif
+            @endrole
+            <a href="{{route('courseplan.courses',$course_allocation)}}"><i class="bx bx-pencil"></i></a>
+        </div>
+
         <label for="" class="text-xs">Course Name</label>
         <div>{{$course_allocation->course->name}}</div>
     </div>
     <div class="p-4 border border-dashed bg-white relative mt-4">
-        <a href="" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
+        <a href="{{route('courseplan.teachers',$course_allocation)}}" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
         <label for="" class="text-xs">Allocated Teacher</label>
         <div>{{$course_allocation->teacher->name ?? '(blank)'}}</div>
     </div>
@@ -38,9 +61,25 @@
         <div>{{$slot_option->course->name}}</div>
         @else
         @foreach($slot_option->availableCourses() as $course)
-        <div>{{$course->name}}</div>
+
+        @if($course_allocation->section->has_course($course->id))
+        <!-- dont show link btn -->
+        @else
+        <div class="flex space-x-2 mt-1">
+            <form action="{{route('courseplan.update',$course_allocation)}}" method="POST" id='del_form' class="flex items-center justify-center">
+                @csrf
+                @method('PATCH')
+                <input type="text" name='course_id' value="{{$course->id}}" hidden>
+                <button type="submit" class="btn-teal py-1 flex items-center">
+                    <i class="bx bx-link"></i>
+                </button>
+            </form>
+            <div>{{$course->name}}</div>
+        </div>
+        @endif
         @endforeach
         @endif
+
     </div>
     <!-- <div class="flex flex-row">
             <div class="w-1/2 text-left">{{$slot_option->course_type->name}} <span class="text-xs text-slate-400">({{$course_allocation->slot->cr}})</span></div>
@@ -113,7 +152,7 @@
                     @endforeach
                 </div>
                 <div class="flex lg:pl-24 text-sm mt-2">
-                    <a href="{{route('courseplan.courses',[$course_allocation->section,$slot])}}" class="bg-teal-300 px-2 flex items-center text-sm">
+                    <a href="{{route('courseplan.courses',$course_allocation)}}" class="bg-teal-300 px-2 flex items-center text-sm">
                         Select Course
                     </a>
                 </div>

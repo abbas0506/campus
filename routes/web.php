@@ -168,8 +168,8 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
     Route::get('showCoursesForSlotOption/{slotoption}', [SlotOptionController::class, 'showCourses'])->name('showCoursesForSlotOption');
 
     Route::resource('courseplan', CoursePlanController::class);
-    Route::get('courseplan/{courseallocation}/teachers', [CoursePlanController::class, 'teachers'])->name('courseplan.teachers');
-    Route::get('courseplan/courses/{section}/{slot}', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
+    Route::get('courseplan/{allocation}/edit/teachers', [CoursePlanController::class, 'teachers'])->name('courseplan.teachers');
+    Route::get('courseplan/{allocation}/edit/courses', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
 
     Route::resource('students', StudentController::class);
     Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);

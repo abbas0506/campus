@@ -120,14 +120,14 @@ class CoursePlanController extends Controller
     public function update(Request $request, $id)
     {
         //append id of hod's current department
-        $request->validate([
-            'teacher_id' => 'required|numeric',
-        ]);
+        // $request->validate([
+        //     'teacher_id' => 'required|numeric',
+        // ]);
 
         try {
             $course_allocation = CourseAllocation::find($id);
             $course_allocation->update($request->all());
-            return redirect()->route('courseplan.edit', $course_allocation->section)->with('success', "Successfully saved");
+            return redirect()->route('courseplan.edit', $course_allocation)->with('success', "Successfully saved");
         } catch (Exception $e) {
             echo $e->getMessage();
             // something went wrong
@@ -140,7 +140,8 @@ class CoursePlanController extends Controller
         //
         try {
             $clas = CourseAllocation::find($id);
-            $clas->delete();
+            $clas->course_id = null;
+            $clas->update();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
@@ -148,27 +149,32 @@ class CoursePlanController extends Controller
         }
     }
 
-    public function courses($section_id, $slot_id)
+    public function courses($id)
     {
-        $section = Section::find($section_id);
-        $slot = Slot::find($slot_id);
-        $related_courses = collect();
+
+        $course_allocation = CourseAllocation::find($id);
+
+
+
+        // $section = Section::find($section_id);
+        // $slot = Slot::find($slot_id);
+        $available_courses = collect();
         try {
-            foreach ($slot->slot_options as $slot_option) {
+            foreach ($course_allocation->slot->slot_options as $slot_option) {
                 if ($slot_option->course_id != '') {
                     $course = Course::find($slot_option->course_id);
-                    $related_courses->add($course);
+                    $available_courses->add($course);
                 } else {
                     $courses = Course::where('course_type_id', $slot_option->course_type_id)->where('department_id', session('department_id'))->get();
                     foreach ($courses as $course) {
-                        $related_courses->add($course);
+                        $available_courses->add($course);
                     }
                 }
             }
-            // $coursetype_ids = $slot->slot_options->pluck('course_type_id')->toArray();
-            // $courses = Course::whereIn('course_type_id', $coursetype_ids)
-            //     ->where('department_id', session('department_id'));
-            return view('hod.courseplan.courses', compact('section', 'slot', 'related_courses'));
+            $coursetype_ids = $course_allocation->slot->slot_options->pluck('course_type_id')->toArray();
+            $courses = Course::whereIn('course_type_id', $coursetype_ids)
+                ->where('department_id', session('department_id'));
+            return view('hod.courseplan.courses', compact('course_allocation', 'available_courses'));
         } catch (Exception $e) {
             echo $e->getMessage();
             // something went wrong
