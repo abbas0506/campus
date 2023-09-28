@@ -59,31 +59,29 @@
                     <table class="table-fixed borderless w-full">
                         <thead>
                             <tr>
-                                <th class="w-10">Slot</th>
-                                <th class="text-left w-48">Course Type</th>
-                                <th class="w-16">Cr. Hr</th>
-                                <th class="w-16">Actions</th>
+                                <th class="w-8">Slot</th>
+                                <th class="text-left w-48">Course Type & Related Course</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($scheme->slots()->for($semester_no)->get()->sortBy('slot_no') as $slot)
                             <tr class="even:bg-slate-100">
-                                <td class="text-center">{{$slot->slot_no}}</td>
-                                <td>{{$slot->lblCrsType()}}</td>
-                                <td class="text-center">{{$slot->cr}}</td>
-                                <td>
-                                    <div class="flex items-center justify-center space-x-4 ">
-                                        <a href="{{route('slots.edit',$slot)}}">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        @if(!$slot->course_allocations()->exists() || Auth::user()->hasRole('super'))
-                                        <form action="{{route('slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="py-0 text-xs" onclick="delme('{{$slot->id}}')"><i class="bi bi-trash3"></i></button>
-                                        </form>
-                                        @endrole
-                                    </div>
+                                <td class="py-0">
+                                    <a href="{{route('slots.edit',$slot)}}" class="link">
+                                        {{$slot->slot_no}}
+                                    </a>
+                                </td>
+                                <td class="py-0">
+                                    <table class="w-full">
+                                        <tbody>
+                                            @foreach($slot->slot_options as $slot_option)
+                                            <tr>
+                                                <td class="w-1/2 text-left">{{$slot_option->course_type->name}} <span class="text-xs text-slate-400">({{$slot->cr}})</span></td>
+                                                <td class="w-1/2 text-left">{{$slot_option->course->name ?? ''}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </td>
                             </tr>
                             @endforeach
