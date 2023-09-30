@@ -24,7 +24,8 @@ class Slot extends Model
     }
     public  function course_allocations()
     {
-        return $this->hasMany(CourseAllocation::class);
+        return CourseAllocation::whereRelation('slot_option', 'slot_id', $this->id)->get();
+        // return $this->hasMany(CourseAllocation::class);
     }
     public function scopeFor($query, $semester_no)
     {

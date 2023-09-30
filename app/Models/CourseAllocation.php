@@ -10,7 +10,7 @@ class CourseAllocation extends Model
     use HasFactory;
     protected $fillable = [
         'section_id',
-        'slot_id',
+        'slot_option_id',
         'course_id',    //optional course id
         'teacher_id',
         'semester_id',
@@ -32,9 +32,9 @@ class CourseAllocation extends Model
         return $this->belongsTo(Section::class);
     }
     // will be implemented later
-    public function slot()
+    public function slot_option()
     {
-        return $this->belongsTo(Slot::class);
+        return $this->belongsTo(SlotOption::class);
     }
     public function course()
     {
@@ -106,7 +106,8 @@ class CourseAllocation extends Model
     }
     public function scopeOn($query, $slot_id)
     {
-        return $query->where('slot_id', $slot_id);
+        $slot_option_ids = SlotOption::where('slot_id', $slot_id)->pluck('id')->toArray();
+        return $query->whereIn('slot_option_id', $slot_option_ids);
     }
     public function scopeAllocatedCr($query)
     {

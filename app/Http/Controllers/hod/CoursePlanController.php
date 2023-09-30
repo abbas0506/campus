@@ -52,7 +52,7 @@ class CoursePlanController extends Controller
                         CourseAllocation::create([
                             'semester_id' => session('semester_id'),
                             'section_id' => $section->id,
-                            'slot_id' => $slot->id,
+                            'slot_option_id' => $slot_option->id,
                             'course_id' => $course_id,
                         ]);
                     }
@@ -93,39 +93,12 @@ class CoursePlanController extends Controller
     public function edit($id)
     {
 
-        //get courses and related/available teachers list teacher
         $course_allocation = CourseAllocation::find($id);
-        // $slot = Slot::find($course_allocation->slot_id);
-        // $related_courses = collect();
-
-        // foreach ($slot->slot_options as $slot_option) {
-        //     if ($slot_option->course_id != '') {
-        //         $course = Course::find($slot_option->course_id);
-        //         $related_courses->add($course);
-        //     } else {
-        //         $courses = Course::where('course_type_id', $slot_option->course_type_id)->where('department_id', session('department_id'))->get();
-        //         foreach ($courses as $course) {
-        //             $related_courses->add($course);
-        //         }
-        //     }
-        // }
-
-        // $teachers = User::whereRelation('roles', 'name', 'teacher')
-        //     ->get()
-        //     ->whereNotIn('id', $course_allocation->teacher_id);
-
-        // // return view('hod.courseplan.courses', compact('section', 'slot', 'related_courses'));
-
         return view('hod.courseplan.edit', compact('course_allocation'));
     }
 
     public function update(Request $request, $id)
     {
-        //append id of hod's current department
-        // $request->validate([
-        //     'teacher_id' => 'required|numeric',
-        // ]);
-
         try {
             $course_allocation = CourseAllocation::find($id);
             $course_allocation->update($request->all());
@@ -143,6 +116,7 @@ class CoursePlanController extends Controller
         try {
             $clas = CourseAllocation::find($id);
             $clas->course_id = null;
+            $clas->teacher_id = null;
             $clas->update();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
@@ -155,49 +129,19 @@ class CoursePlanController extends Controller
     {
 
         $course_allocation = CourseAllocation::find($id);
-
-
-
-        // $section = Section::find($section_id);
-        // $slot = Slot::find($slot_id);
-        $available_courses = collect();
-        try {
-            foreach ($course_allocation->slot->slot_options as $slot_option) {
-                if ($slot_option->course_id != '') {
-                    $course = Course::find($slot_option->course_id);
-                    $available_courses->add($course);
-                } else {
-                    $courses = Course::where('course_type_id', $slot_option->course_type_id)->where('department_id', session('department_id'))->get();
-                    foreach ($courses as $course) {
-                        $available_courses->add($course);
-                    }
-                }
-            }
-            $coursetype_ids = $course_allocation->slot->slot_options->pluck('course_type_id')->toArray();
-            $courses = Course::whereIn('course_type_id', $coursetype_ids)
-                ->where('department_id', session('department_id'));
-            return view('hod.courseplan.courses', compact('course_allocation', 'available_courses'));
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            // something went wrong
-        }
-
-
-
-
-
-        // $courses = Course::whereIn('course_type_id', $course_ids)
-        //     ->where('department_id', session('department_id'))->get();
-
-        // echo $courses;
+        $courses = Course::where('course_type_id', $course_allocation->slot_option->course_type_id)
+            ->where('department_id', session('department_id'))
+            ->where('id', '<>', $course_allocation->course_id)
+            ->get();
+        return view('hod.courseplan.courses', compact('course_allocation', 'courses'));
     }
 
     public function teachers($course_allocation_id)
     {
         $course_allocation = CourseAllocation::find($course_allocation_id);
         $teachers = User::whereRelation('roles', 'name', 'teacher')
-            ->get()
-            ->whereNotIn('id', $course_allocation->teacher_id);
+            ->where('id', '<>', $course_allocation->teacher_id)
+            ->get();
         return view('hod.courseplan.teachers', compact('course_allocation', 'teachers'));
     }
 }

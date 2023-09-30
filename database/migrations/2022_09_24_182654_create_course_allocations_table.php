@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('course_allocations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('section_id');
-            $table->unsignedBigInteger('slot_id');
+            $table->unsignedBigInteger('slot_option_id');
             $table->unsignedBigInteger('course_id')->nullable(); //may be decided later
             $table->unsignedBigInteger('teacher_id')->nullable(); //will be initialized at step 2 of course allocation
             $table->unsignedBigInteger('semester_id');  //for which course are being allocated
@@ -37,7 +37,7 @@ return new class extends Migration
 
             // $table->unique(['section_id', 'course_id'], 'section_course_unique'); //disallow same course allocation twice in a section
             $table->foreign('section_id')->references('id')->on('sections')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('slot_id')->references('id')->on('slots')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('slot_option_id')->references('id')->on('slot_options')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('teacher_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('cascade');

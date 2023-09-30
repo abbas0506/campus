@@ -83,7 +83,7 @@
 
         Swal.fire({
             title: 'Are you sure?',
-            text: "Course will be added to scheme !",
+            text: "Teacher will be allocated!",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

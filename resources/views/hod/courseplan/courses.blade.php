@@ -11,12 +11,6 @@
         <div>Courses</div>
     </div>
 
-    <!-- search -->
-    <div class="flex relative w-full md:w-1/3 mt-8">
-        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
-        <i class="bx bx-search absolute top-2 right-2"></i>
-    </div>
-
     <!-- page message -->
     @if($errors->any())
     <x-message :errors='$errors'></x-message>
@@ -24,9 +18,15 @@
     <x-message></x-message>
     @endif
 
-    <!-- <div class="mt-8 bg-sky-300 text-slate-800 px-2 py-1 rounded-t-lg font-semibold">Courses Selection</div> -->
-
     <h1 class='text-red-600 mt-8'>{{$course_allocation->section->title()}}</h1>
+    <h2 class='mt-4'>Slot # {{$course_allocation->slot_option->slot->slot_no}} ({{$course_allocation->slot_option->course_type->name}})</h2>
+
+    <!-- search -->
+    <div class="flex relative w-full md:w-1/3 mt-8">
+        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
+        <i class="bx bx-search absolute top-2 right-2"></i>
+    </div>
+
     <div class="overflow-x-auto">
         <table class="table-fixed w-full mt-4">
             <thead>
@@ -34,11 +34,10 @@
                     <th class="w-24">Action</th>
                     <th class="w-32">Code</th>
                     <th class="w-96">Name</th>
-                    <th class="w-32">Type</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($available_courses->sortBy('course_type_id') as $course)
+                @foreach($courses as $course)
                 <tr class="tr">
                     <td>
                         @if($course_allocation->section->has_course($course->id))
@@ -55,10 +54,8 @@
                         @endif
 
                     </td>
-                    <td class="text-center">{{$course->code}}</td>
-                    <td>{{$course->name}} <span class="text-slate-500 text-xs">{{($course->lblCr())}}</span></td>
-                    <td class="text-center">{{$course->course_type->name}}</td>
-
+                    <td>{{$course->code}}</td>
+                    <td class="text-left">{{$course->name}} <span class="text-slate-500 text-xs">{{($course->lblCr())}}</span></td>
                 </tr>
                 @endforeach
 

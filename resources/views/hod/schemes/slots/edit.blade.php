@@ -43,15 +43,17 @@
         @endif
 
         <h2 class="flex items-center justify-between mt-8">
-            <div class="flex justify-center items-center w-7 h-7 bg-teal-100 rounded-full ring-1 ring-teal-200 ring-offset-2 mr-4"><i class="bi-hand-index rotate-180 text-[16px]"></i></div>
-            <div>Slot Detail</div>
-            @if(!$slot->course_allocations()->exists() || Auth::user()->hasRole('super'))
+            <div class="flex items-center">
+                <div class="flex justify-center items-center w-7 h-7 bg-teal-100 rounded-full ring-1 ring-teal-200 ring-offset-2 mr-4"><i class="bi-hand-index rotate-180 text-[16px]"></i></div>
+                <div>Slot Detail</div>
+            </div>
+            @if($slot->course_allocations()->count()==0 || Auth::user()->hasRole('super'))
             <form action="{{route('slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn-red py-0 text-xs" onclick="delme('{{$slot->id}}')">Remove Slot</button>
             </form>
-            @endrole
+            @endif
         </h2>
 
         <div class="overflow-x-auto mt-4">
