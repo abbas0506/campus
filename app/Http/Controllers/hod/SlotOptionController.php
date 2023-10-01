@@ -90,12 +90,14 @@ class SlotOptionController extends Controller
     {
         //
         $slot_option = SlotOption::find($id);
-        if ($slot_option->course_id == '') {
+        if ($slot_option->course()->exists()) {
             $courses = Course::where('course_type_id', $slot_option->course_type_id)
+                ->where('id', '<>', $slot_option->course_id)
+                ->whereRaw('cr_theory+cr_practical=' . $slot_option->slot->cr)
                 ->where('department_id', session('department_id'))->get();
         } else {
             $courses = Course::where('course_type_id', $slot_option->course_type_id)
-                ->where('id', '<>', $slot_option->course_id)
+                ->whereRaw('cr_theory+cr_practical=' . $slot_option->slot->cr)
                 ->where('department_id', session('department_id'))->get();
         }
         return view('hod.schemes.slot_options.edit', compact('slot_option', 'courses'));

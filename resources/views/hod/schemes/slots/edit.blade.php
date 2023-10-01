@@ -70,7 +70,7 @@
                         <td class="text-left">
                             <div class="flex justify-between flex-nowrap">
                                 <div>
-                                    {{$slot_option->course_type->name}}
+                                    {{$slot_option->course_type->name}} <span class="text-slate-400 text-xs">({{$slot_option->slot->cr}})</span>
                                 </div>
                                 <div>
                                     <form action="{{route('slot-options.destroy',$slot_option)}}" method="POST" id='del_form{{$slot_option->id}}'>
@@ -86,7 +86,7 @@
                             <a href="{{route('slot-options.edit', $slot_option)}}" class="flex items-center justify-center link"><i class="bi-link-45deg text-[24px]"></i> <span class="text-xs text-slate-600">(select course)</span></a>
                             @else
                             <div class="flex items-center justify-center space-x-4">
-                                <a href="{{route('slot-options.edit', $slot_option)}}" class="link">{{$slot_option->course->name}}</a>
+                                <a href="{{route('slot-options.edit', $slot_option)}}" class="link">{{$slot_option->course->code}} {{$slot_option->course->name}} {{$slot_option->course->lblCr()}} </a>
                                 <form action="{{route('slot-options.update',$slot_option)}}" method="POST">
                                     @csrf
                                     @method('PATCH')

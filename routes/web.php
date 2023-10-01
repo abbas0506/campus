@@ -24,6 +24,7 @@ use App\Http\Controllers\ce\NotifiedGazetteController;
 use App\Http\Controllers\ce\StudentController as CeStudentController;
 use App\Http\Controllers\ce\TranscriptController;
 use App\Http\Controllers\hod\AwardController;
+use App\Http\Controllers\hod\ChangeSectionController;
 use App\Http\Controllers\hod\ProgramController;
 use App\Http\Controllers\hod\CourseController;
 use App\Http\Controllers\hod\TeacherController;
@@ -41,6 +42,7 @@ use App\Http\Controllers\hod\InternalController;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SlotController;
 use App\Http\Controllers\hod\SlotOptionController;
+use App\Http\Controllers\hod\StruckOffController;
 use App\Http\Controllers\MyExceptionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\teacher\AssessmentController;
@@ -156,8 +158,6 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
     Route::resource('teachers', TeacherController::class);
     Route::resource('internals', InternalController::class)->only('edit', 'update');
 
-
-
     Route::resource('schemes', SchemeController::class);
     Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
 
@@ -194,6 +194,11 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
     Route::get('hod/cum/step1', [CumulativeController::class, 'step1']);
     Route::get('hod/cum/{section}/step2', [CumulativeController::class, 'step2'])->name('hod.cum.step2');
     Route::get('hod/cum/{section}/{semester}/preview', [CumulativeController::class, 'preview'])->name('hod.cum.preview');
+});
+
+Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
+    Route::resource('change_section', ChangeSectionController::class)->only('edit', 'update');
+    Route::resource('struckoff', StruckOffController::class)->only('edit', 'update');
 });
 
 Route::group(['middleware' => ['role:teacher', 'my_exception_handler']], function () {

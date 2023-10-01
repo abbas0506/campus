@@ -132,6 +132,7 @@ class CoursePlanController extends Controller
         $courses = Course::where('course_type_id', $course_allocation->slot_option->course_type_id)
             ->where('department_id', session('department_id'))
             ->where('id', '<>', $course_allocation->course_id)
+            ->whereRaw('cr_theory+cr_practical=' . $course_allocation->slot_option->slot->cr)
             ->get();
         return view('hod.courseplan.courses', compact('course_allocation', 'courses'));
     }

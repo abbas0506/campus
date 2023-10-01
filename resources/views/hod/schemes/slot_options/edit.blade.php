@@ -19,7 +19,7 @@
 
 
 
-    <h1 class="text-red-600 mt-8">Slot # {{$slot_option->slot->slot_no}} <span class="text-slate-500 text-sm"> (Cr: {{$slot_option->slot->cr}})</span></h1>
+    <h1 class="text-red-600 mt-8">Slot # {{$slot_option->slot->slot_no}} <span class=""> {{$slot_option->course_type->name}} ({{$slot_option->slot->cr}})</span></h1>
     <div class="flex items-center">
         <h2>{{$slot_option->slot->scheme->program->short}}</h2>
         <span class="chevron-right mx-1"></span>
@@ -41,16 +41,15 @@
             <thead>
                 <tr>
                     <th class="w-16">Action</th>
-                    <th class="w-20">Code</th>
-                    <th class="w-60 text-left">Name</th>
-                    <th class="w-24">Type</th>
+                    <th class="w-24">Code</th>
+                    <th class="w-72 text-left">Name</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($courses->sortBy('code') as $course)
                 <tr class="tr">
                     <td class="">
-                        <form action="{{route('slot-options.update',$slot_option)}}" method="POST" class="py-2 flex items-center justify-center">
+                        <form action="{{route('slot-options.update',$slot_option)}}" method="POST" class="flex items-center justify-center">
                             @csrf
                             @method('PATCH')
                             <input type="text" name="course_id" value="{{$course->id}}" class="hidden">
@@ -61,7 +60,6 @@
                     </td>
                     <td>{{$course->code}}</td>
                     <td class="text-left">{{$course->name}} <span class="text-slate-500 text-xs">{{($course->lblCr())}}</span></td>
-                    <td>{{$course->course_type->name}}</td>
                 </tr>
                 @endforeach
 

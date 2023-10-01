@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 <div class="container">
-    <h2>Class & Sections</h2>
+    <h2>Student Profile</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
@@ -16,8 +16,12 @@
         <div class="text-sm text-slate-600">{{$student->section->clas->short()}}</div>
     </div>
 
-
-    <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mt-8">
+    <div class="flex items-center justify-center gap-x-6 gap-y-2 flex-wrap text-sm mt-4">
+        <a href="{{route('hod.change_section.edit',$student)}}" class="link">Change Section</a>
+        <a href="{{route('hod.struckoff.edit',$student)}}" class="link">Struck Off</a>
+        <a href="" class="link">Freeze Semester</a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
         <div class="relative flex flex-col border border-dashed p-4 text-sm rounded-lg">
             <div class="absolute top-2 right-2">
                 <a href="{{route('students.edit',$student)}}" class='link'>

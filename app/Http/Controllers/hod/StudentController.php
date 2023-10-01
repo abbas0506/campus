@@ -202,4 +202,9 @@ class StudentController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
+
+    public function viewStruckOff()
+    {
+        return view('hod.students.struckoff');
+    }
 }

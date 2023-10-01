@@ -186,9 +186,9 @@ class AjaxController extends Controller
         foreach ($students as $student) {
             $result .=
                 "<tr>" .
-                "<td><a href='/students/" . $student->id . "' class='link'>" . $student->rollno . "</a></td>" .
-                "<td>" . $student->name . "</td>" .
-                "<td>" . $student->father . "</td>" .
+                "<td class='text-left'><a href='/students/" . $student->id . "' class='link'>" . $student->rollno . "</a></td>" .
+                "<td class='text-left'>" . $student->name . "</td>" .
+                "<td class='text-left'>" . $student->father . "</td>" .
                 "</tr>";
         }
         if ($result == '') {
