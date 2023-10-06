@@ -2,8 +2,9 @@ insert into cms_v6.departments
 select * from cms.departments
 where cms.departments.id>1
 
-insert into cms_v6.users
-select * from cms.users where id>3
+insert into cms_v6.users(id, name, email, password, phone, cnic, department_id)
+select id, name, email, password, phone, cnic, department_id from cms.users 
+where id>3;
 
 insert into cms_v6.headships
 select * from cms.headships 

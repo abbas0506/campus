@@ -72,17 +72,6 @@ class Section extends Model
         return Semester::whereBetween('id', [$this->clas->first_semester_id, session('semester_id')])->get();
     }
 
-    public function equivalent()
-    {
-        $classes = Clas::where('program_id', $this->clas->program_id)->get();
-
-        echo $classes;
-
-        //return $classes;
-
-
-    }
-
     // public function semester_nos()
     // {
     //     $semester_nos = collect();

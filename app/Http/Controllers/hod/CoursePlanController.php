@@ -142,6 +142,7 @@ class CoursePlanController extends Controller
         $course_allocation = CourseAllocation::find($course_allocation_id);
         $teachers = User::whereRelation('roles', 'name', 'teacher')
             ->where('id', '<>', $course_allocation->teacher_id)
+            ->where('is_active', 1)
             ->get();
         return view('hod.courseplan.teachers', compact('course_allocation', 'teachers'));
     }

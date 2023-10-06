@@ -175,4 +175,8 @@ class FirstAttempt extends Model
     {
         return $query->where('student_id', '<=', $student_id);
     }
+    public function scopeSlot($query, $slot_no)
+    {
+        return $query->whereRelation('course_allocation.slot_option.slot', 'slot_no', $slot_no);
+    }
 }

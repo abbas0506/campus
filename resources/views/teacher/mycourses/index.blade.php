@@ -67,7 +67,7 @@
                                     </a>
                                 </td>
                                 <td>{{$course_allocation->course->name}} <span class="text-slate-400 text-sm">{{$course_allocation->course->lblCr()}}</span> </td>
-                                <td>{{$course_allocation->slot->cr}}</td>
+                                <td>{{$course_allocation->slot_option->slot->cr}}</td>
                                 <td>{{$course_allocation->section->title()}}</td>
                                 <td class="text-center">{{$course_allocation->first_attempts()->count()}}</td>
                                 <td class="text-center">{{$course_allocation->reappears()->count()}}</td>

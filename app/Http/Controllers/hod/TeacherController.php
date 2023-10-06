@@ -19,7 +19,7 @@ class TeacherController extends Controller
     {
         $department = Department::find(session('department_id'));
         $teachers = $department->teachers();
-        return view('hod.teachers.index', compact('teachers'));
+        // return view('hod.teachers.index', compact('teachers'));
     }
 
     /**

@@ -75,7 +75,7 @@ Route::get('/{url?}', function () {
     if (Auth::check()) {
         //if authenticated, attach semesters
 
-        if (Auth::user()->status == 0) {
+        if (!Auth::user()->is_active) {
             Auth::logout();
             session()->flush();
             return redirect()->route('exception.show', 0);
@@ -199,6 +199,8 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
 Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
     Route::resource('change_section', ChangeSectionController::class)->only('edit', 'update');
     Route::resource('struckoff', StruckOffController::class)->only('edit', 'update');
+    Route::get('cumulative', [CumulativeController::class, 'index']);
+    Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');
 });
 
 Route::group(['middleware' => ['role:teacher', 'my_exception_handler']], function () {

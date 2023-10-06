@@ -25,6 +25,11 @@ class SlotOption extends Model
     {
         return $this->belongsTo(Course::class);
     }
+    public function course_allocations()
+    {
+        return $this->hasMany(CourseAllocation::class);
+    }
+
     public function availableCourses()
     {
         return $this->course_type->courses->where('department_id', session('department_id'));

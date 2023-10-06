@@ -31,10 +31,9 @@
             <h2>{{$student->section->title()}}</h2>
         </div>
 
-
         <div class="flex flex-col border border-dashed p-4 text-sm rounded-lg mt-2">
-            <label for="" class="font-bold text-red-600">Move To</label>
-            @foreach($program->clases()->active()->get() as $clas)
+            <label for="" class="font-bold text-red-600">Can Move To</label>
+            @foreach($program->clases()->active()->validForMove($student->id)->get() as $clas)
             <div class="grid grid-cols-1 md:grid-cols-2 w-full text-sm gap-4 border-b md:divide-x divide-slate-200 py-2">
                 <div>
                     <div class="flex flex-wrap items-center justify-between">
@@ -49,11 +48,11 @@
                 <div class="md:pl-4">
                     <div class="flex flex-wrap gap-2">
                         @foreach($clas->sections as $section)
-                        <form action="{{route('hod.change_section.update',$student)}}" method='post' class="">
+                        <form action="{{route('hod.change_section.update',$student)}}" method='post'>
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name='section_id' value='{{$section->id}}'>
-                            <button type="submit" class="btn-teal rounded">{{$section->name}} <span class="text-xs">({{$section->students->count()}})</span></button>
+                            <button type="submit" class="btn-teal w-16 text-xs" onclick="confirm_submit()">{{$section->name}} <span class="text-xs">({{$section->students->count()}})</span></button>
                         </form>
                         @endforeach
                     </div>
@@ -67,15 +66,25 @@
 </div>
 @endsection
 @section('script')
-<script type="module">
-    $('#cnic').on('input', function() {
-        var cnic = $('#cnic').val()
-        $('#cnic_length').html(cnic.length + "/13");
-    });
+<script type="text/javascript">
+    function confirm_submit() {
 
-    $('#phone').on('input', function() {
-        var phone = $('#phone').val()
-        $('#phone_length').html(phone.length + "/11");
-    });
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Section change will occur!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, do it!'
+        }).then((result) => {
+            if (result.value) {
+                //submit corresponding form
+                $('form').submit();
+            }
+        });
+    }
 </script>
 @endsection

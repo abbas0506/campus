@@ -67,17 +67,24 @@
                             @foreach($scheme->slots()->for($semester_no)->get()->sortBy('slot_no') as $slot)
                             <tr class="even:bg-slate-100">
                                 <td class="py-0">
+                                    @if(!$scheme->has_allocation() || Auth::user()->hasRole('super'))
                                     <a href="{{route('slots.edit',$slot)}}" class="link">
                                         {{$slot->slot_no}}
                                     </a>
+                                    @else
+                                    {{$slot->slot_no}}
+                                    @endif
                                 </td>
                                 <td class="py-0">
                                     <table class="w-full">
                                         <tbody>
                                             @foreach($slot->slot_options as $slot_option)
                                             <tr>
-                                                <td class="w-1/2 text-left">{{$slot_option->course_type->name}} <span class="text-xs text-slate-400">({{$slot->cr}})</span></td>
-                                                <td class="w-1/2 text-left">{{$slot_option->course->name ?? ''}}</td>
+                                                <td class="w-48 text-left">{{$slot_option->course_type->name}} <span class="text-xs text-slate-400">({{$slot->cr}})</span></td>
+                                                @if($slot_option->course()->exists())
+                                                <td class="w-24">{{$slot_option->course->code}}</td>
+                                                <td class="w-48 text-left">{{$slot_option->course->name}} <span class="text-xs text-slate-400">{{$slot_option->course->lblCr()}}</span></td>
+                                                @endif
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -88,7 +95,7 @@
                         </tbody>
                     </table>
                 </div>
-
+                @if(!$scheme->has_allocation() || Auth::user()->hasRole('super'))
                 <div class=" w-full mt-3">
                     <a href="{{route('slots.create', [$scheme->id, $semester_no])}}" class="flex items-center btn-blue text-sm float-left">
                         Create Slot
@@ -97,6 +104,7 @@
                         </svg>
                     </a>
                 </div>
+                @endif
             </div>
 
         </div>

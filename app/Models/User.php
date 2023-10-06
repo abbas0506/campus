@@ -30,7 +30,8 @@ class User extends Authenticatable
         'phone',
         'cnic',
         'role',
-        'status',
+        'is_regular',
+        'is_active',
         'department_id',
         'facebook_id',
         'google_id',
@@ -89,7 +90,8 @@ class User extends Authenticatable
             ->join('sections', 'course_allocations.section_id', '=', 'sections.id')
             ->join('clas', 'sections.clas_id', '=', 'clas.id')
             ->join('shifts', 'clas.shift_id', '=', 'shifts.id')
-            ->join('slots', 'course_allocations.slot_id', '=', 'slots.id')
+            ->join('slot_options', 'course_allocations.slot_option_id', '=', 'slot_options.id')
+            ->join('slots', 'slot_options.slot_id', '=', 'slots.id')
             ->orderBy('clas.program_id')
             ->select('course_allocations.*', 'shifts.short', 'slots.cr');
 

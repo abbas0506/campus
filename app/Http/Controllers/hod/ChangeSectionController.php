@@ -62,7 +62,6 @@ class ChangeSectionController extends Controller
         //
         $student = Student::find($id);
         $program = $student->section->clas->program;
-        // echo $student->section->equivalent();
         return view('hod.students.change_section', compact('student', 'program'));
     }
 

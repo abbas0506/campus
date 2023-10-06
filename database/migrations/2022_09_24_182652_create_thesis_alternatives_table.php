@@ -16,18 +16,16 @@ return new class extends Migration
         Schema::create('thesis_alternatives', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('slot_option_id');
-            $table->unsignedBigInteger('alternative1_id');
-            $table->unsignedBigInteger('alternative2_id');
-            $table->unsignedBigInteger('alternative3_id');
-            $table->tinyInteger('alternative1_cr')->default(0);
-            $table->tinyInteger('alternative2_cr')->default(0);
-            $table->tinyInteger('alternative3_cr')->default(0);
+            $table->unsignedBigInteger('alt1_id');
+            $table->unsignedBigInteger('alt2_id');
+            $table->tinyInteger('alt1_cr')->default(0);
+            $table->tinyInteger('alt2_cr')->default(0);
 
             $table->timestamps();
 
             $table->foreign('slot_option_id')->references('id')->on('slot_options')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('alternative1_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('alternative2_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('alt1_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('alt2_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

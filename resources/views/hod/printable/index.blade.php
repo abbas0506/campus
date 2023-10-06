@@ -28,7 +28,7 @@
                 <i class="bi-journal-check text-2xl" -></i>
                 <div class="mt-2">Gazette</div>
             </a>
-            <a href="{{url('hod/cum/step1')}}" class="text-center rounded-lg bg-sky-200 p-4">
+            <a href="{{url('hod/cumulative')}}" class="text-center rounded-lg bg-sky-200 p-4">
                 <i class="bi-clipboard-check text-2xl"></i>
                 <div class="mt-2">Cumulative</div>
             </a>

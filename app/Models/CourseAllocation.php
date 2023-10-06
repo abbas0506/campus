@@ -117,7 +117,8 @@ class CourseAllocation extends Model
     }
     public function scopeSumOfCr($query)
     {
-        return $query->join('slots', 'course_allocations.slot_id', '=', 'slots.id')->sum('cr');
+        return -1;
+        // return $query->join('slots', 'course_allocations.slot_id', '=', 'slots.id')->sum('cr');
     }
     public function scopeJoinClas($query)
     {

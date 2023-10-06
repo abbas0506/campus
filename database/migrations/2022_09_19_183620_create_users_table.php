@@ -21,9 +21,10 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone', 15)->unique()->nullable();
             $table->string('cnic', 15)->unique()->nullable();
-            $table->boolean('status')->default(true);
             $table->string('facebook_id')->nullable();
             $table->string('google_id')->nullable();
+            $table->boolean('is_regular')->default(true);
+            $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('department_id');
             $table->rememberToken();
             $table->timestamps();

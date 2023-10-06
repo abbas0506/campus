@@ -51,4 +51,8 @@ class Scheme extends Model
         }
         return $collection;
     }
+    public function has_allocation()
+    {
+        return CourseAllocation::whereRelation('slot_option.slot', 'scheme_id', $this->id)->count();
+    }
 }
