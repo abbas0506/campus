@@ -5,26 +5,42 @@
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{route('students.index')}}">Students</a>
+        <a href="{{route('hod.students.index')}}">Students</a>
         <div>/</div>
         <div>View</div>
     </div>
 
     <div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-8">
-        <i class="bi bi-person-circle text-slate-600 bx-md"></i>
         <div class="text-xl text-orange-500 leading-relaxed">{{$student->name}} @if($student->gender=='M') s/o @else d/o @endif {{$student->father}}</div>
         <div class="text-sm text-slate-600">{{$student->section->clas->short()}}</div>
     </div>
 
-    <div class="flex items-center justify-center gap-x-6 gap-y-2 flex-wrap text-sm mt-4">
-        <a href="{{route('hod.change_section.edit',$student)}}" class="link">Change Section</a>
-        <a href="{{route('hod.struckoff.edit',$student)}}" class="link">Struck Off</a>
-        <a href="" class="link">Freeze Semester</a>
+    <div class="flex flex-col items-center justify-center gap-x-6 gap-y-2 flex-wrap text-sm mt-4">
+        <h2 class="font-semibold">
+            Status:
+            @if($student->statuses()->exists())
+            <span class="text-red-600"> {{$student->statuses()->latest()->first()->status->name}}</span>
+            @else
+            Active
+            @endif
+        </h2>
+        <div class="flex items-center space-x-4">
+            @if($student->latest_status_id()==1)
+            <a href="{{route('hod.change_section.edit',$student)}}" class="link">Change Section</a>
+            <a href="{{route('hod.struckoff.edit',$student)}}" class="link">Struck Off</a>
+            <a href="{{route('hod.students.freeze', $student)}}" class="link">Freeze Semester</a>
+            @elseif($student->latest_status_id()==2)
+            <a href="{{route('hod.change_section.edit',$student)}}" class="link">Unfreeze</a>
+            @elseif($student->latest_status_id()==3)
+            <a href="{{route('hod.change_section.edit',$student)}}" class="link">Resume</a>
+            @endif
+        </div>
     </div>
+
     <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
         <div class="relative flex flex-col border border-dashed p-4 text-sm rounded-lg">
             <div class="absolute top-2 right-2">
-                <a href="{{route('students.edit',$student)}}" class='link'>
+                <a href="{{route('hod.students.edit',$student)}}" class='link'>
                     <i class="bi-pencil-square"></i>
                 </a>
             </div>

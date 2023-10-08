@@ -2,16 +2,16 @@
 @section('page-content')
 
 <div class="container">
-    <h2>Class & Sections</h2>
+    <h2>{{$section->title()}}</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{url('clases')}}">Classes & Sections</a>
+        <a href="{{route('hod.clases.index')}}">Classes & Sections</a>
         <div>/</div>
-        <div>View</div>
+        <div>Section</div>
     </div>
 
-    <h1 class='text-red-600 mt-8'>{{$section->title()}}</h1>
+    <!-- <h1 class='text-red-600 mt-8'>{{$section->title()}}</h1> -->
     <div class="flex mt-8">
         <div class="relative">
             <input type="text" placeholder="Search ..." class="search-indigo" oninput="search(event)">
@@ -41,78 +41,63 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <a href="{{route('students.add', $section)}}" class="btn-indigo flex items-center">
+            <a href="{{route('hod.students.add', $section)}}" class="btn-indigo flex items-center">
                 <i class="bi bi-person-add"></i>
                 <span class="hidden md:flex ml-2">Manual Feed</span>
             </a>
-            <a href="{{route('students.excel', $section)}}" class="btn-teal flex items-center">
+            <a href="{{route('hod.students.excel', $section)}}" class="btn-teal flex items-center">
                 <i class="bi bi-upload"></i>
                 <span class="hidden md:flex ml-2">From Excel</span>
             </a>
-            @role('super')
-            <form action="{{route('sections.destroy',$section)}}" method="POST" id='del_form{{$section->id}}'>
+            @if(Auth::user()->hasRole('super')||!$section->students()->exists())
+            <form action="{{route('hod.sections.destroy',$section)}}" method="POST" id='del_form{{$section->id}}'>
                 @csrf
+
                 @method('DELETE')
                 <button type="submit" class="btn-red flex items-center" onclick="delme('{{$section->id}}')">
                     <i class="bi-trash3 text-slate-200"></i>
                     <span class="hidden md:flex ml-2">Remove section</span>
                 </button>
             </form>
-            @endrole
+            @endif
 
         </div>
     </div>
 
     <!-- registered students -->
     <div class="overflow-x-auto mt-4">
-        <table class="table-fixed w-full">
+        <table class="table-fixed w-full text-sm">
             <thead>
                 <tr>
-                    <th class="w-80">Name / Father</th>
-                    <th class="w-48">Roll No</th>
-                    <th class="w-48">Reg No</th>
-                    <th class="w-32">Actions</th>
+                    <th class="w-8"></th>
+                    <th class="w-40">Roll No</th>
+                    <th class="w-48">Student Name</th>
+                    <th class="w-48">Father </th>
+                    <th class="w-24">Status </th>
                 </tr>
             </thead>
             <tbody>
                 @php $sr=$students->count();@endphp
-                @foreach($students->sortBy('rollno') as $student)
+                @foreach($section->students->sortBy('rollno') as $student)
                 <tr class="tr">
                     <td>
-                        <div class="flex items-center space-x-4">
-                            <div>
-                                @if($student->gender=='M')
-                                <i class="bx bx-male text-orange-400 text-lg"></i>
-                                @else
-                                <i class="bx bx-female text-indigo-400 text-lg"></i>
-                                @endif
-                            </div>
-                            <div>
-                                <div class="text-slate-800">{{$student->name}}</div>
-                                <div class="text-slate-400 text-sm">{{$student->father}}
-                                </div>
-                            </div>
 
-                        </div>
+                        @if($student->gender=='M')
+                        <i class="bx bx-male text-green-800 text-lg"></i>
+                        @else
+                        <i class="bx bx-female text-teal-600 text-lg"></i>
+                        @endif
 
                     </td>
-                    <td class="text-center">{{$student->rollno}}</td>
-                    <td class="text-center">{{$student->regno}}</td>
+                    <td><a href="{{route('hod.students.show',$student)}}" class="link">{{$student->rollno}}</a></td>
+                    <td class="text-left">{{$student->name}}</td>
+                    <td>{{$student->father}}</td>
                     <td>
-                        <div class="flex items-center justify-center space-x-4">
-                            <a href="{{route('students.edit', $student)}}">
-                                <i class="bi-pencil-square"></i>
-                            </a>
-                            @role('super')
-                            <form action="{{route('students.destroy',$student)}}" method="POST" id='del_form{{$student->id}}' class="">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$student->id}}')">
-                                    <i class="bi-trash3"></i>
-                                </button>
-                            </form>
-                            @endrole
-                        </div>
+                        @if($student->statuses()->exists())
+                        <span class="text-red-600"> {{$student->statuses()->latest()->first()->status->name}}</span>
+                        @else
+                        <span class="text-green-800">active</span>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
@@ -149,8 +134,8 @@
         var str = 0;
         $('.tr').each(function() {
             if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) ||
-                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
+                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) ||
+                    $(this).children().eq(2).prop('outerText').toLowerCase().includes(searchtext) || $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
                 )) {
                 $(this).addClass('hidden');
             } else {

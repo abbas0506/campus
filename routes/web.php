@@ -43,6 +43,7 @@ use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SlotController;
 use App\Http\Controllers\hod\SlotOptionController;
 use App\Http\Controllers\hod\StruckOffController;
+use App\Http\Controllers\hod\StudentStatusController;
 use App\Http\Controllers\MyExceptionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\teacher\AssessmentController;
@@ -59,6 +60,7 @@ use App\Http\Controllers\teacher\SummativeController;
 use App\Http\Controllers\teacher\EnrollmentController;
 use App\Http\Controllers\teacher\TeacherController as TeacherTeacherController;
 use App\Models\Semester;
+use App\Models\StudentStatus;
 
 /*
 |--------------------------------------------------------------------------
@@ -151,9 +153,6 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
     Route::get('super', [HodController::class, 'index']);
     Route::view('hod/change/pw', 'hod.changepw')->name('hod.changepw');
     Route::resource('programs', ProgramController::class);
-    Route::resource('clases', ClasController::class);
-    Route::get('clases/append/{pid}', [ClasController::class, 'append'])->name('clases.append');
-    Route::resource('sections', SectionController::class);
 
     Route::resource('teachers', TeacherController::class);
     Route::resource('internals', InternalController::class)->only('edit', 'update');
@@ -171,12 +170,6 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
     Route::get('courseplan/{allocation}/edit/teachers', [CoursePlanController::class, 'teachers'])->name('courseplan.teachers');
     Route::get('courseplan/{allocation}/edit/courses', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
 
-    Route::resource('students', StudentController::class);
-    Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
-
-    Route::get('students/{section}/add', [StudentController::class, 'add'])->name('students.add');
-    Route::get('students/{section}/excel', [StudentController::class, 'excel'])->name('students.excel');
-    Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
 
     //?? to verify the reason of presence
     // Route::resource('enrollments', EnrollmentController::class);
@@ -198,8 +191,22 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
 
 Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
     Route::resource('courses', CourseController::class);
+    Route::resource('clases', ClasController::class);
+    Route::get('clases/append/{pid}', [ClasController::class, 'append'])->name('clases.append');
+    Route::resource('sections', SectionController::class);
     Route::resource('change_section', ChangeSectionController::class)->only('edit', 'update');
     Route::resource('struckoff', StruckOffController::class)->only('edit', 'update');
+    Route::resource('student_status', StudentStatusController::class);
+    Route::get('students/{id}/freeze', [StudentStatusController::class, 'freeze'])->name('students.freeze');
+
+    Route::resource('students', StudentController::class);
+    Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
+
+    Route::get('students/{section}/add', [StudentController::class, 'add'])->name('students.add');
+    Route::get('students/{section}/excel', [StudentController::class, 'excel'])->name('students.excel');
+    Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
+
+
     Route::get('cumulative', [CumulativeController::class, 'index']);
     Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');
 });

@@ -72,7 +72,7 @@ class SectionController extends Controller
                 ]);
             }
 
-            return redirect('clases')->with(['shift_id' => $clas->shift_id, 'success' => 'Successfully created']);
+            return redirect()->route('hod.clases.index')->with(['shift_id' => $clas->shift_id, 'success' => 'Successfully created']);
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -132,7 +132,7 @@ class SectionController extends Controller
         $shift_id = $section->clas->shift_id;
         try {
             $section->delete();
-            return redirect('clases')->with(['shift_id' => $shift_id, 'success' => 'Successfully removed']);
+            return redirect()->route('hod.clases.index')->with(['shift_id' => $shift_id, 'success' => 'Successfully removed']);
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }

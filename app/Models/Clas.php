@@ -73,6 +73,15 @@ class Clas extends Model
             return $query->students->count();
         });
     }
+    public function course_allocations()
+    {
+        return CourseAllocation::whereRelation('section', 'clas_id', $this->id);
+    }
+    public function students()
+    {
+        return Student::whereRelation('section', 'clas_id', $this->id);
+    }
+
     public function scopeTill($query, $semester_id)
     {
         return $query->where('last_semester_id', '<=', $semester_id);

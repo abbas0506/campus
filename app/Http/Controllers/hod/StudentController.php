@@ -95,7 +95,7 @@ class StudentController extends Controller
         try {
             $student = Student::create($request->all());
             DB::commit();
-            return redirect()->route('sections.show', $student->section)->with('success', 'Successfully created');
+            return redirect()->route('hod.sections.show', $student->section)->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -148,7 +148,7 @@ class StudentController extends Controller
         try {
 
             $student->update($request->all());
-            return redirect()->route('sections.show', $student->section)->with('success', 'Successfully updated');;
+            return redirect()->route('hod.sections.show', $student->section)->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
                 ->withErrors($ex->getMessage());
@@ -197,7 +197,7 @@ class StudentController extends Controller
 
             );
 
-            return redirect()->route('sections.show', session('section_id'))->with('success', 'Student imported successfully');
+            return redirect()->route('hod.sections.show', session('section_id'))->with('success', 'Student imported successfully');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }

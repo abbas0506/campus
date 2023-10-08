@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 <div class="container">
-    <h2>Struck Off</h2>
+    <h2>Freeze</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
@@ -29,15 +29,11 @@
         <div class="flex flex-col border border-dashed p-4 text-sm rounded-lg mt-2">
             <label for="" class="text-xs">Current Section</label>
             <h2>{{$student->section->title()}}</h2>
-        </div>
-        <div class="flex flex-col border border-dashed p-4 text-sm rounded-lg mt-2">
-            <label for="" class="text-xs">Remarks (optional)</label>
             <form action="{{route('hod.student_status.store')}}" method='post' class="">
                 @csrf
                 <input type="hidden" name='student_id' value="{{$student->id}}">
-                <input type="hidden" name='status_id' value="3">
-                <textarea type="" name="remarks" value="" class="custom-input w-full"></textarea>
-                <button type="submit" class="btn-red p-2 w-24 rounded mt-4">Struck Off</button>
+                <input type="hidden" name='status_id' value="2">
+                <button type="submit" class="btn-red p-2 rounded mt-4 w-24">Freeze</button>
             </form>
         </div>
     </div>

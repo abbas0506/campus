@@ -6,7 +6,7 @@
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{url('clases')}}">Classes & Sections</a>
+        <a href="{{route('hod.clases.index')}}">Classes & Sections</a>
         <div>/</div>
         <div>Edit</div>
     </div>
@@ -32,7 +32,7 @@
 
         <h1 class='text-red-600 mt-8'>{{$clas->program->short}} <i class="bx bx-chevron-right"></i>New Class</h1>
 
-        <form action="{{route('clases.update',$clas)}}" method='post' class="mt-8" onsubmit="return validate(event)">
+        <form action="{{route('hod.clases.update',$clas)}}" method='post' class="mt-8" onsubmit="return validate(event)">
             @csrf
             @method('PATCH')
             <input type="text" name="program_id" value="{{$clas->program->id}}" hidden>

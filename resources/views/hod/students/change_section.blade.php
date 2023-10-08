@@ -5,7 +5,7 @@
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{route('students.index')}}">Student Profile</a>
+        <a href="{{route('hod.students.index')}}">Student Profile</a>
         <div>/</div>
         <div>Edit</div>
     </div>

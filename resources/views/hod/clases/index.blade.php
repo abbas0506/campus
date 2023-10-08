@@ -2,7 +2,7 @@
 @section('page-content')
 
 <div class="container">
-    <h2>Class & Sections</h2>
+    <h2>Classes & Sections</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
@@ -10,10 +10,10 @@
     </div>
 
     <div class="flex flex-col md:flex-row md:items-center gap-x-2 mt-8">
-        <i class="bi bi-info-circle"></i>
-        <ul class="text-xs">
-            <li>Class will be deleted only if it has no student (i.e. empty class)</li>
-            <li>Section delete option is not available on this page. It is available on section page itself. (click on section label)</li>
+        <i class="bi bi-info-circle mr-4"></i>
+        <ul class="text-sm text-slate-600">
+            <li>Class delete option will be available only if if it has overall no student (i.e. empty class)</li>
+            <li>Class edit option will be availble only if its sections have not mande any course allocation </li>
         </ul>
     </div>
 
@@ -46,14 +46,15 @@
                             <div class="text-sm">{{$clas->title()}}</div>
                             <div class="flex items-center space-x-2">
                                 <div class="text-xs text-slate-400">
-                                    <i class="bi bi-person"></i> ({{$clas->strength()}})
+                                    <i class="bi bi-person"></i> ({{$clas->students()->count()}})
                                 </div>
-                                @role('super')
-                                <a href="{{route('clases.edit', $clas)}}">
+                                @if(Auth::user()->hasRole('super')||!$clas->course_allocations()->exists())
+                                <a href="{{route('hod.clases.edit', $clas)}}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                @endrole
-                                <form action="{{route('clases.destroy',$clas)}}" method="POST" id='del_form{{$clas->id}}'>
+                                @endif
+                                @if(Auth::user()->hasRole('super')||!$clas->students()->exists())
+                                <form action="{{route('hod.clases.destroy',$clas)}}" method="POST" id='del_form{{$clas->id}}'>
                                     @csrf
                                     @method('DELETE')
 
@@ -61,17 +62,18 @@
                                         <i class="bi bi-trash3"></i>
                                     </button>
                                 </form>
+                                @endif
                             </div>
                         </div>
                     </div>
                     <div class="md:pl-4">
                         <div class="flex flex-wrap gap-2">
                             @foreach($clas->sections as $section)
-                            <a href="{{route('sections.show',$section)}}" class='pallet-teal'>
+                            <a href="{{route('hod.sections.show',$section)}}" class='pallet-teal'>
                                 {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                             </a>
                             @endforeach
-                            <form action="{{route('sections.store')}}" method="post" class='pallet-teal'>
+                            <form action="{{route('hod.sections.store')}}" method="post" class='pallet-teal'>
                                 @csrf
                                 <input type="text" name="clas_id" value="{{$clas->id}}" hidden>
                                 <button type='submit'>
@@ -86,12 +88,12 @@
                 @endforeach
                 <div class="w-full mt-2">
                     @if($program->schemes->count()>0)
-                    <a href="{{route('clases.append',$program)}}" class="btn-teal float-left">
+                    <a href="{{route('hod.clases.append',$program)}}" class="btn-teal float-left">
                         <i class="bi bi-plus"></i>
                         Add New Class
                     </a>
                     @else
-                    <a href="{{route('schemes.append',$program)}}" class="btn-teal float-left">
+                    <a href="{{route('hod.schemes.append',$program)}}" class="btn-teal float-left">
                         <i class="bi bi-plus"></i>
                         Define Scheme
                     </a>

@@ -83,7 +83,7 @@ class ClasController extends Controller
                 ]);
                 DB::commit();
 
-                return redirect('clases')->with('success', 'Successfully created');
+                return redirect()->route('hod.clases.index')->with('success', 'Successfully created');
             }
         } catch (Exception $e) {
             DB::rollBack();
@@ -152,7 +152,7 @@ class ClasController extends Controller
                 return redirect()->back()->with('warning', 'Class ' . $exists->short() . ' already exists! You may promote/demote it.');
             } else {
                 $clas->update($request->all());
-                return redirect()->route('clases.index')->with('success', 'Successfully updated');;
+                return redirect()->route('hod.clases.index')->with('success', 'Successfully updated');;
             }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
@@ -172,7 +172,7 @@ class ClasController extends Controller
         $shift_id = $clas->shift_id;
         try {
             $clas->delete();
-            return redirect('clases')->with(['shift_id' => $shift_id, 'success' => 'Successfully removed']);
+            return redirect()->route('hod.clases.index')->with(['shift_id' => $shift_id, 'success' => 'Successfully removed']);
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong

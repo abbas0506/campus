@@ -26,7 +26,7 @@ class Student extends Model
         'rollno',
 
         //current
-        'status',
+        // 'status_id',
         'section_id',
 
     ];
@@ -35,7 +35,17 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    public function statuses()
+    {
+        return $this->hasMany(StudentStatus::class);
+    }
+    public function latest_status_id()
+    {
+        if ($this->statuses()->exists())
+            return $this->statuses()->latest()->first()->status_id;
+        else
+            return 1;
+    }
     public function scopeGender($query, $gender)
     {
         return $query->where('gender', $gender);

@@ -1,17 +1,10 @@
 @extends('layouts.hod')
 @section('page-content')
 <div class="container">
-    <h2>Class & Sections</h2>
-    <div class="bread-crumb">
-        <a href="/">Home</a>
-        <div>/</div>
-        <a href="{{route('students.index')}}">Students</a>
-        <div>/</div>
-        <div>View</div>
-    </div>
+    <h2>Import Students</h2>
+    <h1 class="mt-1">{{$section->title()}}</h1>
 
-    <h1 class='text-red-600 mt-8'>{{$section->title()}}</h1>
-    <div class="mt-8">
+    <div class="mt-12">
         <!-- page message -->
         @if($errors->any())
         <x-message :errors='$errors'></x-message>
@@ -19,7 +12,7 @@
         <x-message></x-message>
         @endif
 
-        <form action="{{route('students.import')}}" method="POST" enctype="multipart/form-data" class="flex flex-col mt-8 w-full">
+        <form action="{{route('hod.students.import')}}" method="POST" enctype="multipart/form-data" class="flex flex-col mt-8 w-full">
             @csrf
 
             <div class="flex flex-col border rounded-sm bg-gray-100 p-3">
@@ -28,7 +21,10 @@
 
             </div>
 
-            <button type="submit" class="btn-teal rounded p-2 w-24 mt-6">Import</button>
+            <div class="flex items-center space-x-4 mt-6">
+                <button type="submit" class="btn-teal rounded p-2 w-24">Import</button>
+                <a href="{{route('hod.sections.show', $section)}}" class="btn-blue rounded p-2 w-24 text-center">Cancel</a>
+            </div>
 
         </form>
 

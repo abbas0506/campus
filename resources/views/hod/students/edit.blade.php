@@ -5,7 +5,7 @@
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{route('students.index')}}">Students</a>
+        <a href="{{route('hod.students.index')}}">Students</a>
         <div>/</div>
         <div>Edit</div>
     </div>
@@ -20,7 +20,7 @@
         @endif
 
 
-        <form action="{{route('students.update',$student)}}" method='post' class="mt-8">
+        <form action="{{route('hod.students.update',$student)}}" method='post' class="mt-8">
             @csrf
             @method('PATCH')
 

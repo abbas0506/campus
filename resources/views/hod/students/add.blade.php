@@ -5,7 +5,7 @@
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{route('clases.index')}}">Classes & Sections</a>
+        <a href="{{route('hod.clases.index')}}">Classes & Sections</a>
         <div>/</div>
         <div>New Student</div>
     </div>
@@ -20,7 +20,7 @@
         @endif
 
         <h1 class='text-red-600 mt-8'>{{$section->title()}} </h1>
-        <form action="{{route('students.store')}}" method='post' class="flex flex-col w-full mt-8">
+        <form action="{{route('hod.students.store')}}" method='post' class="flex flex-col w-full mt-8">
             @csrf
             <input type="text" name="section_id" value="{{$section->id}}" hidden>
 

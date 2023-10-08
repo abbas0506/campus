@@ -10,13 +10,13 @@
                 </a>
             </li>
             <li>
-                <a href="{{url('clases')}}" class="flex items-center p-2">
+                <a href="{{route('hod.clases.index')}}" class="flex items-center p-2">
                     <i class="bi-people"></i>
                     <span class="ml-3">Classes / Sections</span>
                 </a>
             </li>
             <li>
-                <a href="{{url('students')}}" class="flex items-center p-2">
+                <a href="{{route('hod.students.index')}}" class="flex items-center p-2">
                     <i class="bi bi-person-circle"></i>
                     <span class="ml-3">Student Profile</span>
                 </a>
