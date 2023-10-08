@@ -154,7 +154,7 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
     Route::resource('clases', ClasController::class);
     Route::get('clases/append/{pid}', [ClasController::class, 'append'])->name('clases.append');
     Route::resource('sections', SectionController::class);
-    Route::resource('courses', CourseController::class);
+
     Route::resource('teachers', TeacherController::class);
     Route::resource('internals', InternalController::class)->only('edit', 'update');
 
@@ -197,6 +197,7 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
 });
 
 Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
+    Route::resource('courses', CourseController::class);
     Route::resource('change_section', ChangeSectionController::class)->only('edit', 'update');
     Route::resource('struckoff', StruckOffController::class)->only('edit', 'update');
     Route::get('cumulative', [CumulativeController::class, 'index']);

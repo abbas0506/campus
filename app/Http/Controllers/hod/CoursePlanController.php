@@ -94,15 +94,33 @@ class CoursePlanController extends Controller
     {
 
         $course_allocation = CourseAllocation::find($id);
-        return view('hod.courseplan.edit', compact('course_allocation'));
+        if ($course_allocation->course()->exists())
+            return view('hod.courseplan.edit', compact('course_allocation'));
+        else {
+            // enlist courses for selection
+            $courses = Course::where('course_type_id', $course_allocation->slot_option->course_type_id)
+                ->where('department_id', session('department_id'))
+                ->where('id', '<>', $course_allocation->course_id)
+                ->whereRaw('cr_theory+cr_practical=' . $course_allocation->slot_option->slot->cr)
+                ->get();
+            return view('hod.courseplan.courses', compact('course_allocation', 'courses'));
+        }
     }
 
     public function update(Request $request, $id)
     {
+
         try {
             $course_allocation = CourseAllocation::find($id);
+            // if request for course update, check for its prerequiste course 
+            if ($request->course_id) {
+                $course = Course::find($request->course_id);
+                if ($course->prerequisite_course()->exists() && !$course_allocation->section->course_allocations()->before(session('semester_id'))->contains($course->prerequisite_course_id)) {
+                    return redirect()->back()->with('warning', 'Pre-requisite course "' . $course->prerequisite_course->code . " " . $course->prerequisite_course->name . ' ' . $course->prerequisite_course->lblCr() . '" required!');
+                }
+            }
             $course_allocation->update($request->all());
-            return redirect()->route('courseplan.edit', $course_allocation)->with('success', "Successfully saved");
+            return redirect()->route('courseplan.show', $course_allocation->section)->with('success', "Successfully saved");
         } catch (Exception $e) {
             echo $e->getMessage();
             // something went wrong
@@ -114,11 +132,11 @@ class CoursePlanController extends Controller
     {
         //
         try {
-            $clas = CourseAllocation::find($id);
-            $clas->course_id = null;
-            $clas->teacher_id = null;
-            $clas->update();
-            return redirect()->back()->with('success', 'Successfully deleted');
+            $course_allocation = CourseAllocation::find($id);
+            $course_allocation->course_id = null;
+            $course_allocation->teacher_id = null;
+            $course_allocation->update();
+            return redirect()->route('courseplan.show', $course_allocation->section)->with('success', 'Successfully removed');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong

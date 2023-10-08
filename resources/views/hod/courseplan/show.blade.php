@@ -23,7 +23,7 @@
     @endphp
 
     <h1 class='text-red-600 mt-8'>{{$section->title()}} </h1>
-    <p class="bg-teal-600 text-md font-semibold px-2 text-white">Scheme: {{$section->clas->scheme->title()}}</p>
+    <p class="bg-teal-600 text-md font-semibold px-2 text-white mt-2">Scheme: {{$section->clas->scheme->title()}}</p>
 
     @php
     $semester=App\Models\Semester::find(session('semester_id'));
@@ -52,6 +52,7 @@
         <div class="border border-dashed">
             @foreach($section->course_allocations()->for($semester->id)->get() as $course_allocation)
             <div class="flex w-full py-1">
+                <!--  manual rowspan for a given slot-->
                 @if($prev_slot_no!=$course_allocation->slot_option->slot->slot_no)
                 <div class="shrink-0 w-16 text-center">{{$course_allocation->slot_option->slot->slot_no}}</div>
                 @else

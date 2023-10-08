@@ -24,7 +24,7 @@
     <div class="p-4 border border-dashed bg-white relative mt-4">
         <div class="absolute top-2 right-2 flex flex-row items-center space-x-2">
 
-            @if($course_allocation->course()->exists() && (Auth::user()->hasRole('super') || !$course_allocation->first_attempts()->exists()))
+            @if(Auth::user()->hasRole('super') || !$course_allocation->first_attempts()->exists())
             <form action="{{route('courseplan.destroy',$course_allocation)}}" method="POST" id='del_form{{$course_allocation->id}}'>
                 @csrf
                 @method('DELETE')
@@ -34,66 +34,59 @@
             </form>
             @endif
 
-            @if(!$course_allocation->teacher()->exists())
-            <a href="{{route('courseplan.courses',$course_allocation)}}"><i class="bx bx-pencil"></i></a>
-            @endif
         </div>
 
         <label for="" class="text-xs">Course</label>
         <div class="flex flex-wrap">
-            @if($course_allocation->course()->exists())
             <div class="w-24">{{$course_allocation->course->code }}</div>
             <div class="">{{$course_allocation->course->name }} <span class="text-slate-400 text-xs">{{ $course_allocation->course->lblCr() }}</span></div>
-            @else
-            <div>(blank)</div>
-            @endif
         </div>
     </div>
     <div class="p-4 border border-dashed bg-white relative mt-4">
-        @if($course_allocation->course()->exists())
         <a href="{{route('courseplan.teachers',$course_allocation)}}" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
-        @endif
         <label for="" class="text-xs">Allocated Teacher</label>
-        <div>{{$course_allocation->teacher->name ?? '(blank)'}}</div>
-    </div>
-    <div class="flex justify-end w-full mt-4">
-        <a href="{{route('courseplan.show', $course_allocation->section_id)}}" class="btn btn-blue">Go Back</a>
+        @if($course_allocation->teacher()->exists())
+        <div>{{$course_allocation->teacher->name }}</div>
+        @else
+        <div class="text-slate-400 text-xs">(blank)</div>
+        @endif
     </div>
     @endsection
-    @section('script')
-    <script type="text/javascript">
-        function search(event) {
-            var searchtext = event.target.value.toLowerCase();
-            $('.tr').each(function() {
-                if (!(
-                        $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) ||
-                        $(this).children().eq(2).prop('outerText').toLowerCase().includes(searchtext)
-                    )) {
-                    $(this).addClass('hidden');
-                } else {
-                    $(this).removeClass('hidden');
-                }
-            });
-        }
+</div>
+@section('script')
+<script type="text/javascript">
+    function search(event) {
+        var searchtext = event.target.value.toLowerCase();
+        $('.tr').each(function() {
+            if (!(
+                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) ||
+                    $(this).children().eq(2).prop('outerText').toLowerCase().includes(searchtext)
+                )) {
+                $(this).addClass('hidden');
+            } else {
+                $(this).removeClass('hidden');
+            }
+        });
+    }
 
-        function delme(formid) {
+    function delme(formid) {
 
-            event.preventDefault();
+        event.preventDefault();
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.value) {
-                    //submit corresponding form
-                    $('#del_form' + formid).submit();
-                }
-            });
-        }
-    </script>
-    @endsection
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                //submit corresponding form
+                $('#del_form' + formid).submit();
+            }
+        });
+    }
+</script>
+@endsection

@@ -14,9 +14,9 @@
     <div class="flex flex-col md:flex-row md:items-center gap-x-4 mt-8">
         <i class="bi-info-circle text-2xl text-indigo-600"></i>
         <div class="flex-grow text-left sm:mt-0">
-            <ul class="text-sm">
-                <li>Click on any program to show classes and their sections</li>
-                <li>Click on any section to assign teachers for current semester</li>
+            <ul class="text-sm text-slate-600">
+                <li>Course allocation is allowed only for non-empty sections</li>
+                <li>If some section is missing on this page, it might have no student</li>
             </ul>
         </div>
     </div>
@@ -58,9 +58,11 @@
                     <div class="md:pl-4">
                         <div class="flex flex-wrap gap-2">
                             @foreach($clas->sections as $section)
+                            @if($section->students()->exists())
                             <a href="{{route('courseplan.show',$section)}}" class='pallet-teal'>
                                 {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                             </a>
+                            @endif
                             @endforeach
                         </div>
                     </div>

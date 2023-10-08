@@ -26,14 +26,14 @@
         <div class="text-sm  text-gray-500" id='lbl_filteredBy'>{{$courses->count()}} records found</div>
         <div class="flex items-center space-x-4">
             <div onclick="toggleFilterSection()" class="hover:cursor-pointer"><i class="bi-filter pr-2"></i>Filter</div>
-            <a href="{{route('courses.create')}}" class="btn-indigo">
+            <a href="{{route('hod.courses.create')}}" class="btn-indigo">
                 Add New
             </a>
         </div>
     </div>
 
-    <div id="filterSection" class="hidden border border-slate-200 p-4 mt-4">
-        <div class="grid grid-col-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <div id="filterSection" class="hidden bg-slate-100 p-4 mt-4">
+        <div class="grid grid-col-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             <div id='all' class="filterOption active" onclick="filter('all')">
                 <span class="desc">All</span>
                 <span class="ml-1 text-sm text-slate-600">
@@ -52,41 +52,41 @@
         </div>
     </div>
     <div class="overflow-x-auto mt-4">
-        <table class="table-fixed w-full">
+        <table class="table-fixed w-full text-sm">
             <thead>
                 <tr class="border-b border-slate-200">
                     <th class="w-24">Code</th>
                     <th class="w-60">Course Name</th>
                     <th class="w-32">Type</th>
-                    <th class="w-24">Cr Hrs.</th>
+                    <th class="w-48">Pre Requisite</th>
                     <th class="w-24">Marks</th>
                     <th class='w-24'>Actions</th>
                 </tr>
             </thead>
             <tbody>
 
-                @foreach($courses->sortByDesc('id') as $course)
+                @foreach($courses->sortByDesc('updated_at') as $course)
                 <tr class="tr border-b ">
                     <td class="text-center">{{$course->code}}</td>
-                    <td class="">
-                        <div>{{$course->name}}</div>
+                    <td class="text-left">
+                        <div>{{$course->name}} <span class="text-slate-400 text-xs">{{$course->lblCr()}}</span></div>
                         <div class="text-slate-400">{{$course->short}}</div>
                     </td>
                     <td class="hidden">{{$course->course_type->id}}</td>
                     <td class="text-center">{{$course->course_type->name}}</td>
 
-                    <td class="text-center">{{$course->creditHrsLabel()}}</td>
+                    <td class="text-center">{{$course->prerequisite_course->short ?? ''}}</td>
                     <td class="text-center">
                         {{$course->marks_theory}} + {{$course->marks_practical}}
                     </td>
 
                     <td>
                         <div class="flex justify-center items-center space-x-3">
-                            <a href="{{route('courses.edit', $course)}}">
+                            <a href="{{route('hod.courses.edit', $course)}}">
                                 <i class="bi bi-pencil-square text-green-600"></i>
                             </a>
                             @role('super')
-                            <form action="{{route('courses.destroy',$course)}}" method="POST" id='del_form{{$course->id}}'>
+                            <form action="{{route('hod.courses.destroy',$course)}}" method="POST" id='del_form{{$course->id}}'>
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$course->id}}')">

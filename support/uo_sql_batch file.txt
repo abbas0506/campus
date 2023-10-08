@@ -1,30 +1,29 @@
 insert into cms_v6.departments
 select * from cms.departments
-where cms.departments.id>1
+where cms.departments.id>1;
 
 insert into cms_v6.users(id, name, email, password, phone, cnic, department_id)
 select id, name, email, password, phone, cnic, department_id from cms.users 
 where id>3;
 
 insert into cms_v6.headships
-select * from cms.headships 
+select * from cms.headships; 
 
 insert into cms_v6.model_has_roles
 select * from cms.model_has_roles
-where model_id>3
+where model_id>3;
 
 insert into cms_v6.course_types
-select * from cms.course_types
+select * from cms.course_types;
 
 insert into cms_v6.programs
-select * from cms.programs
+select * from cms.programs;
 
-//Courses
-insert into cms_v6.courses
-select * from cms.courses;
+insert into cms_v6.courses(id,name,short,code,course_type_id,cr_theory,cr_practical,marks_theory,marks_practical,department_id)
+select id,name,short,code,course_type_id,cr_theory,cr_practical,marks_theory,marks_practical,department_id from cms.courses;
 
 insert into cms_v6.schemes
-select * from cms.schemes
+select * from cms.schemes;
 
 insert into cms_v6.slots 
 select * from cms.slots;
@@ -36,10 +35,10 @@ insert into cms_v6.clas
 select * from cms.clas;
 
 insert into cms_v6.sections
-select * from cms.sections
+select * from cms.sections;
 
 insert into cms_v6.students
-select * from cms.students
+select * from cms.students;
 
 insert into cms_v6.course_allocations
 select * from cms.course_allocations;

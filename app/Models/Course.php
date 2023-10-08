@@ -18,11 +18,16 @@ class Course extends Model
         'marks_theory',
         'marks_practical',
         'department_id',
+        'prerequisite_course_id',
     ];
 
     public function course_type()
     {
         return $this->belongsTo(CourseType::class);
+    }
+    public function prerequisite_course()
+    {
+        return $this->belongsTo(Course::class);
     }
     public function department()
     {

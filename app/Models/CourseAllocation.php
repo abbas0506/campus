@@ -104,10 +104,18 @@ class CourseAllocation extends Model
     {
         return $query->where('semester_id', '<=', $semester_id);
     }
+    public function scopeBefore($query, $semester_id)
+    {
+        return $query->where('semester_id', '<', $semester_id);
+    }
     public function scopeOn($query, $slot_id)
     {
         $slot_option_ids = SlotOption::where('slot_id', $slot_id)->pluck('id')->toArray();
         return $query->whereIn('slot_option_id', $slot_option_ids);
+    }
+    public function scopeContains($query, $course_id)
+    {
+        return $query->where('course_id', $course_id)->count() > 0 ? true : false;;
     }
     public function scopeAllocatedCr($query)
     {
