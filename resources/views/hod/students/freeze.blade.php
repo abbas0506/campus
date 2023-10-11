@@ -29,7 +29,7 @@
         <div class="flex flex-col border border-dashed p-4 text-sm rounded-lg mt-2">
             <label for="" class="text-xs">Current Section</label>
             <h2>{{$student->section->title()}}</h2>
-            <form action="{{route('hod.student_status.store')}}" method='post' class="">
+            <form action="{{route('hod.students.deactivate')}}" method='post' class="">
                 @csrf
                 <input type="hidden" name='student_id' value="{{$student->id}}">
                 <input type="hidden" name='status_id' value="2">

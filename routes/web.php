@@ -23,6 +23,7 @@ use App\Http\Controllers\ce\GazetteController as CeGazetteController;
 use App\Http\Controllers\ce\NotifiedGazetteController;
 use App\Http\Controllers\ce\StudentController as CeStudentController;
 use App\Http\Controllers\ce\TranscriptController;
+use App\Http\Controllers\hod\AttemptPermissionController;
 use App\Http\Controllers\hod\AwardController;
 use App\Http\Controllers\hod\ChangeSectionController;
 use App\Http\Controllers\hod\ProgramController;
@@ -37,6 +38,7 @@ use App\Http\Controllers\hod\ClassPromotionController;
 use App\Http\Controllers\hod\ClassReversionController;
 use App\Http\Controllers\hod\CoursePlanController;
 use App\Http\Controllers\hod\CumulativeController;
+use App\Http\Controllers\hod\FirstAttemptController as HodFirstAttemptController;
 use App\Http\Controllers\hod\HodController;
 use App\Http\Controllers\hod\InternalController;
 use App\Http\Controllers\hod\SectionController;
@@ -192,12 +194,26 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
 Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
     Route::resource('courses', CourseController::class);
     Route::resource('clases', ClasController::class);
-    Route::get('clases/append/{pid}', [ClasController::class, 'append'])->name('clases.append');
     Route::resource('sections', SectionController::class);
-    Route::resource('change_section', ChangeSectionController::class)->only('edit', 'update');
-    Route::resource('struckoff', StruckOffController::class)->only('edit', 'update');
-    Route::resource('student_status', StudentStatusController::class);
+    Route::get('clases/append/{pid}', [ClasController::class, 'append'])->name('clases.append');
+
+    Route::resource('allow-deny-attempt', AttemptPermissionController::class)->only('update');
+
+    Route::get('students/{id}/move', [StudentStatusController::class, 'move'])->name('students.move');
+    Route::patch('students/{student}/swap', [StudentStatusController::class, 'swap'])->name('students.swap');
+
+    Route::get('students/{id}/struckoff', [StudentStatusController::class, 'struckoff'])->name('students.struckoff');
     Route::get('students/{id}/freeze', [StudentStatusController::class, 'freeze'])->name('students.freeze');
+    // radmit deal both resume after struckoff or unfreeze
+    Route::get('students/{id}/readmit', [StudentStatusController::class, 'readmit'])->name('students.readmit');
+
+    Route::post('students/deactivate', [StudentStatusController::class, 'deactivate'])->name('students.deactivate');
+    Route::post('students/activate', [StudentStatusController::class, 'activate'])->name('students.activate');
+
+    Route::get('enroll-fresh/{allocation}', [EnrollmentController::class, 'fresh'])->name('enroll.fresh');
+    Route::get('enroll-reappear/{allocation}', [EnrollmentController::class, 'reappear'])->name('enroll.reappear');
+    Route::resource('first-attempts', HodFirstAttemptController::class);
+
 
     Route::resource('students', StudentController::class);
     Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);

@@ -24,7 +24,7 @@ class EnrollmentController extends Controller
         $unregistered = Student::whereNotIn('id', $student_ids)
             ->where('section_id', $course_allocation->section_id)->get();
 
-        return view('teacher.enroll.fresh', compact('course_allocation', 'unregistered'));
+        return view('hod.courseplan.enrollment.fresh', compact('course_allocation', 'unregistered'));
     }
 
     public function reappear($id)

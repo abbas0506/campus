@@ -64,9 +64,11 @@
                     </a>
                     <span class="text-slate-400 text-xs ml-2">({{ $course_allocation->slot_option->slot->cr }})</span>
                 </div>
-                <div class="shrink-0 w-24">{{ $course_allocation->course->code ?? '' }}</div>
-                <div class="shrink-0 w-64">{{ $course_allocation->course->name ?? '' }}</div>
+                @if($course_allocation->course()->exists())
+                <div class="shrink-0 w-24">{{ $course_allocation->course->code }}</div>
+                <div class="shrink-0 w-64">{{ $course_allocation->course->name}} <span class="text-slate-400 text-xs ml-2"> {{$course_allocation->course->lblCr()}}</span></div>
                 <div class="shrink-0 w-64">{{$course_allocation->teacher->name ?? ''}}</div>
+                @endif
             </div>
 
             <!-- show slot no only for once to make slot options' group  -->
@@ -77,6 +79,8 @@
 
             @endforeach
         </div>
+
+
     </div>
 </div>
 @endsection

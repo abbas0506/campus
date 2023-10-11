@@ -1,13 +1,13 @@
 @extends('layouts.hod')
 @section('page-content')
 <div class="container">
-    <h2>Change Section</h2>
+    <h2>Student Readmission</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
         <a href="{{route('hod.students.index')}}">Student Profile</a>
         <div>/</div>
-        <div>Edit</div>
+        <div>Readmit</div>
     </div>
 
     <div class="md:w-3/4 mx-auto mt-8">
@@ -48,11 +48,11 @@
                 <div class="md:pl-4">
                     <div class="flex flex-wrap gap-2">
                         @foreach($clas->sections as $section)
-                        <form action="{{route('hod.change_section.update',$student)}}" method='post'>
+                        <form action="{{route('hod.students.activate')}}" method='post' id='form{{$section->id}}'>
                             @csrf
-                            @method('PATCH')
+                            <input type="hidden" name='student_id' value='{{$student->id}}'>
                             <input type="hidden" name='section_id' value='{{$section->id}}'>
-                            <button type="submit" class="btn-teal w-16 text-xs" onclick="confirm_submit()">{{$section->name}} <span class="text-xs">({{$section->students->count()}})</span></button>
+                            <button type="submit" class="btn-teal w-16 text-xs" onclick="confirm_submit('{{$section->id}}')">{{$section->name}} <span class="text-xs">({{$section->students->count()}})</span></button>
                         </form>
                         @endforeach
                     </div>
@@ -67,7 +67,7 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-    function confirm_submit() {
+    function confirm_submit(id) {
 
         event.preventDefault();
 
@@ -82,7 +82,7 @@
         }).then((result) => {
             if (result.value) {
                 //submit corresponding form
-                $('form').submit();
+                $('#form' + id).submit();
             }
         });
     }

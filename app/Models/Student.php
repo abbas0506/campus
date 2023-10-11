@@ -26,8 +26,8 @@ class Student extends Model
         'rollno',
 
         //current
-        // 'status_id',
-        'section_id',
+        //'status_id',
+        // 'section_id',
 
     ];
 

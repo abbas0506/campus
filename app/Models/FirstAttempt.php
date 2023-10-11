@@ -17,6 +17,7 @@ class FirstAttempt extends Model
         'presentation',
         'midterm',
         'summative',
+        'is_active',
 
     ];
     public function student()

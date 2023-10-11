@@ -106,7 +106,6 @@ class Clas extends Model
         $student = Student::find($id);
         //grace period in years
         $grace_period = $student->section->clas->program->max_t - $student->section->clas->program->min_t;
-        return  $query->where('id', '<>', $student->section->clas->id)
-            ->where('last_semester_id', '<=', $student->section->clas->last_semester_id + $grace_period * 2);
+        return  $query->where('last_semester_id', '<=', $student->section->clas->last_semester_id + $grace_period * 2);
     }
 }

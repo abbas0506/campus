@@ -56,7 +56,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: "{{url('searchByRollNoOrName')}}",
+                    url: "{{url('hod/searchByRollNoOrName')}}",
                     data: {
                         "searchby": searchby,
                         "_token": token,
