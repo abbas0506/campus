@@ -77,7 +77,7 @@
             <div class="bg-sky-100 p-4">
                 <div class="flex items-center space-x-2">
                     <i class="bi-gear text-lg"></i>
-                    <h2>Config for Once</h2>
+                    <h2>1-Time Config</h2>
                 </div>
                 <div class="divider mt-4 border-sky-200"></div>
                 <div class="flex items-center justify-between mt-2 text-sm">

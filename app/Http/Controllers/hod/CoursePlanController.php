@@ -34,36 +34,6 @@ class CoursePlanController extends Controller
 
     public function show($sid)
     {
-        $section = Section::find($sid);
-        if (!$section->course_allocations()->for(session('semester_id'))->exists()) {
-            //if empty, auto create course allocation plan according to related scheme
-            DB::beginTransaction();
-            try {
-                $semester_no = $section->clas->semesterNo(session('semester_id'));
-                // retrieve all slots for current semester
-                foreach ($section->clas->scheme->slots()->for($semester_no)->get()->sortBy('slot_no') as $slot) {
-                    //if slot has fixed course, save as it is
-                    foreach ($slot->slot_options as $slot_option) {
-                        if ($slot_option->course()->exists())
-                            $course_id = $slot_option->course_id;
-                        else
-                            $course_id = null;
-
-                        CourseAllocation::create([
-                            'semester_id' => session('semester_id'),
-                            'section_id' => $section->id,
-                            'slot_option_id' => $slot_option->id,
-                            'course_id' => $course_id,
-                        ]);
-                    }
-                }
-                DB::commit();
-            } catch (Exception $ex) {
-                DB::rollBack();
-                return redirect()->back()->withErrors($ex->getMessage());
-            }
-        }
-        return view('hod.courseplan.show', compact('section'));
     }
 
     public function store(Request $request)
@@ -92,76 +62,16 @@ class CoursePlanController extends Controller
 
     public function edit($id)
     {
-
-        $course_allocation = CourseAllocation::find($id);
-        if ($course_allocation->course()->exists())
-            return view('hod.courseplan.edit', compact('course_allocation'));
-        else {
-            // enlist courses for selection
-            $courses = Course::where('course_type_id', $course_allocation->slot_option->course_type_id)
-                ->where('department_id', session('department_id'))
-                ->where('id', '<>', $course_allocation->course_id)
-                ->whereRaw('cr_theory+cr_practical=' . $course_allocation->slot_option->slot->cr)
-                ->get();
-            return view('hod.courseplan.courses', compact('course_allocation', 'courses'));
-        }
     }
 
     public function update(Request $request, $id)
     {
-
-        try {
-            $course_allocation = CourseAllocation::find($id);
-            // if request for course update, check for its prerequiste course 
-            if ($request->course_id) {
-                $course = Course::find($request->course_id);
-                if ($course->prerequisite_course()->exists() && !$course_allocation->section->course_allocations()->before(session('semester_id'))->contains($course->prerequisite_course_id)) {
-                    return redirect()->back()->with('warning', 'Pre-requisite course "' . $course->prerequisite_course->code . " " . $course->prerequisite_course->name . ' ' . $course->prerequisite_course->lblCr() . '" required!');
-                }
-            }
-            $course_allocation->update($request->all());
-            return redirect()->route('courseplan.show', $course_allocation->section)->with('success', "Successfully saved");
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            // something went wrong
-        }
     }
 
 
     public function destroy($id)
     {
         //
-        try {
-            $course_allocation = CourseAllocation::find($id);
-            $course_allocation->course_id = null;
-            $course_allocation->teacher_id = null;
-            $course_allocation->update();
-            return redirect()->route('courseplan.show', $course_allocation->section)->with('success', 'Successfully removed');
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage());
-            // something went wrong
-        }
-    }
 
-    public function courses($id)
-    {
-
-        $course_allocation = CourseAllocation::find($id);
-        $courses = Course::where('course_type_id', $course_allocation->slot_option->course_type_id)
-            ->where('department_id', session('department_id'))
-            ->where('id', '<>', $course_allocation->course_id)
-            ->whereRaw('cr_theory+cr_practical=' . $course_allocation->slot_option->slot->cr)
-            ->get();
-        return view('hod.courseplan.courses', compact('course_allocation', 'courses'));
-    }
-
-    public function teachers($course_allocation_id)
-    {
-        $course_allocation = CourseAllocation::find($course_allocation_id);
-        $teachers = User::whereRelation('roles', 'name', 'teacher')
-            ->where('id', '<>', $course_allocation->teacher_id)
-            ->where('is_active', 1)
-            ->get();
-        return view('hod.courseplan.teachers', compact('course_allocation', 'teachers'));
     }
 }

@@ -4,11 +4,7 @@
 <div class="container">
     <h2>Course Selection</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
-        <div>/</div>
-        <a href="{{url('courseplan')}}">Course Allocation</a>
-        <div>/</div>
-        <div>Courses</div>
+        <a href="{{route('hod.semester-plan.show', $course_allocation->section)}}">Cancel & Go Back</a>
     </div>
 
     <!-- page message -->
@@ -18,8 +14,10 @@
     <x-message></x-message>
     @endif
 
-    <h1 class='text-red-600 mt-8'>{{$course_allocation->section->title()}}</h1>
-    <h2 class='mt-4'>Slot # {{$course_allocation->slot_option->slot->slot_no}} ({{$course_allocation->slot_option->course_type->name}})</h2>
+    <div class="flex items-center justify-center space-x-4 mt-8 border border-dashed p-4">
+        <h2 class='text-red-600'>{{$course_allocation->section->title()}}</h2>
+        <p class="text-slate-600 text-sm">Slot # {{$course_allocation->slot_option->slot->slot_no}} ({{$course_allocation->slot_option->course_type->name}})</p>
+    </div>
 
     <!-- search -->
     <div class="flex relative w-full md:w-1/3 mt-8">
@@ -43,7 +41,7 @@
                         @if($course_allocation->section->has_course($course->id))
                         <!-- dont show link btn -->
                         @else
-                        <form action="{{route('courseplan.update',$course_allocation)}}" method="POST" id='del_form' class="flex items-center justify-center">
+                        <form action="{{route('hod.course-allocations.update',$course_allocation)}}" method="POST" id='del_form' class="flex items-center justify-center">
                             @csrf
                             @method('PATCH')
                             <input type="text" name='course_id' value="{{$course->id}}" hidden>
@@ -69,7 +67,7 @@
         var searchtext = event.target.value.toLowerCase();
         $('.tr').each(function() {
             if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) ||
+                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) ||
                     $(this).children().eq(2).prop('outerText').toLowerCase().includes(searchtext)
                 )) {
                 $(this).addClass('hidden');

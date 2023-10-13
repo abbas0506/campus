@@ -34,14 +34,16 @@ use App\Http\Controllers\hod\StudentController;
 use App\Http\Controllers\hod\GazetteController;
 use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\ClasController;
-use App\Http\Controllers\hod\ClassPromotionController;
-use App\Http\Controllers\hod\ClassReversionController;
+use App\Http\Controllers\hod\CourseAllocationController;
+use App\Http\Controllers\hod\ReappearController;
 use App\Http\Controllers\hod\CoursePlanController;
 use App\Http\Controllers\hod\CumulativeController;
+use App\Http\Controllers\hod\EnrollmentController;
 use App\Http\Controllers\hod\FirstAttemptController as HodFirstAttemptController;
 use App\Http\Controllers\hod\HodController;
 use App\Http\Controllers\hod\InternalController;
 use App\Http\Controllers\hod\SectionController;
+use App\Http\Controllers\hod\SemesterPlanController;
 use App\Http\Controllers\hod\SlotController;
 use App\Http\Controllers\hod\SlotOptionController;
 use App\Http\Controllers\hod\StruckOffController;
@@ -55,11 +57,11 @@ use App\Http\Controllers\teacher\FormativeController;
 use App\Http\Controllers\teacher\FreshFormativeController;
 use App\Http\Controllers\teacher\FreshSummativeController;
 use App\Http\Controllers\teacher\MyCoursesController;
-use App\Http\Controllers\teacher\ReappearController;
+
 use App\Http\Controllers\teacher\ReappearFormativeController;
 use App\Http\Controllers\teacher\ReappearSummativeController;
 use App\Http\Controllers\teacher\SummativeController;
-use App\Http\Controllers\teacher\EnrollmentController;
+
 use App\Http\Controllers\teacher\TeacherController as TeacherTeacherController;
 use App\Models\Semester;
 use App\Models\StudentStatus;
@@ -168,9 +170,7 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
     Route::resource('slot-options', SlotOptionController::class)->except('index', 'create');
     Route::get('showCoursesForSlotOption/{slotoption}', [SlotOptionController::class, 'showCourses'])->name('showCoursesForSlotOption');
 
-    Route::resource('courseplan', CoursePlanController::class);
-    Route::get('courseplan/{allocation}/edit/teachers', [CoursePlanController::class, 'teachers'])->name('courseplan.teachers');
-    Route::get('courseplan/{allocation}/edit/courses', [CoursePlanController::class, 'courses'])->name('courseplan.courses');
+
 
 
     //?? to verify the reason of presence
@@ -197,6 +197,13 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::resource('sections', SectionController::class);
     Route::get('clases/append/{pid}', [ClasController::class, 'append'])->name('clases.append');
 
+    Route::resource('courseplan', CoursePlanController::class);
+    Route::resource('semester-plan', SemesterPlanController::class);
+    Route::resource('course-allocations', CourseAllocationController::class);
+    Route::get('course-allocations/{allocation}/assign/courses', [CourseAllocationController::class, 'courses'])->name('course-allocations.courses');
+    Route::get('course-allocations/{allocation}/assign/teachers', [CourseAllocationController::class, 'teachers'])->name('course-allocations.teachers');
+
+
     Route::resource('allow-deny-attempt', AttemptPermissionController::class)->only('update');
 
     Route::get('students/{id}/move', [StudentStatusController::class, 'move'])->name('students.move');
@@ -213,6 +220,10 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('enroll-fresh/{allocation}', [EnrollmentController::class, 'fresh'])->name('enroll.fresh');
     Route::get('enroll-reappear/{allocation}', [EnrollmentController::class, 'reappear'])->name('enroll.reappear');
     Route::resource('first-attempts', HodFirstAttemptController::class);
+    Route::resource('reappears', ReappearController::class);
+
+    Route::post('enroll-fresh', [EnrollmentController::class, 'enrollFresh'])->name('enroll.fresh.post');
+    Route::post('search-reappear-data', [EnrollmentController::class, 'searchReappearData'])->name('search.reappear.data');
 
 
     Route::resource('students', StudentController::class);
@@ -241,7 +252,6 @@ Route::group(['middleware' => ['role:teacher', 'my_exception_handler']], functio
     Route::resource('reappear_summative', ReappearSummativeController::class);
 
     Route::resource('first_attempts', FirstAttemptController::class);
-    Route::resource('reappears', ReappearController::class);
 
     Route::get('enroll/f/{id}', [EnrollmentController::class, 'fresh'])->name('enroll.fa');
     Route::get('enroll/r/{id}', [EnrollmentController::class, 'reappear'])->name('enroll.ra');

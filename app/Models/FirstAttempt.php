@@ -180,4 +180,16 @@ class FirstAttempt extends Model
     {
         return $query->whereRelation('course_allocation.slot_option.slot', 'slot_no', $slot_no);
     }
+    public function scopePassed($query)
+    {
+        return $query->whereRaw('assignment+presentation+midterm+summative>=50');
+    }
+    public function scopeFailed($query)
+    {
+        return $query->whereRaw('assignment+presentation+midterm+summative<50');
+    }
+    public function scopeCourse($query, $course_id)
+    {
+        return $query->whereRelation('course_allocation.course', 'id', $course_id);
+    }
 }

@@ -3,17 +3,7 @@
 <div class="container">
     <h2>Teacher Allocation</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
-        <div>/</div>
-        <a href="{{url('courseplan')}}">Course Allocation</a>
-        <div>/</div>
-        <div>Teachers</div>
-    </div>
-
-    <!-- search -->
-    <div class="flex relative w-full md:w-1/3 mt-8">
-        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
-        <i class="bx bx-search absolute top-2 right-2"></i>
+        <a href="{{route('hod.semester-plan.show', $course_allocation->section)}}">Cancel & Go Back</a>
     </div>
 
     <!-- page message -->
@@ -23,7 +13,19 @@
     <x-message></x-message>
     @endif
 
-    <h1 class='text-red-600 mt-8'>{{$course_allocation->section->title()}} <span class="bi-chevron-right text-sm"></span> {{$course_allocation->course->name}}</h1>
+    <div class="mt-8 border border-dashed p-4">
+        <div class="flex items-center justify-center space-x-4 ">
+            <h2 class='text-red-600'>{{$course_allocation->section->title()}}</h2>
+            <p class="text-slate-600 text-sm">Slot # {{$course_allocation->slot_option->slot->slot_no}} ({{$course_allocation->slot_option->course_type->name}})</p>
+        </div>
+        <h2 class="text-center mt-1">{{$course_allocation->course->name ?? ''}}</h2>
+    </div>
+
+    <!-- search -->
+    <div class="flex relative w-full md:w-1/3 mt-8">
+        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
+        <i class="bx bx-search absolute top-2 right-2"></i>
+    </div>
 
     <div class="overflow-x-auto mt-8">
         <label>{{$teachers->count()}} records in view</label>
@@ -41,7 +43,7 @@
                 @foreach($teachers->sortBy('name') as $teacher)
                 <tr class="tr">
                     <td>
-                        <form action="{{route('courseplan.update', $course_allocation->id)}}" method="POST" id='assign_form{{$teacher->id}}' class="flex items-center justify-center">
+                        <form action="{{route('hod.course-allocations.update', $course_allocation->id)}}" method="POST" id='assign_form{{$teacher->id}}' class="flex items-center justify-center">
                             @csrf
                             @method('PATCH')
                             <input type="text" name='teacher_id' value="{{$teacher->id}}" hidden>

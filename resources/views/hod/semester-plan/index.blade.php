@@ -1,13 +1,13 @@
 @extends('layouts.hod')
 @section('page-content')
 <div class="container">
-    <h2>Course Allocations</h2>
+    <h2>Semester Plan</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <div>Course Allocations</div>
+        <div>Semester Plan</div>
         <div>/</div>
-        <div>Step I</div>
+        <div>Classes</div>
     </div>
 
     <!-- help -->
@@ -15,7 +15,7 @@
         <i class="bi-info-circle text-2xl text-indigo-600"></i>
         <div class="flex-grow text-left sm:mt-0">
             <ul class="text-sm text-slate-600">
-                <li>Course allocation is allowed only for non-empty sections</li>
+                <li>Only non-empty sections are visible here</li>
                 <li>If some section is missing on this page, it might have no student</li>
             </ul>
         </div>
@@ -59,7 +59,7 @@
                         <div class="flex flex-wrap gap-2">
                             @foreach($clas->sections as $section)
                             @if($section->students()->exists())
-                            <a href="{{route('courseplan.show',$section)}}" class='pallet-teal'>
+                            <a href="{{route('hod.semester-plan.show',$section)}}" class='pallet-teal'>
                                 {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                             </a>
                             @endif

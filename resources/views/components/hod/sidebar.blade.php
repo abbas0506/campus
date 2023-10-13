@@ -22,9 +22,9 @@
                 </a>
             </li>
             <li>
-                <a href="{{url('courseplan')}}" class="flex items-center p-2">
+                <a href="{{route('hod.semester-plan.index')}}" class="flex items-center p-2">
                     <i class="bi-book"></i>
-                    <span class="ml-3">Course Allocation</span>
+                    <span class="ml-3">Semester Plan</span>
                 </a>
             </li>
             <li>

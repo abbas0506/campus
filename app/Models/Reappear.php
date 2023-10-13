@@ -49,6 +49,13 @@ class Reappear extends Model
         else
             return "Fail";
     }
+
+    public function obtained()
+    {
+        if ($this->status() == 'Pass')
+            return $this->assignment + $this->presentation + $this->midterm + $this->summative;
+        else return 0;
+    }
     public function gpa()
     {
         $marks = $this->total();
