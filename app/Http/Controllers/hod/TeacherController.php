@@ -19,7 +19,7 @@ class TeacherController extends Controller
     {
         $department = Department::find(session('department_id'));
         $teachers = $department->teachers();
-        // return view('hod.teachers.index', compact('teachers'));
+        return view('hod.teachers.index', compact('teachers'));
     }
 
     /**
@@ -46,8 +46,8 @@ class TeacherController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'phone' => 'unique:users',
-            'cnic' => 'required|unique:users',
+            'phone' => 'nullable|unique:users',
+            'cnic' => 'nullable|unique:users',
             'department_id' => 'required|numeric'
 
         ]);
@@ -58,12 +58,12 @@ class TeacherController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make('password'),
                 'phone' => $request->phone,
-                'cnic' => $request->cnic,
+                'cnic' => $request->cnic ? '' : null,
                 'department_id' => $request->department_id,
             ]);
 
             $user->assignRole(['teacher']);
-            return redirect('teachers')->with('success', 'Successfully created');
+            return redirect()->route('hod.teachers.index')->with('success', 'Successfully created');
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }
@@ -105,8 +105,8 @@ class TeacherController extends Controller
         //
         $request->validate([
             'name' => 'required',
-            'email' => 'required|unique:users,email,' . $id, 'id',
-            'cnic' => 'unique:users,cnic,' . $id, 'id',
+            // 'email' => 'required|email|unique:users,email,' . $id, 'id',
+            'cnic' => 'nullable|unique:users,cnic,' . $id, 'id',
         ]);
 
 
@@ -114,7 +114,7 @@ class TeacherController extends Controller
             $user = User::findOrFail($id);
             $user->update($request->all());
 
-            return redirect('teachers')->with('success', 'Successfully updated');;
+            return redirect()->route('hod.teachers.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }
@@ -134,7 +134,7 @@ class TeacherController extends Controller
             $teacher->delete();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
-            return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
+            return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
         }
     }

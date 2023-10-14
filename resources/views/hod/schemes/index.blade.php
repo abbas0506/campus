@@ -12,23 +12,25 @@
 
     </div>
 
-    <!-- search -->
-    <div class="flex relative w-full md:w-1/3 mt-8">
-        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
-        <i class="bx bx-search absolute top-2 right-2"></i>
-    </div>
-
     <!-- page message -->
     @if($errors->any())
     <x-message :errors='$errors'></x-message>
     @else
     <x-message></x-message>
     @endif
-    <div class="flex flex-wrap items-center gap-2 mt-8 mb-1">
-        <div class="text-sm  text-gray-500">{{$programs->count()}} records found <span class='text-xs text-slate-600 ml-4 bg-teal-100 px-2'>(S=Spring, F=Fall)</span></div>
-        <div class="text-xs text-gray-500"><i class="bx bxs-hand-right text-indigo-600 mr-2"></i>Click on + icon to add new scheme</div>
+
+    <div class="flex flex-row items-center gap-x-4 mt-12">
+        <i class="bi-info-circle text-2xl pr-4"></i>
+        <div class="flex-grow text-left sm:mt-0">
+            <ul class="text-sm">
+                <li>Click + button to add a scheme</li>
+            </ul>
+        </div>
     </div>
-    <div class="overflow-x-auto mt-4">
+
+    <div class="text-sm  text-gray-500 mt-8">{{$programs->count()}} programs found </div>
+
+    <div class="overflow-x-auto w-full mt-1">
         <table class="table-fixed w-full">
             <thead>
                 <tr>
@@ -39,16 +41,16 @@
             <tbody>
 
                 @foreach($programs->sortBy('level') as $program)
-                <tr class="tr even:slate-100">
-                    <td class="text-left">{{$program->short}}</td>
+                <tr class="tr">
+                    <td class="text-left pl-4">{{$program->short}} </br><span class="text-xs">{{$program->name}}</span></td>
                     <td>
-                        <div class="flex items-center space-x-2">
+                        <div class="flex flex-shrink-0 items-center space-x-2 pl-4">
                             @foreach($program->schemes as $scheme)
-                            <a href="{{route('hod.schemes.show', $scheme)}}" class="w-12 px-2 text-sm bg-teal-100 text-center hover:bg-teal-600 hover:text-white">
-                                {{$scheme->subtitle()}}
+                            <a href="{{route('hod.schemes.show', $scheme)}}" class="w-20 text-sm btn-teal p-0">
+                                {{$scheme->semester->title()}}
                             </a>
                             @endforeach
-                            <a href="{{route('hod.schemes.append',$program)}}" class="flex items-center justify-center border border-dashed border-slate-200 bg-teal-50 hover:bg-teal-600 hover:text-white text-teal-800  w-12">
+                            <a href="{{route('hod.schemes.append',$program)}}" class="w-8 text-sm btn-teal p-0">
                                 <i class="bx bx-plus"></i>
                             </a>
                         </div>

@@ -3,9 +3,11 @@
 <div class="container">
     <h2>Teachers</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <div>Teachers</div>
+        <div>/</div>
+        <div>All</div>
     </div>
 
     <!-- search -->
@@ -23,33 +25,35 @@
 
     <div class="flex flex-wrap items-center justify-between mt-4">
         <div class="text-sm  text-gray-500">{{$teachers->count()}} records found</div>
-        <a href="{{route('teachers.create')}}" class="btn-indigo">
+        <a href="{{route('hod.teachers.create')}}" class="btn-indigo">
             Add New
         </a>
     </div>
 
 
     <div class="overflow-x-auto mt-4 w-full">
-        <table class="table-fixed borderless w-full">
+        <table class="table-fixed w-full">
             <thead>
                 <tr>
-                    <th class="w-64 text-left">Teacher</th>
+                    <th class="w-64">Teacher</th>
                     <th class="w-32">Phone</th>
+                    <th class="w-40">CNIC/Email</th>
                     <th class='w-24'>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($teachers->sortByDesc('id') as $teacher)
                 <tr class="tr">
-                    <td>{{$teacher->name}}</td>
-                    <td class="text-center">{{$teacher->phone}}</td>
+                    <td class="text-left md:pl-4">{{$teacher->name}}</td>
+                    <td>{{$teacher->phone}} </td>
+                    <td>{{$teacher->cnic}} <br> {{$teacher->email}}</td>
                     <td class="shrink-0">
                         <div class="flex items-center justify-center space-x-3">
-                            <a href="{{route('teachers.edit', $teacher)}}">
+                            <a href="{{route('hod.teachers.edit', $teacher)}}">
                                 <i class="bi-pencil-square"></i>
                             </a>
                             @role('super')
-                            <form action="{{route('teachers.destroy',$teacher)}}" method="POST" id='del_form{{$teacher->id}}' class="">
+                            <form action="{{route('hod.teachers.destroy',$teacher)}}" method="POST" id='del_form{{$teacher->id}}' class="">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-transparent p-0 border-0 text-red-600" onclick="delme('{{$teacher->id}}')" @disabled($teacher->hasRole('hod'))>

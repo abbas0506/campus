@@ -11,8 +11,8 @@
         <div>{{$scheme->title()}}</div>
     </div>
 
-    <h1 class="text-red-600 mt-8">{{$scheme->program->short}} <span class="chevron-right mx-1"></span> {{$scheme->subtitle()}}</h1>
-
+    <h1 class="text-red-600 mt-8">{{$scheme->program->short}} <span class="chevron-right mx-1"></span> {{$scheme->semester->title()}}</h1>
+    <label for="" class='text-sm text-slate-600'><i class="bi-hand-index mr-2"></i>Scheme will be removable only if it has no related result.</label>
     <!-- page message -->
     @if($errors->any())
     <x-message :errors='$errors'></x-message>
@@ -22,16 +22,19 @@
 
     <div class="flex flex-wrap justify-between items-center gap-2 mt-8">
         <div class="flex items-center text-sm bg-teal-100 text-teal-600 font-semibold p-1">Cr Hrs: &nbsp <span class="mr-3 text-slate-600">{{$scheme->slots()->sum('cr')}} / {{$scheme->program->cr}}</span> <span class="bx bx-check-double ml-2"></span></div>
-        @role('super')
-        <form action="#" method="POST" id='del_form{{$scheme->id}}'>
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn-red flex items-center justify-center space-x-2 text-sm" onclick="delme('{{$scheme->id}}')">
-                <i class="bi-trash3 text-slate-200 "></i>
-                <span>Remove</span>
-            </button>
-        </form>
-        @endrole
+
+        <div class="flex items-center space-x-4">
+            <a href="{{route('hod.schemes.pdf',$scheme)}}" class="btn-teal text-sm"><i class="bi-printer"></i></a>
+            @if(Auth::user()->hasRole('super')||!$scheme->attempts()->exists())
+            <form action="{{route('hod.schemes.destroy',$scheme)}}" method="POST" id='del_form{{$scheme->id}}'>
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn-red flex items-center justify-center space-x-2 text-sm" onclick="delme('{{$scheme->id}}')">
+                    <i class="bi-trash3 text-slate-200 "></i>
+                </button>
+            </form>
+            @endif
+        </div>
     </div>
 
     @php

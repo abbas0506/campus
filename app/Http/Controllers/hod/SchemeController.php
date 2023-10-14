@@ -10,6 +10,7 @@ use App\Models\Semester;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class SchemeController extends Controller
 {
@@ -111,7 +112,7 @@ class SchemeController extends Controller
     {
         try {
             $scheme->delete();
-            return redirect('schemes')->with('success', 'Successfully deleted');
+            return redirect()->route('hod.schemes.index')->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }
@@ -122,5 +123,17 @@ class SchemeController extends Controller
         $program = Program::find($id);
         $semesters = Semester::active()->get();
         return view('hod.schemes.create', compact('semesters', 'program',));
+    }
+    public function pdf($scheme_id)
+    {
+
+        $scheme = Scheme::find($scheme_id);
+        $pdf = PDF::loadView('hod.schemes.pdf', compact('scheme'))->setPaper('a4', 'portrait');
+        $pdf->set_option("isPhpEnabled", true);
+
+        $file = "Scheme " . $scheme->program->name . ".pdf";
+        return $pdf->stream($file);
+
+        return view('hod.schemes.pdf', compact('scheme'));
     }
 }

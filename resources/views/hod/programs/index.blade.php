@@ -32,20 +32,22 @@
         <table class="table-fixed w-full">
             <thead>
                 <tr>
-                    <th class="w-48 text-left">Program Name</th>
+                    <th class="w-48">Program Name</th>
                     <th class="w-16">Level <br> <span class="text-xs text-slate-400 font-thin">(years)</span></th>
                     <th class="w-16">Duration <br><span class="text-xs text-slate-400 font-thin">(years)</span></th>
                     <th class="w-16">Cr. Hrs <br> <span class="text-xs text-slate-400 font-thin">(total)</span></th>
                     <th class="w-24">Scheme(s)</th>
                     <th class="w-40">Internal</th>
+                    @role('super')
                     <th class="w-16">Remove</th>
+                    @endrole
                 </tr>
             </thead>
             <tbody>
                 @foreach($programs->sortBy('level') as $program)
                 <tr class="tr">
-                    <td class="text-left">
-                        <a href="{{route('hod.programs.show',$program)}}" class="link">{{$program->short}}</a>
+                    <td class="text-left md:pl-4">
+                        <a href="{{route('hod.programs.show',$program)}}" class="link">{{$program->short}} </a><br><span class="text-xs">{{$program->name}}</span>
                     </td>
                     <td>{{$program->level}}</td>
                     <td>{{$program->min_t}}-{{$program->max_t}}</td>
@@ -58,9 +60,9 @@
                             @endforeach
                         </div>
                     </td>
-                    <td>{{$program->internal->name ?? ''}}</td>
+                    <td>{{$program->internal->name ?? ''}} <br> <span class="text-xs">{{$program->internal->phone??''}}</span></td>
+                    @role('super')
                     <td>
-                        @role('super')
                         <form action="{{route('hod.programs.destroy',$program)}}" method="POST" id='del_form{{$program->id}}'>
                             @csrf
                             @method('DELETE')
@@ -68,8 +70,8 @@
                                 <i class="bi bi-trash3 text-red-600"></i>
                             </button>
                         </form>
-                        @endrole
                     </td>
+                    @endrole
 
                 </tr>
                 @endforeach

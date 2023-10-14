@@ -183,12 +183,15 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('programs/{program}/internal', [ProgramController::class, 'internal'])->name('programs.internal');
     Route::patch('programs/{program}internal/update', [ProgramController::class, 'updateInternal'])->name('programs.internal.update');
 
+    Route::get('programs/{program}/schemes/add', [ProgramController::class, 'scheme'])->name('programs.schemes.add');
+    Route::post('programs/schemes/add', [ProgramController::class, 'addScheme'])->name('programs.schemes.store');
 
     Route::resource('teachers', TeacherController::class);
     Route::resource('internals', InternalController::class)->only('edit', 'update');
 
     Route::resource('schemes', SchemeController::class);
-    Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
+    Route::get('schemes//{id}/append', [SchemeController::class, 'append'])->name('schemes.append');
+    Route::get('schemes/{scheme}/pdf', [SchemeController::class, 'pdf'])->name('schemes.pdf');
 
     Route::get('schemes/slot/create/{scheme}/{semester}', [SlotController::class, 'create'])->name('slots.create');
 

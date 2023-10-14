@@ -108,4 +108,8 @@ class Clas extends Model
         $grace_period = $student->section->clas->program->max_t - $student->section->clas->program->min_t;
         return  $query->where('last_semester_id', '<=', $student->section->clas->last_semester_id + $grace_period * 2);
     }
+    public function scopeFollowingScheme($query, $scheme_id)
+    {
+        return  $query->where('scheme_id', $scheme_id);
+    }
 }

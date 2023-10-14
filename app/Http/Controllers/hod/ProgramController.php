@@ -9,8 +9,11 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use Exception;
 use App\Models\Program;
+use App\Models\Scheme;
+use App\Models\Semester;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Svg\Tag\Rect;
 
 class ProgramController extends Controller
 {
@@ -169,6 +172,28 @@ class ProgramController extends Controller
         try {
             $program->delete();
             return redirect()->back()->with('success', 'Successfully deleted!');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
+    }
+    public function scheme($id)
+    {
+        $program = Program::find($id);
+        $semesters = Semester::active()->get();
+        return view('hod.programs.schemes.add', compact('semesters', 'program',));
+    }
+
+    public function addScheme(Request $request)
+    {
+        $request->validate([
+            'wef_semester_id' => 'required|numeric',
+            'program_id' => 'required|numeric|unique:schemes,program_id,NULL,id,wef_semester_id,' . $request->wef_semester_id,
+        ]);
+
+        try {
+            Scheme::create($request->all());
+            return redirect()->route('hod.programs.show', $request->program_id)->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong

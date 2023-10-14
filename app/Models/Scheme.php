@@ -25,11 +25,11 @@ class Scheme extends Model
     {
         return $this->hasMany(Slot::class);
     }
-
     public function semester()
     {
         return $this->belongsTo(Semester::class, 'wef_semester_id');
     }
+
     public function title()
     {
         return $this->program->short . ' / ' . $this->semester->title();
@@ -54,5 +54,11 @@ class Scheme extends Model
     public function has_allocation()
     {
         return CourseAllocation::whereRelation('slot_option.slot', 'scheme_id', $this->id)->count();
+    }
+
+    public function attempts()
+    {
+        //indirectly realted to first attempts
+        return Scheme::whereRelation('clases.sections.course_allocations.first_attempts', 'scheme_id', $this->id);
     }
 }

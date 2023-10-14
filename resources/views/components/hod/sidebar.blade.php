@@ -5,7 +5,7 @@
         <ul class="space-y-2">
             <li>
                 <a href="{{url('hod')}}" class="flex items-center p-2">
-                    <i class="bi-grid"></i>
+                    <i class="bi-house"></i>
                     <span class="ml-3">Home</span>
                 </a>
             </li>
@@ -23,7 +23,7 @@
             </li>
             <li>
                 <a href="{{route('hod.semester-plan.index')}}" class="flex items-center p-2">
-                    <i class="bi-book"></i>
+                    <i class="bi-calendar2-event"></i>
                     <span class="ml-3">Semester Plan</span>
                 </a>
             </li>

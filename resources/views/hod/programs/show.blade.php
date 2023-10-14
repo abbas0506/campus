@@ -4,7 +4,7 @@
 <div class="container">
     <h2>{{$program->name}}</h2>
     <div class="bread-crumb">
-        <a href="{{route('hod')}}">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <a href="{{route('hod.programs.index')}}">Programs</a>
         <div>/</div>
@@ -24,23 +24,31 @@
                 <label for="" class="text-xs">Scheme(s)</label>
 
                 @if($program->schemes()->exists())
-                <h2>
+                <div class="flex flex-wrap items-center">
                     @foreach($program->schemes as $scheme)
-                    {{$scheme->semester->title()}} &nbsp
+                    <!-- show scheme name -->
+                    {{$scheme->semester->title()}}
+                    <!-- show delete option if no class follows this scheme -->
+                    @if(!$program->clases()->followingScheme($scheme->id)->exists())
+                    <form action="{{route('hod.schemes.destroy',$scheme)}}" method="POST" id='del_form{{$scheme->id}}'>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="p-0" onclick="delme('{{$scheme->id}}')">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </form>
+                    @endif
+                    &nbsp &nbsp
                     @endforeach
-                </h2>
+                </div>
                 @else
                 <div class="text-sm text-slate-600">(blank)</div>
                 @endif
             </div>
             <div class="flex justify-center items-center bg-slate-200 flex-shrink-0 w-12 h-12 rounded-full">
-                <div>
-                    @if($program->schemes()->exists())
-                    {{$program->schemes->count()}}
-                    @else
-                    <i class="bx bx-pencil"></i>
-                    @endif
-                </div>
+                <a href="{{route('hod.programs.schemes.add',$program)}}">
+                    <i class="bx bx-plus text-lg"></i>
+                </a>
             </div>
         </div>
 
@@ -71,4 +79,27 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    function delme(formid) {
+
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                //submit corresponding form
+                $('#del_form' + formid).submit();
+            }
+        });
+    }
+</script>
 @endsection
