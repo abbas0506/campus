@@ -9,6 +9,7 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use Exception;
 use App\Models\Program;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ProgramController extends Controller
@@ -69,7 +70,7 @@ class ProgramController extends Controller
                 return redirect()->back()->with('warning', 'Program ' . $exists->name . ' already exists!');
             } else {
                 Program::create($request->all());
-                return redirect()->route('programs.index')->with('success', 'Successfully created');
+                return redirect()->route('hod.programs.index')->with('success', 'Successfully created');
             }
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['create' => $e->getMessage()]);
@@ -86,6 +87,8 @@ class ProgramController extends Controller
     public function show($id)
     {
         //
+        $program = Program::findOrFail($id);
+        return view('hod.programs.show', compact('program'));
     }
 
     /**
@@ -145,12 +148,11 @@ class ProgramController extends Controller
                     }
                 }
                 DB::commit();
-                return redirect()->route('programs.index')->with('success', 'Successfully updated');
+                return redirect()->route('hod.programs.index')->with('success', 'Successfully updated');
             }
         } catch (Exception $ex) {
             DB::rollBack();
-            return redirect()->back()
-                ->withErrors(['update' => $ex->getMessage()]);
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 
@@ -166,10 +168,32 @@ class ProgramController extends Controller
         $program = Program::findOrFail($id);
         try {
             $program->delete();
-            return redirect()->back()->with('success', 'Successfully deleted');
+            return redirect()->back()->with('success', 'Successfully deleted!');
         } catch (Exception $e) {
-            return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
+            return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
+        }
+    }
+
+    public function internal($id)
+    {
+        $program = Program::find($id);
+        $teachers = User::whereRelation('roles', 'name', 'teacher')
+            ->where('id', '<>', $program->internal_id)->get();
+        return view('hod.programs.internal', compact('program', 'teachers'));
+    }
+    public function updateInternal(Request $request, $id)
+    {
+        $request->validate([
+            'internal_id' => 'required|numeric',
+        ]);
+
+        try {
+            $program = Program::findOrFail($id);
+            $program->update($request->all());
+            return redirect()->route('hod.programs.index')->with('success', 'Successfully updated');;
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage());
         }
     }
 }

@@ -5,7 +5,7 @@
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{route('programs.index')}}">Programs</a>
+        <a href="{{route('hod.programs.index')}}">Programs</a>
         <div>/</div>
         <div>Edit</div>
     </div>
@@ -18,7 +18,7 @@
     @endif
 
     <div class="w-full md:w-3/4 mx-auto mt-8">
-        <form action="{{route('programs.update',$program)}}" method='post' class="flex flex-col w-full mt-12">
+        <form action="{{route('hod.programs.update',$program)}}" method='post' class="flex flex-col w-full mt-12">
             @csrf
             @method('PATCH')
             <div class="grid grid-cols-1  md:grid-cols-2 gap-3">
@@ -61,7 +61,7 @@
                 <div>
                     <label>Intake Semester</label>
                     <select id='intake' name="intake" class="custom-input">
-                        <option value="1" @selected($porgram->intake==1)>1st Semester</option>
+                        <option value="1" @selected($program->intake==1)>1st Semester</option>
                         <option value="5" @selected($program->intake==5)>5th Semester</option>
                     </select>
                 </div>

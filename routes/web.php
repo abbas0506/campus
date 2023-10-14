@@ -36,7 +36,6 @@ use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\ClasController;
 use App\Http\Controllers\hod\CourseAllocationController;
 use App\Http\Controllers\hod\ReappearController;
-use App\Http\Controllers\hod\CoursePlanController;
 use App\Http\Controllers\hod\CumulativeController;
 use App\Http\Controllers\hod\EnrollmentController;
 use App\Http\Controllers\hod\FirstAttemptController as HodFirstAttemptController;
@@ -156,21 +155,6 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
     Route::get('hod', [HodController::class, 'index']);
     Route::get('super', [HodController::class, 'index']);
     Route::view('hod/change/pw', 'hod.changepw')->name('hod.changepw');
-    Route::resource('programs', ProgramController::class);
-
-    Route::resource('teachers', TeacherController::class);
-    Route::resource('internals', InternalController::class)->only('edit', 'update');
-
-    Route::resource('schemes', SchemeController::class);
-    Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
-
-    Route::get('schemes/slot/create/{scheme}/{semester}', [SlotController::class, 'create'])->name('slots.create');
-
-    Route::resource('slots', SlotController::class)->except('create');
-    Route::resource('slot-options', SlotOptionController::class)->except('index', 'create');
-    Route::get('showCoursesForSlotOption/{slotoption}', [SlotOptionController::class, 'showCourses'])->name('showCoursesForSlotOption');
-
-
 
 
     //?? to verify the reason of presence
@@ -192,17 +176,38 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
 });
 
 Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
+    Route::resource('programs', ProgramController::class);
+    Route::get('programs/{program}/internal', [ProgramController::class, 'internal'])->name('programs.internal');
+    Route::patch('programs/{program}internal/update', [ProgramController::class, 'updateInternal'])->name('programs.internal.update');
+
+
+    Route::resource('teachers', TeacherController::class);
+    Route::resource('internals', InternalController::class)->only('edit', 'update');
+
+    Route::resource('schemes', SchemeController::class);
+    Route::get('schemes/append/{id}', [SchemeController::class, 'append'])->name('schemes.append');
+
+    Route::get('schemes/slot/create/{scheme}/{semester}', [SlotController::class, 'create'])->name('slots.create');
+
+    Route::resource('slots', SlotController::class)->except('create');
+    Route::resource('slot-options', SlotOptionController::class)->except('index', 'create');
+    Route::get('showCoursesForSlotOption/{slotoption}', [SlotOptionController::class, 'showCourses'])->name('showCoursesForSlotOption');
+
+
+
+
+
+
+
     Route::resource('courses', CourseController::class);
     Route::resource('clases', ClasController::class);
     Route::resource('sections', SectionController::class);
-    Route::get('clases/append/{pid}', [ClasController::class, 'append'])->name('clases.append');
+    Route::get('clases/{program}/add', [ClasController::class, 'add'])->name('clases.add');
 
-    Route::resource('courseplan', CoursePlanController::class);
     Route::resource('semester-plan', SemesterPlanController::class);
     Route::resource('course-allocations', CourseAllocationController::class);
     Route::get('course-allocations/{allocation}/assign/courses', [CourseAllocationController::class, 'courses'])->name('course-allocations.courses');
     Route::get('course-allocations/{allocation}/assign/teachers', [CourseAllocationController::class, 'teachers'])->name('course-allocations.teachers');
-
 
     Route::resource('allow-deny-attempt', AttemptPermissionController::class)->only('update');
 
@@ -217,20 +222,21 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::post('students/deactivate', [StudentStatusController::class, 'deactivate'])->name('students.deactivate');
     Route::post('students/activate', [StudentStatusController::class, 'activate'])->name('students.activate');
 
-    Route::get('enroll-fresh/{allocation}', [EnrollmentController::class, 'fresh'])->name('enroll.fresh');
-    Route::get('enroll-reappear/{allocation}', [EnrollmentController::class, 'reappear'])->name('enroll.reappear');
-    Route::resource('first-attempts', HodFirstAttemptController::class);
-    Route::resource('reappears', ReappearController::class);
+    Route::get('course-allocations/{allocation}/fresh', [EnrollmentController::class, 'fresh'])->name('course-allocations.enrollment.fresh');
+    Route::get('course-allocations/{allocation}/reappear', [EnrollmentController::class, 'reappear'])->name('course-allocations.enrollment.reappear');
 
-    Route::post('enroll-fresh', [EnrollmentController::class, 'enrollFresh'])->name('enroll.fresh.post');
+    Route::post('course-allocations/fresh/post', [EnrollmentController::class, 'enrollFresh'])->name('course-allocations.enrollment.fresh.post');
+    Route::post('course-allocations/reappear/post', [EnrollmentController::class, 'enrollReappear'])->name('course-allocations.enrollment.reappear.post');
+    Route::delete('course-allocations/fresh/destroy/{attempt}', [EnrollmentController::class, 'destroyFresh'])->name('course-allocations.enrollment.fresh.destroy');
+    Route::delete('course-allocations/reappear/destory/{attempt}', [EnrollmentController::class, 'destroyReappear'])->name('course-allocations.enrollment.reappear.destroy');
+
     Route::post('search-reappear-data', [EnrollmentController::class, 'searchReappearData'])->name('search.reappear.data');
-
 
     Route::resource('students', StudentController::class);
     Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
 
-    Route::get('students/{section}/add', [StudentController::class, 'add'])->name('students.add');
-    Route::get('students/{section}/excel', [StudentController::class, 'excel'])->name('students.excel');
+    Route::get('sections/{section}/students/feed', [StudentController::class, 'feed'])->name('students.feed');
+    Route::get('sections/{section}/students/excel', [StudentController::class, 'excel'])->name('students.excel');
     Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
 
 

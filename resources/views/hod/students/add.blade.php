@@ -3,11 +3,7 @@
 <div class="container">
     <h2>New Student</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
-        <div>/</div>
-        <a href="{{route('hod.clases.index')}}">Classes & Sections</a>
-        <div>/</div>
-        <div>New Student</div>
+        <a href="{{route('hod.sections.show',$section)}}">{{$section->title()}}</a>
     </div>
 
     <div class="md:w-3/4 mx-auto mt-8">
@@ -19,7 +15,6 @@
         <x-message></x-message>
         @endif
 
-        <h1 class='text-red-600 mt-8'>{{$section->title()}} </h1>
         <form action="{{route('hod.students.store')}}" method='post' class="flex flex-col w-full mt-8">
             @csrf
             <input type="text" name="section_id" value="{{$section->id}}" hidden>
@@ -36,8 +31,16 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
+                <div>
+                    <label>Roll No *</label>
+                    <input type="text" name="rollno" class="custom-input" placeholder="Roll No." value="" required>
+                </div>
+                <div>
+                    <label>Reg. No</label>
+                    <input type="text" name="regno" class="custom-input" placeholder="Registration No." value="">
+                </div>
                 <div class="md:col-span-2">
-                    <label class='mt-8'>Student Name</label>
+                    <label class='mt-8'>Student Name *</label>
                     <input type="text" id='' name='name' class="custom-input" placeholder="Student name" value="" required>
                 </div>
                 <div>
@@ -59,17 +62,6 @@
                 <div class="md:col-span-2">
                     <label>Address</label>
                     <input type="text" id='address' name='address' value="" class="custom-input" placeholder="address">
-                </div>
-                <div class="md:col-span-2 border-b border-dashed border-slate-200 mt-3 h-4">
-                    <!-- divider -->
-                </div>
-                <div>
-                    <label>Roll No</label>
-                    <input type="text" name="rollno" class="custom-input" placeholder="Roll No." value="" required>
-                </div>
-                <div>
-                    <label>Reg. No</label>
-                    <input type="text" name="regno" class="custom-input" placeholder="Registration No." value="">
                 </div>
 
             </div>

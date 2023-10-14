@@ -3,12 +3,9 @@
 <div class="container">
     <h2>Edit Student</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
-        <div>/</div>
-        <a href="{{route('hod.students.index')}}">Students</a>
-        <div>/</div>
-        <div>Edit</div>
+        <a href="{{route('hod.sections.show',$student->section)}}">{{$student->section->title()}}</a>
     </div>
+
 
     <div class="md:w-3/4 mx-auto mt-8">
 
@@ -36,13 +33,21 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
+                <div>
+                    <label>Roll No </label>
+                    <p>{{$student->rollno}}</p>
+                </div>
+                <div>
+                    <label>Reg. No</label>
+                    <p>{{$student->regno ?? '-'}}</p>
+                </div>
                 <div class="md:col-span-2">
-                    <label for="" class='mt-8'>Student Name</label>
+                    <label for="" class='mt-8'>Student Name *</label>
                     <input type="text" id='' name='name' class="custom-input" placeholder="Sajjad Ahmad" value="{{$student->name}}" required>
                 </div>
                 <div>
                     <label for="" class=''>Father</label>
-                    <input type="text" id='' name='father' class="custom-input" placeholder="father name" value="{{$student->father}}" required>
+                    <input type="text" id='' name='father' class="custom-input" placeholder="father name" value="{{$student->father}}">
                 </div>
                 <div>
                     <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
@@ -60,18 +65,6 @@
                     <label for="">Address</label>
                     <input type="text" id='address' name='address' value="{{$student->address}}" class="custom-input" placeholder="address">
                 </div>
-                <div class="md:col-span-2 border-b border-dashed border-slate-200 mt-3 h-4">
-                    <!-- divider -->
-                </div>
-                <div>
-                    <label for="">Roll No</label>
-                    <input type="text" name="rollno" class="custom-input" placeholder="Roll No." value="{{$student->rollno}}" required>
-                </div>
-                <div>
-                    <label for="">Reg. No</label>
-                    <input type="text" name="regno" class="custom-input" placeholder="Registration No." value="{{$student->regno}}">
-                </div>
-
             </div>
             <div class="flex">
                 <button type="submit" class="btn-teal rounded p-2 mt-4">Update Now</button>

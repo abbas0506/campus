@@ -3,11 +3,7 @@
 <div class="container">
     <h2>Enroll Fresh Students</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
-        <div>/</div>
-        <a href="{{route('hod.courseplan.index')}}">Semester Plan</a>
-        <div>/</div>
-        <a href="{{route('hod.courseplan.edit', $course_allocation)}}">{{$course_allocation->course->name}}</a>
+        <a href="{{route('hod.course-allocations.show',$course_allocation)}}">Cancel & Go Back</a>
     </div>
 
     <!-- page message -->
@@ -17,9 +13,12 @@
     <x-message></x-message>
     @endif
 
-    <div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-6">
-        <h2>{{$course_allocation->course->name}}</h2>
-        <div class="text-sm">{{$course_allocation->section->title()}}</div>
+    <div class="mt-8 border border-dashed p-4">
+        <div class="flex items-center justify-center space-x-4 ">
+            <h2 class='text-red-600'>{{$course_allocation->section->title()}}</h2>
+            <p class="text-slate-600 text-sm">Slot # {{$course_allocation->slot_option->slot->slot_no}} ({{$course_allocation->slot_option->course_type->name}})</p>
+        </div>
+        <h2 class="text-center mt-1">{{$course_allocation->course->name ?? ''}}</h2>
     </div>
 
 
@@ -31,7 +30,7 @@
             <i class="bi bi-search absolute right-1 top-3"></i>
         </div>
 
-        <form action="{{route('hod.enroll.fresh.post')}}" method="post">
+        <form action="{{route('hod.course-allocations.enrollment.fresh.post')}}" method="post">
             @csrf
             <input type="hidden" name='course_allocation_id' value='{{$course_allocation->id}}'>
             @foreach($unregistered as $student)

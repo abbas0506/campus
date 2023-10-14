@@ -83,7 +83,7 @@
                 <div class="flex items-center justify-between mt-2 text-sm">
                     <div class="flex items-center">
                         <i class="bi bi-award w-8"></i>
-                        <a href="{{url('programs')}}" class="link">Programs</a>
+                        <a href="{{route('hod.programs.index')}}" class="link">Programs</a>
                     </div>
                     <div>{{$department->programs->count()}}</div>
                 </div>
@@ -97,14 +97,14 @@
                 <div class="flex items-center justify-between mt-2 text-sm">
                     <div class="flex items-center">
                         <i class="bi-database-gear w-8"></i>
-                        <a href="{{url('schemes')}}" class="link">Schemes</a>
+                        <a href="{{route('hod.schemes.index')}}" class="link">Schemes</a>
                     </div>
                     <div>{{$department->schemes()->count()}}</div>
                 </div>
                 <div class="flex items-center justify-between mt-2 text-sm">
                     <div class="flex items-center">
                         <i class="bi-person-workspace w-8"></i>
-                        <a href="{{url('teachers')}}" class="link">Teachers</a>
+                        <a href="{{route('hod.teachers.index')}}" class="link">Teachers</a>
                     </div>
                     <div>{{$department->teachers()->count()}}</div>
                 </div>

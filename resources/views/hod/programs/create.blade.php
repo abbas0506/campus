@@ -5,7 +5,7 @@
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{route('programs.index')}}">Programs</a>
+        <a href="{{route('hod.programs.index')}}">Programs</a>
         <div>/</div>
         <div>New</div>
     </div>
@@ -18,7 +18,7 @@
     @endif
 
     <div class="w-full md:w-3/4 mx-auto mt-8">
-        <form action="{{route('programs.store')}}" method='post' class="flex flex-col w-full">
+        <form action="{{route('hod.programs.store')}}" method='post' class="flex flex-col w-full">
             @csrf
             <div class="grid grid-cols-1  md:grid-cols-2 gap-3">
                 <div class="col-span-2">

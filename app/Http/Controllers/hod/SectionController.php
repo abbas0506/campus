@@ -94,7 +94,7 @@ class SectionController extends Controller
         //     'section_id' => $id,
         // ]);
         $students = $section->students;
-        return view('hod.sections.show', compact('section', 'students'));
+        return view('hod.clases.sections.show', compact('section', 'students'));
     }
 
     /**

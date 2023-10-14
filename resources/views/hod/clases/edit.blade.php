@@ -2,11 +2,11 @@
 @section('page-content')
 
 <div class="container">
-    <h2>Class & Sections</h2>
+    <h2>Edit Class</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{route('hod.clases.index')}}">Classes & Sections</a>
+        <a href="{{route('hod.clases.index')}}">Current Classes</a>
         <div>/</div>
         <div>Edit</div>
     </div>
@@ -30,7 +30,7 @@
         <x-message></x-message>
         @endif
 
-        <h1 class='text-red-600 mt-8'>{{$clas->program->short}} <i class="bx bx-chevron-right"></i>New Class</h1>
+        <h1 class='text-red-600 mt-8'>{{$clas->program->short}} <i class="bx bx-chevron-right"></i>Edit Class</h1>
 
         <form action="{{route('hod.clases.update',$clas)}}" method='post' class="mt-8" onsubmit="return validate(event)">
             @csrf

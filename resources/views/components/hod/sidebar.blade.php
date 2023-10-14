@@ -6,13 +6,13 @@
             <li>
                 <a href="{{url('hod')}}" class="flex items-center p-2">
                     <i class="bi-grid"></i>
-                    <span class="ml-3">Dashbaord</span>
+                    <span class="ml-3">Home</span>
                 </a>
             </li>
             <li>
                 <a href="{{route('hod.clases.index')}}" class="flex items-center p-2">
                     <i class="bi-people"></i>
-                    <span class="ml-3">Classes / Sections</span>
+                    <span class="ml-3">Current Classes</span>
                 </a>
             </li>
             <li>

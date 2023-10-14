@@ -88,7 +88,7 @@
                 @endforeach
                 <div class="w-full mt-2">
                     @if($program->schemes->count()>0)
-                    <a href="{{route('hod.clases.append',$program)}}" class="btn-teal float-left">
+                    <a href="{{route('hod.clases.add',$program)}}" class="btn-teal float-left">
                         <i class="bi bi-plus"></i>
                         Add New Class
                     </a>

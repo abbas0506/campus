@@ -27,38 +27,6 @@ class StudentController extends Controller
         //
         $department = Department::find(session('department_id'));
         return view('hod.students.index', compact('department'));
-
-        // $result = '';
-        // $searchby = 'samra';
-        // try {
-        //     $students = Student::where('rollno', 'like', '%' . $searchby . '%')
-        //         ->orWhere('name', 'like', '%' . $searchby . '%')
-        //         ->whereRelation('section.clas.program', 'department_id', session('department_id'))
-        //         ->get();
-
-
-        //     echo "<table>" .
-        //         "<tbody>";
-
-
-
-        //     foreach ($students as $student) {
-
-        //         $result .=
-        //             "<tr>" .
-        //             "<td><a href='/students/" . $student->id . "' class='link'>" . $student->rollno . "</a></td>" .
-        //             "<td>" . $student->name ?? '' . "</td>" .
-        //             "<td>" . $student->father ?? ''  . "</td>" .
-        //             "<td>" . $student->section->clas->title() . "</td>" .
-        //             "</tr>";
-        //     }
-        //     echo $result;
-
-        //     echo "</tbody>" .
-        //         "</table>";
-        // } catch (Exception $e) {
-        //     echo $e->getMessage();
-        // }
     }
 
     /**
@@ -69,8 +37,7 @@ class StudentController extends Controller
     public function create()
     {
         //
-        // $section = Section::find(session('section_id'));
-        // return view('hod.students.create', compact('section'));
+
     }
 
     /**
@@ -84,10 +51,10 @@ class StudentController extends Controller
         //
 
         $request->validate([
-            'name' => 'required|string|max:100',
-            'father' => 'required|string|max:100',
-            'gender' => 'required|string|max:1',
             'rollno' => 'required|string|unique:students|max:20',
+            'name' => 'required|string|max:100',
+            'gender' => 'required|string|max:1',
+            'email' => 'nullable|email',
             'regno' => 'nullable|string|unique:students|max:20',
             'section_id' => 'required|numeric',
         ]);
@@ -141,8 +108,9 @@ class StudentController extends Controller
         $student = Student::find($id);
         $request->validate([
             'name' => 'required|string|max:100',
-            'father' => 'required|string|max:100',
             'gender' => 'required|string|max:1',
+            'email' => 'nullable|email'
+
         ]);
 
         try {
@@ -174,7 +142,7 @@ class StudentController extends Controller
             // something went wrong
         }
     }
-    public function add($id)
+    public function feed($id)
     {
         //
         $section = Section::find($id);

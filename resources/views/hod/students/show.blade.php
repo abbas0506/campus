@@ -3,9 +3,9 @@
 <div class="container">
     <h2>Student Profile</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{route('hod.clases.index')}}">Current Classes</a>
         <div>/</div>
-        <a href="{{route('hod.students.index')}}">Students</a>
+        <a href="{{route('hod.sections.show',$student->section)}}">Students</a>
         <div>/</div>
         <div>View</div>
     </div>

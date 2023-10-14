@@ -2,13 +2,13 @@
 @section('page-content')
 
 <div class="container">
-    <h2>Class & Sections</h2>
+    <h2>Add New Class</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{route('hod.clases.index')}}">Classes & Sections</a>
+        <a href="{{route('hod.clases.index')}}">Current Classes</a>
         <div>/</div>
-        <div>New</div>
+        <div>Add</div>
     </div>
 
     <div class="md:w-3/4 mx-auto mt-8">

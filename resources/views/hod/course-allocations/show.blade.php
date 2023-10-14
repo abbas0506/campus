@@ -59,9 +59,9 @@
         <label for="" class="text-xs">Enrollment</label>
         @if($course_allocation->teacher()->exists())
         <div class="flex items-center gap-x-4">
-            <div> <a href="{{route('hod.enroll.fresh', $course_allocation)}}" class="link">Fresh</a> <span class="text-slate-400 ml-2">({{$course_allocation->first_attempts->count()}})</span></div>
+            <div> <a href="{{route('hod.course-allocations.enrollment.fresh', $course_allocation)}}" class="link">Fresh</a> <span class="text-slate-400 ml-2">({{$course_allocation->first_attempts->count()}})</span></div>
             <div>|</div>
-            <div><a href="{{route('hod.enroll.reappear', $course_allocation)}}" class="link">Reappear</a><span class="text-slate-400 ml-2">({{$course_allocation->reappears->count()}})</span></div>
+            <div><a href="{{route('hod.course-allocations.enrollment.reappear', $course_allocation)}}" class="link">Reappear</a><span class="text-slate-400 ml-2">({{$course_allocation->reappears->count()}})</span></div>
         </div>
         @else
         <div class="text-slate-400 text-xs">(blank)</div>
@@ -104,10 +104,10 @@
                     <td class="text-center">Fresh</td>
 
                     <td>
-                        <form action="{{route('hod.first-attempts.destroy',$first_attempt)}}" method="POST" id='del_form{{$first_attempt->student->id}}' class="flex items-center justify-center">
+                        <form action="{{route('hod.course-allocations.enrollment.fresh.destroy',$first_attempt)}}" method="POST" id='del_fresh_form{{$first_attempt->id}}' class="flex items-center justify-center">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="del('{{$first_attempt->student->id}}')">
+                            <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="del_fresh('{{$first_attempt->id}}')">
                                 <i class="bi bi-person-dash text-lg"></i>
                             </button>
                         </form>
@@ -137,10 +137,10 @@
                     <td>Reappear</td>
                     <td>
                         <div class="flex justify-center items-center py-2">
-                            <form action="{{route('hod.reappears.destroy',$reappear)}}" method="POST" id='del_form{{$reappear->first_attempt->student->id}}' class="mt-1">
+                            <form action="{{route('hod.course-allocations.enrollment.reappear.destroy',$reappear)}}" method="POST" id='del_reappear_form{{$reappear->id}}' class="mt-1">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="del('{{$reappear->first_attempt->student->id}}')">
+                                <button type="submit" class="bg-transparent py-2 border-0 text-red-700" onclick="del_reappear('{{$reappear->id}}')">
                                     <i class="bi bi-person-dash text-lg"></i>
                                 </button>
                             </form>
@@ -170,7 +170,7 @@
         });
     }
 
-    function delme(formid) {
+    function del_fresh(formid) {
 
         event.preventDefault();
 
@@ -185,7 +185,27 @@
         }).then((result) => {
             if (result.value) {
                 //submit corresponding form
-                $('#del_form' + formid).submit();
+                $('#del_fresh_form' + formid).submit();
+            }
+        });
+    }
+
+    function del_reappear(formid) {
+
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                //submit corresponding form
+                $('#del_reappear_form' + formid).submit();
             }
         });
     }

@@ -178,7 +178,7 @@ class ClasController extends Controller
             // something went wrong
         }
     }
-    public function append($pid)
+    public function add($pid)
     {
         $program = Program::find($pid);
         $shifts = Shift::all();
