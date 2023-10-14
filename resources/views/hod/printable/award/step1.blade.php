@@ -3,7 +3,7 @@
 <div class="container">
     <h2>Print Award List</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <a href="{{url('hod/printable')}}">Print Options</a>
         <div>/</div>

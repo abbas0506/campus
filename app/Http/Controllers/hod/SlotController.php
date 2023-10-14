@@ -85,7 +85,7 @@ class SlotController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('schemes.show', $request->scheme_id)->with(['success' => 'Successfully created', 'active_semester_no' => $request->semester_no]);
+            return redirect()->route('hod.schemes.show', $request->scheme_id)->with(['success' => 'Successfully created', 'active_semester_no' => $request->semester_no]);
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
@@ -158,7 +158,7 @@ class SlotController extends Controller
         try {
             $scheme = $slot->scheme;
             $slot->delete();
-            return redirect()->route('schemes.show', $scheme)->with('success', 'Successfully deleted');
+            return redirect()->route('hod.schemes.show', $scheme)->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['deletion' => $e->getMessage()]);
             // something went wrong

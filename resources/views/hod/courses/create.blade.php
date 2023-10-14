@@ -3,7 +3,7 @@
 <div class="container">
     <h2>New Course</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <a href="{{route('hod.courses.index')}}">Courses</a>
         <div>/</div>
@@ -41,7 +41,7 @@
                     <input type="text" id='full_name' name='name' class="custom-input" placeholder="Software Engineering" value="">
                 </div>
                 <div>
-                    <label>Short Name</label>
+                    <label>Short Name *</label>
                     <input type="text" id='short_name' name='short' class="custom-input" placeholder="For example: SE" value="">
                 </div>
                 <div>

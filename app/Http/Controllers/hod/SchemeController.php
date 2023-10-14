@@ -57,7 +57,7 @@ class SchemeController extends Controller
 
         try {
             Scheme::create($request->all());
-            return redirect()->route('schemes.index')->with('success', 'Successfully created');
+            return redirect()->route('hod.schemes.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong

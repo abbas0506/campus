@@ -4,11 +4,11 @@
 <div class="container">
     <h2>Create New Slot</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
-        <a href="{{route('schemes.index')}}">Programs & Schemes</a>
+        <a href="{{route('hod.schemes.index')}}">Schemes</a>
         <div>/</div>
-        <a href="{{route('schemes.show', $scheme)}}">{{$scheme->subtitle()}}</a>
+        <a href="{{route('hod.schemes.show', $scheme)}}">{{$scheme->subtitle()}}</a>
         <div>/</div>
         <div>New Slot</div>
     </div>
@@ -38,7 +38,7 @@
         @endif
 
 
-        <form action="{{route('slots.store')}}" method='post' class="flex flex-col w-full text-left mt-6">
+        <form action="{{route('hod.slots.store')}}" method='post' class="flex flex-col w-full text-left mt-6">
             @csrf
 
             <input type="hidden" name="scheme_id" value="{{$scheme->id}}">

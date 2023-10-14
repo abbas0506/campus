@@ -3,7 +3,7 @@
 <div class="container">
     <h2>Semester Plan </h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <a href="{{route('hod.semester-plan.index')}}">Semester Plan</a>
         <div>/</div>

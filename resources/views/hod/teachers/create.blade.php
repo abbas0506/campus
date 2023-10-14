@@ -3,7 +3,7 @@
 <div class="container">
     <h2>New Teacher</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <a href="{{route('teachers.index')}}">Teachers</a>
         <div>/</div>

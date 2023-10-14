@@ -62,7 +62,7 @@ class SlotOptionController extends Controller
             // }
 
             DB::commit();
-            return redirect()->route('slots.edit', $slot)->with('success', 'Successfully added');
+            return redirect()->route('hod.slots.edit', $slot)->with('success', 'Successfully added');
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
@@ -117,7 +117,7 @@ class SlotOptionController extends Controller
 
         try {
             $slot_option->update($request->all());
-            return redirect()->route('slots.edit', $slot_option->slot)->with('success', 'Successfully updated');
+            return redirect()->route('hod.slots.edit', $slot_option->slot)->with('success', 'Successfully updated');
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }

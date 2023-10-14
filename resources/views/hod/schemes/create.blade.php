@@ -4,9 +4,9 @@
 <div class="container">
     <h2>Schemes</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
-        <a href="{{route('schemes.index')}}">Program & Schemes</a>
+        <a href="{{route('hod.schemes.index')}}">Program & Schemes</a>
         <div>/</div>
         <div>New</div>
     </div>
@@ -30,7 +30,7 @@
         <x-message></x-message>
         @endif
 
-        <form action="{{route('schemes.store')}}" method='post' class="flex flex-col w-full text-left mt-8">
+        <form action="{{route('hod.schemes.store')}}" method='post' class="flex flex-col w-full text-left mt-8">
             @csrf
             <h1 class="text-red-600">{{$program->short}}<span class="text-sm text-red-700 ml-2 font-thin">(program for which scheme is being defined)</span></h1>
             <input id="" name="program_id" value="{{$program->id}}" class="hidden">

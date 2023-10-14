@@ -4,7 +4,7 @@
 <div class="container">
     <h2>{{$program->name}}</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{route('hod')}}">Home</a>
         <div>/</div>
         <a href="{{route('hod.programs.index')}}">Programs</a>
         <div>/</div>
@@ -22,15 +22,25 @@
         <div class="flex items-center justify-between border border-dashed bg-white p-4">
             <div>
                 <label for="" class="text-xs">Scheme(s)</label>
+
+                @if($program->schemes()->exists())
                 <h2>
                     @foreach($program->schemes as $scheme)
                     {{$scheme->semester->title()}} &nbsp
                     @endforeach
                 </h2>
-
+                @else
+                <div class="text-sm text-slate-600">(blank)</div>
+                @endif
             </div>
             <div class="flex justify-center items-center bg-slate-200 flex-shrink-0 w-12 h-12 rounded-full">
-                <div>{{$program->schemes->count()}}</div>
+                <div>
+                    @if($program->schemes()->exists())
+                    {{$program->schemes->count()}}
+                    @else
+                    <i class="bx bx-pencil"></i>
+                    @endif
+                </div>
             </div>
         </div>
 

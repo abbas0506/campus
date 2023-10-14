@@ -4,9 +4,12 @@
 <div class="container">
     <h2>Schemes</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <div>Program & Schemes</div>
+        <div>/</div>
+        <div>All</div>
+
     </div>
 
     <!-- search -->
@@ -21,7 +24,6 @@
     @else
     <x-message></x-message>
     @endif
-
     <div class="flex flex-wrap items-center gap-2 mt-8 mb-1">
         <div class="text-sm  text-gray-500">{{$programs->count()}} records found <span class='text-xs text-slate-600 ml-4 bg-teal-100 px-2'>(S=Spring, F=Fall)</span></div>
         <div class="text-xs text-gray-500"><i class="bx bxs-hand-right text-indigo-600 mr-2"></i>Click on + icon to add new scheme</div>
@@ -30,8 +32,8 @@
         <table class="table-fixed w-full">
             <thead>
                 <tr>
-                    <th class="w-60">Program Name</th>
-                    <th class="w-40">Scheme(s)</th>
+                    <th class="w-50">Program Name</th>
+                    <th class="w-50">Scheme(s)</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,15 +44,12 @@
                     <td>
                         <div class="flex items-center space-x-2">
                             @foreach($program->schemes as $scheme)
-                            <a href="{{route('schemes.show', $scheme)}}" class="w-12 px-2 text-sm bg-teal-100 text-center hover:bg-teal-600 hover:text-white">
+                            <a href="{{route('hod.schemes.show', $scheme)}}" class="w-12 px-2 text-sm bg-teal-100 text-center hover:bg-teal-600 hover:text-white">
                                 {{$scheme->subtitle()}}
                             </a>
                             @endforeach
-                            <a href="{{route('schemes.append',$program)}}" class="flex items-center justify-center border border-dashed border-slate-200 bg-teal-50 hover:bg-teal-600 hover:text-white text-teal-800  w-12">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
-                                </svg>
-
+                            <a href="{{route('hod.schemes.append',$program)}}" class="flex items-center justify-center border border-dashed border-slate-200 bg-teal-50 hover:bg-teal-600 hover:text-white text-teal-800  w-12">
+                                <i class="bx bx-plus"></i>
                             </a>
                         </div>
                     </td>
@@ -61,7 +60,8 @@
         </table>
     </div>
 </div>
-
+@endsection
+@section('script')
 <script type="text/javascript">
     function delme(formid) {
 

@@ -4,31 +4,22 @@
 <div class="container">
     <h2>Course Fixation on Slot</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
-        <div>/</div>
-        <a href="{{route('schemes.index')}}">Programs & Schemes</a>
-        <div>/</div>
-        <a href="{{route('schemes.show', $slot_option->slot->scheme)}}">{{$slot_option->slot->scheme->subtitle()}}</a>
-        <div>/</div>
-        <div>Courses</div>
+        <a href="{{route('hod.slots.edit',$slot_option->slot)}}">Cancel & Go Back</a>
     </div>
 
     @php
     $roman = config('global.romans');
     @endphp
-
-
-
-    <h1 class="text-red-600 mt-8">Slot # {{$slot_option->slot->slot_no}} <span class=""> {{$slot_option->course_type->name}} ({{$slot_option->slot->cr}})</span></h1>
-    <div class="flex items-center">
+    <div class="flex items-center mt-8">
         <h2>{{$slot_option->slot->scheme->program->short}}</h2>
-        <span class="chevron-right mx-1"></span>
-        <div class="flex items-center text-blue-600 link">
+        <span class="mx-1">/</span>
+        <div class="flex items-center">
             {{$slot_option->slot->scheme->subtitle()}}
             (Semester-{{$roman[$slot_option->slot->semester_no-1]}})
             </a>
         </div>
     </div>
+    <h1 class="text-red-600">Slot # {{$slot_option->slot->slot_no}} <span class=""> {{$slot_option->course_type->name}} ({{$slot_option->slot->cr}})</span></h1>
 
     <!-- search -->
     <div class="flex relative w-full md:w-1/3 mt-8">
@@ -49,7 +40,7 @@
                 @foreach($courses->sortBy('code') as $course)
                 <tr class="tr">
                     <td class="">
-                        <form action="{{route('slot-options.update',$slot_option)}}" method="POST" class="flex items-center justify-center">
+                        <form action="{{route('hod.slot-options.update',$slot_option)}}" method="POST" class="flex items-center justify-center">
                             @csrf
                             @method('PATCH')
                             <input type="text" name="course_id" value="{{$course->id}}" class="hidden">

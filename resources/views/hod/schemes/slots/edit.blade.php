@@ -4,13 +4,7 @@
 <div class="container">
     <h2>Edit Slot</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
-        <div>/</div>
-        <a href="{{route('schemes.index')}}">Programs & Schemes</a>
-        <div>/</div>
-        <a href="{{route('schemes.show', $slot->scheme)}}">{{$slot->scheme->subtitle()}}</a>
-        <div>/</div>
-        <div>Edit Slot</div>
+        <a href="{{route('hod.schemes.show', $slot->scheme)}}">Cancel & Go Back</a>
     </div>
 
     @php
@@ -21,10 +15,10 @@
         <div class="flex items-center">
             <h2>{{$slot->scheme->program->short}}</h2>
             <span class="chevron-right mx-1"></span>
-            <a href="{{route('schemes.show', $slot->scheme)}}" class="flex items-center text-blue-600 link">
+            <div>
                 {{$slot->scheme->subtitle()}}
                 (Semester-{{$roman[$slot->semester_no-1]}})
-            </a>
+            </div>
         </div>
         <h1 class="text-red-600 mt-2">Slot # {{$slot->slot_no}} ___ <i class="bi-clock"></i> {{$slot->cr}}</h1>
 
@@ -48,7 +42,7 @@
                 <div>Slot Detail</div>
             </div>
             @if($slot->course_allocations()->count()==0 || Auth::user()->hasRole('super'))
-            <form action="{{route('slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
+            <form action="{{route('hod.slots.destroy',$slot)}}" method="POST" id='del_form{{$slot->id}}'>
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn-red py-0 text-xs" onclick="delme('{{$slot->id}}')">Remove Slot</button>
@@ -73,7 +67,7 @@
                                     {{$slot_option->course_type->name}} <span class="text-slate-400 text-xs">({{$slot_option->slot->cr}})</span>
                                 </div>
                                 <div>
-                                    <form action="{{route('slot-options.destroy',$slot_option)}}" method="POST" id='del_form{{$slot_option->id}}'>
+                                    <form action="{{route('hod.slot-options.destroy',$slot_option)}}" method="POST" id='del_form{{$slot_option->id}}'>
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="py-0 text-xs text-red-600" onclick="delme('{{$slot_option->id}}')">Remove</button>
@@ -83,11 +77,11 @@
                         </td>
                         <td>
                             @if(!$slot_option->course)
-                            <a href="{{route('slot-options.edit', $slot_option)}}" class="flex items-center justify-center link"><i class="bi-link-45deg text-[24px]"></i> <span class="text-xs text-slate-600">(select course)</span></a>
+                            <a href="{{route('hod.slot-options.edit', $slot_option)}}" class="flex items-center justify-center link"><i class="bi-link-45deg text-[24px]"></i> <span class="text-xs text-slate-600">(select course)</span></a>
                             @else
                             <div class="flex items-center justify-center space-x-4">
-                                <a href="{{route('slot-options.edit', $slot_option)}}" class="link">{{$slot_option->course->code}} {{$slot_option->course->name}} {{$slot_option->course->lblCr()}} </a>
-                                <form action="{{route('slot-options.update',$slot_option)}}" method="POST">
+                                <a href="{{route('hod.slot-options.edit', $slot_option)}}" class="link">{{$slot_option->course->code}} {{$slot_option->course->name}} {{$slot_option->course->lblCr()}} </a>
+                                <form action="{{route('hod.slot-options.update',$slot_option)}}" method="POST">
                                     @csrf
                                     @method('PATCH')
                                     <input type="text" name="course_id" value="" class="hidden">
@@ -112,7 +106,7 @@
                 <div class="body">
                     <div class="flex flex-wrap gap-4">
                         @foreach($missing_course_types as $course_type)
-                        <form action="{{route('slot-options.store')}}" method='post'>
+                        <form action="{{route('hod.slot-options.store')}}" method='post'>
                             @csrf
                             <input type="hidden" name="slot_id" value="{{$slot->id}}">
                             <input type="hidden" name="course_type_id" value="{{$course_type->id}}">

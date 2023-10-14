@@ -53,7 +53,7 @@ class CourseController extends Controller
             'name' => 'required',
             'code' => 'nullable|required_if:course_type_id,1',
             'course_type_id' => 'required|numeric',
-            // 'short' => 'required',
+            'short' => 'required',
             'cr_theory' => 'required|numeric',
             'marks_theory' => 'required|numeric',
             'cr_practical' => 'required|numeric',

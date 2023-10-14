@@ -2,11 +2,13 @@
 @section('page-content')
 
 <div class="container">
-    <h2>Schemes</h2>
+    <h2>View Scheme</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
-        <div>Program & Schemes</div>
+        <a href="{{route('hod.schemes.index')}}">Schemes</a>
+        <div>/</div>
+        <div>{{$scheme->title()}}</div>
     </div>
 
     <h1 class="text-red-600 mt-8">{{$scheme->program->short}} <span class="chevron-right mx-1"></span> {{$scheme->subtitle()}}</h1>
@@ -68,7 +70,7 @@
                             <tr class="even:bg-slate-100">
                                 <td class="py-0">
                                     @if(!$scheme->has_allocation() || Auth::user()->hasRole('super'))
-                                    <a href="{{route('slots.edit',$slot)}}" class="link">
+                                    <a href="{{route('hod.slots.edit',$slot)}}" class="link">
                                         {{$slot->slot_no}}
                                     </a>
                                     @else
@@ -97,7 +99,7 @@
                 </div>
                 @if(!$scheme->has_allocation() || Auth::user()->hasRole('super'))
                 <div class=" w-full mt-3">
-                    <a href="{{route('slots.create', [$scheme->id, $semester_no])}}" class="flex items-center btn-blue text-sm float-left">
+                    <a href="{{route('hod.slots.create', [$scheme->id, $semester_no])}}" class="flex items-center btn-blue text-sm float-left">
                         Create Slot
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />

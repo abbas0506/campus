@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Change Password</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <div>Change Password</div>
     </div>

@@ -1,9 +1,9 @@
 @extends('layouts.hod')
 @section('page-content')
 <div class="container">
-    <h2>Courses</h2>
+    <h2>Edit Course</h2>
     <div class="bread-crumb">
-        <a href="/">Home</a>
+        <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <a href="{{route('hod.courses.index')}}">Courses</a>
         <div>/</div>
@@ -18,8 +18,6 @@
     @endif
 
     <div class="w-full md:w-3/4 mx-auto mt-8">
-        <h1 class="text-red-600">{{$course->name}}</h1>
-
         <form action="{{route('hod.courses.update',$course)}}" method='post' class="flex flex-col w-full mt-4" onsubmit="return validate(event)">
             @csrf
             @method('PATCH')
@@ -40,12 +38,12 @@
                 </div>
 
                 <div class="md:col-span-2">
-                    <label>Full Name</label>
+                    <label>Full Name *</label>
                     <input type="text" id='full_name' name='name' class="custom-input" placeholder="Software Engineering" value="{{$course->name}}">
                 </div>
 
                 <div>
-                    <label>Short Name <span class="text-sm">(if any)</span></label>
+                    <label>Short Name <span class="text-xs">(if any, otherwise same as full name)</span></label>
                     <input type="text" id='short_name' name='short' class="custom-input" placeholder="For example: SE" value="{{$course->short}}">
                 </div>
                 <div>
@@ -62,19 +60,19 @@
 
 
                 <div>
-                    <label>Cr Hrs (Theory)</label>
+                    <label>Cr Hrs * <span class="text-xs">(Theory)</span></label>
                     <input id="" type='number' name="cr_theory" class="custom-input" placeholder="Crdit Hrs" value="{{$course->cr_theory}}" required>
                 </div>
                 <div>
-                    <label>Cr Hrs (Practical)</label>
+                    <label>Cr Hrs * <span class="text-xs">(Practical)</span></label>
                     <input id="" type='number' name="cr_practical" class="custom-input" placeholder="0 if no practical" value="{{$course->cr_practical}}" min=0 required>
                 </div>
                 <div>
-                    <label>Marks (Theory)</label>
+                    <label>Marks * <span class="text-xs">(Theory)</span></label>
                     <input type='number' id="" name="marks_theory" class="custom-input" placeholder="Marks" value="{{$course->marks_theory}}" min=0 required>
                 </div>
                 <div>
-                    <label>Marks (Practical)</label>
+                    <label>Marks * <span class="text-xs">(Practical)</span></label>
                     <input type='number' id="" name="marks_practical" class="custom-input" placeholder="0 if no practical" value="{{$course->marks_practical}}" min=0 required>
                 </div>
                 <div>

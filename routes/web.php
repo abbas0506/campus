@@ -92,6 +92,7 @@ Route::get('/{url?}', function () {
         return view('index');
 })->where('url', ('login|signin|index'));
 
+
 Route::view('changepw', 'changepw');
 Route::patch('changepw/{id}', [AuthController::class, 'update']);
 Route::view('two/fa', 'two_fa');
@@ -152,9 +153,6 @@ Route::group(['middleware' => ['role:controller']], function () {
 });
 
 Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], function () {
-    Route::get('hod', [HodController::class, 'index']);
-    Route::get('super', [HodController::class, 'index']);
-    Route::view('hod/change/pw', 'hod.changepw')->name('hod.changepw');
 
 
     //?? to verify the reason of presence
@@ -176,6 +174,11 @@ Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], funct
 });
 
 Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
+    Route::get('/', [HodController::class, 'index']);
+    Route::get('super', [HodController::class, 'index']);
+    Route::view('change/pw', 'hod.changepw')->name('changepw');
+
+
     Route::resource('programs', ProgramController::class);
     Route::get('programs/{program}/internal', [ProgramController::class, 'internal'])->name('programs.internal');
     Route::patch('programs/{program}internal/update', [ProgramController::class, 'updateInternal'])->name('programs.internal.update');
