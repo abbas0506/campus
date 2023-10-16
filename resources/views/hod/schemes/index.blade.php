@@ -46,11 +46,11 @@
                     <td>
                         <div class="flex flex-shrink-0 items-center space-x-2 pl-4">
                             @foreach($program->schemes as $scheme)
-                            <a href="{{route('hod.schemes.show', $scheme)}}" class="w-20 text-sm btn-teal p-0">
+                            <a href="{{route('hod.schemes.show', $scheme)}}" class="w-20 text-sm pallet-teal p-0">
                                 {{$scheme->semester->title()}}
                             </a>
                             @endforeach
-                            <a href="{{route('hod.schemes.append',$program)}}" class="w-8 text-sm btn-teal p-0">
+                            <a href="{{route('hod.schemes.append',$program)}}" class="w-8 text-sm pallet-teal p-0">
                                 <i class="bx bx-plus"></i>
                             </a>
                         </div>

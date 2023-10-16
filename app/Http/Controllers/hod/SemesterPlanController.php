@@ -9,6 +9,7 @@ use App\Models\Section;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class SemesterPlanController extends Controller
 {
@@ -120,5 +121,15 @@ class SemesterPlanController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function pdf($section_id)
+    {
+
+        $section = Section::find($section_id);
+        $pdf = PDF::loadView('hod.semester-plan.pdf', compact('section'))->setPaper('a4', 'portrait');
+        $pdf->set_option("isPhpEnabled", true);
+
+        $file = "Semester Plan " . ".pdf";
+        return $pdf->stream($file);
     }
 }

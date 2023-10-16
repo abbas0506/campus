@@ -16,12 +16,12 @@ class GazetteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function step1()
+    public function index()
     {
         $department = Department::find(session('department_id'));
         $programs = $department->programs;
 
-        return view('hod.printable.gazette.step1', compact('programs'));
+        return view('hod.printable.gazette.index', compact('programs'));
     }
     public function preview($id)
     {

@@ -22,9 +22,10 @@
     $roman=config('global.romans');
     @endphp
 
-    <div class="flex items-center justify-center space-x-4 mt-8 border border-dashed p-4">
+    <div class="flex flex-wrap items-center justify-center space-x-4 mt-8 border border-dashed p-4">
         <h2 class='text-red-600'>{{$section->title()}} </h2>
         <p class="text-slate-600 text-sm">( Scheme: {{$section->clas->scheme->semester->title()}} )</p>
+        <a href="{{route('hod.semester-plan.pdf',$section)}}" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i></a>
     </div>
 
     @php
@@ -51,6 +52,7 @@
                     <th class="w-32">Code</th>
                     <th class="w-64">Course</th>
                     <th class="w-64">Teacher</th>
+                    <th class="w-12"><i class="bi-people"></i></th>
                 </tr>
             </thead>
             <tbody>
@@ -71,7 +73,9 @@
                     <td>{{ $course_allocation->course->code }}</td>
                     <td class="text-left">{{ $course_allocation->course->name }}<span class="text-slate-400 text-xs ml-1"> {{ $course_allocation->course->lblCr() }}</span></td>
                     <td class="text-left">{{ $course_allocation->teacher->name??'' }}</td>
+                    <td>{{ $course_allocation->strength() }}</td>
                     @else
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>

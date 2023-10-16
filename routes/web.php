@@ -152,32 +152,10 @@ Route::group(['middleware' => ['role:controller']], function () {
     Route::get('ce/gazette/{allocation}/pdf', [PdfController::class, 'gazette'])->name('ce.gazette.pdf');
 });
 
-Route::group(['middleware' => ['role:super|hod', 'my_exception_handler']], function () {
-
-
-    //?? to verify the reason of presence
-    // Route::resource('enrollments', EnrollmentController::class);
-
-    Route::view('hod/printable', 'hod.printable.index');
-    Route::get('hod/gazette/step1', [GazetteController::class, 'step1']);
-    Route::get('hod/gazette/{section}/preview', [GazetteController::class, 'preview'])->name('hod.gazette.preview');
-    Route::get('hod/gazette/{section}/pdf', [PdfController::class, 'gazette'])->name('hod.gazette.pdf');
-
-    Route::get('hod/award/step1', [AwardController::class, 'step1']);
-    Route::get('hod/award/{section}/step2', [AwardController::class, 'step2'])->name('hod.award.step2');
-    Route::get('hod/award/{allocation}/pdf', [PdfController::class, 'award'])->name('hod.award.pdf');
-    Route::get('hod/award/{allocation}/export', [AwardController::class, 'export'])->name('hod.award.export');
-
-    Route::get('hod/cum/step1', [CumulativeController::class, 'step1']);
-    Route::get('hod/cum/{section}/step2', [CumulativeController::class, 'step2'])->name('hod.cum.step2');
-    Route::get('hod/cum/{section}/{semester}/preview', [CumulativeController::class, 'preview'])->name('hod.cum.preview');
-});
-
+Route::get('super', [HodController::class, 'index']);
 Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
     Route::get('/', [HodController::class, 'index']);
-    Route::get('super', [HodController::class, 'index']);
     Route::view('change/pw', 'hod.changepw')->name('changepw');
-
 
     Route::resource('programs', ProgramController::class);
     Route::get('programs/{program}/internal', [ProgramController::class, 'internal'])->name('programs.internal');
@@ -199,18 +177,14 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::resource('slot-options', SlotOptionController::class)->except('index', 'create');
     Route::get('showCoursesForSlotOption/{slotoption}', [SlotOptionController::class, 'showCourses'])->name('showCoursesForSlotOption');
 
-
-
-
-
-
-
     Route::resource('courses', CourseController::class);
     Route::resource('clases', ClasController::class);
     Route::resource('sections', SectionController::class);
     Route::get('clases/{program}/add', [ClasController::class, 'add'])->name('clases.add');
 
     Route::resource('semester-plan', SemesterPlanController::class);
+    Route::get('semester-plan/{semester}/pdf', [SemesterPlanController::class, 'pdf'])->name('semester-plan.pdf');
+
     Route::resource('course-allocations', CourseAllocationController::class);
     Route::get('course-allocations/{allocation}/assign/courses', [CourseAllocationController::class, 'courses'])->name('course-allocations.courses');
     Route::get('course-allocations/{allocation}/assign/teachers', [CourseAllocationController::class, 'teachers'])->name('course-allocations.teachers');
@@ -230,7 +204,6 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
 
     Route::get('course-allocations/{allocation}/fresh', [EnrollmentController::class, 'fresh'])->name('course-allocations.enrollment.fresh');
     Route::get('course-allocations/{allocation}/reappear', [EnrollmentController::class, 'reappear'])->name('course-allocations.enrollment.reappear');
-
     Route::post('course-allocations/fresh/post', [EnrollmentController::class, 'enrollFresh'])->name('course-allocations.enrollment.fresh.post');
     Route::post('course-allocations/reappear/post', [EnrollmentController::class, 'enrollReappear'])->name('course-allocations.enrollment.reappear.post');
     Route::delete('course-allocations/fresh/destroy/{attempt}', [EnrollmentController::class, 'destroyFresh'])->name('course-allocations.enrollment.fresh.destroy');
@@ -245,8 +218,17 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('sections/{section}/students/excel', [StudentController::class, 'excel'])->name('students.excel');
     Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
 
+    Route::view('printable', 'hod.printable.index');
+    Route::get('award/index', [AwardController::class, 'index'])->name('award.index');
+    Route::get('award/{section}/courses', [AwardController::class, 'courses'])->name('award.courses');
+    Route::get('award/{allocation}/pdf', [PdfController::class, 'award'])->name('award.pdf');
+    Route::get('award/{allocation}/export', [AwardController::class, 'export'])->name('award.export');
 
-    Route::get('cumulative', [CumulativeController::class, 'index']);
+    Route::get('gazette/index', [GazetteController::class, 'index'])->name('gazette.index');
+    Route::get('gazette/{section}/preview', [GazetteController::class, 'preview'])->name('gazette.preview');
+    Route::get('gazette/{section}/pdf', [PdfController::class, 'gazette'])->name('gazette.pdf');
+
+    Route::get('cumulative/index', [CumulativeController::class, 'index'])->name('cumulative.index');
     Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');
 });
 
@@ -264,9 +246,6 @@ Route::group(['middleware' => ['role:teacher', 'my_exception_handler']], functio
     Route::resource('reappear_summative', ReappearSummativeController::class);
 
     Route::resource('first_attempts', FirstAttemptController::class);
-
-    Route::get('enroll/f/{id}', [EnrollmentController::class, 'fresh'])->name('enroll.fa');
-    Route::get('enroll/r/{id}', [EnrollmentController::class, 'reappear'])->name('enroll.ra');
 
     Route::resource('assessment', AssessmentController::class);
     Route::get('assessment/pdf/{id}', [AssessmentController::class, 'pdf']);

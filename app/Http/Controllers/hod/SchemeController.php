@@ -133,7 +133,5 @@ class SchemeController extends Controller
 
         $file = "Scheme " . $scheme->program->name . ".pdf";
         return $pdf->stream($file);
-
-        return view('hod.schemes.pdf', compact('scheme'));
     }
 }

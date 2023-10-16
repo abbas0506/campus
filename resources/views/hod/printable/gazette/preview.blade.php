@@ -3,17 +3,12 @@
 <div class="container">
     <h2>Print Gazette</h2>
     <div class="bread-crumb">
-        <a href="{{url('hod')}}">Home</a>
-        <div>/</div>
-        <a href="{{url('hod/printable')}}">Print Options</a>
-        <div>/</div>
-        <div>Gazette</div>
+        <a href="{{route('hod.gazette.index')}}">Cancel & Go Back</a>
     </div>
 
-    <!-- search -->
-    <div class="flex relative w-full md:w-1/3 mt-8">
-        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
-        <i class="bi bi-search absolute top-2 right-2"></i>
+    <div class="flex flex-wrap items-center justify-center space-x-4 mt-8 border border-dashed p-4">
+        <h2 class='text-red-600'>{{$section->title()}} </h2>
+        <a href="{{route('hod.gazette.pdf', $section)}}" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i></a>
     </div>
 
     <!-- page message -->
@@ -23,13 +18,10 @@
     <x-message></x-message>
     @endif
 
-
-    <div class="flex flex-wrap items-center justify-between mt-8">
-        <h1 class='text-red-600'>{{$section->title()}} </h1>
-        <a href="{{route('hod.gazette.pdf', $section)}}" target='_blank' class="btn-teal w-24 float-right">
-            <i class="bi-printer"></i>
-            Print
-        </a>
+    <!-- search -->
+    <div class="flex relative w-full md:w-1/3 mt-8">
+        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
+        <i class="bi bi-search absolute top-2 right-2"></i>
     </div>
     <!-- section students -->
     <div class="overflow-x-auto w-full mt-4">

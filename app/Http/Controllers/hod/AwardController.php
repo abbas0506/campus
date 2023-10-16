@@ -13,18 +13,18 @@ use Maatwebsite\Excel\Facades\Excel;
 class AwardController extends Controller
 {
     //
-    public function step1()
+    public function index()
     {
 
         $department = Department::find(session('department_id'));
         $programs = $department->programs;
 
-        return view('hod.printable.award.step1', compact('programs', 'department'));
+        return view('hod.printable.award.index', compact('programs', 'department'));
     }
-    public function step2($id)
+    public function courses($id)
     {
         $section = Section::find($id);
-        return view('hod.printable.award.step2', compact('section'));
+        return view('hod.printable.award.courses', compact('section'));
     }
 
     public function export($id)

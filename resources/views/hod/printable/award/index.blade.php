@@ -44,7 +44,7 @@
                     <div class="md:pl-4">
                         <div class="flex flex-wrap gap-2">
                             @foreach($clas->sections as $section)
-                            <a href="{{route('hod.award.step2',$section)}}" class='pallet-teal'>
+                            <a href="{{route('hod.award.courses',$section)}}" class='pallet-teal'>
                                 {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
                             </a>
                             @endforeach

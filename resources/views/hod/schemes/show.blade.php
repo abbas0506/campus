@@ -24,7 +24,7 @@
         <div class="flex items-center text-sm bg-teal-100 text-teal-600 font-semibold p-1">Cr Hrs: &nbsp <span class="mr-3 text-slate-600">{{$scheme->slots()->sum('cr')}} / {{$scheme->program->cr}}</span> <span class="bx bx-check-double ml-2"></span></div>
 
         <div class="flex items-center space-x-4">
-            <a href="{{route('hod.schemes.pdf',$scheme)}}" class="btn-teal text-sm"><i class="bi-printer"></i></a>
+            <a href="{{route('hod.schemes.pdf',$scheme)}}" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i></a>
             @if(Auth::user()->hasRole('super')||!$scheme->attempts()->exists())
             <form action="{{route('hod.schemes.destroy',$scheme)}}" method="POST" id='del_form{{$scheme->id}}'>
                 @csrf
