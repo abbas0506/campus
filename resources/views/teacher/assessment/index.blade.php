@@ -59,14 +59,14 @@
         <div class="flex items-start">
             <div class="h-6 w-6 flex flex-shrink-0 items-center justify-center bg-teal-600 mt-1 text-white text-sm">2</div>
             <div class="flex-grow ml-4 md:ml-8">
-                <a href="" class="link font-semibold">Add Formative Assessment</a>
+                <a href="{{route('teacher.formative.edit', $course_allocation)}}" class="link font-semibold">Add Formative Assessment</a>
                 <p class="text-xs text-slate-600">Less than 50% marks will be considered a failure case </p>
             </div>
         </div>
         <div class="flex items-start">
             <div class="h-6 w-6 flex flex-shrink-0 items-center justify-center bg-teal-600 mt-1 text-white text-sm">3</div>
             <div class="flex-grow ml-4 md:ml-8">
-                <a href="" class="link font-semibold">Add Summative Assessment</a>
+                <a href="{{route('teacher.summative.edit', $course_allocation)}}" class="link font-semibold">Add Summative Assessment</a>
                 <p class="text-xs text-slate-600">Less than 50% marks will be considered a failure case</p>
             </div>
         </div>

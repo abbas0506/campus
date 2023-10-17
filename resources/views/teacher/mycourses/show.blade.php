@@ -14,11 +14,6 @@
         </div>
         <div class="text-center">
             <i class="bi-arrow-down"></i>
-            <!-- @if($course_allocation->submitted_at!='')
-            <i class="bi-lock text-red-600 text-2xl"></i>
-            @else
-            <i class="bi-unlock text-blue-600 text-2xl"></i>
-            @endif -->
             <div><a href="{{route('teacher.assessment.show',$course_allocation)}}" class="link">Assessment</a></div>
         </div>
     </div>

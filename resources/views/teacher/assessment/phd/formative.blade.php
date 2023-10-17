@@ -44,7 +44,7 @@
         @endif
 
         <!-- fresh students -->
-        <form id="tab_fresh" action="{{route('fresh_formative.update', $course_allocation)}}" method="POST" class='mt-8' onsubmit="return validateBeforeSubmit(event)">
+        <form id="tab_fresh" action="{{route('teacher.fresh_formative.update', $course_allocation)}}" method="POST" class='mt-8' onsubmit="return validateBeforeSubmit(event)">
             @csrf
             @method('PATCH')
             <!-- submit button -->
@@ -120,7 +120,7 @@
         </form>
 
         <!-- Reappear cases -->
-        <form id='tab_reappear' action="{{route('reappear_formative.update', $course_allocation)}}" method="POST" class="mt-8 hidden" onsubmit="return validateBeforeSubmit(event)">
+        <form id='tab_reappear' action="{{route('teacher.reappear_formative.update', $course_allocation)}}" method="POST" class="mt-8 hidden" onsubmit="return validateBeforeSubmit(event)">
             @csrf
             @method('PATCH')
             <div class="flex items-end justify-between py-2 space-x-5 ">

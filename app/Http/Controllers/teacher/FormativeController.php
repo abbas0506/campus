@@ -4,7 +4,11 @@ namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
+use App\Models\FirstAttempt;
+use App\Models\Reappear;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FormativeController extends Controller
 {
@@ -77,6 +81,39 @@ class FormativeController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'id' => 'required',
+            'assignment' => 'required',
+            'presentation' => 'required',
+            'midterm' => 'required',
+            'attempt_type' => "required",
+        ]);
+
+        $ids = $request->id;
+        $assignment = $request->assignment;
+        $presentation = $request->presentation;
+        $midterm = $request->midterm;
+        $attempt_type = $request->attempt_type;
+        DB::beginTransaction();
+        try {
+            foreach ($ids as $key => $id) {
+                if ($attempt_type[$key] == 'F')
+                    $attempt = FirstAttempt::find($id);
+                else
+                    $attempt = Reappear::find($id);
+
+                $attempt->assignment = $assignment[$key];
+                $attempt->presentation = $presentation[$key];
+                $attempt->midterm = $midterm[$key];
+
+                $attempt->update();
+            }
+            DB::commit();
+            return redirect()->back()->with('success', "Successfully added");
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($ex->getMessage());
+        }
     }
 
     /**
