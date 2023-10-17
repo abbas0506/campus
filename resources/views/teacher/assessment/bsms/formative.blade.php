@@ -100,7 +100,7 @@
                     <!-- reappear -->
                     @foreach($course_allocation->reappears_sorted() as $reappear)
                     <tr class="tr">
-                        <td>{{$sr++}}</td>
+                        <td class="text-red-800">{{$sr++}}</td>
                         <td>
                             @if($reappear->first_attempt->student->gender=='M')
                             <i class="bx bx-male text-teal-600 text-lg"></i>
