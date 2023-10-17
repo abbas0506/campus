@@ -5,9 +5,9 @@
     <div class="bread-crumb">
         <a href="/">Home</a>
         <div>/</div>
-        <a href="{{route('mycourses.index')}}">My Courses</a>
+        <a href="{{route('teacher.mycourses.index')}}">My Courses</a>
         <div>/</div>
-        <a href="{{route('mycourses.show',$course_allocation)}}">{{$course_allocation->course->code}}</a>
+        <a href="{{route('teacher.mycourses.show',$course_allocation)}}">{{$course_allocation->course->code}}</a>
         <div>/</div>
         <div>Summative</div>
     </div>

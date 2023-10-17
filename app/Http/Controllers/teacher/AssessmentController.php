@@ -52,6 +52,8 @@ class AssessmentController extends Controller
     public function show($id)
     {
 
+        $course_allocation = CourseAllocation::findOrFail($id);
+        return view('teacher.assessment.index', compact('course_allocation'));
         // $course_allocation = CourseAllocation::find($id);
         // $subquery = DB::table('first_attempts')
         //     ->selectRaw("id, assignment+presentation+midterm+summative as marks")

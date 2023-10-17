@@ -3,11 +3,11 @@
 @section('body')
 <div class="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-blue-100 to-blue-400">
 
-    <div class="flex flex-col items-center w-full px-5 md:w-1/3">
+    <div class="flex flex-col items-center w-full px-5 md:w-1/2">
 
         @guest
-        <img class="w-full" alt="logo" src="{{asset('/images/logo/logo.png')}}">
-        <h1 class="text-lg md:text-4xl font-thin text-indigo-900 mt-4 font-culpa tracking-wider">Exam System</h1>
+        <img class="md:w-2/3" alt="logo" src="{{asset('/images/logo/logo.png')}}">
+        <h1 class="text-3xl md:text-6xl font-thin text-indigo-900 font-culpa tracking-wider">Exam System</h1>
 
         <div class="w-full mt-4">
 
@@ -20,20 +20,20 @@
                 </ul>
             </div>
             @endif
-            <h3 class="text-xs">Not a user? Please, contact system admin!</h3>
+            <!-- <h3 class="text-xs">Not a user? Please, contact system admin!</h3> -->
             <form action="{{url('login')}}" method="post" class="w-full mt-1">
                 @csrf
                 <div class="flex flex-col w-full items-start">
                     <div class="flex items-center w-full relative">
-                        <i class="bi bi-envelope-at absolute left-2 text-slate-600"></i>
-                        <input type="text" id="email" name="email" class="w-full custom-input px-8" placeholder="Type your email here">
+                        <i class="bi bi-envelope-at absolute left-5 text-slate-600"></i>
+                        <input type="text" id="email" name="email" class="w-full custom-input px-12" placeholder="Type your email here">
                     </div>
                     <div class="flex items-center w-full mt-3 relative">
-                        <i class="bi bi-key absolute left-2 text-slate-600 -rotate-[45deg]"></i>
-                        <input type="password" id="password" name="password" class="w-full custom-input px-8" placeholder="default password: password">
+                        <i class="bi bi-key absolute left-5 text-slate-600 -rotate-[45deg]"></i>
+                        <input type="password" id="password" name="password" class="w-full custom-input px-12" placeholder="Password">
                         <!-- eye -->
-                        <i class="bi bi-eye-slash absolute right-2 eye-slash" onclick="showpw()"></i>
-                        <i class="bi bi-eye absolute right-2 eye hidden" onclick="hidepw()"></i>
+                        <i class="bi bi-eye-slash absolute right-5 eye-slash" onclick="showpw()"></i>
+                        <i class="bi bi-eye absolute right-5 eye hidden" onclick="hidepw()"></i>
                     </div>
                     <button type="submit" class="w-full mt-6 btn-indigo p-2">Login</button>
                     <div class="mt-2">
@@ -45,20 +45,16 @@
         @else
         <!-- authenticated -->
         <i class="bi bi-person-fill-check text-8xl text-sky-600"></i>
-        <h1 class="text-center text-slate-800 mt-8">Welcome {{Auth::user()->name}}</h1>
+        <h1 class="text-center text-slate-800 mt-8 text-2xl">Welcome {{Auth::user()->name}}</h1>
 
         <form action="{{route('login.as')}}" method='post' class="w-full mt-8" onsubmit="return validate(event)">
             @csrf
 
-            @if(Auth::user()->roles->count()>1)
-            <div>Please select a role for this session</div>
-            @else
-            <label for="">You will proceed as</label>
-            @endif
+
 
             <select id="role" name="role" class="custom-input  px-4 py-3 w-full mt-3 bg-transparent" onchange="loadDepartments()">
                 @if(Auth::user()->hasAnyRole('hod','teacher','super'))
-                <option value="">- select -</option>
+                <option value="">Please select a role</option>
                 @endif
                 @foreach(Auth::user()->roles as $role)
                 <option value="{{$role->name}}" class="">{{Str::upper($role->name)}}</option>

@@ -51,7 +51,7 @@
                             <tr>
                                 <td class="text-center">{{$i++}}</td>
                                 <td class="text-center">
-                                    <a href="{{route('mycourses.show',$course_allocation->id)}}" class="link">
+                                    <a href="{{route('teacher.mycourses.show',$course_allocation->id)}}" class="link">
                                         {{$course_allocation->course->code}}
                                     </a>
                                 </td>

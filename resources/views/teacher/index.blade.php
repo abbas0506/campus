@@ -16,7 +16,7 @@
 
     <!-- pallets -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        <a href="{{route('mycourses.index')}}" class="pallet-box">
+        <a href="{{route('teacher.mycourses.index')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Courses</div>
                 <div class="h2">{{$user->allocations()->count()}}</div>
@@ -25,7 +25,7 @@
                 <i class="bi bi-book text-green-600"></i>
             </div>
         </a>
-        <a href="{{route('mycourses.index')}}" class="pallet-box">
+        <a href="{{route('teacher.mycourses.index')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Credit Hrs</div>
                 <div class="h2">{{$user->allocations()->sum('cr')}}</div>

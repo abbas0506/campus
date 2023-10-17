@@ -3,7 +3,7 @@
 <h1>Transcript</h1>
 <div class="flex items-center justify-between flex-wrap">
     <div class="bread-crumb">
-        <a href="{{route('mycourses.index')}}" class="text-orange-700 mr-1">Transcripts </a> / {{$student->name}} / {{$student->rollno}}
+        <a href="{{route('teacher.mycourses.index')}}" class="text-orange-700 mr-1">Transcripts </a> / {{$student->name}} / {{$student->rollno}}
     </div>
 </div>
 

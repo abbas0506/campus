@@ -147,7 +147,7 @@
         @apply w-full fixed top-0 z-20 bg-white text-slate-700 shadow;
     }
     header .current-user-dropdown {
-        @apply flex flex-col absolute w-48 top-12 right-8 z-20 bg-white font-thin drop-shadow-xl hidden;
+        @apply flex flex-col absolute w-48 top-12 right-8 z-20 bg-white drop-shadow-xl hidden;
     }
     header .current-user-dropdown a:hover {
         @apply text-orange-700;

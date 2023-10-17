@@ -11,7 +11,7 @@
             </li>
 
             <li>
-                <a href="{{route('mycourses.index')}}" class="flex items-center p-2 ">
+                <a href="{{route('teacher.mycourses.index')}}" class="flex items-center p-2 ">
                     <i class="bx bx-book"></i>
                     <span class="ml-3">My Courses</span>
                 </a>

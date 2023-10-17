@@ -232,11 +232,14 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');
 });
 
-Route::group(['middleware' => ['role:teacher', 'my_exception_handler']], function () {
+Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:teacher', 'my_exception_handler']], function () {
 
-    Route::get('teacher', [TeacherTeacherController::class, 'index']);
-    Route::view('teacher/change/pw', 'teacher.changepw')->name('teacher.changepw');
+    Route::get('/', [TeacherTeacherController::class, 'index']);
+    Route::view('change/pw', 'teacher.changepw')->name('changepw');
     Route::resource('mycourses', MyCoursesController::class);
+    Route::resource('assessment', AssessmentController::class);
+    Route::get('assessment/pdf/{id}', [AssessmentController::class, 'pdf']);
+
     Route::resource('formative', FormativeController::class);
     Route::resource('summative', SummativeController::class);
 
@@ -247,8 +250,6 @@ Route::group(['middleware' => ['role:teacher', 'my_exception_handler']], functio
 
     Route::resource('first_attempts', FirstAttemptController::class);
 
-    Route::resource('assessment', AssessmentController::class);
-    Route::get('assessment/pdf/{id}', [AssessmentController::class, 'pdf']);
 
     Route::get('teacher/award', [TeacherAwardController::class, 'index']);
     Route::get('teacher/award/{course}/pdf', [PdfController::class, 'award'])->name('teacher.award');
