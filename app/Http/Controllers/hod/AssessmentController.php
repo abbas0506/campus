@@ -32,9 +32,9 @@ class AssessmentController extends Controller
             ->where('semester_id', session('semester_id'))
             ->whereNotNull('course_id')
             ->whereNotNull('teacher_id')
-            ->orderBY('programs.id')
-            ->orderBY('clas.id')
-            ->orderBY('sections.name')
+            ->orderBy('programs.id')
+            ->orderBy('clas.id')
+            ->orderBy('sections.name')
             // ->orderBy('course_allocations.submitted_at', 'desc')
             ->get();
 
