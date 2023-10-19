@@ -13,14 +13,13 @@
             </div>
         </div>
         <div class="text-center">
-            <i class="bi-arrow-down"></i>
-            <div><a href="{{route('teacher.assessment.show',$course_allocation)}}" class="link">Assessment</a></div>
+            <div class="animate-bounce"><i class="bi-arrow-down"></i></div>
+            <div><a href="{{route('teacher.assessment.show',$course_allocation)}}" class="text-blue-800 font-semibold">Assessment</a></div>
         </div>
     </div>
 
     <div class="flex flex-wrap items-center justify-center space-x-4 mt-8 border border-dashed p-4">
         <h2 class='text-red-600'>{{$course_allocation->section->title()}} </h2>
-        <a href="" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i></a>
     </div>
 
     <div class="mt-8">
@@ -73,7 +72,7 @@
                             <i class="bx bx-female text-indigo-400 text-lg"></i>
                             @endif
                         </td>
-                        <td><a href="http://" class="link">{{$first_attempt->student->rollno}}</a></td>
+                        <td>{{$first_attempt->student->rollno}}</td>
                         <td class="text-left">{{$first_attempt->student->name}}</td>
                         <td class="text-left">{{$first_attempt->student->father}}</td>
                         <td>Fresh</td>
@@ -83,14 +82,14 @@
                     <!-- reappears -->
                     @foreach($course_allocation->reappears_sorted() as $reappear)
                     <tr class="tr text-sm">
-                        <td>{{$sr++}}</td>
+                        <td class="text-slate-400">{{$sr++}}</td>
                         <td>@if($reappear->first_attempt->student->gender=='M')
                             <i class="bx bx-male text-teal-600 text-lg"></i>
                             @else
                             <i class="bx bx-female text-indigo-400 text-lg"></i>
                             @endif
                         </td>
-                        <td><a href="http://" class="link">{{$reappear->first_attempt->student->rollno}}</a></td>
+                        <td>{{$reappear->first_attempt->student->rollno}}</td>
                         <td class="text-left">{{$reappear->first_attempt->student->name}}</td>
                         <td class="text-left">{{$reappear->first_attempt->student->father}}</td>
                         <td>Reappear</td>

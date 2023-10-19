@@ -5,7 +5,7 @@
         <div>
             <h2>Student Assessment </h2>
             <div class="bread-crumb">
-                <a href="{{route('teacher.mycourses.index')}}">Cancel & Go Back</a>
+                <a href="{{route('teacher.mycourses.show',$course_allocation)}}">Cancel & Go Back</a>
             </div>
         </div>
         <div class="text-center">
@@ -19,8 +19,8 @@
     </div>
 
     <div class="flex flex-wrap items-center justify-center space-x-4 mt-8 border border-dashed p-4">
-        <h2 class='text-red-600'>Print Assessment / Result </h2>
-        <a href="" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i></a>
+        <h2 class='text-slate-600'>Preview Data</h2>
+        <a href="{{route('teacher.assessment.preview', $course_allocation)}}" target="_blank" class="btn-teal text-sm"><i class="bi-eye"></i></a>
     </div>
 
     <div class="mt-8">
@@ -48,25 +48,30 @@
     <x-message></x-message>
     @endif
 
-    <div class="grid grid-cols-2 gap-4 md:w-4/5 mx-auto mt-12 p-8 border border-dashed border-slate-400">
+    @if($course_allocation->submitted_at)
+    <div class="flex justify-center items-center mt-12 p-8 border border-dashed border-slate-200">
+        <h2 class="text-red-700">Has been submitted on {{ $course_allocation->submitted_at ?? '' }} </h2>
+    </div>
+    @else
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto mt-12 p-8 border border-dashed border-slate-200">
         <div class="flex items-start">
             <div class="h-6 w-6 flex flex-shrink-0 items-center justify-center bg-teal-600 mt-1 text-white text-sm">1</div>
             <div class="flex-grow ml-4 md:ml-8">
-                <a href="" class="link font-semibold">Mark Attendance</a>
-                <p class="text-xs text-slate-600">Only those students can appear in final exam whose attendance is above 50%</p>
+                <a href="{{route('teacher.attendance.edit',$course_allocation)}}" class="font-semibold text-blue-800">Mark Attendance</a>
+                <p class="text-xs text-slate-600">Only those students can appear in final exam whose attendance is atleast 75%</p>
             </div>
         </div>
         <div class="flex items-start">
             <div class="h-6 w-6 flex flex-shrink-0 items-center justify-center bg-teal-600 mt-1 text-white text-sm">2</div>
             <div class="flex-grow ml-4 md:ml-8">
-                <a href="{{route('teacher.formative.edit', $course_allocation)}}" class="link font-semibold">Add Formative Assessment</a>
+                <a href="{{route('teacher.formative.edit', $course_allocation)}}" class="font-semibold text-blue-800">Add Formative</a>
                 <p class="text-xs text-slate-600">Less than 50% marks will be considered a failure case </p>
             </div>
         </div>
         <div class="flex items-start">
             <div class="h-6 w-6 flex flex-shrink-0 items-center justify-center bg-teal-600 mt-1 text-white text-sm">3</div>
             <div class="flex-grow ml-4 md:ml-8">
-                <a href="{{route('teacher.summative.edit', $course_allocation)}}" class="link font-semibold">Add Summative Assessment</a>
+                <a href="{{route('teacher.summative.edit', $course_allocation)}}" class="font-semibold text-blue-800">Add Summative</a>
                 <p class="text-xs text-slate-600">Less than 50% marks will be considered a failure case</p>
             </div>
         </div>
@@ -75,11 +80,12 @@
                 <i class="bi-check-all"></i>
             </div>
             <div class="flex-grow ml-4 md:ml-8">
-                <a href="" class="link font-semibold">Submit Final Result</a>
-                <p class="text-xs text-slate-600">Please confirm data before final submission. Once submitted, it will not be editable.</p>
+                <a href="{{route('teacher.assessment.edit', $course_allocation)}}" class="font-semibold text-blue-800">Finish</a>
+                <p class="text-xs text-slate-600">Once submitted, it will not be editable. Please preview & confirm data before final submission. </p>
             </div>
         </div>
 
     </div>
+    @endif
 </div>
 @endsection

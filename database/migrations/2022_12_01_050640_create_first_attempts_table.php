@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('first_attempts', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedInteger('attendance')->nullable()->default(0);
             $table->unsignedInteger('assignment')->nullable()->default(0);
             $table->unsignedInteger('presentation')->nullable()->default(0);
             $table->unsignedInteger('midterm')->nullable()->default(0);

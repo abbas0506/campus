@@ -24,7 +24,7 @@
             <p>{{$course_allocation->section->title()}}</p>
         </div>
         <div></div>
-        <a href="" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i></a>
+        <a href="{{route('teacher.assessment.preview', $course_allocation)}}" class="btn-teal text-sm"><i class="bi-eye"></i> &nbsp Preview</a>
     </div>
 
     <!-- page message -->
@@ -53,11 +53,11 @@
     $sr=1;
     @endphp
     <!-- fresh students -->
-    <form action="{{route('teacher.formative.update', $course_allocation)}}" method="POST" class='mt-8' onsubmit="return validateBeforeSubmit(event)">
+    <form action="{{route('teacher.formative.update', $course_allocation)}}" method="POST" class='mt-4' onsubmit="return validateBeforeSubmit(event)">
         @csrf
         @method('PATCH')
 
-        <div class="overflow-x-auto w-full mt-4">
+        <div class="overflow-x-auto w-full">
             <table class="table-fixed w-full">
                 <thead>
                     <tr class="border-b border-slate-200 text-sm">
@@ -68,7 +68,6 @@
                         <th class="w-20">Asgn <br> <span class="font-thin">(10%)</span></th>
                         <th class="w-20">Pres<br> <span class="font-thin">(10%)</span></th>
                         <th class="w-20">Mid<br> <span class="font-thin">(30%)</span></th>
-                        <!-- <th class="w-24">Formative<br> <span class="font-thin">(50%)</span></th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -100,7 +99,7 @@
                     <!-- reappear -->
                     @foreach($course_allocation->reappears_sorted() as $reappear)
                     <tr class="tr">
-                        <td class="text-red-800">{{$sr++}}</td>
+                        <td class="text-slate-400">{{$sr++}}</td>
                         <td>
                             @if($reappear->first_attempt->student->gender=='M')
                             <i class="bx bx-male text-teal-600 text-lg"></i>
@@ -127,7 +126,7 @@
                 </tbody>
             </table>
         </div>
-        <button type="submit" class="btn-teal mt-4">Save Result</button>
+        <button type="submit" class="btn-teal mt-4 float-right">Save Result</button>
     </form>
 
 </div>

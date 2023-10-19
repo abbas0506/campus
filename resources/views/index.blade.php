@@ -3,11 +3,11 @@
 @section('body')
 <div class="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-blue-100 to-blue-400">
 
-    <div class="flex flex-col items-center w-full px-5 md:w-1/2">
+    <div class="flex flex-col items-center w-full px-5 md:w-1/3">
 
         @guest
-        <img class="md:w-2/3" alt="logo" src="{{asset('/images/logo/logo.png')}}">
-        <h1 class="text-3xl md:text-6xl font-thin text-indigo-900 font-culpa tracking-wider">Exam System</h1>
+        <img class="md:w-3/4" alt="logo" src="{{asset('/images/logo/logo.png')}}">
+        <h1 class="text-2xl md:text-4xl font-thin text-indigo-900 font-culpa tracking-wider">Exam System</h1>
 
         <div class="w-full mt-4">
 
@@ -25,51 +25,49 @@
                 @csrf
                 <div class="flex flex-col w-full items-start">
                     <div class="flex items-center w-full relative">
-                        <i class="bi bi-envelope-at absolute left-5 text-slate-600"></i>
-                        <input type="text" id="email" name="email" class="w-full custom-input px-12" placeholder="Type your email here">
+                        <i class="bi bi-envelope-at absolute left-3 text-slate-600"></i>
+                        <input type="text" id="email" name="email" class="w-full custom-input px-9 py-1" placeholder="Type your email here">
                     </div>
                     <div class="flex items-center w-full mt-3 relative">
-                        <i class="bi bi-key absolute left-5 text-slate-600 -rotate-[45deg]"></i>
-                        <input type="password" id="password" name="password" class="w-full custom-input px-12" placeholder="Password">
+                        <i class="bi bi-key absolute left-3 text-slate-600 -rotate-[45deg]"></i>
+                        <input type="password" id="password" name="password" class="w-full custom-input px-9 py-1" placeholder="Password">
                         <!-- eye -->
                         <i class="bi bi-eye-slash absolute right-5 eye-slash" onclick="showpw()"></i>
                         <i class="bi bi-eye absolute right-5 eye hidden" onclick="hidepw()"></i>
                     </div>
-                    <button type="submit" class="w-full mt-6 btn-indigo p-2">Login</button>
-                    <div class="mt-2">
-                        <a href="{{url('forgot/password')}}" class="link text-slate-800">Forgot password?</a>
+                    <div class="flex justify-end w-full mt-1">
+                        <a href="{{url('forgot/password')}}" class="link text-slate-700 float-right text-xs">Forgot password?</a>
                     </div>
+                    <button type="submit" class="w-full mt-4 btn-indigo p-2">Login</button>
+
                 </div>
             </form>
         </div>
         @else
         <!-- authenticated -->
         <i class="bi bi-person-fill-check text-8xl text-sky-600"></i>
-        <h1 class="text-center text-slate-800 mt-8 text-2xl">Welcome {{Auth::user()->name}}</h1>
+        <h1 class="text-center text-slate-800 mt-2 text-xl">{{Auth::user()->name}}</h1>
 
-        <form action="{{route('login.as')}}" method='post' class="w-full mt-8" onsubmit="return validate(event)">
+        <form action="{{route('login.as')}}" method='post' class="w-full mt-2" onsubmit="return validate(event)">
             @csrf
-
-
-
-            <select id="role" name="role" class="custom-input  px-4 py-3 w-full mt-3 bg-transparent" onchange="loadDepartments()">
+            <select id="role" name="role" class="custom-input px-4 w-full py-0 mt-3 bg-transparent" onchange="loadDepartments()">
                 @if(Auth::user()->hasAnyRole('hod','teacher','super'))
-                <option value="">Please select a role</option>
+                <option value="" class="py-0">Please select a role</option>
                 @endif
                 @foreach(Auth::user()->roles as $role)
-                <option value="{{$role->name}}" class="">{{Str::upper($role->name)}}</option>
+                <option value="{{$role->name}}" class="py-0">{{Str::upper($role->name)}}</option>
                 @endforeach
             </select>
             <div id='deptt_container' class="hidden">
                 <div class="mt-3">
-                    <label for="" class="text-base text-gray-700 text-left">Department</label>
+                    <!-- <label for="" class="text-base text-gray-700 text-left">Department</label> -->
                     <select id="department_id" name="department_id" class="custom-input px-4 py-3 w-full">
 
                     </select>
                 </div>
             </div>
             <div id='semester_container' class="mt-3 hidden">
-                <label for="" class="text-base text-gray-700 text-left w-full">Semester</label>
+                <!-- <label for="" class="text-base text-gray-700 text-left w-full">Semester</label> -->
                 <select id="semester_id" name="semester_id" class="custom-input px-4 py-3 w-full">
                     <option value="">Select a semester</option>
                     @foreach($semesters as $semester)

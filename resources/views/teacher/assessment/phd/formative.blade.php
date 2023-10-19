@@ -24,7 +24,7 @@
             <p>{{$course_allocation->section->title()}}</p>
         </div>
         <div></div>
-        <a href="" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i></a>
+        <a href="{{route('teacher.assessment.preview', $course_allocation)}}" class="btn-teal text-sm"><i class="bi-eye"></i> &nbsp Preview</a>
     </div>
 
     <!-- page message -->
@@ -53,11 +53,11 @@
     $sr=1;
     @endphp
     <!-- fresh students -->
-    <form action="{{route('teacher.formative.update', $course_allocation)}}" method="POST" class='mt-8' onsubmit="return validateBeforeSubmit(event)">
+    <form action="{{route('teacher.formative.update', $course_allocation)}}" method="POST" class='mt-4' onsubmit="return validateBeforeSubmit(event)">
         @csrf
         @method('PATCH')
 
-        <div class="overflow-x-auto w-full mt-4">
+        <div class="overflow-x-auto w-full">
             <table class="table-fixed w-full">
                 <thead>
                     <tr class="border-b border-slate-200 text-sm">
@@ -125,7 +125,7 @@
                 </tbody>
             </table>
         </div>
-        <button type="submit" class="btn-teal mt-4">Save Result</button>
+        <button type="submit" class="btn-teal mt-4 float-right">Save Result</button>
     </form>
 
 </div>

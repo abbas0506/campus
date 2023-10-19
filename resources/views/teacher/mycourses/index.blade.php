@@ -51,8 +51,7 @@
                                 <th class="w-48 text-left">Class</th>
                                 <th class="w-16">Fresh</th>
                                 <th class="w-16">Re</th>
-                                <th class="w-16">Result</th>
-                                <th class="w-16">Pass</th>
+                                <th class="w-16">Status</th>
                             </tr>
 
                         </thead>
@@ -71,8 +70,13 @@
                                 <td class="text-left">{{$course_allocation->section->title()}}</td>
                                 <td>{{$course_allocation->first_attempts()->count()}}</td>
                                 <td>{{$course_allocation->reappears()->count()}}</td>
-                                <td>%</td>
-                                <td>%</td>
+                                <td>
+                                    @if($course_allocation->submitted_at)
+                                    <i class="bi-lock text-red-700 text-xs"></i>
+                                    @else
+                                    <i class="bi-unlock text-teal-700 text-xs"></i>
+                                    @endif
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

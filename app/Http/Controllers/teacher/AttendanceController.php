@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\teacher;
 
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
-use AgliPanci\LaravelCase\Query\CaseBuilder;
 use App\Models\FirstAttempt;
+use App\Models\Reappear;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class AssessmentController extends Controller
+class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,6 @@ class AssessmentController extends Controller
     public function index()
     {
         //
-
     }
 
     /**
@@ -52,9 +51,8 @@ class AssessmentController extends Controller
      */
     public function show($id)
     {
+        //
 
-        $course_allocation = CourseAllocation::findOrFail($id);
-        return view('teacher.assessment.index', compact('course_allocation'));
     }
 
     /**
@@ -65,9 +63,9 @@ class AssessmentController extends Controller
      */
     public function edit($id)
     {
-        //final submission
-        $course_allocation = CourseAllocation::find($id);
-        return view('teacher.assessment.edit', compact('course_allocation'));
+        //
+        $course_allocation = CourseAllocation::findOrFail($id);
+        return view('teacher.assessment.bsms.attendance', compact('course_allocation'));
     }
 
     /**
@@ -80,11 +78,28 @@ class AssessmentController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $course_allocation = CourseAllocation::findOrFail($id);
+        $request->validate([
+            'id' => 'required',
+            'attendance' => 'required',
+            'attempt_type' => "required",
+        ]);
+
+        $ids = $request->id;
+        $attendance = $request->attendance;
+        $attempt_type = $request->attempt_type;
+        DB::beginTransaction();
         try {
-            $course_allocation->submitted_at = now();
-            $course_allocation->update();
-            return redirect()->route('teacher.mycourses.index', $course_allocation)->with('success', "Successfully updated");
+            foreach ($ids as $key => $id) {
+                if ($attempt_type[$key] == 'F')
+                    $attempt = FirstAttempt::find($id);
+                else
+                    $attempt = Reappear::find($id);
+
+                $attempt->attendance = $attendance[$key];
+                $attempt->update();
+            }
+            DB::commit();
+            return redirect()->back()->with('success', "Successfully added");
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
@@ -100,14 +115,5 @@ class AssessmentController extends Controller
     public function destroy($id)
     {
         //
-    }
-    public function preview($id)
-    {
-        $course_allocation = CourseAllocation::find($id);
-        //if phd
-        if ($course_allocation->section->clas->program->level == 21)
-            return view('teacher.assessment.phd.preview', compact('course_allocation'));
-        else
-            return view('teacher.assessment.bsms.preview', compact('course_allocation'));
     }
 }

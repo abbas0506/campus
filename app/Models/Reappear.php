@@ -12,6 +12,7 @@ class Reappear extends Model
         'first_attempt_id',
         'semester_id',
         'course_allocation_id',
+        'attendance',
         'assignment',
         'presentation',
         'midterm',

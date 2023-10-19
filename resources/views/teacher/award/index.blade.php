@@ -40,8 +40,8 @@
                                 <th class="w-48">Class & Section</th>
                                 <th class="w-16">Fresh</th>
                                 <th class="w-16">Re</th>
-                                <th class="w-16">Result</th>
-                                <th class="w-16">Action</th>
+                                <th class="w-16">Status</th>
+                                <th class="w-16">Print</th>
                             </tr>
 
                         </thead>
@@ -60,9 +60,16 @@
                                 <td>{{$course_allocation->section->title()}}</td>
                                 <td class="text-center">{{$course_allocation->first_attempts()->count()}}</td>
                                 <td class="text-center">{{$course_allocation->reappears()->count()}}</td>
-                                <td class="text-center">{{$course_allocation->status()}}</td>
                                 <td class="text-center">
-                                    <a href="{{route('teacher.award',$course_allocation->id)}}" target="_blank" class="flex flex-col justify-center items-center">
+                                    @if($course_allocation->submitted_at!='')
+                                    <i class="bi-lock text-red-600 text-xs"></i>
+                                    @else
+                                    <i class="bi-unlock text-teal-600 text-xs"></i>
+                                    @endif
+
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{route('teacher.award.pdf',$course_allocation->id)}}" target="_blank" class="flex flex-col justify-center items-center">
                                         <i class="bi bi-printer text-blue-600"></i>
                                     </a>
                                 </td>

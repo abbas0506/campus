@@ -23,6 +23,7 @@ use App\Http\Controllers\ce\GazetteController as CeGazetteController;
 use App\Http\Controllers\ce\NotifiedGazetteController;
 use App\Http\Controllers\ce\StudentController as CeStudentController;
 use App\Http\Controllers\ce\TranscriptController;
+use App\Http\Controllers\hod\AssessmentController as HodAssessmentController;
 use App\Http\Controllers\hod\AttemptPermissionController;
 use App\Http\Controllers\hod\AwardController;
 use App\Http\Controllers\hod\ChangeSectionController;
@@ -50,6 +51,7 @@ use App\Http\Controllers\hod\StudentStatusController;
 use App\Http\Controllers\MyExceptionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\teacher\AssessmentController;
+use App\Http\Controllers\teacher\AttendanceController;
 use App\Http\Controllers\teacher\AwardController as TeacherAwardController;
 use App\Http\Controllers\teacher\FirstAttemptController;
 use App\Http\Controllers\teacher\FormativeController;
@@ -208,6 +210,7 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::post('course-allocations/reappear/post', [EnrollmentController::class, 'enrollReappear'])->name('course-allocations.enrollment.reappear.post');
     Route::delete('course-allocations/fresh/destroy/{attempt}', [EnrollmentController::class, 'destroyFresh'])->name('course-allocations.enrollment.fresh.destroy');
     Route::delete('course-allocations/reappear/destory/{attempt}', [EnrollmentController::class, 'destroyReappear'])->name('course-allocations.enrollment.reappear.destroy');
+    Route::resource('assessment', HodAssessmentController::class);
 
     Route::post('search-reappear-data', [EnrollmentController::class, 'searchReappearData'])->name('search.reappear.data');
 
@@ -237,20 +240,13 @@ Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:
     Route::get('/', [TeacherTeacherController::class, 'index']);
     Route::view('change/pw', 'teacher.changepw')->name('changepw');
     Route::resource('mycourses', MyCoursesController::class);
+    Route::resource('attendance', AttendanceController::class);
     Route::resource('assessment', AssessmentController::class);
-    Route::get('assessment/pdf/{id}', [AssessmentController::class, 'pdf']);
+    Route::get('assessment/{allocation}/preview', [AssessmentController::class, 'preview'])->name('assessment.preview');
 
     Route::resource('formative', FormativeController::class);
     Route::resource('summative', SummativeController::class);
 
-    Route::resource('fresh_formative', FreshFormativeController::class);
-    Route::resource('fresh_summative', FreshSummativeController::class);
-    Route::resource('reappear_formative', ReappearFormativeController::class);
-    Route::resource('reappear_summative', ReappearSummativeController::class);
-
-    Route::resource('first_attempts', FirstAttemptController::class);
-
-
-    Route::get('teacher/award', [TeacherAwardController::class, 'index']);
-    Route::get('teacher/award/{course}/pdf', [PdfController::class, 'award'])->name('teacher.award');
+    Route::get('award', [TeacherAwardController::class, 'index'])->name('award');
+    Route::get('award/{allocation}/pdf', [PdfController::class, 'award'])->name('award.pdf');
 });

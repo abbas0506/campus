@@ -1,13 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\teacher;
+namespace App\Http\Controllers\hod;
 
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
-use AgliPanci\LaravelCase\Query\CaseBuilder;
-use App\Models\FirstAttempt;
-use Exception;
 use Illuminate\Http\Request;
 
 class AssessmentController extends Controller
@@ -20,7 +16,29 @@ class AssessmentController extends Controller
     public function index()
     {
         //
+        // $course_allocations = CourseAllocation::where('semester_id', session('semester_id'))
+        //     // ->whereRelation('section.clas.program.department', 'department_id', session('department_id'))
+        //     ->whereNotNull('course_id')
+        //     ->whereNotNull('teacher_id')
+        //     ->join('sections', 'section_id', 'sections.id')
+        //     ->join('clases', 'clas_id', 'clases.id')
+        //     ->join('programs', 'program_id', 'programs.id')
+        //     ->orderBy('programs.id')
+        //     ->get();
 
+        $course_allocations = CourseAllocation::Join('sections', 'section_id', 'sections.id')
+            ->Join('clas', 'clas_id', 'clas.id')
+            ->join('programs', 'program_id', 'programs.id')
+            ->where('semester_id', session('semester_id'))
+            ->whereNotNull('course_id')
+            ->whereNotNull('teacher_id')
+            ->orderBY('programs.id')
+            ->orderBY('clas.id')
+            ->orderBY('sections.name')
+            // ->orderBy('course_allocations.submitted_at', 'desc')
+            ->get();
+
+        return view('hod.course-allocations.assessment.index', compact('course_allocations'));
     }
 
     /**
@@ -52,9 +70,7 @@ class AssessmentController extends Controller
      */
     public function show($id)
     {
-
-        $course_allocation = CourseAllocation::findOrFail($id);
-        return view('teacher.assessment.index', compact('course_allocation'));
+        //
     }
 
     /**
@@ -65,9 +81,7 @@ class AssessmentController extends Controller
      */
     public function edit($id)
     {
-        //final submission
-        $course_allocation = CourseAllocation::find($id);
-        return view('teacher.assessment.edit', compact('course_allocation'));
+        //
     }
 
     /**
@@ -80,15 +94,6 @@ class AssessmentController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $course_allocation = CourseAllocation::findOrFail($id);
-        try {
-            $course_allocation->submitted_at = now();
-            $course_allocation->update();
-            return redirect()->route('teacher.mycourses.index', $course_allocation)->with('success', "Successfully updated");
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return redirect()->back()->withErrors($ex->getMessage());
-        }
     }
 
     /**
@@ -100,14 +105,5 @@ class AssessmentController extends Controller
     public function destroy($id)
     {
         //
-    }
-    public function preview($id)
-    {
-        $course_allocation = CourseAllocation::find($id);
-        //if phd
-        if ($course_allocation->section->clas->program->level == 21)
-            return view('teacher.assessment.phd.preview', compact('course_allocation'));
-        else
-            return view('teacher.assessment.bsms.preview', compact('course_allocation'));
     }
 }

@@ -3,7 +3,7 @@
 <div class="container">
     <div class="flex flex-wrap justify-between items-center">
         <div>
-            <h2>Summative Assessment</h2>
+            <h2>Attendance</h2>
             <div class="bread-crumb">
                 <a href="{{route('teacher.assessment.show', $course_allocation)}}">Cancel & Go Back</a>
             </div>
@@ -53,7 +53,7 @@
     $sr=1;
     @endphp
     <!-- fresh students -->
-    <form action="{{route('teacher.summative.update', $course_allocation)}}" method="POST" class='mt-4' onsubmit="return validateBeforeSubmit(event)">
+    <form action="{{route('teacher.attendance.update', $course_allocation)}}" method="POST" class='mt-4' onsubmit="return validateBeforeSubmit(event)">
         @csrf
         @method('PATCH')
 
@@ -65,7 +65,7 @@
                         <th class="w-8"></th>
                         <th class="w-48 text-left">Name</th>
                         <th class="w-48 text-left">Father</th>
-                        <th class="w-20">Summative<br> <span class="font-thin">(50%)</span></th>
+                        <th class="w-20">Attendance <br> <span class="font-thin">(2%)</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,23 +80,19 @@
                         </td>
                         <td class="text-left">{{$first_attempt->student->name}}<br>{{$first_attempt->student->rollno}}</td>
                         <td class="text-left">{{$first_attempt->student->father}}</td>
-
-                        @if($first_attempt->formative()>=25)
                         <td hidden><input type="text" name='id[]' value="{{$first_attempt->id}}"></td>
                         <td hidden><input type="text" name='attempt_type[]' value="F"></td>
                         <td>
-                            <input type='text' name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->summative}}" placeholder="absent" onchange="validate(event,50)">
+                            <input type='text' name='attendance[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->attendance}}" placeholder="absent" onchange="validate(event,100)">
                         </td>
-                        @else
-                        <td></td>
-                        @endif
+
                     </tr>
                     @endforeach
 
                     <!-- reappear -->
                     @foreach($course_allocation->reappears_sorted() as $reappear)
                     <tr class="tr">
-                        <td class="text-red-800">{{$sr++}}</td>
+                        <td class="text-slate-400">{{$sr++}}</td>
                         <td>
                             @if($reappear->first_attempt->student->gender=='M')
                             <i class="bx bx-male text-teal-600 text-lg"></i>
@@ -106,22 +102,17 @@
                         </td>
                         <td class="text-left">{{$reappear->first_attempt->student->name}}<br>{{$reappear->first_attempt->student->rollno}}</td>
                         <td>{{$reappear->first_attempt->student->father}}</td>
-                        @if($reappear->formative()>=25)
                         <td hidden><input type="text" name='id[]' value="{{$reappear->id}}"></td>
                         <td hidden><input type="text" name='attempt_type[]' value="R"></td>
                         <td>
-                            <input type='text' name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->summative}}" placeholder="absent" onchange="validate(event,50)">
+                            <input type='text' name='attendance[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->attendance}}" placeholder="absent" onchange="validate(event,100)">
                         </td>
-                        @else
-                        <td></td>
-                        @endif
-
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <button type="submit" class="btn-teal mt-4 float-right">Save Result</button>
+        <button type="submit" class="btn-teal mt-4 float-right">Save Attendance</button>
     </form>
 
 </div>
