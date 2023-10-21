@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\hod;
+namespace App\Http\Controllers\internal;
 
 use App\Http\Controllers\Controller;
-use App\Models\Notification;
-use Exception;
+use App\Models\CourseAllocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class NotificationCotroller extends Controller
+class AssessmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +16,14 @@ class NotificationCotroller extends Controller
      */
     public function index()
     {
-        //
-        $notifications = Auth::user()->notifications_received()->unread()
-            ->where('receiver_role', 'hod')
+        //retrieve only internal related course allocations
+        $course_allocations = CourseAllocation::where('semester_id', session('semester_id'))
+            ->whereRelation('section.clas.program', 'internal_id', Auth::user()->id)
+            ->whereNotNull('course_id')
+            ->whereNotNull('teacher_id')
             ->get();
-        return view('hod.notifications.index', compact('notifications'));
+
+        return view('internal.assessment.index', compact('course_allocations'));
     }
 
     /**
@@ -77,19 +79,6 @@ class NotificationCotroller extends Controller
     public function update(Request $request, $id)
     {
         //
-        $request->validate([
-            'is_read' => 'required|boolean',
-        ]);
-
-        try {
-
-            $notification = Notification::find($id);
-            $notification->is_read = 1;
-            $notification->update();
-            return redirect()->route('hod.notifications.index')->with('success', 'Successfully updated');;
-        } catch (Exception $ex) {
-            return redirect()->back()->withErrors($ex->getMessage());
-        }
     }
 
     /**

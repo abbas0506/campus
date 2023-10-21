@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\hod;
+namespace App\Http\Controllers\internal;
 
 use App\Http\Controllers\Controller;
-use App\Models\Notification;
-use Exception;
+use App\Models\Department;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class NotificationCotroller extends Controller
+class InternalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +16,8 @@ class NotificationCotroller extends Controller
     public function index()
     {
         //
-        $notifications = Auth::user()->notifications_received()->unread()
-            ->where('receiver_role', 'hod')
-            ->get();
-        return view('hod.notifications.index', compact('notifications'));
+        $department = Department::find(session('department_id'));
+        return view('internal.index', compact('department'));
     }
 
     /**
@@ -77,19 +73,6 @@ class NotificationCotroller extends Controller
     public function update(Request $request, $id)
     {
         //
-        $request->validate([
-            'is_read' => 'required|boolean',
-        ]);
-
-        try {
-
-            $notification = Notification::find($id);
-            $notification->is_read = 1;
-            $notification->update();
-            return redirect()->route('hod.notifications.index')->with('success', 'Successfully updated');;
-        } catch (Exception $ex) {
-            return redirect()->back()->withErrors($ex->getMessage());
-        }
     }
 
     /**

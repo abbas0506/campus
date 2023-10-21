@@ -16,15 +16,18 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sender_id');
-            $table->unsignedBigInteger('sender_role_id');
+            $table->string('sender_role')->nullable();
 
             $table->unsignedBigInteger('receiver_id');
-            $table->unsignedBigInteger('receiver_role_id');
+            $table->string('receiver_role')->nullable();
 
             $table->string('message');
-            $table->boolean('is_active');
+            $table->boolean('is_read')->default(0);
 
             $table->timestamps();
+
+            $table->foreign('sender_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('receiver_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

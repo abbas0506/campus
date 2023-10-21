@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\hod;
+namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
@@ -19,9 +19,9 @@ class NotificationCotroller extends Controller
     {
         //
         $notifications = Auth::user()->notifications_received()->unread()
-            ->where('receiver_role', 'hod')
+            ->where('receiver_role', 'teacher')
             ->get();
-        return view('hod.notifications.index', compact('notifications'));
+        return view('teacher.notifications.index', compact('notifications'));
     }
 
     /**
@@ -77,16 +77,12 @@ class NotificationCotroller extends Controller
     public function update(Request $request, $id)
     {
         //
-        $request->validate([
-            'is_read' => 'required|boolean',
-        ]);
-
         try {
 
             $notification = Notification::find($id);
             $notification->is_read = 1;
             $notification->update();
-            return redirect()->route('hod.notifications.index')->with('success', 'Successfully updated');;
+            return redirect()->route('teacher.notifications.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }

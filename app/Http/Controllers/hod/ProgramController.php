@@ -212,12 +212,28 @@ class ProgramController extends Controller
         $request->validate([
             'internal_id' => 'required|numeric',
         ]);
-
+        $user = User::find($request->internal_id);
+        DB::beginTransaction();
         try {
             $program = Program::findOrFail($id);
-            $program->update($request->all());
+            //update existing internal status
+            //if he performs somewhere else as internal, keep him as internal
+            if ($program->internal) {
+                if ($program->internal->intern_programs->count() == 1)
+                    $program->internal->removeRole('internal');
+            }
+
+            // replace by recently selected internal id
+            $program->internal_id = $request->internal_id;
+            $program->update();
+
+            if (!$user->hasRole('internal')) {
+                $user->assignRole('internal');
+            }
+            DB::commit();
             return redirect()->route('hod.programs.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
+            DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
         }
     }

@@ -38,6 +38,12 @@ class AjaxController extends Controller
             foreach ($headships as $headship) {
                 $options .= "<option value='" . $headship->department->id . "'>" . $headship->department->name . "</option>";
             }
+        } elseif ($request->role == 'internal') {
+            // return departments headed by the user
+            $departments = $user->intern_departments()->get();
+            foreach ($departments as $department) {
+                $options .= "<option value='" . $department->id . "'>" . $department->name . "</option>";
+            }
         } elseif ($request->role == 'teacher') {
             // 
             $departments = $user->teaching_departments();

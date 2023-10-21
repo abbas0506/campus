@@ -28,6 +28,13 @@
                     <i class="bx bx-chevron-down"></i>
                 </label>
 
+                <a href="{{route('teacher.notifications.index')}}" class="relative">
+                    <i class="bi-bell"></i>
+                    @if(Auth::user()->notifications_received()->unread()->count()>0)
+                    <div class="absolute top-0 right-0 w-2 h-2 rounded-full bg-orange-400"></div>
+                    @endif
+                </a>
+
                 <div class="hidden md:flex rounded-full bg-indigo-300 text-indigo-800 p-2" id='current-user-avatar'>
                     <i class="bx bx-user"></i>
                 </div>

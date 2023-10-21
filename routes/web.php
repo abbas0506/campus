@@ -42,12 +42,15 @@ use App\Http\Controllers\hod\EnrollmentController;
 use App\Http\Controllers\hod\FirstAttemptController as HodFirstAttemptController;
 use App\Http\Controllers\hod\HodController;
 use App\Http\Controllers\hod\InternalController;
+use App\Http\Controllers\hod\NotificationCotroller;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SemesterPlanController;
 use App\Http\Controllers\hod\SlotController;
 use App\Http\Controllers\hod\SlotOptionController;
 use App\Http\Controllers\hod\StruckOffController;
 use App\Http\Controllers\hod\StudentStatusController;
+use App\Http\Controllers\internal\AssessmentController as InternalAssessmentController;
+use App\Http\Controllers\internal\InternalController as InternalInternalController;
 use App\Http\Controllers\MyExceptionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\teacher\AssessmentController;
@@ -58,7 +61,7 @@ use App\Http\Controllers\teacher\FormativeController;
 use App\Http\Controllers\teacher\FreshFormativeController;
 use App\Http\Controllers\teacher\FreshSummativeController;
 use App\Http\Controllers\teacher\MyCoursesController;
-
+use App\Http\Controllers\teacher\NotificationCotroller as TeacherNotificationCotroller;
 use App\Http\Controllers\teacher\ReappearFormativeController;
 use App\Http\Controllers\teacher\ReappearSummativeController;
 use App\Http\Controllers\teacher\SummativeController;
@@ -161,7 +164,7 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
 
     Route::resource('programs', ProgramController::class);
     Route::get('programs/{program}/internal', [ProgramController::class, 'internal'])->name('programs.internal');
-    Route::patch('programs/{program}internal/update', [ProgramController::class, 'updateInternal'])->name('programs.internal.update');
+    Route::patch('programs/{program}/internal/update', [ProgramController::class, 'updateInternal'])->name('programs.internal.update');
 
     Route::get('programs/{program}/schemes/add', [ProgramController::class, 'scheme'])->name('programs.schemes.add');
     Route::post('programs/schemes/add', [ProgramController::class, 'addScheme'])->name('programs.schemes.store');
@@ -188,8 +191,14 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('semester-plan/{semester}/pdf', [SemesterPlanController::class, 'pdf'])->name('semester-plan.pdf');
 
     Route::resource('course-allocations', CourseAllocationController::class);
+    Route::resource('notifications', NotificationCotroller::class);
+    Route::post('notifications/mark/as/read', [NotificationCotroller::class, 'markAsRead'])->name('notifications.mark');
     Route::get('course-allocations/{allocation}/assign/courses', [CourseAllocationController::class, 'courses'])->name('course-allocations.courses');
     Route::get('course-allocations/{allocation}/assign/teachers', [CourseAllocationController::class, 'teachers'])->name('course-allocations.teachers');
+
+    Route::resource('assessment', HodAssessmentController::class);
+    Route::post('assessment/missing/notify', [HodAssessmentController::class, 'notifyMissing'])->name('assessment.missing.notify');
+    Route::patch('assessment/{allocation}/unlock', [HodAssessmentController::class, 'unlock'])->name('assessment.unlock');
 
     Route::resource('allow-deny-attempt', AttemptPermissionController::class)->only('update');
 
@@ -210,7 +219,7 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::post('course-allocations/reappear/post', [EnrollmentController::class, 'enrollReappear'])->name('course-allocations.enrollment.reappear.post');
     Route::delete('course-allocations/fresh/destroy/{attempt}', [EnrollmentController::class, 'destroyFresh'])->name('course-allocations.enrollment.fresh.destroy');
     Route::delete('course-allocations/reappear/destory/{attempt}', [EnrollmentController::class, 'destroyReappear'])->name('course-allocations.enrollment.reappear.destroy');
-    Route::resource('assessment', HodAssessmentController::class);
+
 
     Route::post('search-reappear-data', [EnrollmentController::class, 'searchReappearData'])->name('search.reappear.data');
 
@@ -220,6 +229,7 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('sections/{section}/students/feed', [StudentController::class, 'feed'])->name('students.feed');
     Route::get('sections/{section}/students/excel', [StudentController::class, 'excel'])->name('students.excel');
     Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
+
 
     Route::view('printable', 'hod.printable.index');
     Route::get('award/index', [AwardController::class, 'index'])->name('award.index');
@@ -243,10 +253,40 @@ Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:
     Route::resource('attendance', AttendanceController::class);
     Route::resource('assessment', AssessmentController::class);
     Route::get('assessment/{allocation}/preview', [AssessmentController::class, 'preview'])->name('assessment.preview');
-
+    Route::resource('notifications', TeacherNotificationCotroller::class);
     Route::resource('formative', FormativeController::class);
     Route::resource('summative', SummativeController::class);
 
     Route::get('award', [TeacherAwardController::class, 'index'])->name('award');
     Route::get('award/{allocation}/pdf', [PdfController::class, 'award'])->name('award.pdf');
+});
+
+Route::group(['prefix' => 'internal', 'as' => 'internal.', 'middleware' => ['role:super|internal', 'my_exception_handler']], function () {
+    Route::get('/', [InternalInternalController::class, 'index']);
+    // Route::view('change/pw', 'internal.changepw')->name('changepw');
+
+    Route::resource('notifications', NotificationCotroller::class);
+    Route::post('notifications/mark/as/read', [NotificationCotroller::class, 'markAsRead'])->name('notifications.mark');
+    Route::resource('assessment', InternalAssessmentController::class);
+    Route::post('assessment/missing/notify', [HodAssessmentController::class, 'notifyMissing'])->name('assessment.missing.notify');
+    Route::patch('assessment/{allocation}/unlock', [HodAssessmentController::class, 'unlock'])->name('assessment.unlock');
+
+
+    Route::post('search-reappear-data', [EnrollmentController::class, 'searchReappearData'])->name('search.reappear.data');
+
+    Route::resource('students', StudentController::class);
+    Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
+
+    Route::view('printable', 'hod.printable.index');
+    Route::get('award/index', [AwardController::class, 'index'])->name('award.index');
+    Route::get('award/{section}/courses', [AwardController::class, 'courses'])->name('award.courses');
+    Route::get('award/{allocation}/pdf', [PdfController::class, 'award'])->name('award.pdf');
+    Route::get('award/{allocation}/export', [AwardController::class, 'export'])->name('award.export');
+
+    Route::get('gazette/index', [GazetteController::class, 'index'])->name('gazette.index');
+    Route::get('gazette/{section}/preview', [GazetteController::class, 'preview'])->name('gazette.preview');
+    Route::get('gazette/{section}/pdf', [PdfController::class, 'gazette'])->name('gazette.pdf');
+
+    Route::get('cumulative/index', [CumulativeController::class, 'index'])->name('cumulative.index');
+    Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');
 });

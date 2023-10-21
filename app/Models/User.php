@@ -66,6 +66,14 @@ class User extends Authenticatable
     {
         return  $this->hasMany(Headship::class);
     }
+    public function intern_programs()
+    {
+        return $this->hasMany(Program::class, 'internal_id');
+    }
+    public function intern_departments()
+    {
+        return Department::whereRelation('programs.internal', 'internal_id', $this->id);
+    }
     public function teacher()
     {
         return  $this->hasOne(Teacher::class);
@@ -78,6 +86,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(CourseAllocation::class, 'teacher_id')
             ->where('semester_id', session('semester_id'));
+    }
+    public function notifications_sent()
+    {
+        return $this->hasMany(Notification::class, 'sender_id');
+    }
+    public function notifications_received()
+    {
+        return $this->hasMany(Notification::class, 'receiver_id');
     }
     public function teaching_departments()
     {

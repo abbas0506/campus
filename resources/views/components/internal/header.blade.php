@@ -1,13 +1,13 @@
 <header>
     <div class="flex flex-wrap w-full h-16 items-center justify-between">
         <div class="flex items-center">
-            <a href="{{url('hod')}}">
+            <a href="{{url('internal')}}">
                 <img alt="logo" src="{{asset('/images/logo/logo.png')}}" class="w-20 md:w-24">
             </a>
             <div class="hidden md:flex text-base md:text-xl font-semibold">Examination System</div>
             <div class="hidden md:flex px-1 md:px-4">|</div>
             <div class="text-sm flex items-center space-x-2">
-                <div>HOD {{Str::replace('Department of', '', App\Models\Department::find(session('department_id'))->name)}}</div>
+                <div>Internal {{Str::replace('Department of', '', App\Models\Department::find(session('department_id'))->name)}}</div>
                 <i class="bi bi-chevron-right text-[10px]"></i>
                 @if(Auth::user()->hasRole('super'))
                 <form action="{{route('switch.semester')}}" method="post" id='switchSemesterForm'>

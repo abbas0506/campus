@@ -19,7 +19,7 @@ class MyExceptionHandler
     {
         if (!session('current_role'))
             return redirect()->route('exception.show', 1);
-        elseif (session('current_role') == 'hod' || session('current_role') == 'super') {
+        elseif (session('current_role') == 'hod' || session('current_role') == 'super' || session('current_role') == 'internal') {
             if (!session('department_id'))
                 return redirect()->route('exception.show', 2);
             if (!session('semester_id'))

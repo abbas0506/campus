@@ -19,10 +19,10 @@
                 <input type="checkbox" id='toggle-current-user-dropdown' hidden>
                 <label for="toggle-current-user-dropdown" class="hidden md:flex items-center">
                     <div class="">{{auth()->user()->name}}</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mx-2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                    </svg>
+                    <i class="bi-chevron-down"></i>
                 </label>
+
+
 
                 <div class="hidden md:flex rounded-full bg-indigo-300 text-indigo-800 p-2" id='current-user-avatar'>
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" class="w-5 h-5" viewBox="0 0 24 24">

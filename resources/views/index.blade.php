@@ -51,7 +51,7 @@
         <form action="{{route('login.as')}}" method='post' class="w-full mt-2" onsubmit="return validate(event)">
             @csrf
             <select id="role" name="role" class="custom-input px-4 w-full py-0 mt-3 bg-transparent" onchange="loadDepartments()">
-                @if(Auth::user()->hasAnyRole('hod','teacher','super'))
+                @if(Auth::user()->hasAnyRole('super','hod','internal','teacher'))
                 <option value="" class="py-0">Please select a role</option>
                 @endif
                 @foreach(Auth::user()->roles as $role)
@@ -109,7 +109,7 @@
         //token for ajax call
         var token = $("meta[name='csrf-token']").attr("content");
         var role = $('#role').val();
-        if (role == 'hod' || role == 'super') {
+        if (role == 'super' || role == 'hod' || role == 'internal') {
             //fetch concerned department by role
             $.ajax({
                 type: 'POST',
@@ -159,7 +159,7 @@
                 timer: 1500,
             })
 
-        } else if (role == 'hod' || role == 'teacher') {
+        } else if (role == 'hod' || role == 'teacher' || role == 'internal') {
             //semester required for both
             if (semester == '') {
                 validated = false;
