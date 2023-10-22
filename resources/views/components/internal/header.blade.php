@@ -8,7 +8,7 @@
             <div class="hidden md:flex px-1 md:px-4">|</div>
             <div class="text-sm flex items-center space-x-2">
                 <div>Internal {{Str::replace('Department of', '', App\Models\Department::find(session('department_id'))->name)}}</div>
-                <i class="bi bi-chevron-right text-[10px]"></i>
+                <i class="bx bx-chevron-right"></i>
                 @if(Auth::user()->hasRole('super'))
                 <form action="{{route('switch.semester')}}" method="post" id='switchSemesterForm'>
                     @csrf
@@ -33,7 +33,7 @@
                 <i class="bx bx-chevron-down"></i>
             </label>
 
-            <a href="{{route('hod.notifications.index')}}" class="relative">
+            <a href="{{route('internal.notifications.index')}}" class="relative">
                 <i class="bi-bell"></i>
                 @if(Auth::user()->notifications_received()->unread()->count()>0)
                 <div class="absolute top-0 right-0 w-2 h-2 rounded-full bg-orange-400"></div>

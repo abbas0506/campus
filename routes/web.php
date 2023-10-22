@@ -51,6 +51,7 @@ use App\Http\Controllers\hod\StruckOffController;
 use App\Http\Controllers\hod\StudentStatusController;
 use App\Http\Controllers\internal\AssessmentController as InternalAssessmentController;
 use App\Http\Controllers\internal\InternalController as InternalInternalController;
+use App\Http\Controllers\internal\NotificationCotroller as InternalNotificationCotroller;
 use App\Http\Controllers\MyExceptionController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\teacher\AssessmentController;
@@ -98,8 +99,9 @@ Route::get('/{url?}', function () {
 })->where('url', ('login|signin|index'));
 
 
-Route::view('changepw', 'changepw');
-Route::patch('changepw/{id}', [AuthController::class, 'update']);
+Route::get('change-pw', [AuthController::class, 'editPassword'])->name('edit.pw');
+Route::patch('change-pw/{id}', [AuthController::class, 'changePassword'])->name('change.pw');
+
 Route::view('two/fa', 'two_fa');
 Route::view('forgot/password', 'forgot_password');
 Route::resource('resetpassword', ResetPasswordController::class);
@@ -263,13 +265,15 @@ Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:
 
 Route::group(['prefix' => 'internal', 'as' => 'internal.', 'middleware' => ['role:super|internal', 'my_exception_handler']], function () {
     Route::get('/', [InternalInternalController::class, 'index']);
-    // Route::view('change/pw', 'internal.changepw')->name('changepw');
+    Route::resource('notifications', InternalNotificationCotroller::class);
+    Route::post('notifications/mark/as/read', [InternalNotificationCotroller::class, 'markAsRead'])->name('notifications.mark');
 
-    Route::resource('notifications', NotificationCotroller::class);
-    Route::post('notifications/mark/as/read', [NotificationCotroller::class, 'markAsRead'])->name('notifications.mark');
     Route::resource('assessment', InternalAssessmentController::class);
-    Route::post('assessment/missing/notify', [HodAssessmentController::class, 'notifyMissing'])->name('assessment.missing.notify');
-    Route::patch('assessment/{allocation}/unlock', [HodAssessmentController::class, 'unlock'])->name('assessment.unlock');
+    Route::post('assessment/missing/notify', [InternalAssessmentController::class, 'notifyMissing'])->name('assessment.missing.notify');
+
+    Route::get('assessment/view/pending', [InternalAssessmentController::class, 'pending'])->name('assessment.pending');
+    Route::get('assessment/view/submitted', [InternalAssessmentController::class, 'submitted'])->name('assessment.submitted');
+    Route::get('assessment/{allocation}/pdf', [InternalAssessmentController::class, 'pdf'])->name('assessment.pdf');
 
 
     Route::post('search-reappear-data', [EnrollmentController::class, 'searchReappearData'])->name('search.reappear.data');

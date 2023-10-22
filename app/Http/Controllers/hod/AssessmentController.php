@@ -122,7 +122,7 @@ class AssessmentController extends Controller
                     'sender_role' => 'hod',
                     'receiver_id' => $course_allocation->teacher->id,
                     'receiver_role' => 'teacher',
-                    'message' => 'Reminder: The result of ' . $course_allocation->course->code . ' entitled to ' . $course_allocation->course->name . ' (' . $course_allocation->section->title() . ') is still pending. Please submit it as early as possible',
+                    'message' => 'Reminder: The result of ' . $course_allocation->course->code . ' entitled to ' . $course_allocation->course->name . ' (' . $course_allocation->section->title() . ') is still pending. Please submit it at earlier',
                 ]);
             }
 

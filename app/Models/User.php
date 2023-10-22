@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Mail\SendTwoFaCodeMail;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -66,14 +67,33 @@ class User extends Authenticatable
     {
         return  $this->hasMany(Headship::class);
     }
+
     public function intern_programs()
     {
         return $this->hasMany(Program::class, 'internal_id');
+    }
+    public function intern_students_count()
+    {
+        $count = 0;
+        foreach ($this->intern_course_allocations()->get() as $allocation) {
+            $count += $allocation->first_attempts->count();
+        }
+        return $count;
     }
     public function intern_departments()
     {
         return Department::whereRelation('programs.internal', 'internal_id', $this->id);
     }
+
+    public function intern_course_allocations()
+    {
+        return CourseAllocation::where('semester_id', session('semester_id'))
+            ->whereRelation('course', 'department_id', session('department_id'))
+            ->whereRelation('section.clas.program', 'internal_id', $this->id)
+            ->whereNotNull('course_id')
+            ->whereNotNull('teacher_id');
+    }
+
     public function teacher()
     {
         return  $this->hasOne(Teacher::class);

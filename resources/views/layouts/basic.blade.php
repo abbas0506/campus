@@ -29,6 +29,7 @@
     @yield('body')
 
     <script src="{{asset('js/sweetalert2@10.js')}}"></script>
+    <script src="{{asset('js/toast.js')}}"></script>
     <script type="module" src="{{asset('js/collapsible.js')}}"></script>
 
     @yield('script')

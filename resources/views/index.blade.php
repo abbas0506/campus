@@ -71,7 +71,7 @@
                 <select id="semester_id" name="semester_id" class="custom-input px-4 py-3 w-full">
                     <option value="">Select a semester</option>
                     @foreach($semesters as $semester)
-                    <option value="{{$semester->id}}">{{$semester->short()}}</option>
+                    <option value="{{$semester->id}}">{{$semester->title()}}</option>
                     @endforeach
                 </select>
             </div>

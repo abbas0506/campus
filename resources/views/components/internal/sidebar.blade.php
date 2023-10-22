@@ -10,15 +10,9 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('internal.assessment.index')}}" class="flex items-center p-2">
+                <a href="{{route('internal.assessment.submitted')}}" class="flex items-center p-2">
                     <i class="bi-clipboard2-pulse"></i>
                     <span class="ml-3">Assessment</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{url('hod/printable')}}" class="flex items-center p-2">
-                    <i class="bi bi-printer"></i>
-                    <span class="ml-3">Print / Download</span>
                 </a>
             </li>
             <li class="md:hidden">

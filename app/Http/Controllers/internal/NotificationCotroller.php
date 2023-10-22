@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\internal;
 
 use App\Http\Controllers\Controller;
-use App\Models\Department;
+use App\Models\Notification;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class InternalController extends Controller
+class NotificationCotroller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +18,10 @@ class InternalController extends Controller
     public function index()
     {
         //
-        $user = Auth::user();
-        $department = Department::find(session('department_id'));
-        return view('internal.index', compact('user', 'department'));
+        $notifications = Auth::user()->notifications_received()->unread()
+            ->where('receiver_role', 'internal')
+            ->get();
+        return view('internal.notifications.index', compact('notifications'));
     }
 
     /**
@@ -75,6 +77,19 @@ class InternalController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'is_read' => 'required|boolean',
+        ]);
+
+        try {
+
+            $notification = Notification::find($id);
+            $notification->is_read = 1;
+            $notification->update();
+            return redirect()->back()->with('success', 'Successfully updated');;
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage());
+        }
     }
 
     /**

@@ -154,28 +154,7 @@ class AuthController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $user = User::find($id);
-        //change password process
-        $request->validate([
-            'current' => 'required',
-            'new' => 'required',
-        ]);
 
-        try {
-
-            if (Hash::check($request->current, $user->password)) {
-                $user->password = Hash::make($request->new);
-                $user->save();
-                return redirect()->back()->with('success', 'successfuly changed');
-            } else {
-                //password not found
-                return redirect()->back()->with('warning', 'Oops, something wrong!');;
-            }
-        } catch (Exception $e) {
-            return redirect()->back()
-                ->withErrors($e->getMessage());
-            // something went wrong
-        }
     }
 
     /**
@@ -209,5 +188,38 @@ class AuthController extends Controller
     }
     public function resetPassword(Request $request, $id)
     {
+    }
+
+    public function editPassword()
+    {
+        if (Auth::user())
+            return view('change-pw');
+        else
+            echo "Login required before any password change";
+    }
+    public function changePassword(Request $request, $id)
+    {
+        $user = User::find($id);
+        //change password process
+        $request->validate([
+            'current' => 'required',
+            'new' => 'required',
+        ]);
+
+        try {
+
+            if (Hash::check($request->current, $user->password)) {
+                $user->password = Hash::make($request->new);
+                $user->save();
+                return redirect(session('current_role'))->with('success', 'successfuly changed');
+            } else {
+                //password not found
+                return redirect()->back()->with('warning', 'Oops, something wrong!');;
+            }
+        } catch (Exception $e) {
+            return redirect()->back()
+                ->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 }
