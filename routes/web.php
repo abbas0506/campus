@@ -273,10 +273,10 @@ Route::group(['prefix' => 'internal', 'as' => 'internal.', 'middleware' => ['rol
     Route::post('notifications/mark/as/read', [InternalNotificationCotroller::class, 'markAsRead'])->name('notifications.mark');
 
     Route::resource('assessment', InternalAssessmentController::class);
-    Route::post('assessment/missing/notify', [InternalAssessmentController::class, 'notifyMissing'])->name('assessment.missing.notify');
-    Route::post('assessment/missing/notify/single', [InternalAssessmentController::class, 'notifySingle'])->name('assessment.missing.notify.single');
     Route::get('assessment/view/pending', [InternalAssessmentController::class, 'pending'])->name('assessment.pending');
     Route::get('assessment/view/submitted', [InternalAssessmentController::class, 'submitted'])->name('assessment.submitted');
+    Route::post('assessment/missing/notify/all', [InternalAssessmentController::class, 'notifyMissing'])->name('assessment.missing.notify');
+    Route::post('assessment/missing/notify/single', [InternalAssessmentController::class, 'notifySingle'])->name('assessment.missing.notify.single');
     Route::get('assessment/{allocation}/pdf', [InternalAssessmentController::class, 'pdf'])->name('assessment.pdf');
 
 
