@@ -18,7 +18,7 @@ class FirstAttempt extends Model
         'presentation',
         'midterm',
         'summative',
-        'is_active',
+        'can_apear',    // 0 if struck of from this course 
 
     ];
     public function student()

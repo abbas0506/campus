@@ -41,13 +41,15 @@ use App\Http\Controllers\hod\CumulativeController;
 use App\Http\Controllers\hod\EnrollmentController;
 use App\Http\Controllers\hod\FirstAttemptController as HodFirstAttemptController;
 use App\Http\Controllers\hod\HodController;
-use App\Http\Controllers\hod\InternalController;
 use App\Http\Controllers\hod\NotificationCotroller;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SemesterPlanController;
 use App\Http\Controllers\hod\SlotController;
 use App\Http\Controllers\hod\SlotOptionController;
 use App\Http\Controllers\hod\StruckOffController;
+use App\Http\Controllers\hod\students\MovementController;
+use App\Http\Controllers\hod\students\ResumptionController;
+use App\Http\Controllers\hod\students\SuspensionController;
 use App\Http\Controllers\hod\StudentStatusController;
 use App\Http\Controllers\internal\AssessmentController as InternalAssessmentController;
 use App\Http\Controllers\internal\InternalController as InternalInternalController;
@@ -57,14 +59,9 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\teacher\AssessmentController;
 use App\Http\Controllers\teacher\AttendanceController;
 use App\Http\Controllers\teacher\AwardController as TeacherAwardController;
-use App\Http\Controllers\teacher\FirstAttemptController;
 use App\Http\Controllers\teacher\FormativeController;
-use App\Http\Controllers\teacher\FreshFormativeController;
-use App\Http\Controllers\teacher\FreshSummativeController;
 use App\Http\Controllers\teacher\MyCoursesController;
 use App\Http\Controllers\teacher\NotificationCotroller as TeacherNotificationCotroller;
-use App\Http\Controllers\teacher\ReappearFormativeController;
-use App\Http\Controllers\teacher\ReappearSummativeController;
 use App\Http\Controllers\teacher\SummativeController;
 
 use App\Http\Controllers\teacher\TeacherController as TeacherTeacherController;
@@ -170,8 +167,6 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::post('programs/schemes/add', [ProgramController::class, 'addScheme'])->name('programs.schemes.store');
 
     Route::resource('teachers', TeacherController::class);
-    Route::resource('internals', InternalController::class)->only('edit', 'update');
-
     Route::resource('schemes', SchemeController::class);
     Route::get('schemes//{id}/append', [SchemeController::class, 'append'])->name('schemes.append');
     Route::get('schemes/{scheme}/pdf', [SchemeController::class, 'pdf'])->name('schemes.pdf');
@@ -218,6 +213,11 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
 
     Route::post('students/deactivate', [StudentStatusController::class, 'deactivate'])->name('students.deactivate');
     Route::post('students/activate', [StudentStatusController::class, 'activate'])->name('students.activate');
+
+    Route::resource('students/movement', MovementController::class);
+    Route::resource('students/suspension', SuspensionController::class);
+    Route::resource('students/resumption', ResumptionController::class);
+
 
     Route::get('course-allocations/{allocation}/fresh', [EnrollmentController::class, 'fresh'])->name('course-allocations.enrollment.fresh');
     Route::get('course-allocations/{allocation}/reappear', [EnrollmentController::class, 'reappear'])->name('course-allocations.enrollment.reappear');

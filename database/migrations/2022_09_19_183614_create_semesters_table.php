@@ -18,8 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('semester_type_id');
             $table->unsignedInteger('year');
             $table->boolean('status')->default(0);
-            $table->timestamps();
+            $table->date('ends_at')->nullable(); //last date of result submission
 
+            $table->timestamps();
             $table->unique(['semester_type_id', 'year']);
             $table->foreign('semester_type_id')->references('id')->on('semester_types')->onDelete('cascade');  //cascade delete
         });

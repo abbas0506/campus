@@ -17,7 +17,8 @@ class StatusSeeder extends Seeder
     {
         //
         Status::create(['name' => 'Active']);   //
-        Status::create(['name' => 'Frozen']);
+        Status::create(['name' => 'Ceased']);
         Status::create(['name' => 'Struck Off']);
+        Status::create(['name' => 'Frozen']);
     }
 }
