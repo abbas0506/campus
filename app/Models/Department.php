@@ -48,13 +48,15 @@ class Department extends Model
     }
     public function students()
     {
-        return Student::whereRelation('section.clas.program', 'department_id', $this->id)->get();
+        return Student::whereRelation('section.clas.program', 'department_id', $this->id);
     }
 
-    public function teacher_course_allocations()
+    public function current_allocations()
     {
-        //current teacher's course allocations 
-        $teacher = Auth::user();
-        return CourseAllocation::whereRelation('section.clas.program', 'teacher_id', $teacher->id)->get();
+        // 
+        return CourseAllocation::whereRelation('course.department', 'id', $this->id)
+            ->where('semester_id', session('semester_id'))
+            ->whereNotNull('course_id')
+            ->whereNotNull('teacher_id');
     }
 }

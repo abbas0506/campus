@@ -46,11 +46,11 @@
 
             <div class="current-user-dropdown text-sm" id='current-user-dropdown'>
 
-                <a href="{{route('hod.changepw')}}" class="flex items-center border-b py-2 px-4">
+                <a href="{{route('passwords.edit')}}" class="flex items-center border-b py-2 px-4">
                     <i class="bx bx-key -rotate-45 mr-3"></i>
                     Change Password
                 </a>
-                <a href="{{url('signout')}}" class="flex items-center border-b py-2 px-4">
+                <a href="{{route('signout')}}" class="flex items-center border-b py-2 px-4">
                     <i class="bx bx-log-out mr-3"></i>
                     Sign Out
                 </a>

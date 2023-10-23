@@ -46,6 +46,7 @@
                     <th class="w-16">Fresh</th>
                     <th class="w-16">Re</th>
                     <th class='w-32'>Submission</th>
+                    <th class="w-8"></th>
                 </tr>
             </thead>
             <tbody>
@@ -65,6 +66,13 @@
                     <td>{{$course_allocation->first_attempts->count()}}</td>
                     <td>{{$course_allocation->reappears->count()}}</td>
                     <td>Pending</td>
+                    <td>
+                        <form action="{{route('internal.assessment.missing.notify.single')}}" class="text-sm" method="post">
+                            @csrf
+                            <input type="hidden" name="course_allocation_id" value="{{$course_allocation->id}}">
+                            <button type="submit" class="text-teal-400 hover:text-orange-500"><i class="bi-bell"></i></button>
+                        </form>
+                    </td>
 
                 </tr>
 

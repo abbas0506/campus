@@ -31,7 +31,6 @@ class CourseAllocation extends Model
     {
         return $this->belongsTo(Section::class);
     }
-    // will be implemented later
     public function slot_option()
     {
         return $this->belongsTo(SlotOption::class);
@@ -52,7 +51,6 @@ class CourseAllocation extends Model
     {
         return $this->section->clas->program->internal;
     }
-
     public function hod()
     {
         return $this->section->clas->program->department->headship->user;
@@ -82,10 +80,7 @@ class CourseAllocation extends Model
     {
         return Reappear::with('first_attempt')->where('course_allocation_id', $this->id)->get()->sortBy('first_attempt.student.rollno');
     }
-    // public function scopeAllocated($query, $no)
-    // {
-    //     return $query->where('semester_id', $no);
-    // }
+
     public function scopeSumOfCreditHrs($query, $id)
     {
         return $query->where('semester_id', $id)->get()->sum(function ($allocation) {
@@ -113,6 +108,7 @@ class CourseAllocation extends Model
         $slot_option_ids = SlotOption::where('slot_id', $slot_id)->pluck('id')->toArray();
         return $query->whereIn('slot_option_id', $slot_option_ids);
     }
+    // find already allocated course by id
     public function scopeContains($query, $course_id)
     {
         return $query->where('course_id', $course_id)->count() > 0 ? true : false;;
@@ -150,5 +146,22 @@ class CourseAllocation extends Model
         else if ($this->verified_at) return "Verified";
         else if ($this->submitted_at) return "Submitted";
         else return "Pending";
+    }
+
+    public function scopeCurrent($query)
+    {
+        return $query->where('semester_id', session('semester_id'));
+    }
+    public function scopeAssigned($query)
+    {
+        return $query->whereNotNull('course_id')->whereNotNull('teacher_id');
+    }
+    public function scopeSubmitted($query)
+    {
+        $query->whereNotNull('submitted_at');
+    }
+    public function scopePending($query)
+    {
+        $query->whereNull('submitted_at');
     }
 }

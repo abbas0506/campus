@@ -4,6 +4,7 @@ namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
 use App\Models\CourseAllocation;
+use App\Models\Department;
 use App\Models\Notification;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,24 +20,8 @@ class AssessmentController extends Controller
      */
     public function index()
     {
-        //
-        // $course_allocations = CourseAllocation::Join('sections', 'section_id', 'sections.id')
-        //     ->Join('clas', 'clas_id', 'clas.id')
-        //     ->join('programs', 'program_id', 'programs.id')
-        //     ->where('semester_id', session('semester_id'))
-        //     ->whereNotNull('course_id')
-        //     ->whereNotNull('teacher_id')
-        //     ->orderBy('programs.id')
-        //     ->orderBy('clas.id')
-        //     ->orderBy('sections.name')
-        //     // ->orderBy('course_allocations.submitted_at', 'desc')
-        //     ->get();
-        $course_allocations = CourseAllocation::where('semester_id', session('semester_id'))
-            ->whereNotNull('course_id')
-            ->whereNotNull('teacher_id')
-            ->get();
-
-        return view('hod.assessment.index', compact('course_allocations'));
+        $department = Department::find(session('department_id'));
+        return view('hod.assessment.index', compact('department'));
     }
 
     /**
@@ -128,7 +113,36 @@ class AssessmentController extends Controller
 
             DB::commit();
 
-            return redirect()->route('hod.assessment.index')->with('success', 'Reminder successfully sent');
+            return redirect()->back()->with('success', 'Reminder successfully sent');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
+    }
+    public function notifySingle(Request $request)
+    {
+        $request->validate([
+            'course_allocation_id' => 'required|numeric',
+
+        ]);
+
+        $course_allocation = CourseAllocation::find($request->course_allocation_id);
+
+        DB::beginTransaction();
+        try {
+
+            Notification::create([
+                'sender_id' => Auth::user()->id,
+                'sender_role' => 'hod',
+                'receiver_id' => $course_allocation->teacher->id,
+                'receiver_role' => 'teacher',
+                'message' => 'Reminder: The result of ' . $course_allocation->course->code . ' entitled to ' . $course_allocation->course->name . ' (' . $course_allocation->section->title() . ') is still pending. Please submit it at earlier',
+            ]);
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Reminder successfully sent');
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors($e->getMessage());
@@ -146,5 +160,16 @@ class AssessmentController extends Controller
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
         }
+    }
+
+    public function submitted()
+    {
+        $department = Department::find(session('department_id'));
+        return view('hod.assessment.submitted', compact('department'));
+    }
+    public function pending()
+    {
+        $department = Department::find(session('department_id'));
+        return view('hod.assessment.pending', compact('department'));
     }
 }

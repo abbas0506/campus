@@ -36,7 +36,7 @@
                         <i class="bi bi-eye absolute right-5 eye hidden" onclick="hidepw()"></i>
                     </div>
                     <div class="flex justify-end w-full mt-1">
-                        <a href="{{url('forgot/password')}}" class="link text-slate-700 float-right text-xs">Forgot password?</a>
+                        <a href="{{route('passwords.forgot')}}" class="link text-slate-700 float-right text-xs">Forgot password?</a>
                     </div>
                     <button type="submit" class="w-full mt-4 btn-indigo p-2">Login</button>
 

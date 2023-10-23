@@ -15,7 +15,7 @@
         <x-message></x-message>
         @endif
 
-        <form action="{{route('change.pw', Auth::user()->id)}}" method="post" class="flex flex-col mt-4" onsubmit="return validate(event)">
+        <form action="{{route('passwords.change', Auth::user()->id)}}" method="post" class="flex flex-col mt-4" onsubmit="return validate(event)">
             @csrf
             @method('PATCH')
 

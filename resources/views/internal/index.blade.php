@@ -9,6 +9,8 @@
             <div class="bread-crumb">
                 <div>Internal</div>
                 <div>/</div>
+                <div>{{Str::replace('Department of', '', App\Models\Department::find(session('department_id'))->name)}}</div>
+                <div>/</div>
                 <div>Home</div>
             </div>
         </div>
@@ -62,12 +64,56 @@
         </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 mt-8 gap-6">
         <!-- middle panel  -->
-        <div class="md:col-span-2">
-            <!-- update news  -->
-            <div class="p-4 bg-red-50">
+        <div class="lg:col-span-2">
+            <div class="p-4 bg-slate-50">
+                <h2>Programs</h2>
+                <ul class="flex flex-wrap space-x-4 text-sm">
+                    @foreach($user->intern_programs()->get() as $program)
+                    <li>{{ $program->name }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="p-4 bg-slate-50 mt-4">
+                <h2>Today's Activity</h2>
+                <div class="overflow-x-auto mt-2">
+                    <table class="table-fixed w-full text-sm">
+                        <thead>
+                            <tr class="text-xs">
+                                <th class="w-40">Class</th>
+                                <th class="w-60">Course Name</th>
+                                <th class='w-24'>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $last_section_id='';
+                            @endphp
 
+
+                            @foreach($user->intern_course_allocations()->get()->whereNotNull('submitted_at') as $course_allocation)
+                            <tr class="tr text-xs">
+                                <td>
+                                    @if($last_section_id!=$course_allocation->section->id)
+                                    {{$course_allocation->section->title()}}
+                                    @endif
+                                </td>
+                                <td class="text-left">{{$course_allocation->course->code}} | {{$course_allocation->course->name}} <span class="text-slate-400 text-xs">{{$course_allocation->course->lblCr()}}</span> <br> <span class="text-slate-400">{{$course_allocation->teacher->name}}</span></td>
+                                <td>
+                                    <a href="{{route('internal.assessment.show',$course_allocation)}}" class="btn-green rounded"><i class="bi-eye"></i></a>
+                                </td>
+                            </tr>
+
+                            @php
+                            if($last_section_id!=$course_allocation->section->id)
+                            $last_section_id=$course_allocation->section->id;
+                            @endphp
+
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
 
@@ -75,7 +121,6 @@
         <!-- middle panel end -->
         <!-- right side bar starts -->
         <div class="">
-
             <div class="p-4 bg-sky-100">
                 <h2>Profile</h2>
                 <div class="flex flex-col">
@@ -94,11 +139,10 @@
                     <div class="divider border-blue-200 mt-4"></div>
                     <div class="flex text-sm mt-4">
                         <div class="w-8"><i class="bi-key"></i></div>
-                        <a href="{{route('edit.pw')}}" class="link">Change Password</a>
+                        <a href="{{route('passwords.edit')}}" class="link">Change Password</a>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

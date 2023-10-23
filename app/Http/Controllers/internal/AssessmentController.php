@@ -90,6 +90,35 @@ class AssessmentController extends Controller
             // something went wrong
         }
     }
+    public function notifySingle(Request $request)
+    {
+        $request->validate([
+            'course_allocation_id' => 'required|numeric',
+
+        ]);
+
+        $course_allocation = CourseAllocation::find($request->course_allocation_id);
+
+        DB::beginTransaction();
+        try {
+
+            Notification::create([
+                'sender_id' => Auth::user()->id,
+                'sender_role' => 'hod',
+                'receiver_id' => $course_allocation->teacher->id,
+                'receiver_role' => 'teacher',
+                'message' => 'Reminder: The result of ' . $course_allocation->course->code . ' entitled to ' . $course_allocation->course->name . ' (' . $course_allocation->section->title() . ') is still pending. Please submit it at earlier',
+            ]);
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Reminder successfully sent');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

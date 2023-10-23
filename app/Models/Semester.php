@@ -17,9 +17,9 @@ class Semester extends Model
     {
         return $this->belongsTo(SemesterType::class);
     }
-    public function sections()
+    public function course_allocations()
     {
-        return $this->hasMany(Section::class);
+        return $this->hasMany(CourseAllocation::class);
     }
     public function title()
     {

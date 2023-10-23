@@ -18,6 +18,7 @@ class HodController extends Controller
         //
         $department = Department::find(session('department_id'));
 
+        // echo $department->course_allocations()->count();
         // $data->add($department->programs->count());
         // $data->add($department->courses->count());
         // $data->add($department->teachers()->count());

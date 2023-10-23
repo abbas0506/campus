@@ -37,7 +37,7 @@
         <a href="" class="pallet-box">
             <div class="flex-1 ">
                 <div class="title">Course Allocations</div>
-                <div class="h2">%</div>
+                <div class="h2">{{$department->current_allocations()->count()}}</div>
             </div>
             <div class="ico bg-teal-100">
                 <i class="bi bi-card-checklist text-teal-600"></i>
@@ -45,8 +45,13 @@
         </a>
         <a href="" class="pallet-box">
             <div class="flex-1">
-                <div class="title">Results</div>
-                <div class="h2"> %</div>
+                <div class="title">Result Submission</div>
+                <div class="h2">
+                    @if($department->current_allocations()->count()>0)
+                    {{$department->current_allocations()->submitted()->count()}}/{{$department->current_allocations()->count()}} ({{round( $department->current_allocations()->submitted()->count()/$department->current_allocations()->count(),1)}} %)
+                    @endif
+                </div>
+
             </div>
             <div class="ico bg-sky-100">
                 <i class="bi bi-graph-up text-sky-600"></i>
@@ -58,16 +63,23 @@
         <!-- middle panel  -->
         <div class="md:col-span-2">
             <!-- update news  -->
-            <div class="p-4 bg-red-50">
-                <h2>Important Features of ES V5.0 </h2>
-                <ul class="list-disc pl-4 text-sm">
-                    <li><u>Responsive</u> - app is easy to use on small screens as well </li>
-                    <li><u>Single login</u> - for all of your authorized departments.</li>
-                    <li><u>Dashboard</u> - provides you quick access to your profile info, passowrd change option and other needful pages like config for once, course allcation, printable etc. </li>
-                    <li><u>Page navigation</u> - links help you to navigate across pages. (highlighted in blue color)</li>
-                    <li><u>Award lists</u> - are available in .xlsx and .pdf formats. Pdf version consists of 30 students per page. </li>
-                    <li><u>Upcoming</u> - soon you will be able to see results submission progress of all the teachers of your department, course profile (by whom the course is being taught) and teacher profile (list of allocated courses and workload in credit hours)</li>
-                </ul>
+            <div class="p-4 bg-slate-50">
+                <h2>Students</h2>
+                <div class="divider mt-4 border-slate-200"></div>
+                <div class="grid grid-cols-3 mt-2">
+                    <div>
+                        <label class="text-xs text-slate-600">Active</label>
+                        <p>{{$department->students()->active()->count()}}</p>
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-600">Frozen</label>
+                        <p>{{$department->students()->frozen()->count()}}</p>
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-600">Struck Off</label>
+                        <p>{{$department->students()->struckoff()->count()}}</p>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -76,8 +88,8 @@
         <div class="">
             <div class="bg-sky-100 p-4">
                 <div class="flex items-center space-x-2">
-                    <i class="bi-gear text-lg"></i>
-                    <h2>1-Time Config</h2>
+                    <i class="bi-tools text-sm"></i>
+                    <h2>Basic Configuration</h2>
                 </div>
                 <div class="divider mt-4 border-sky-200"></div>
                 <div class="flex items-center justify-between mt-2 text-sm">
@@ -129,7 +141,7 @@
                     <div class="divider border-blue-200 mt-4"></div>
                     <div class="flex text-sm mt-4">
                         <div class="w-8"><i class="bi-key"></i></div>
-                        <a href="{{route('hod.changepw')}}" class="link">Change Password</a>
+                        <a href="{{route('passwords.edit')}}" class="link">Change Password</a>
                     </div>
                 </div>
             </div>

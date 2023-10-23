@@ -190,13 +190,6 @@ class AuthController extends Controller
     {
     }
 
-    public function editPassword()
-    {
-        if (Auth::user())
-            return view('change-pw');
-        else
-            echo "Login required before any password change";
-    }
     public function changePassword(Request $request, $id)
     {
         $user = User::find($id);
@@ -211,7 +204,7 @@ class AuthController extends Controller
             if (Hash::check($request->current, $user->password)) {
                 $user->password = Hash::make($request->new);
                 $user->save();
-                return redirect(session('current_role'))->with('success', 'successfuly changed');
+                return redirect()->route('passwords.confirm')->with('success', 'Password successfuly changed');
             } else {
                 //password not found
                 return redirect()->back()->with('warning', 'Oops, something wrong!');;

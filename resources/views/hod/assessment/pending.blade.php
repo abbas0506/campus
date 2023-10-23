@@ -10,14 +10,18 @@
     </div>
 
     <!-- search -->
+    <div class="relative mt-4 md:w-1/3">
+        <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
+        <i class="bx bx-search absolute top-2 right-2"></i>
+    </div>
     <div class="flex flex-wrap items-center justify-between w-full mt-8 gap-y-4">
-        <div class="relative">
-            <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
-            <i class="bx bx-search absolute top-2 right-2"></i>
+        <div class="flex items-center space-x-4 text-slate-600">
+            <a href="{{route('hod.assessment.submitted')}}" class="tab">Submitted ({{$department->current_allocations()->submitted()->count()}})</a>
+            <p class="tab active">Pending ({{$department->current_allocations()->pending()->count()}})</p>
         </div>
         <form action="{{route('hod.assessment.missing.notify')}}" class="text-sm" method="post">
             @csrf
-            <button type="submit" class="btn-teal"><i class="bi-bell mr-2"></i>Send Reminder <span class="text-xs">({{$course_allocations->whereNull('submitted_at')->count()}}/{{$course_allocations->count()}})</span></button>
+            <button type="submit" class="btn-teal"><i class="bi-bell mr-2"></i>Send Reminder ({{$department->current_allocations()->pending()->count()}})</button>
         </form>
 
     </div>
@@ -28,7 +32,7 @@
     @else
     <x-message></x-message>
     @endif
-
+    <!-- pending assessments -->
     <div class="overflow-x-auto mt-4">
         <table class="table-fixed w-full text-sm">
             <thead>
@@ -39,6 +43,7 @@
                     <th class="w-16">Fresh</th>
                     <th class="w-16">Re</th>
                     <th class='w-32'>Submission</th>
+                    <th class='w-8'></th>
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +51,7 @@
                 $last_section_id='';
                 @endphp
 
-                @foreach($course_allocations->whereNull('submitted_at') as $course_allocation)
+                @foreach($department->current_allocations()->pending()->get() as $course_allocation)
                 <tr class="tr text-xs">
                     <td>
                         @if($last_section_id!=$course_allocation->section->id)
@@ -58,6 +63,13 @@
                     <td>{{$course_allocation->first_attempts->count()}}</td>
                     <td>{{$course_allocation->reappears->count()}}</td>
                     <td>Pending</td>
+                    <td>
+                        <form action="{{route('hod.assessment.missing.notify.single')}}" class="text-sm" method="post">
+                            @csrf
+                            <input type="hidden" name="course_allocation_id" value="{{$course_allocation->id}}">
+                            <button type="submit" class="text-teal-500 hover:text-orange-500"><i class="bi-bell"></i></button>
+                        </form>
+                    </td>
 
                 </tr>
 
@@ -69,61 +81,6 @@
                 @endforeach
             </tbody>
         </table>
-
-        <!-- submitted results -->
-        <div class="overflow-x-auto mt-4">
-            <table class="table-fixed w-full text-sm">
-                <thead>
-                    <tr class="text-xs">
-                        <th class="w-40">Class</th>
-                        <th class="w-24">Code</th>
-                        <th class="w-60">Course Name</th>
-                        <th class="w-16">Fresh</th>
-                        <th class="w-16">Re</th>
-                        <th class='w-32'>Submission</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                    $last_section_id='';
-                    @endphp
-
-
-                    @foreach($course_allocations->whereNotNull('submitted_at') as $course_allocation)
-                    <tr class="tr text-xs">
-                        <td>
-                            @if($last_section_id!=$course_allocation->section->id)
-                            {{$course_allocation->section->title()}}
-                            @endif
-                        </td>
-                        <td>{{$course_allocation->course->code}}</td>
-                        <td class="text-left">{{$course_allocation->course->name}} <span class="text-slate-400 text-xs">{{$course_allocation->course->lblCr()}}</span> <br> <span class="text-slate-400">{{$course_allocation->teacher->name}}</span></td>
-                        <td>{{$course_allocation->first_attempts->count()}}</td>
-                        <td>{{$course_allocation->reappears->count()}}</td>
-                        <td>{{$course_allocation->submitted_at}}
-                            <br>
-                            <div class="flex items-center justify-center mt-1 space-x-1">
-                                <a href="{{route('hod.assessment.show',$course_allocation)}}" class="btn-green rounded"><i class="bi-eye"></i></a>
-                                <form action="{{route('hod.assessment.unlock',$course_allocation)}}" method="post">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn-sky rounded"><i class="bi-unlock"></i></button>
-                                </form>
-
-                            </div>
-
-                        </td>
-                    </tr>
-
-                    @php
-                    if($last_section_id!=$course_allocation->section->id)
-                    $last_section_id=$course_allocation->section->id;
-                    @endphp
-
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
     </div>
     @endsection
     @section('script')

@@ -98,12 +98,12 @@ Route::get('/{url?}', function () {
         return view('index');
 })->where('url', ('login|signin|index'));
 
-
-Route::get('change-pw', [AuthController::class, 'editPassword'])->name('edit.pw');
-Route::patch('change-pw/{id}', [AuthController::class, 'changePassword'])->name('change.pw');
+Route::view('auth/passwords/edit', 'auth.passwords.edit')->name('passwords.edit');
+Route::view('auth/passwords/edit/confirm', 'auth.passwords.confirm')->name('passwords.confirm');
+Route::patch('auth/passwords/change/{id}', [AuthController::class, 'changePassword'])->name('passwords.change');
 
 Route::view('two/fa', 'two_fa');
-Route::view('forgot/password', 'forgot_password');
+Route::view('auth/passwords/forgot', 'auth.passwords.forgot')->name('passwords.forgot');
 Route::resource('resetpassword', ResetPasswordController::class);
 Route::post('resetpassword/sendcode', [ResetPasswordController::class, 'sendCode'])->name('resetpassword.sendcode');
 
@@ -162,8 +162,6 @@ Route::group(['middleware' => ['role:controller']], function () {
 Route::get('super', [HodController::class, 'index']);
 Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
     Route::get('/', [HodController::class, 'index']);
-    Route::view('change/pw', 'hod.changepw')->name('changepw');
-
     Route::resource('programs', ProgramController::class);
     Route::get('programs/{program}/internal', [ProgramController::class, 'internal'])->name('programs.internal');
     Route::patch('programs/{program}/internal/update', [ProgramController::class, 'updateInternal'])->name('programs.internal.update');
@@ -200,7 +198,13 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
 
     Route::resource('assessment', HodAssessmentController::class);
     Route::post('assessment/missing/notify', [HodAssessmentController::class, 'notifyMissing'])->name('assessment.missing.notify');
+    Route::post('assessment/missing/notify/single', [HodAssessmentController::class, 'notifySingle'])->name('assessment.missing.notify.single');
     Route::patch('assessment/{allocation}/unlock', [HodAssessmentController::class, 'unlock'])->name('assessment.unlock');
+
+    Route::get('assessment/view/pending', [HodAssessmentController::class, 'pending'])->name('assessment.pending');
+    Route::get('assessment/view/submitted', [HodAssessmentController::class, 'submitted'])->name('assessment.submitted');
+    Route::get('assessment/{allocation}/pdf', [HodAssessmentController::class, 'pdf'])->name('assessment.pdf');
+
 
     Route::resource('allow-deny-attempt', AttemptPermissionController::class)->only('update');
 
@@ -270,7 +274,7 @@ Route::group(['prefix' => 'internal', 'as' => 'internal.', 'middleware' => ['rol
 
     Route::resource('assessment', InternalAssessmentController::class);
     Route::post('assessment/missing/notify', [InternalAssessmentController::class, 'notifyMissing'])->name('assessment.missing.notify');
-
+    Route::post('assessment/missing/notify/single', [InternalAssessmentController::class, 'notifySingle'])->name('assessment.missing.notify.single');
     Route::get('assessment/view/pending', [InternalAssessmentController::class, 'pending'])->name('assessment.pending');
     Route::get('assessment/view/submitted', [InternalAssessmentController::class, 'submitted'])->name('assessment.submitted');
     Route::get('assessment/{allocation}/pdf', [InternalAssessmentController::class, 'pdf'])->name('assessment.pdf');

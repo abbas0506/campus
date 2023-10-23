@@ -26,7 +26,7 @@ class Student extends Model
         'rollno',
 
         //current
-        //'status_id',
+        'status_id',
         // 'section_id',
 
     ];
@@ -150,10 +150,16 @@ class Student extends Model
         }
         return $subjects;
     }
-    public function currentlyEnrolledCourses($semester_id)
+    public function scopeActive($query)
     {
+        return $query->where('status_id', 1);
     }
-    public function allEnrolledCourses()
+    public function scopeFrozen($query)
     {
+        return $query->where('status_id', 2);
+    }
+    public function scopeStruckoff($query)
+    {
+        return $query->where('status_id', 3);
     }
 }
