@@ -29,11 +29,19 @@
         <div class="flex flex-col border border-dashed p-4 text-sm rounded-lg mt-2">
             <label for="" class="text-xs">Current Section</label>
             <h2>{{$student->section->title()}}</h2>
-            <form action="{{route('hod.students.deactivate')}}" method='post' class="">
+            <form action="{{route('hod.suspension.update',$student)}}" method='post' class="flex flex-col">
                 @csrf
-                <input type="hidden" name='student_id' value="{{$student->id}}">
-                <input type="hidden" name='status_id' value="2">
-                <button type="submit" class="btn-red p-2 rounded mt-4 w-24">Freeze</button>
+                @method('PATCH')
+                <label for="" class="text-xs mt-3">Change Status to</label>
+                <select name="status_id" id="" class="custom-input">
+                    <option value="">Select a status</option>
+                    @foreach($statuses->where('id','>',2) as $status)
+                    <option value="{{$status->id}}">{{$status->name}}</option>
+                    @endforeach
+                </select>
+                <label for="" class="text-xs mt-3">Remarks</label>
+                <textarea name="remarks" id="" cols="30" rows="2" class="custom-input"></textarea>
+                <button type="submit" class="btn-red p-2 rounded mt-4">Update Status</button>
             </form>
         </div>
     </div>

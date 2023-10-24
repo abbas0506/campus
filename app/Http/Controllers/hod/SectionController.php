@@ -90,9 +90,6 @@ class SectionController extends Controller
         //
 
         $section = Section::find($id);
-        // session([
-        //     'section_id' => $id,
-        // ]);
         $students = $section->students;
         return view('hod.clases.sections.show', compact('section', 'students'));
     }

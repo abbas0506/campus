@@ -50,7 +50,6 @@ use App\Http\Controllers\hod\StruckOffController;
 use App\Http\Controllers\hod\students\MovementController;
 use App\Http\Controllers\hod\students\ResumptionController;
 use App\Http\Controllers\hod\students\SuspensionController;
-use App\Http\Controllers\hod\StudentStatusController;
 use App\Http\Controllers\internal\AssessmentController as InternalAssessmentController;
 use App\Http\Controllers\internal\InternalController as InternalInternalController;
 use App\Http\Controllers\internal\NotificationCotroller as InternalNotificationCotroller;
@@ -66,7 +65,7 @@ use App\Http\Controllers\teacher\SummativeController;
 
 use App\Http\Controllers\teacher\TeacherController as TeacherTeacherController;
 use App\Models\Semester;
-use App\Models\StudentStatus;
+
 
 /*
 |--------------------------------------------------------------------------

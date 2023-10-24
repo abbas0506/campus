@@ -95,13 +95,7 @@
                     <td><a href="{{route('hod.students.show',$student)}}" class="link">{{$student->rollno}}</a></td>
                     <td class="text-left">{{$student->name}}</td>
                     <td>{{$student->father}}</td>
-                    <td>
-                        @if($student->statuses()->exists())
-                        <span class="text-red-600"> {{$student->statuses()->latest()->first()->status->name}}</span>
-                        @else
-                        <span class="text-green-800">active</span>
-                        @endif
-                    </td>
+                    <td>{{$student->status->name}}</td>
                     <td>
                         <form action="{{route('hod.students.destroy',$student)}}" method="POST" id='del_student_form{{$student->id}}' class="flex items-center justify-center">
                             @csrf

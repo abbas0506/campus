@@ -35,16 +35,9 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function statuses()
+    public function status()
     {
-        return $this->hasMany(StudentStatus::class);
-    }
-    public function latest_status_id()
-    {
-        if ($this->statuses()->exists())
-            return $this->statuses()->latest()->first()->status_id;
-        else
-            return 1;
+        return $this->belongsTo(Status::class);
     }
     public function scopeGender($query, $gender)
     {

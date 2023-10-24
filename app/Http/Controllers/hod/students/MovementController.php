@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\hod\students;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clas;
+use App\Models\Student;
+use Exception;
 use Illuminate\Http\Request;
 
 class MovementController extends Controller
@@ -58,6 +61,10 @@ class MovementController extends Controller
     public function edit($id)
     {
         //
+        $student = Student::find($id);
+        $clases = Clas::where('program_id', $student->section->clas->program_id)
+            ->where('first_semester_id', $student->section->clas->first_semester_id);
+        return view('hod.students.move', compact('student', 'clases'));
     }
 
     /**
@@ -70,6 +77,18 @@ class MovementController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'section_id' => 'required|numeric',
+        ]);
+
+        try {
+            $student = Student::find($id);
+            $student->section_id = $request->section_id;
+            $student->update();
+            return redirect()->route('hod.students.show', $student->id)->with('success', 'Successfully updated');;
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage());
+        }
     }
 
     /**

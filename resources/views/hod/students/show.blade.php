@@ -16,23 +16,13 @@
     </div>
 
     <div class="flex flex-col items-center justify-center gap-x-6 gap-y-2 flex-wrap text-sm mt-4">
-        <h2 class="font-semibold">
-            Status:
-            @if($student->statuses()->exists())
-            <span class="text-red-600"> {{$student->statuses()->latest()->first()->status->name}}</span>
-            @else
-            Active
-            @endif
-        </h2>
+        <h2 class="font-semibold">Status: {{$student->status->name}}</h2>
         <div class="flex items-center space-x-4">
-            @if($student->latest_status_id()==1)
-            <a href="{{route('hod.students.move',$student)}}" class="link">Change Section</a>
-            <a href="{{route('hod.students.struckoff',$student)}}" class="link">Struck Off</a>
-            <a href="{{route('hod.students.freeze', $student)}}" class="link">Freeze Semester</a>
-            @elseif($student->latest_status_id()==2)
-            <a href="{{route('hod.students.readmit',$student)}}" class="link">Unfreeze</a>
-            @elseif($student->latest_status_id()==3)
-            <a href="{{route('hod.students.readmit',$student)}}" class="link">Readmit</a>
+            @if($student->status_id==1)
+            <a href="{{route('hod.movement.edit',$student)}}" class="link">Change Section</a>
+            <a href="{{route('hod.suspension.edit',$student)}}" class="link">Struck Off / Freeze</a>
+            @else
+            <a href="{{route('hod.resumption.edit',$student)}}" class="link">Unfreeze / Readmit / Resume </a>
             @endif
         </div>
     </div>
@@ -44,7 +34,7 @@
         </div>
         <div class="body">
             <div class="relative flex flex-col p-4 text-sm w-full">
-                @if($student->latest_status_id()==1)
+                @if($student->status_id==1)
                 <div class="absolute top-2 right-2">
                     <a href="{{route('hod.students.edit',$student)}}" class='link'>
                         <i class="bi-pencil-square"></i>
@@ -89,7 +79,7 @@
     <!-- Current semester Courses -->
     <div class="collapsible mt-3">
         <div class="head">
-            <h2><span class="bx bx-book mr-2"></span>Current Semester Courses</h2>
+            <h2><span class="bx bx-book mr-2"></span>Current Courses <span class="text-xs text-slate-600">(this semester)</span></h2>
             <i class="bx bx-chevron-down text-lg"></i>
         </div>
         <div class="body">
@@ -111,7 +101,7 @@
                     <h3 class="w-24">Class:</h3>
                     <label>{{$student->section->clas->short()}}</label>
                 </div>
-                @if($student->latest_status_id()==1)
+                @if($student->status_id==1)
                 <h2 class="mt-3">Enrolled Courses </h2>
                 <div class="overflow-x-auto w-full mt-2">
                     <table class="table-auto w-full">
@@ -160,7 +150,7 @@
     </div>
     <div class="collapsible mt-3">
         <div class="head">
-            <h2><span class="bx bx-time mr-2"></span> Academic History</h2>
+            <h2><span class="bx bx-time mr-2"></span> Previous Courses <span class="text-xs text-slate-600">(have been studied)</span></h2>
             <i class="bx bx-chevron-down text-lg"></i>
         </div>
         <div class="body">

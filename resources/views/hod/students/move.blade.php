@@ -49,7 +49,7 @@
                     <div class="flex flex-wrap gap-2">
                         @foreach($clas->sections as $section)
 
-                        <form action="{{route('hod.students.swap', $student->id)}}" method='post' id='form{{$section->id}}'>
+                        <form action="{{route('hod.movement.update', $student->id)}}" method='post' id='form{{$section->id}}'>
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name='section_id' value='{{$section->id}}'>
