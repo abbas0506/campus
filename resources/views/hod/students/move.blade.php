@@ -21,7 +21,7 @@
 
         <div class="flex flex-col border border-dashed p-4 text-sm rounded-lg bg-slate-100">
 
-            <h2>{{$student->id}}{{ $student->name}} @if($student->gender=='M') s/o @else d/o @endif {{$student->father }}</h2>
+            <h2>{{ $student->name}} @if($student->gender=='M') s/o @else d/o @endif {{$student->father }}</h2>
             <h3>{{ $student->rollno }}</h3>
             <label>{{$student->address}}</label>
         </div>

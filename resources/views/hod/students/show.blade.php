@@ -3,16 +3,16 @@
 <div class="container">
     <h2>Student Profile</h2>
     <div class="bread-crumb">
-        <a href="{{route('hod.clases.index')}}">Current Classes</a>
-        <div>/</div>
-        <a href="{{route('hod.sections.show',$student->section)}}">Students</a>
-        <div>/</div>
-        <div>View</div>
+        <a href="{{route('hod.sections.show', $student->section)}}" class="text-sm link">Cancel & Go Back</a>
     </div>
 
     <div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-8">
-        <div class="text-xl text-orange-500 leading-relaxed">{{$student->name}} @if($student->gender=='M') s/o @else d/o @endif {{$student->father}}</div>
-        <div class="text-sm text-slate-600">{{$student->section->title()}}</div>
+        <h1 class="text-orange-500 leading-relaxed">{{$student->name}}
+            @if($student->father)
+            @if($student->gender=='M') s/o @else d/o @endif {{$student->father}}
+            @endif
+        </h1>
+        <a href="{{route('hod.sections.show', $student->section)}}" class="text-sm link">{{$student->section->title()}}</a>
     </div>
 
     <div class="flex flex-col items-center justify-center gap-x-6 gap-y-2 flex-wrap text-sm mt-4">
@@ -73,18 +73,7 @@
                     <h3 class="w-24">Address:</h3>
                     <label>{{$student->address}}</label>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Current semester Courses -->
-    <div class="collapsible mt-3">
-        <div class="head">
-            <h2><span class="bx bx-book mr-2"></span>Current Courses <span class="text-xs text-slate-600">(this semester)</span></h2>
-            <i class="bx bx-chevron-down text-lg"></i>
-        </div>
-        <div class="body">
-            <div class="p-4 rounded w-full">
-                <!-- <h2 class="underline underline-offset-4">Semester ({{App\Models\Semester::find(session('semester_id'))->title()}})</h2> -->
+                <div class="divider my-1"></div>
                 <div class="flex items-center">
                     <h3 class="w-24">Roll No:</h3>
                     <label>{{$student->rollno}}</label>
@@ -101,9 +90,20 @@
                     <h3 class="w-24">Class:</h3>
                     <label>{{$student->section->clas->short()}}</label>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- Current semester Courses -->
+    <div class="collapsible mt-3">
+        <div class="head">
+            <h2><span class="bx bx-book mr-2"></span>Current Courses <span class="text-xs text-slate-600">(this semester)</span></h2>
+            <i class="bx bx-chevron-down text-lg"></i>
+        </div>
+        <div class="body">
+            <div class="p-4 rounded w-full">
+                <!-- <h2 class="underline underline-offset-4">Semester ({{App\Models\Semester::find(session('semester_id'))->title()}})</h2> -->
                 @if($student->status_id==1)
-                <h2 class="mt-3">Enrolled Courses </h2>
-                <div class="overflow-x-auto w-full mt-2">
+                <div class="overflow-x-auto w-full">
                     <table class="table-auto w-full">
                         <thead>
                             <tr>

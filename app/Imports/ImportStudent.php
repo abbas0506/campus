@@ -25,6 +25,7 @@ class ImportStudent implements ToModel, WithHeadingRow
 
             //root status
             'section_id' => session('section_id'),
+            'root_section_id' => session('section_id'),
 
         ]);
     }

@@ -76,7 +76,7 @@
                     </td>
                     <td class="text-left">{{$first_attempt->student->name}}<br>{{$first_attempt->student->rollno}}</td>
                     <td class="text-left">{{$first_attempt->student->father}}</td>
-                    <td></td>
+                    <td>{{$first_attempt->attendance}}</td>
                     <td>{{$first_attempt->assignment}}</td>
                     <td>{{$first_attempt->presentation}}</td>
                     <td>{{$first_attempt->midterm}}</td>
@@ -101,7 +101,7 @@
                     </td>
                     <td class="text-left">{{$reappear->first_attempt->student->name}}<br>{{$reappear->first_attempt->student->rollno}}</td>
                     <td>{{$reappear->first_attempt->student->father}}</td>
-                    <td></td>
+                    <td>{{$reappear->attendance}}</td>
                     <td>{{$reappear->assignment}}</td>
                     <td>{{$reappear->presentation}}</td>
                     <td>{{$reappear->midterm}}</td>

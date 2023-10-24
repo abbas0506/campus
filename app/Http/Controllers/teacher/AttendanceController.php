@@ -95,6 +95,9 @@ class AttendanceController extends Controller
                 else
                     $attempt = Reappear::find($id);
 
+                // if (!$attendance[$key])
+                //     echo "key: " . $key . "-" . $attendance[$key] . "," . $attempt_type[$key] . "<br>";
+
                 $attempt->attendance = $attendance[$key];
                 $attempt->update();
             }

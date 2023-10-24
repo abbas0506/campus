@@ -17,6 +17,7 @@ class Reappear extends Model
         'presentation',
         'midterm',
         'summative',
+        'can_appear',
 
     ];
     public function first_attempt()
@@ -105,5 +106,22 @@ class Reappear extends Model
             else $grade = 'F';
         }
         return $grade;
+    }
+
+    public function scopeCanAppear($query)
+    {
+        return $query->where('can_appear', 1);
+    }
+    public function scopeSorted($query)
+    {
+        return $query->with('first_attempt')->get()->sortBy('first_attempt.student.rollno');
+    }
+    public function scopeAttendanceClear($query)
+    {
+        return $query->where('attendance', '>=', 75);
+    }
+    public function scopeFormativeClear($query)
+    {
+        $query->whereRaw('assignment+presentation+midterm>=25');
     }
 }

@@ -193,4 +193,20 @@ class FirstAttempt extends Model
     {
         return $query->whereRelation('course_allocation.course', 'id', $course_id);
     }
+    public function scopeCanAppear($query)
+    {
+        return $query->where('can_appear', 1);
+    }
+    public function scopeSorted($query)
+    {
+        return $query->with('student')->get()->sortBy('student.rollno');
+    }
+    public function scopeAttendanceClear($query)
+    {
+        return $query->where('attendance', '>=', 75);
+    }
+    public function scopeFormativeClear($query)
+    {
+        $query->whereRaw('assignment+presentation+midterm>=25');
+    }
 }

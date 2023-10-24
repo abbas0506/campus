@@ -21,13 +21,13 @@ class Student extends Model
         'image',
 
         //root status
-        'section_id',
+        'root_section_id',
         'regno',
         'rollno',
 
         //current
         'status_id',
-        // 'section_id',
+        'section_id',
 
     ];
 
@@ -56,6 +56,10 @@ class Student extends Model
     {
         return $this->belongsTo(Section::class);
     }
+    public function root_section()
+    {
+        return $this->belongsTo(Section::class);
+    }
 
     public function program()
     {
@@ -64,6 +68,10 @@ class Student extends Model
     public function first_attempts()
     {
         return $this->hasMany(FirstAttempt::class);
+    }
+    public function suspensions()
+    {
+        return $this->hasMany(Suspension::class);
     }
     public function credits_covered()
     {
@@ -147,12 +155,16 @@ class Student extends Model
     {
         return $query->where('status_id', 1);
     }
-    public function scopeFrozen($query)
+    public function scopeCeased($query)
     {
         return $query->where('status_id', 2);
     }
     public function scopeStruckoff($query)
     {
         return $query->where('status_id', 3);
+    }
+    public function scopeFrozen($query)
+    {
+        return $query->where('status_id', 4);
     }
 }

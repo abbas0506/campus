@@ -24,7 +24,7 @@
             <p>{{$course_allocation->section->title()}}</p>
         </div>
         <div></div>
-        <a href="{{route('teacher.assessment.preview', $course_allocation)}}" class="btn-teal text-sm"><i class="bi-eye"></i> &nbsp Preview</a>
+        <a href="{{route('teacher.assessment.preview', $course_allocation)}}" target="_blank" class="btn-teal text-sm"><i class="bi-eye"></i> &nbsp Preview</a>
     </div>
 
     <!-- page message -->
@@ -71,7 +71,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($course_allocation->first_attempts_sorted() as $first_attempt)
+                    @foreach($course_allocation->first_attempts()->canAppear()->attendanceClear()->sorted() as $first_attempt)
                     <tr class="tr">
                         <td>{{$sr++}}</td>
                         <td>@if($first_attempt->student->gender=='M')
@@ -97,7 +97,8 @@
                     @endforeach
 
                     <!-- reappear -->
-                    @foreach($course_allocation->reappears_sorted() as $reappear)
+                    <!-- can appear -->
+                    @foreach($course_allocation->reappears()->canAppear()->attendanceClear()->sorted() as $reappear)
                     <tr class="tr">
                         <td class="text-slate-400">{{$sr++}}</td>
                         <td>

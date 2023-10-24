@@ -66,17 +66,21 @@
             <div class="p-4 bg-slate-50">
                 <h2>Students</h2>
                 <div class="divider mt-4 border-slate-200"></div>
-                <div class="grid grid-cols-3 mt-2">
+                <div class="grid grid-cols-2 mt-2 gap-2">
                     <div>
-                        <label class="text-xs text-slate-600">Active</label>
+                        <label class="text-slate-600">Active</label>
                         <p>{{$department->students()->active()->count()}}</p>
                     </div>
                     <div>
-                        <label class="text-xs text-slate-600">Frozen</label>
+                        <label class="text-slate-600">Ceased</label>
+                        <p>{{$department->students()->ceased()->count()}}</p>
+                    </div>
+                    <div>
+                        <label class="text-slate-600">Frozen</label>
                         <p>{{$department->students()->frozen()->count()}}</p>
                     </div>
                     <div>
-                        <label class="text-xs text-slate-600">Struck Off</label>
+                        <label class="text-slate-600">Struck Off</label>
                         <p>{{$department->students()->struckoff()->count()}}</p>
                     </div>
                 </div>

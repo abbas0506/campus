@@ -69,7 +69,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($course_allocation->first_attempts_sorted() as $first_attempt)
+                    @foreach($course_allocation->first_attempts()->formativeClear()->sorted() as $first_attempt)
                     <tr class="tr text-sm">
                         <td>{{$sr++}}</td>
                         <td>@if($first_attempt->student->gender=='M')
@@ -80,21 +80,17 @@
                         </td>
                         <td class="text-left">{{$first_attempt->student->name}}<br>{{$first_attempt->student->rollno}}</td>
                         <td class="text-left">{{$first_attempt->student->father}}</td>
-
-                        @if($first_attempt->formative()>=25)
                         <td hidden><input type="text" name='id[]' value="{{$first_attempt->id}}"></td>
                         <td hidden><input type="text" name='attempt_type[]' value="F"></td>
                         <td>
                             <input type='text' name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->summative}}" placeholder="absent" onchange="validate(event,50)">
                         </td>
-                        @else
-                        <td></td>
-                        @endif
+
                     </tr>
                     @endforeach
 
                     <!-- reappear -->
-                    @foreach($course_allocation->reappears_sorted() as $reappear)
+                    @foreach($course_allocation->reappears()->formativeClear()->sorted() as $reappear)
                     <tr class="tr text-sm">
                         <td class="text-slate-400">{{$sr++}}</td>
                         <td>

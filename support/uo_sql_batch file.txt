@@ -37,8 +37,11 @@ select * from cms.clas;
 insert into cms_v6.sections
 select * from cms.sections;
 
-insert into cms_v6.students
-select * from cms.students;
+insert into cms_v6.students(id, name,father,cnic,phone,email,gender,rollno,regno,section_id, root_section_id,created_at, updated_at)
+select id, name,father,cnic,phone,email,gender,rollno,regno,section_id, section_id,created_at, updated_at from cms.students;
+
+//insert into cms_v6.students
+//select * from cms.students;
 
 insert into cms_v6.course_allocations
 select * from cms.course_allocations;

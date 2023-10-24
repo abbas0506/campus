@@ -60,7 +60,15 @@ class StudentController extends Controller
         ]);
 
         try {
-            $student = Student::create($request->all());
+            $student = Student::create([
+                'rollno' => $request->rollno,
+                'name' => $request->name,
+                'gender' => $request->gender,
+                'email' => $request->email,
+                'regno' => $request->regno,
+                'section_id' => $request->section_id,
+                'root_section_id' => $request->section_id,
+            ]);
             DB::commit();
             return redirect()->route('hod.sections.show', $student->section)->with('success', 'Successfully created');
         } catch (Exception $e) {

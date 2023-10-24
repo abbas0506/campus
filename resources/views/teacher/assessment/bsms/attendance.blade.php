@@ -69,7 +69,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($course_allocation->first_attempts_sorted() as $first_attempt)
+                    @foreach($course_allocation->first_attempts()->sorted() as $first_attempt)
                     <tr class="tr">
                         <td>{{$sr++}}</td>
                         <td>@if($first_attempt->student->gender=='M')
@@ -90,7 +90,7 @@
                     @endforeach
 
                     <!-- reappear -->
-                    @foreach($course_allocation->reappears_sorted() as $reappear)
+                    @foreach($course_allocation->reappears()->sorted() as $reappear)
                     <tr class="tr">
                         <td class="text-slate-400">{{$sr++}}</td>
                         <td>

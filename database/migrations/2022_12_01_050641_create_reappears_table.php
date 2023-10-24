@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('presentation')->nullable()->default(0);
             $table->unsignedInteger('midterm')->nullable()->default(0);
             $table->unsignedInteger('summative')->nullable()->default(0);
+            $table->boolean('can_appear')->default(1); //0 if struck off from this course
             $table->boolean('editable')->default(1); //editable before final submission
 
             $table->unsignedBigInteger('first_attempt_id');

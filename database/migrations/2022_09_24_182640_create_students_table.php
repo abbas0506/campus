@@ -27,9 +27,12 @@ return new class extends Migration
             $table->enum('gender', ['M', 'F', 'T']);
             $table->string('regno', 40)->unique()->nullable();
             $table->string('rollno', 40)->unique();
-            $table->unsignedBigInteger('section_id');
+
+            $table->unsignedBigInteger('root_section_id');   //root section
+            $table->unsignedBigInteger('section_id');   //current section
             $table->unsignedBigInteger('status_id')->default(1); //by default active
 
+            $table->foreign('root_section_id')->references('id')->on('sections')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('section_id')->references('id')->on('sections')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
 
