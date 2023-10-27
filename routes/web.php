@@ -5,10 +5,10 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\LoginOptionsController;
 use App\Http\Controllers\AuthController; //my authcontroller
-use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\MyExceptionController;
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SemesterController;
@@ -16,13 +16,12 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\HeadshipController;
 use App\Http\Controllers\Admin\UserAccessController;
 use App\Http\Controllers\Admin\CourseTypeController;
-use App\Http\Controllers\ResetPasswordController;
+
 use App\Http\Controllers\ce\AwardController as CeAwardController;
-use App\Http\Controllers\ce\FinalGazetteController;
 use App\Http\Controllers\ce\GazetteController as CeGazetteController;
-use App\Http\Controllers\ce\NotifiedGazetteController;
 use App\Http\Controllers\ce\StudentController as CeStudentController;
 use App\Http\Controllers\ce\TranscriptController;
+
 use App\Http\Controllers\coordinator\AssessmentController as CoordinatorAssessmentController;
 use App\Http\Controllers\coordinator\ClasController as CoordinatorClasController;
 use App\Http\Controllers\coordinator\CoordinatorController;
@@ -35,38 +34,36 @@ use App\Http\Controllers\coordinator\SectionController as CoordinatorSectionCont
 use App\Http\Controllers\coordinator\SemesterPlanController as CoordinatorSemesterPlanController;
 use App\Http\Controllers\coordinator\StudentController as CoordinatorStudentController;
 use App\Http\Controllers\coordinator\SuspensionController as CoordinatorSuspensionController;
+
 use App\Http\Controllers\hod\AssessmentController as HodAssessmentController;
 use App\Http\Controllers\hod\AttemptPermissionController;
 use App\Http\Controllers\hod\AwardController;
-use App\Http\Controllers\hod\ChangeSectionController;
 use App\Http\Controllers\hod\ProgramController;
 use App\Http\Controllers\hod\CourseController;
 use App\Http\Controllers\hod\TeacherController;
 use App\Http\Controllers\hod\SchemeController;
 use App\Http\Controllers\hod\StudentController;
 use App\Http\Controllers\hod\GazetteController;
-use App\Http\Controllers\hod\SchemeDetailController;
 use App\Http\Controllers\hod\ClasController;
 use App\Http\Controllers\hod\CourseAllocationController;
-use App\Http\Controllers\hod\ReappearController;
 use App\Http\Controllers\hod\CumulativeController;
 use App\Http\Controllers\hod\EnrollmentController;
-use App\Http\Controllers\hod\FirstAttemptController as HodFirstAttemptController;
+
 use App\Http\Controllers\hod\HodController;
 use App\Http\Controllers\hod\NotificationCotroller;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SemesterPlanController;
 use App\Http\Controllers\hod\SlotController;
 use App\Http\Controllers\hod\SlotOptionController;
-use App\Http\Controllers\hod\StruckOffController;
 use App\Http\Controllers\hod\students\MovementController;
 use App\Http\Controllers\hod\students\ResumptionController;
 use App\Http\Controllers\hod\students\SuspensionController;
-use App\Http\Controllers\internal\AssessmentController as InternalAssessmentController;
+
 use App\Http\Controllers\internal\InternalController as InternalInternalController;
+use App\Http\Controllers\internal\AssessmentController as InternalAssessmentController;
 use App\Http\Controllers\internal\NotificationCotroller as InternalNotificationCotroller;
-use App\Http\Controllers\MyExceptionController;
-use App\Http\Controllers\PdfController;
+
+use App\Http\Controllers\teacher\TeacherController as TeacherTeacherController;
 use App\Http\Controllers\teacher\AssessmentController;
 use App\Http\Controllers\teacher\AttendanceController;
 use App\Http\Controllers\teacher\AwardController as TeacherAwardController;
@@ -75,7 +72,8 @@ use App\Http\Controllers\teacher\MyCoursesController;
 use App\Http\Controllers\teacher\NotificationCotroller as TeacherNotificationCotroller;
 use App\Http\Controllers\teacher\SummativeController;
 
-use App\Http\Controllers\teacher\TeacherController as TeacherTeacherController;
+
+use App\Http\Controllers\PdfController;
 use App\Models\Semester;
 
 
@@ -171,27 +169,26 @@ Route::get('super', [HodController::class, 'index']);
 Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
     Route::get('/', [HodController::class, 'index']);
     Route::resource('programs', ProgramController::class);
-    Route::get('programs/{program}/internal', [ProgramController::class, 'internal'])->name('programs.internal');
-    Route::patch('programs/{program}/internal/update', [ProgramController::class, 'updateInternal'])->name('programs.internal.update');
-
-    Route::get('programs/{program}/coordinator', [ProgramController::class, 'coordinator'])->name('programs.coordinator');
-    Route::patch('programs/{program}/coordinator/update', [ProgramController::class, 'updateCoordinator'])->name('programs.coordinator.update');
+    Route::resource('courses', CourseController::class);
+    Route::resource('schemes', SchemeController::class);
+    Route::resource('teachers', TeacherController::class);
 
     Route::get('programs/{program}/schemes/add', [ProgramController::class, 'scheme'])->name('programs.schemes.add');
     Route::post('programs/schemes/add', [ProgramController::class, 'addScheme'])->name('programs.schemes.store');
+    Route::get('programs/{program}/internal', [ProgramController::class, 'internal'])->name('programs.internal');
+    Route::patch('programs/{program}/internal/update', [ProgramController::class, 'updateInternal'])->name('programs.internal.update');
+    Route::get('programs/{program}/coordinator', [ProgramController::class, 'coordinator'])->name('programs.coordinator');
+    Route::patch('programs/{program}/coordinator/update', [ProgramController::class, 'updateCoordinator'])->name('programs.coordinator.update');
 
-    Route::resource('teachers', TeacherController::class);
-    Route::resource('schemes', SchemeController::class);
+
     Route::get('schemes//{id}/append', [SchemeController::class, 'append'])->name('schemes.append');
     Route::get('schemes/{scheme}/pdf', [SchemeController::class, 'pdf'])->name('schemes.pdf');
-
     Route::get('schemes/slot/create/{scheme}/{semester}', [SlotController::class, 'create'])->name('slots.create');
 
     Route::resource('slots', SlotController::class)->except('create');
     Route::resource('slot-options', SlotOptionController::class)->except('index', 'create');
     Route::get('showCoursesForSlotOption/{slotoption}', [SlotOptionController::class, 'showCourses'])->name('showCoursesForSlotOption');
 
-    Route::resource('courses', CourseController::class);
     Route::resource('clases', ClasController::class);
     Route::resource('sections', SectionController::class);
     Route::get('clases/{program}/add', [ClasController::class, 'add'])->name('clases.add');
@@ -200,8 +197,6 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('semester-plan/{semester}/pdf', [SemesterPlanController::class, 'pdf'])->name('semester-plan.pdf');
 
     Route::resource('course-allocations', CourseAllocationController::class);
-    Route::resource('notifications', NotificationCotroller::class);
-    Route::post('notifications/mark/as/read', [NotificationCotroller::class, 'markAsRead'])->name('notifications.mark');
     Route::get('course-allocations/{allocation}/assign/courses', [CourseAllocationController::class, 'courses'])->name('course-allocations.courses');
     Route::get('course-allocations/{allocation}/assign/teachers', [CourseAllocationController::class, 'teachers'])->name('course-allocations.teachers');
 
@@ -209,17 +204,11 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::post('assessment/missing/notify', [HodAssessmentController::class, 'notifyMissing'])->name('assessment.missing.notify');
     Route::post('assessment/missing/notify/single', [HodAssessmentController::class, 'notifySingle'])->name('assessment.missing.notify.single');
     Route::patch('assessment/{allocation}/unlock', [HodAssessmentController::class, 'unlock'])->name('assessment.unlock');
-
     Route::get('assessment/view/pending', [HodAssessmentController::class, 'pending'])->name('assessment.pending');
     Route::get('assessment/view/submitted', [HodAssessmentController::class, 'submitted'])->name('assessment.submitted');
     Route::get('assessment/{allocation}/pdf', [PdfController::class, 'award'])->name('assessment.pdf');
-
-
-    Route::resource('attempt-permission', AttemptPermissionController::class)->only('update');
-    Route::resource('students/movement', MovementController::class);
-    Route::resource('students/suspension', SuspensionController::class);
-    Route::resource('students/resumption', ResumptionController::class);
-
+    Route::resource('notifications', NotificationCotroller::class);
+    Route::post('notifications/mark/as/read', [NotificationCotroller::class, 'markAsRead'])->name('notifications.mark');
 
     Route::get('course-allocations/{allocation}/fresh', [EnrollmentController::class, 'fresh'])->name('course-allocations.enrollment.fresh');
     Route::get('course-allocations/{allocation}/reappear', [EnrollmentController::class, 'reappear'])->name('course-allocations.enrollment.reappear');
@@ -228,16 +217,17 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::delete('course-allocations/fresh/destroy/{attempt}', [EnrollmentController::class, 'destroyFresh'])->name('course-allocations.enrollment.fresh.destroy');
     Route::delete('course-allocations/reappear/destory/{attempt}', [EnrollmentController::class, 'destroyReappear'])->name('course-allocations.enrollment.reappear.destroy');
 
-
-    Route::post('search-reappear-data', [EnrollmentController::class, 'searchReappearData'])->name('search.reappear.data');
-
     Route::resource('students', StudentController::class);
+    Route::resource('students/movement', MovementController::class);
+    Route::resource('students/suspension', SuspensionController::class);
+    Route::resource('students/resumption', ResumptionController::class);
+    Route::resource('attempt-permission', AttemptPermissionController::class)->only('update');
     Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
+    Route::post('search-reappear-data', [EnrollmentController::class, 'searchReappearData'])->name('search.reappear.data');
 
     Route::get('sections/{section}/students/feed', [StudentController::class, 'feed'])->name('students.feed');
     Route::get('sections/{section}/students/excel', [StudentController::class, 'excel'])->name('students.excel');
     Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
-
 
     Route::view('printable', 'hod.printable.index');
     Route::get('award/index', [AwardController::class, 'index'])->name('award.index');

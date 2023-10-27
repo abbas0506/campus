@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clas;
 use App\Models\Student;
 use Exception;
 use Illuminate\Http\Request;
 
-class ChangeSectionController extends Controller
+class MovementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -61,8 +62,9 @@ class ChangeSectionController extends Controller
     {
         //
         $student = Student::find($id);
-        $program = $student->section->clas->program;
-        return view('hod.students.change_section', compact('student', 'program'));
+        $clases = Clas::where('program_id', $student->section->clas->program_id)
+            ->where('first_semester_id', $student->section->clas->first_semester_id);
+        return view('hod.students.move', compact('student', 'clases'));
     }
 
     /**
@@ -76,16 +78,14 @@ class ChangeSectionController extends Controller
     {
         //
         $request->validate([
-            // 'name' => 'required|unique:programs,name,' . $id, 'id',
             'section_id' => 'required|numeric',
-
         ]);
 
         try {
             $student = Student::find($id);
             $student->section_id = $request->section_id;
             $student->update();
-            return redirect()->back()->with('success', 'Successfully updated');
+            return redirect()->route('hod.students.show', $student->id)->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }

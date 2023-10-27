@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clas;
+use App\Models\Status;
 use App\Models\Student;
+use App\Models\Suspension;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class StruckOffController extends Controller
+class SuspensionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -61,7 +65,11 @@ class StruckOffController extends Controller
     {
         //
         $student = Student::find($id);
-        return view('hod.students.struckoff', compact('student'));
+        $clases = Clas::where('program_id', $student->section->clas->program_id)
+            ->where('first_semester_id', $student->section->clas->first_semester_id);
+
+        $statuses = Status::all();
+        return view('hod.students.suspend', compact('student', 'clases', 'statuses'));
     }
 
     /**
@@ -74,12 +82,25 @@ class StruckOffController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'status_id' => 'required|numeric',
+            'remarks' => 'nullable|string|max:200',
+        ]);
+        DB::beginTransaction();
         try {
             $student = Student::find($id);
-            $student->status_id = 2;    //struckoff
+            $student->status_id = $request->status_id;
             $student->update();
-            return redirect()->back()->with('success', 'Successfully updated');
+            //log student suspension status as well
+            Suspension::create([
+                'student_id' => $student->id,
+                'status_id' => $request->status_id,
+                'remarks' => $request->remarks,
+            ]);
+            DB::commit();
+            return redirect()->route('hod.students.show', $student)->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
+            DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
         }
     }
