@@ -33,18 +33,20 @@
     </div>
     @endif
 
-    <table class="table-auto w-full mt-8">
+    <table class="table-fixed w-full mt-8">
         <thead>
             <tr class="border-b border-slate-200">
-                <th>Course Type</th>
-                <th class='text-center'>Actions</th>
+                <th class="w-8">ID</th>
+                <th class="w-48">Course Type</th>
+                <th class="w-16">Actions</th>
             </tr>
         </thead>
         <tbody>
 
             @foreach($coursetypes->sortBy('name') as $coursetype)
             <tr class="tr">
-                <td>{{$coursetype->name}}</td>
+                <td>{{$coursetype->id}}</td>
+                <td class="text-left">{{$coursetype->name}}</td>
                 <td>
                     <div class="flex justify-center items-center">
                         <a href="{{route('coursetypes.edit', $coursetype)}}" class="text-teal-800">

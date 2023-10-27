@@ -1,9 +1,9 @@
-@extends('layouts.hod')
+@extends('layouts.coordinator')
 @section('page-content')
 <div class="container">
     <h2>Student Profile</h2>
     <div class="bread-crumb">
-        <a href="{{route('hod.sections.show', $student->section)}}" class="text-sm link">Cancel & Go Back</a>
+        <a href="{{route('coordinator.sections.show', $student->section)}}" class="text-sm link">Cancel & Go Back</a>
     </div>
 
     <div class="flex flex-col items-center justify-center border border-dashed border-slate-300 bg-slate-50 p-2 mt-8">
@@ -12,17 +12,17 @@
             @if($student->gender=='M') s/o @else d/o @endif {{$student->father}}
             @endif
         </h1>
-        <a href="{{route('hod.sections.show', $student->section)}}" class="text-sm link">{{$student->section->title()}}</a>
+        <a href="{{route('coordinator.sections.show', $student->section)}}" class="text-sm link">{{$student->section->title()}}</a>
     </div>
 
     <div class="flex flex-col items-center justify-center gap-x-6 gap-y-2 flex-wrap text-sm mt-4">
         <h2 class="font-semibold">Status: {{$student->status->name}}</h2>
         <div class="flex items-center space-x-4">
             @if($student->status_id==1)
-            <a href="{{route('hod.movement.edit',$student)}}" class="link">Change Section</a>
-            <a href="{{route('hod.suspension.edit',$student)}}" class="link">Struck Off / Freeze</a>
+            <a href="{{route('coordinator.movement.edit',$student)}}" class="link">Change Section</a>
+            <a href="{{route('coordinator.suspension.edit',$student)}}" class="link">Struck Off / Freeze</a>
             @else
-            <a href="{{route('hod.resumption.edit',$student)}}" class="link">Unfreeze / Readmit / Resume </a>
+            <a href="{{route('coordinator.resumption.edit',$student)}}" class="link">Unfreeze / Readmit / Resume </a>
             @endif
         </div>
     </div>
@@ -36,7 +36,7 @@
             <div class="relative flex flex-col p-4 text-sm w-full">
                 @if($student->status_id==1)
                 <div class="absolute top-2 right-2">
-                    <a href="{{route('hod.students.edit',$student)}}" class='link'>
+                    <a href="{{route('coordinator.students.edit',$student)}}" class='link'>
                         <i class="bi-pencil-square"></i>
                     </a>
                 </div>
@@ -52,10 +52,6 @@
                 <div class="flex items-center">
                     <h3 class="w-24">Gender:</h3>
                     <label>{{$student->gender}}</label>
-                </div>
-                <div class="flex items-center mt-1">
-                    <h3 class="w-24">DOB:</h3>
-                    <label>{{$student->dob}}</label>
                 </div>
                 <div class="flex items-center mt-1">
                     <h3 class="w-24">CNIC:</h3>
@@ -124,14 +120,14 @@
                                 <td>@if($first_attempt->can_appear) active @else blocked @endif</td>
                                 <td>
                                     @if($first_attempt->can_appear)
-                                    <form action="{{route('hod.attempt-permission.update', $first_attempt)}}" method="post">
+                                    <form action="{{route('coordinator.attempt-permission.update', $first_attempt)}}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name='can_appear' value="0">
                                         <button type="submit" class="btn btn-red rounded text-xs p-1 w-16">Block</button>
                                     </form>
                                     @else
-                                    <form action="{{route('hod.attempt-permission.update', $first_attempt)}}" method="post">
+                                    <form action="{{route('coordinator.attempt-permission.update', $first_attempt)}}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name='can_appear' value="1">

@@ -1,11 +1,11 @@
-@extends('layouts.hod')
+@extends('layouts.coordinator')
 @section('page-content')
 <div class="container">
     <h2>Resume Student</h2>
     <div class="bread-crumb">
         <a href="{{url('hod')}}">Home</a>
         <div>/</div>
-        <a href="{{route('hod.students.index')}}">Student Profile</a>
+        <a href="{{route('coordinator.students.index')}}">Student Profile</a>
         <div>/</div>
         <div>Move</div>
     </div>
@@ -57,7 +57,7 @@
                     <div class="flex flex-wrap gap-2">
                         @foreach($clas->sections as $section)
 
-                        <form action="{{route('hod.resumption.update', $student->id)}}" method='post' id='form{{$section->id}}'>
+                        <form action="{{route('coordinator.resumption.update', $student->id)}}" method='post' id='form{{$section->id}}'>
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name='section_id' value='{{$section->id}}'>

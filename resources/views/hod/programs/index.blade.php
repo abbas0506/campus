@@ -31,13 +31,14 @@
     <div class="overflow-x-auto mt-4">
         <table class="table-fixed w-full">
             <thead>
-                <tr>
+                <tr class="text-xs">
                     <th class="w-48">Program Name</th>
-                    <th class="w-16">Level <br> <span class="text-xs text-slate-400 font-thin">(years)</span></th>
-                    <th class="w-16">Duration <br><span class="text-xs text-slate-400 font-thin">(years)</span></th>
-                    <th class="w-16">Cr. Hrs <br> <span class="text-xs text-slate-400 font-thin">(total)</span></th>
+                    <!-- <th class="w-16">Level <br> <span class="text-xs text-slate-400 font-thin">(years)</span></th> -->
+                    <th class="w-12">Duration <br><span class="text-xs text-slate-400 font-thin">(years)</span></th>
+                    <th class="w-12">Credits <br> <span class="text-xs text-slate-400 font-thin">(total)</span></th>
                     <th class="w-24">Scheme(s)</th>
                     <th class="w-40">Internal</th>
+                    <th class="w-40">Coordinator</th>
                     @role('super')
                     <th class="w-16">Remove</th>
                     @endrole
@@ -45,11 +46,11 @@
             </thead>
             <tbody>
                 @foreach($programs->sortBy('level') as $program)
-                <tr class="tr">
+                <tr class="tr text-sm">
                     <td class="text-left md:pl-4">
                         <a href="{{route('hod.programs.show',$program)}}" class="link">{{$program->short}} </a><br><span class="text-xs">{{$program->name}}</span>
                     </td>
-                    <td>{{$program->level}}</td>
+                    <!-- <td>{{$program->level}}</td> -->
                     <td>{{$program->min_t}}-{{$program->max_t}}</td>
                     <td>{{$program->cr}}</td>
 
@@ -61,6 +62,7 @@
                         </div>
                     </td>
                     <td>{{$program->internal->name ?? ''}} <br> <span class="text-xs">{{$program->internal->phone??''}}</span></td>
+                    <td>{{$program->coordinator->name ?? ''}} <br> <span class="text-xs">{{$program->coordinator->phone??''}}</span></td>
                     @role('super')
                     <td>
                         <form action="{{route('hod.programs.destroy',$program)}}" method="POST" id='del_form{{$program->id}}'>

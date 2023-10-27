@@ -109,7 +109,7 @@
         //token for ajax call
         var token = $("meta[name='csrf-token']").attr("content");
         var role = $('#role').val();
-        if (role == 'super' || role == 'hod' || role == 'internal') {
+        if (role == 'super' || role == 'hod' || role == 'internal' || role == 'coordinator') {
             //fetch concerned department by role
             $.ajax({
                 type: 'POST',
@@ -159,7 +159,7 @@
                 timer: 1500,
             })
 
-        } else if (role == 'hod' || role == 'teacher' || role == 'internal') {
+        } else if (role == 'hod' || role == 'teacher' || role == 'internal' || role == 'coordinator') {
             //semester required for both
             if (semester == '') {
                 validated = false;

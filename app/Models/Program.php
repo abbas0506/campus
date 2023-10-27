@@ -14,10 +14,11 @@ class Program extends Model
         'level',
         'cr',   //total credits to pass
         'min_t',
-        'max_t',
+        'max_t',    //inlcuding grace period
         'intake', //intake semester no
         'department_id',
         'internal_id',  //any teacher working as internal examiner
+        'coordinator_id',  //any teacher working as coordinator
     ];
     public function department()
     {
@@ -25,7 +26,11 @@ class Program extends Model
     }
     public function internal()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'internal_id');
+    }
+    public function coordinator()
+    {
+        return $this->belongsTo(User::class, 'coordinator_id');
     }
     public function schemes()
     {

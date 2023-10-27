@@ -1,12 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\hod;
+namespace App\Http\Controllers\coordinator;
 
 use App\Http\Controllers\Controller;
-use App\Models\Department;
+use App\Models\Clas;
+use App\Models\Status;
+use App\Models\Student;
+use App\Models\Suspension;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class HodController extends Controller
+class SuspensionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +21,6 @@ class HodController extends Controller
     public function index()
     {
         //
-        $department = Department::find(session('department_id'));
-        return view('hod.index', compact('department'));
     }
 
     /**
@@ -61,6 +64,12 @@ class HodController extends Controller
     public function edit($id)
     {
         //
+        $student = Student::find($id);
+        $clases = Clas::where('program_id', $student->section->clas->program_id)
+            ->where('first_semester_id', $student->section->clas->first_semester_id);
+
+        $statuses = Status::all();
+        return view('coordinator.students.suspend', compact('student', 'clases', 'statuses'));
     }
 
     /**
@@ -73,6 +82,27 @@ class HodController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'status_id' => 'required|numeric',
+            'remarks' => 'nullable|string|max:200',
+        ]);
+        DB::beginTransaction();
+        try {
+            $student = Student::find($id);
+            $student->status_id = $request->status_id;
+            $student->update();
+            //log student suspension status as well
+            Suspension::create([
+                'student_id' => $student->id,
+                'status_id' => $request->status_id,
+                'remarks' => $request->remarks,
+            ]);
+            DB::commit();
+            return redirect()->route('coordinator.students.show', $student)->with('success', 'Successfully updated');;
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($ex->getMessage());
+        }
     }
 
     /**

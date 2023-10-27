@@ -1,9 +1,9 @@
-@extends('layouts.hod')
+@extends('layouts.coordinator')
 @section('page-content')
 <div class="container">
     <h2>New Student</h2>
     <div class="bread-crumb">
-        <a href="{{route('hod.sections.show',$section)}}">{{$section->title()}}</a>
+        <a href="{{route('coordinator.sections.show',$section)}}">{{$section->title()}}</a>
     </div>
 
     <div class="md:w-3/4 mx-auto mt-8">
@@ -15,7 +15,7 @@
         <x-message></x-message>
         @endif
 
-        <form action="{{route('hod.students.store')}}" method='post' class="flex flex-col w-full mt-8">
+        <form action="{{route('coordinator.students.store')}}" method='post' class="flex flex-col w-full mt-8">
             @csrf
             <input type="text" name="section_id" value="{{$section->id}}" hidden>
             <input type="text" name="root_section_id" value="{{$section->id}}" hidden>

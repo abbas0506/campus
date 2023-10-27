@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\coordinator;
 
-use App\Models\Role;
+use App\Http\Controllers\Controller;
+use App\Models\Clas;
+use App\Models\Student;
+use Exception;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class MovementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +44,10 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show($id)
     {
         //
     }
@@ -52,33 +55,49 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
         //
+        $student = Student::find($id);
+        $clases = Clas::where('program_id', $student->section->clas->program_id)
+            ->where('first_semester_id', $student->section->clas->first_semester_id);
+        return view('coordinator.students.move', compact('student', 'clases'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'section_id' => 'required|numeric',
+        ]);
+
+        try {
+            $student = Student::find($id);
+            $student->section_id = $request->section_id;
+            $student->update();
+            return redirect()->route('coordinator.students.show', $student->id)->with('success', 'Successfully updated');;
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy($id)
     {
         //
     }

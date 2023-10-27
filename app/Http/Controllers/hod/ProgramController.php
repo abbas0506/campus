@@ -237,4 +237,42 @@ class ProgramController extends Controller
             return redirect()->back()->withErrors($ex->getMessage());
         }
     }
+
+    public function coordinator($id)
+    {
+        $program = Program::find($id);
+        $teachers = User::whereRelation('roles', 'name', 'teacher')
+            ->where('id', '<>', $program->coordinator_id)->get();
+        return view('hod.programs.coordinator', compact('program', 'teachers'));
+    }
+    public function updateCoordinator(Request $request, $id)
+    {
+        $request->validate([
+            'coordinator_id' => 'required|numeric',
+        ]);
+        $user = User::find($request->coordinator_id);
+        DB::beginTransaction();
+        try {
+            $program = Program::findOrFail($id);
+            //update existing internal status
+            //if he performs somewhere else as internal, keep him as internal
+            if ($program->coordinator) {
+                if ($program->coordinator->cdr_programs->count() == 1)
+                    $program->coordinator->removeRole('coordinator');
+            }
+
+            // replace by recently selected internal id
+            $program->coordinator_id = $request->coordinator_id;
+            $program->update();
+
+            if (!$user->hasRole('coordinator')) {
+                $user->assignRole('coordinator');
+            }
+            DB::commit();
+            return redirect()->route('hod.programs.index')->with('success', 'Successfully updated');;
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($ex->getMessage());
+        }
+    }
 }

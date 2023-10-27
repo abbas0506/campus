@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\coordinator;
 
-use App\Models\Teacher;
+use App\Http\Controllers\Controller;
+use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class TeacherController extends Controller
+class CoordinatorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +17,9 @@ class TeacherController extends Controller
     public function index()
     {
         //
+        $user = Auth::user();
+        $department = Department::find(session('department_id'));
+        return view('coordinator.index', compact('department', 'user'));
     }
 
     /**
@@ -41,10 +46,10 @@ class TeacherController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Teacher  $teacher
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Teacher $teacher)
+    public function show($id)
     {
         //
     }
@@ -52,10 +57,10 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Teacher  $teacher
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Teacher $teacher)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +69,10 @@ class TeacherController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Teacher  $teacher
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +80,10 @@ class TeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Teacher  $teacher
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teacher $teacher)
+    public function destroy($id)
     {
         //
     }

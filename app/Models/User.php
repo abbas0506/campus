@@ -72,6 +72,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Program::class, 'internal_id');
     }
+    public function cdr_programs()
+    {
+        return $this->hasMany(Program::class, 'coordinator_id');
+    }
     public function intern_students_count()
     {
         $count = 0;
@@ -79,6 +83,10 @@ class User extends Authenticatable
             $count += $allocation->first_attempts->count();
         }
         return $count;
+    }
+    public function cdr_departments()
+    {
+        return Department::whereRelation('programs.coordinator', 'coordinator_id', $this->id);
     }
     public function intern_departments()
     {

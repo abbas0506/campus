@@ -69,8 +69,8 @@ class AuthController extends Controller
     {
         $request->validate([
             'role' => 'required',
-            'department_id' => 'required_if:role,hod,super',
-            'semester_id' => 'required_if:role,hod,teacher',
+            'department_id' => 'required_if:role,hod,super,coordinator',
+            'semester_id' => 'required_if:role,hod,teacher,coordinator',
         ]);
 
         if (Auth::user()->hasRole($request->role)) {
@@ -79,12 +79,12 @@ class AuthController extends Controller
                 'current_role' => $request->role,
             ]);
             //save selected semester id for entire session
-            if (Auth::user()->hasAnyRole('super', 'hod', 'internal', 'teacher')) {
+            if (Auth::user()->hasAnyRole('super', 'hod', 'internal', 'coordinator', 'teacher')) {
                 $semester = Semester::find($request->semester_id);
                 session([
                     'semester_id' => $request->semester_id,
                 ]);
-                if ($request->role == 'super' || $request->role == 'hod' || $request->role == 'internal') {
+                if ($request->role == 'super' || $request->role == 'hod' || $request->role == 'internal' || $request->role == 'coordinator') {
                     $department = Department::find($request->department_id);
                     session([
                         'department_id' => $request->department_id,

@@ -24,10 +24,12 @@ return new class extends Migration
             $table->unsignedInteger('intake')->default(1); //intake semester
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('internal_id')->nullable();
+            $table->unsignedBigInteger('coordinator_id')->nullable();
             $table->timestamps();
 
             $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('internal_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('coordinator_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

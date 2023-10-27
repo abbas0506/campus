@@ -1,11 +1,11 @@
-@extends('layouts.hod')
+@extends('layouts.coordinator')
 @section('page-content')
 <div class="container">
-    <h2>Resume Student</h2>
+    <h2>Section Change</h2>
     <div class="bread-crumb">
         <a href="{{url('hod')}}">Home</a>
         <div>/</div>
-        <a href="{{route('hod.students.index')}}">Student Profile</a>
+        <a href="{{route('coordinator.students.index')}}">Student Profile</a>
         <div>/</div>
         <div>Move</div>
     </div>
@@ -29,14 +29,6 @@
         <div class="flex flex-col border border-dashed p-4 text-sm rounded-lg mt-2">
             <label for="" class="text-xs">Current Section</label>
             <h2>{{$student->section->title()}}</h2>
-
-            <div class="divider my-4"></div>
-            <label for="" class="text-xs">Current Status</label>
-            <div class="flex flex-wrap items-center space-x-4">
-                <h2>{{$student->status->name}}</h2>
-                <p>({{$student->suspensions->last()->remarks}})</p>
-            </div>
-
         </div>
 
         <div class="flex flex-col border border-dashed p-4 text-sm rounded-lg mt-2">
@@ -57,7 +49,7 @@
                     <div class="flex flex-wrap gap-2">
                         @foreach($clas->sections as $section)
 
-                        <form action="{{route('hod.resumption.update', $student->id)}}" method='post' id='form{{$section->id}}'>
+                        <form action="{{route('coordinator.movement.update', $student->id)}}" method='post' id='form{{$section->id}}'>
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name='section_id' value='{{$section->id}}'>

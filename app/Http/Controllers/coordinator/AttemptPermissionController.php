@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\hod;
+namespace App\Http\Controllers\coordinator;
 
 use App\Http\Controllers\Controller;
 use App\Models\FirstAttempt;

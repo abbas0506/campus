@@ -18,7 +18,7 @@
     <x-message></x-message>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
         <div class="flex items-center justify-between border border-dashed bg-white p-4">
             <div>
                 <label for="" class="text-xs">Scheme(s)</label>
@@ -54,30 +54,48 @@
 
         <div class="relative border border-dashed bg-white p-4">
             <a href="{{route('hod.programs.internal',$program)}}" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
-            <label for="" class="text-xs">Allocated Internal</label>
+            <label for="" class="text-xs">Internal Examiner</label>
             <div>{{$program->internal->name ?? ''}}</div>
         </div>
-        <div class="md:col-span-2 relative border border-dashed bg-white p-4">
-            <a href="{{route('hod.programs.edit',$program)}}" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
-
-            <label class="text-xs">Program Name</label>
-            <div class="mb-2">{{$program->name ?? ''}}</div>
-
-            <label class="text-xs">Short Name</label>
-            <div class="mb-2">{{$program->short ?? ''}}</div>
-
-            <label class="text-xs">Level</label>
-            <div class="mb-2">{{$program->level ?? ''}} years</div>
-
-            <label class="text-xs">Max Credit Hours</label>
-            <div class="mb-2">{{$program->cr ?? ''}} </div>
-
-            <label class="text-xs">Duration</label>
-            <div class="mb-2">{{$program->min_t ?? ''}}-{{$program->max_t ?? ''}} years</div>
-
-
+        <div class="relative border border-dashed bg-white p-4">
+            <a href="{{route('hod.programs.coordinator',$program)}}" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
+            <label for="" class="text-xs">Program Coordinator</label>
+            <div>{{$program->coordinator->name ?? ''}}</div>
         </div>
     </div>
+    <div class="grid grid-cols-2 relative border border-dashed bg-slate-100 gap-4 p-4 mt-4">
+        <a href="{{route('hod.programs.edit',$program)}}" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
+        <div>
+            <label class="text-xs">Program Name</label>
+            <div class="">{{$program->name ?? ''}}</div>
+        </div>
+        <div>
+            <label class="text-xs">Short Name</label>
+            <div class="">{{$program->short ?? ''}}</div>
+        </div>
+        <div>
+            <label class="text-xs">Level</label>
+            <div class="">{{$program->level ?? ''}} years</div>
+        </div>
+        <div>
+            <label class="text-xs">Max Credit Hours</label>
+            <div class="">{{$program->cr ?? ''}} </div>
+        </div>
+        <div>
+            <label class="text-xs">Duration</label>
+            <div class="">{{$program->min_t ?? ''}}-{{$program->max_t ?? ''}} years</div>
+        </div>
+
+        @php
+        $roman = config('global.romans');
+        @endphp
+        <div>
+            <label class="text-xs">Intake Semester</label>
+            <div class="">{{$roman[$program->intake-1]}}</div>
+        </div>
+
+    </div>
+</div>
 </div>
 @endsection
 @section('script')

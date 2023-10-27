@@ -19,7 +19,7 @@
 
     <!-- pallets -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        <a href="{{route('teacher.mycourses.index')}}" class="pallet-box">
+        <a href="#" class="pallet-box">
             <div class="flex-1">
                 <div class="title">My Programs</div>
                 <div class="h2">{{$user->intern_programs()->where('department_id', session('department_id'))->count()}}</div>
@@ -29,7 +29,7 @@
             </div>
         </a>
 
-        <a href="" class="pallet-box">
+        <a href="#" class="pallet-box">
             <div class="flex-1">
                 <div class="title">My Students</div>
                 <div class="h2">{{$user->intern_students_count()}}</div>
@@ -38,7 +38,7 @@
                 <i class="bi bi-person-circle text-indigo-400"></i>
             </div>
         </a>
-        <a href="{{route('teacher.mycourses.index')}}" class="pallet-box">
+        <a href="{{route('internal.assessment.pending')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Pending Result</div>
                 <div class="h2">{{$user->intern_course_allocations()->whereNull('submitted_at')->count()}}/{{$user->intern_course_allocations()->count()}} </div>
@@ -53,7 +53,7 @@
         else
         $result_percentage='-';
         @endphp
-        <a href="" class="pallet-box">
+        <a href="{{route('internal.assessment.submitted')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Result Submission</div>
                 <div class="h2"> {{$result_percentage}} %</div>
@@ -68,8 +68,10 @@
         <!-- middle panel  -->
         <div class="lg:col-span-2">
             <div class="p-4 bg-slate-50">
-                <h2>Programs</h2>
-                <ul class="flex flex-wrap space-x-4 text-sm">
+
+                <h2>My Programs (as an internal)</h2>
+                <div class="divider my-2"></div>
+                <ul class="list-disc list-inside pl-2 text-sm">
                     @foreach($user->intern_programs()->get() as $program)
                     <li>{{ $program->name }}</li>
                     @endforeach

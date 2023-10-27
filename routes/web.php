@@ -23,6 +23,13 @@ use App\Http\Controllers\ce\GazetteController as CeGazetteController;
 use App\Http\Controllers\ce\NotifiedGazetteController;
 use App\Http\Controllers\ce\StudentController as CeStudentController;
 use App\Http\Controllers\ce\TranscriptController;
+use App\Http\Controllers\coordinator\ClasController as CoordinatorClasController;
+use App\Http\Controllers\coordinator\CoordinatorController;
+use App\Http\Controllers\coordinator\MovementController as CoordinatorMovementController;
+use App\Http\Controllers\coordinator\ResumptionController as CoordinatorResumptionController;
+use App\Http\Controllers\coordinator\SectionController as CoordinatorSectionController;
+use App\Http\Controllers\coordinator\StudentController as CoordinatorStudentController;
+use App\Http\Controllers\coordinator\SuspensionController as CoordinatorSuspensionController;
 use App\Http\Controllers\hod\AssessmentController as HodAssessmentController;
 use App\Http\Controllers\hod\AttemptPermissionController;
 use App\Http\Controllers\hod\AwardController;
@@ -162,6 +169,9 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('programs/{program}/internal', [ProgramController::class, 'internal'])->name('programs.internal');
     Route::patch('programs/{program}/internal/update', [ProgramController::class, 'updateInternal'])->name('programs.internal.update');
 
+    Route::get('programs/{program}/coordinator', [ProgramController::class, 'coordinator'])->name('programs.coordinator');
+    Route::patch('programs/{program}/coordinator/update', [ProgramController::class, 'updateCoordinator'])->name('programs.coordinator.update');
+
     Route::get('programs/{program}/schemes/add', [ProgramController::class, 'scheme'])->name('programs.schemes.add');
     Route::post('programs/schemes/add', [ProgramController::class, 'addScheme'])->name('programs.schemes.store');
 
@@ -200,19 +210,7 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('assessment/{allocation}/pdf', [HodAssessmentController::class, 'pdf'])->name('assessment.pdf');
 
 
-    Route::resource('allow-deny-attempt', AttemptPermissionController::class)->only('update');
-
-    Route::get('students/{id}/move', [StudentStatusController::class, 'move'])->name('students.move');
-    Route::patch('students/{student}/swap', [StudentStatusController::class, 'swap'])->name('students.swap');
-
-    Route::get('students/{id}/struckoff', [StudentStatusController::class, 'struckoff'])->name('students.struckoff');
-    Route::get('students/{id}/freeze', [StudentStatusController::class, 'freeze'])->name('students.freeze');
-    // radmit deal both resume after struckoff or unfreeze
-    Route::get('students/{id}/readmit', [StudentStatusController::class, 'readmit'])->name('students.readmit');
-
-    Route::post('students/deactivate', [StudentStatusController::class, 'deactivate'])->name('students.deactivate');
-    Route::post('students/activate', [StudentStatusController::class, 'activate'])->name('students.activate');
-
+    Route::resource('attempt-permission', AttemptPermissionController::class)->only('update');
     Route::resource('students/movement', MovementController::class);
     Route::resource('students/suspension', SuspensionController::class);
     Route::resource('students/resumption', ResumptionController::class);
@@ -296,4 +294,43 @@ Route::group(['prefix' => 'internal', 'as' => 'internal.', 'middleware' => ['rol
 
     Route::get('cumulative/index', [CumulativeController::class, 'index'])->name('cumulative.index');
     Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');
+});
+
+Route::group(['prefix' => 'coordinator', 'as' => 'coordinator.', 'middleware' => ['role:coordinator', 'my_exception_handler']], function () {
+    Route::get('/', [CoordinatorController::class, 'index']);
+
+    Route::resource('clases', CoordinatorClasController::class);
+    Route::get('clases/{program}/add', [CoordinatorClasController::class, 'add'])->name('clases.add');
+    Route::resource('sections', CoordinatorSectionController::class);
+
+    Route::resource('students', CoordinatorStudentController::class);
+    Route::resource('attempt-permission', AttemptPermissionController::class)->only('update');
+
+    Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
+
+    Route::get('sections/{section}/students/feed', [CoordinatorStudentController::class, 'feed'])->name('students.feed');
+    Route::get('sections/{section}/students/excel', [CoordinatorStudentController::class, 'excel'])->name('students.excel');
+    Route::post('students/import', [CoordinatorStudentController::class, 'import'])->name('students.import');
+
+    Route::resource('students/movement', CoordinatorMovementController::class);
+    Route::resource('students/suspension', CoordinatorSuspensionController::class);
+    Route::resource('students/resumption', CoordinatorResumptionController::class);
+
+    Route::resource('course-allocations', CourseAllocationController::class);
+    Route::resource('notifications', NotificationCotroller::class);
+    Route::post('notifications/mark/as/read', [NotificationCotroller::class, 'markAsRead'])->name('notifications.mark');
+    Route::get('course-allocations/{allocation}/assign/courses', [CourseAllocationController::class, 'courses'])->name('course-allocations.courses');
+    Route::get('course-allocations/{allocation}/assign/teachers', [CourseAllocationController::class, 'teachers'])->name('course-allocations.teachers');
+
+    Route::resource('semester-plan', SemesterPlanController::class);
+    Route::get('semester-plan/{semester}/pdf', [SemesterPlanController::class, 'pdf'])->name('semester-plan.pdf');
+
+    Route::resource('assessment', HodAssessmentController::class);
+    Route::post('assessment/missing/notify', [HodAssessmentController::class, 'notifyMissing'])->name('assessment.missing.notify');
+    Route::post('assessment/missing/notify/single', [HodAssessmentController::class, 'notifySingle'])->name('assessment.missing.notify.single');
+    Route::patch('assessment/{allocation}/unlock', [HodAssessmentController::class, 'unlock'])->name('assessment.unlock');
+
+    Route::get('assessment/view/pending', [HodAssessmentController::class, 'pending'])->name('assessment.pending');
+    Route::get('assessment/view/submitted', [HodAssessmentController::class, 'submitted'])->name('assessment.submitted');
+    Route::get('assessment/{allocation}/pdf', [HodAssessmentController::class, 'pdf'])->name('assessment.pdf');
 });

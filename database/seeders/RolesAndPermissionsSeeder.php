@@ -23,7 +23,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Role::create(['name' => 'teacher']);
 
         Role::create(['name' => 'internal']);
-        Role::create(['name' => 'kpo']);
+        Role::create(['name' => 'coordinator']);
         Role::create(['name' => 'student']);
     }
 }

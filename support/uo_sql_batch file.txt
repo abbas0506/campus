@@ -16,8 +16,8 @@ where model_id>3;
 insert into cms_v6.course_types
 select * from cms.course_types;
 
-insert into cms_v6.programs
-select * from cms.programs;
+insert into cms_v6.programs(id,name,short,level,cr,min_t,max_t,intake,department_id,internal_id,created_at,updated_at)
+select id,name,short,level,cr,min_t,max_t,intake,department_id,internal_id,created_at,updated_at from cms.programs;
 
 insert into cms_v6.courses(id,name,short,code,course_type_id,cr_theory,cr_practical,marks_theory,marks_practical,department_id)
 select id,name,short,code,course_type_id,cr_theory,cr_practical,marks_theory,marks_practical,department_id from cms.courses;
@@ -39,6 +39,8 @@ select * from cms.sections;
 
 insert into cms_v6.students(id, name,father,cnic,phone,email,gender,rollno,regno,section_id, root_section_id,created_at, updated_at)
 select id, name,father,cnic,phone,email,gender,rollno,regno,section_id, section_id,created_at, updated_at from cms.students;
+
+update programs set internal_id=null;
 
 //insert into cms_v6.students
 //select * from cms.students;
