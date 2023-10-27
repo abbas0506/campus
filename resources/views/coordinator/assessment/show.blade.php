@@ -1,11 +1,11 @@
-@extends('layouts.hod')
+@extends('layouts.coordinator')
 @section('page-content')
 <div class="container">
     <div class="flex flex-wrap justify-between items-center">
         <div>
             <h2>Assessment Preview</h2>
             <div class="bread-crumb">
-                <a href="{{route('hod.assessment.submitted',$course_allocation)}}">Cancel & Go Back</a>
+                <a href="{{route('coordinator.assessment.submitted',$course_allocation)}}">Cancel & Go Back</a>
             </div>
         </div>
     </div>
@@ -16,7 +16,7 @@
             <p>{{$course_allocation->section->title()}}</p>
         </div>
         <div></div>
-        <a href="{{route('hod.assessment.pdf',$course_allocation)}}" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i>&nbsp Print</a>
+        <a href="{{route('coordinator.assessment.pdf',$course_allocation)}}" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i>&nbsp Print</a>
     </div>
 
     <!-- page message -->

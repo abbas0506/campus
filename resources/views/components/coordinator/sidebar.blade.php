@@ -19,13 +19,13 @@
             </li>
 
             <li>
-                <a href="{{route('hod.semester-plan.index')}}" class="flex items-center p-2">
+                <a href="{{route('coordinator.semester-plan.index')}}" class="flex items-center p-2">
                     <i class="bi-calendar2-event"></i>
                     <span class="ml-3">Semester Plan</span>
                 </a>
             </li>
             <li>
-                <a href="{{route('hod.assessment.submitted')}}" class="flex items-center p-2">
+                <a href="{{route('coordinator.assessment.submitted')}}" class="flex items-center p-2">
                     <i class="bi-clipboard2-pulse"></i>
                     <span class="ml-3">Assessment</span>
                 </a>
@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('hod.students.index')}}" class="flex items-center p-2">
+                <a href="{{route('coordinator.students.index')}}" class="flex items-center p-2">
                     <i class="bi bi-person-circle"></i>
                     <span class="ml-3">Student Profile</span>
                 </a>
