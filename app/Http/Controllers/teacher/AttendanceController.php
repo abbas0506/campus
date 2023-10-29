@@ -95,14 +95,11 @@ class AttendanceController extends Controller
                 else
                     $attempt = Reappear::find($id);
 
-                // if (!$attendance[$key])
-                //     echo "key: " . $key . "-" . $attendance[$key] . "," . $attempt_type[$key] . "<br>";
-
                 $attempt->attendance = $attendance[$key];
                 $attempt->update();
             }
             DB::commit();
-            return redirect()->back()->with('success', "Successfully added");
+            return redirect()->route('teacher.assessment.show', $attempt->course_allocation_id)->with('success', "Attendance successful");
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());

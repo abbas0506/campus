@@ -16,12 +16,6 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('hod.students.index')}}" class="flex items-center p-2">
-                    <i class="bi bi-person-circle"></i>
-                    <span class="ml-3">Student Profile</span>
-                </a>
-            </li>
-            <li>
                 <a href="{{route('hod.semester-plan.index')}}" class="flex items-center p-2">
                     <i class="bi-calendar2-event"></i>
                     <span class="ml-3">Semester Plan</span>
@@ -37,6 +31,12 @@
                 <a href="{{url('hod/printable')}}" class="flex items-center p-2">
                     <i class="bi bi-printer"></i>
                     <span class="ml-3">Print / Download</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('hod.students.index')}}" class="flex items-center p-2">
+                    <i class="bi bi-person-circle"></i>
+                    <span class="ml-3">Student Profile</span>
                 </a>
             </li>
             <li class="md:hidden border-t border-dashed">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\hod;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseAllocation;
+use App\Models\Department;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,6 +20,8 @@ class CourseAllocationController extends Controller
     public function index()
     {
         //
+        $department = Department::find(session('department_id'));
+        return view('hod.course-allocations.index', compact('department'));
     }
 
     /**

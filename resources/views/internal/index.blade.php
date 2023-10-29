@@ -94,7 +94,7 @@
                             @endphp
 
 
-                            @foreach($user->intern_course_allocations()->get()->whereNotNull('submitted_at') as $course_allocation)
+                            @foreach($user->intern_course_allocations()->submitted()->today()->get() as $course_allocation)
                             <tr class="tr text-xs">
                                 <td>
                                     @if($last_section_id!=$course_allocation->section->id)

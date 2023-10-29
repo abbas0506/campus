@@ -16,7 +16,7 @@
 
     <!-- pallets -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        <a href="{{url('students')}}" class="pallet-box">
+        <a href="#" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Students</div>
                 <div class="h2">{{$department->students()->count()}}</div>
@@ -34,7 +34,7 @@
                 <i class="bi bi-person-workspace text-indigo-400"></i>
             </div>
         </a>
-        <a href="" class="pallet-box">
+        <a href="{{route('hod.course-allocations.index')}}" class="pallet-box">
             <div class="flex-1 ">
                 <div class="title">Course Allocations</div>
                 <div class="h2">{{$department->current_allocations()->count()}}</div>
@@ -72,7 +72,7 @@
             <div class="p-4 bg-slate-50">
                 <h2>Students</h2>
                 <div class="divider mt-4 border-slate-200"></div>
-                <div class="grid grid-cols-4 mt-2 gap-2 text-center">
+                <div class="grid grid-cols-2 lg:grid-cols-4 mt-2 gap-2 text-center">
                     <div>
                         <label class="text-slate-600">Active</label>
                         <p>{{$department->students()->active()->count()}}</p>
