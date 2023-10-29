@@ -56,7 +56,7 @@ class AuthController extends Controller
             if (Auth::attempt($credentials)) {
                 Auth::user()->sendCode();
 
-                return redirect('two/fa');
+                return redirect('auth/verification');
             } else {
                 return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
             }
@@ -106,7 +106,7 @@ class AuthController extends Controller
     }
 
 
-    public function twoFA(Request $request)
+    public function verify(Request $request)
     {
         //get 2nd factor secret code sent to gmail
         //if matched, redirect to user dashboard
@@ -114,21 +114,15 @@ class AuthController extends Controller
             'code' => 'required',
         ]);
 
-        $find = TwoFa::where('user_id', auth()->user()->id)
+        $authorized = TwoFa::where('user_id', auth()->user()->id)
             ->where('code', $request->code)
             ->where('updated_at', '>=', now()->subMinutes(2))
             ->first();
 
-        if (!is_null($find)) {
-
-            session([
-                'user_2fa' => auth()->user()->id,
-            ]);
-
+        if ($authorized)
             return redirect('/');
-        }
-
-        return back()->with('warning', 'You entered wrong code.');
+        else
+            return back()->with('warning', 'Code incorrect!');
     }
 
     /**

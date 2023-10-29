@@ -46,7 +46,7 @@
         @else
         <!-- authenticated -->
         <i class="bi bi-person-fill-check text-8xl text-sky-600"></i>
-        <h1 class="text-center text-slate-800 mt-2 text-xl">{{Auth::user()->name}}</h1>
+        <h1 class="text-slate-800 mt-2 text-xl">Welcome back {{Auth::user()->name}}!</h1>
 
         <form action="{{route('login.as')}}" method='post' class="w-full mt-2" onsubmit="return validate(event)">
             @csrf
@@ -129,7 +129,6 @@
         var validated = true;
         var role = $('#role').val()
         var department = $('#department_id').val()
-        var semester = $('#semester_id').val()
 
         if (role == '') {
             validated = false;
@@ -141,34 +140,8 @@
                 timer: 1500,
             })
 
-        } else if (role == 'hod' || role == 'teacher' || role == 'internal' || role == 'coordinator') {
-            //semester required for both
-            if (semester == '') {
-                validated = false;
-                event.preventDefault();
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Please select a semester',
-                    showConfirmButton: false,
-                    timer: 1500,
-                })
-            }
-            //department required for only hod
-            if (role == 'hod' && department == '') {
-                validated = false;
-                event.preventDefault();
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Please select a department',
-                    showConfirmButton: false,
-                    timer: 1500,
-                })
-            }
-
-            return validated;
-            // return false;
-
         }
+        return validated;
     }
 </script>
 

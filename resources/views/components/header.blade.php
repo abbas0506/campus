@@ -34,7 +34,10 @@
                 <i class="bx bx-chevron-down"></i>
             </label>
 
-            <a href="{{route('hod.notifications.index')}}" class="relative">
+            @php
+            $role=session('role')=='super'?'hod':session('role');
+            @endphp
+            <a href="{{route($role.'.notifications.index')}}" class="relative">
                 <i class="bi-bell"></i>
                 @if(Auth::user()->notifications_received()->unread()->count()>0)
                 <div class="absolute top-0 right-0 w-2 h-2 rounded-full bg-orange-400"></div>

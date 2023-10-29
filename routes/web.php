@@ -104,17 +104,20 @@ Route::get('/{url?}', function () {
         return view('index');
 })->where('url', ('login|signin|index'));
 
-Route::view('auth/passwords/edit', 'auth.passwords.edit')->name('passwords.edit');
-Route::view('auth/passwords/edit/confirm', 'auth.passwords.confirm')->name('passwords.confirm');
-Route::patch('auth/passwords/change/{id}', [AuthController::class, 'changePassword'])->name('passwords.change');
+Route::post('login', [AuthController::class, 'login']);
+Route::view('auth/verification', 'auth.passwords.verification');
+Route::post('auth/verify', [AuthController::class, 'verify'])->name('auth.verify');
 
-Route::view('two/fa', 'two_fa');
 Route::view('auth/passwords/forgot', 'auth.passwords.forgot')->name('passwords.forgot');
 Route::resource('resetpassword', ResetPasswordController::class);
 Route::post('resetpassword/sendcode', [ResetPasswordController::class, 'sendCode'])->name('resetpassword.sendcode');
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('two/fa', [AuthController::class, 'twoFA']);
+Route::view('auth/passwords/edit', 'auth.passwords.edit')->name('passwords.edit');
+Route::view('auth/passwords/edit/confirm', 'auth.passwords.confirm')->name('passwords.confirm');
+Route::patch('auth/passwords/change/{id}', [AuthController::class, 'changePassword'])->name('passwords.change');
+
+
+
 
 Route::post('login/as', [AuthController::class, 'loginAs'])->name('login.as');
 Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
