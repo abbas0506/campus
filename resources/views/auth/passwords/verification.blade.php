@@ -4,9 +4,9 @@
 
 
 <div class="flex justify-center items-center w-screen h-screen bg-gradient-to-b from-blue-100 to-blue-400">
-    <div class="w-1/3">
-        <h1 class="text-xl">Verification Code</h1>
-        <p class="text-sm">Please check your email and enter 4-digits code here</p>
+    <div class="md:w-1/3 px-5">
+        <h1 class="text-xl">Please confirm that it is really you!</h1>
+        <p class="text-sm">Check your email inbox/spam folder and enter 4-digits code here without any spaces.</p>
 
         <!-- page message -->
         @if($errors->any())

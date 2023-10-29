@@ -180,35 +180,27 @@ class AuthController extends Controller
     }
 
     // switch semester
-    public function switchSemester(Request $request)
+    public function viewSwitch()
+    {
+        $roles = Auth::user()->roles;
+        $semesters = Semester::active()->get();
+        return view('switch', compact('roles', 'semesters'));
+    }
+    public function switch(Request $request)
     {
         $request->validate([
+            'role' => 'required',
             'semester_id' => 'required|numeric',
 
         ]);
         session([
+            'role' => $request->role,
             'semester_id' => $request->semester_id,
         ]);
         return redirect(session('role'));
     }
 
     //switch current role
-    public function switchRole(Request $request)
-    {
-        $request->validate([
-            'role_id' => 'required|numeric',
-
-        ]);
-        session([
-            'role_id' => $request->role_id,
-            'role' => $request->role,
-        ]);
-        return redirect(session('role'));
-    }
-    public function resetPassword(Request $request, $id)
-    {
-    }
-
     public function changePassword(Request $request, $id)
     {
         $user = User::find($id);

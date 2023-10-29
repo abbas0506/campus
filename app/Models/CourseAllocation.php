@@ -121,24 +121,11 @@ class CourseAllocation extends Model
     }
     public function scopeSumOfCr($query)
     {
-        return -1;
-        // return $query->join('slots', 'course_allocations.slot_id', '=', 'slots.id')->sum('cr');
-    }
-    public function scopeJoinClas($query)
-    {
-        //sort by program id
-        return $query->join('sections', 'course_allocations.section_id', '=', 'sections.id')
-            ->join('clas', 'sections.clas_id', '=', 'clas.id');
+        return $query->get()->sum(function ($allocation) {
+            return $allocation->slot_option->slot->cr;
+        });
     }
 
-    public function scopeOrderByProgram($query)
-    {
-        return $query->orderBy('clas.program_id');
-    }
-    public function scopeFilterByShift($query, $shift)
-    {
-        return $query->where('clas.shift_id', $shift);
-    }
     public function status()
     {
 
@@ -158,10 +145,14 @@ class CourseAllocation extends Model
     }
     public function scopeSubmitted($query)
     {
-        $query->whereNotNull('submitted_at');
+        return $query->whereNotNull('submitted_at');
     }
     public function scopePending($query)
     {
-        $query->whereNull('submitted_at');
+        return $query->whereNull('submitted_at');
+    }
+    public function scopeShift($query, $shift)
+    {
+        return $query->whereRelation('section.clas', 'shift_id', $shift);
     }
 }

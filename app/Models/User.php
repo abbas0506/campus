@@ -127,20 +127,6 @@ class User extends Authenticatable
     {
         return Department::whereRelation('courses.course_allocations', 'teacher_id', $this->id)->get();
     }
-    public function allocations()
-    {
-        $allocations = CourseAllocation::where('teacher_id', $this->id)
-            ->where('semester_id', session('semester_id'))
-            ->join('sections', 'course_allocations.section_id', '=', 'sections.id')
-            ->join('clas', 'sections.clas_id', '=', 'clas.id')
-            ->join('shifts', 'clas.shift_id', '=', 'shifts.id')
-            ->join('slot_options', 'course_allocations.slot_option_id', '=', 'slot_options.id')
-            ->join('slots', 'slot_options.slot_id', '=', 'slots.id')
-            ->orderBy('clas.program_id')
-            ->select('course_allocations.*', 'shifts.short', 'slots.cr');
-
-        return $allocations;
-    }
 
     public function sendCode()
     {

@@ -25,7 +25,6 @@ class AjaxController extends Controller
         $options = "<option value=''>Select a department</option>";
         $user = Auth::user();
 
-
         if ($request->role == 'super') {
             // return departments headed by the user
             $departments = Department::all();

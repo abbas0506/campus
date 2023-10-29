@@ -19,7 +19,7 @@
         <a href="{{route('teacher.mycourses.index')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Courses</div>
-                <div class="h2">{{$user->allocations()->count()}}</div>
+                <div class="h2">{{$user->course_allocations()->count()}}</div>
             </div>
             <div class="ico bg-green-100">
                 <i class="bi bi-book text-green-600"></i>
@@ -28,7 +28,7 @@
         <a href="{{route('teacher.mycourses.index')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Credit Hrs</div>
-                <div class="h2">{{$user->allocations()->sum('cr')}}</div>
+                <div class="h2">{{$user->course_allocations()->sumOfCr()}}</div>
             </div>
             <div class="ico bg-teal-100">
                 <i class="bi bi-clock text-teal-600"></i>

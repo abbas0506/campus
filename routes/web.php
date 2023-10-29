@@ -107,6 +107,7 @@ Route::get('/{url?}', function () {
 Route::post('login', [AuthController::class, 'login']);
 Route::view('auth/verification', 'auth.passwords.verification');
 Route::post('auth/verify', [AuthController::class, 'verify'])->name('auth.verify');
+Route::view('signout/me', 'signout');
 
 Route::view('auth/passwords/forgot', 'auth.passwords.forgot')->name('passwords.forgot');
 Route::resource('resetpassword', ResetPasswordController::class);
@@ -116,13 +117,11 @@ Route::view('auth/passwords/edit', 'auth.passwords.edit')->name('passwords.edit'
 Route::view('auth/passwords/edit/confirm', 'auth.passwords.confirm')->name('passwords.confirm');
 Route::patch('auth/passwords/change/{id}', [AuthController::class, 'changePassword'])->name('passwords.change');
 
-
-
-
 Route::post('login/as', [AuthController::class, 'loginAs'])->name('login.as');
 Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
 Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
-Route::post('switch/semester', [AuthController::class, 'switchSemester'])->name('switch.semester');; //for ajax call
+Route::get('switch/me', [AuthController::class, 'viewSwitch'])->name('switch.me.view');
+Route::post('switch/me', [AuthController::class, 'switch'])->name('switch.me');; //for ajax call
 
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 Route::view('exception/r', 'exceptions.missing.role')->name('role_missed_exception');

@@ -6,33 +6,14 @@
             </a>
             <div class="hidden md:flex text-base md:text-xl font-semibold">Examination System</div>
             <div class="hidden md:flex px-1 md:px-4">|</div>
-            <div class="text-sm">{{ucfirst(session('role'))}} ({{App\Models\Semester::find(session('semester_id'))->short()}}) <i class="bx bx-chevron-down text-xs"></i></div>
 
-            <!-- <div class="text-sm flex items-center space-x-2">
-                <i class="bi bi-chevron-right text-[10px]"></i>
-                @if(Auth::user()->hasRole('super'))
-                <form action="{{route('switch.semester')}}" method="post" id='switchSemesterForm'>
-                    @csrf
-                    <select name="semester_id" id="cboSemesterId" class="font-semibold">
-                        @foreach(App\Models\Semester::active()->get() as $semester)
-                        <option value="{{$semester->id}}" @selected($semester->id==session('semester_id'))>{{$semester->short()}}</option>
-                        @endforeach
-                    </select>
-                </form>
-                @else
-                <div>{{App\Models\Semester::find(session('semester_id'))->short()}}</div>
-                @endif
+            <a href="{{route('switch.me.view')}}" class="text-sm">{{ucfirst(session('role'))}} ({{App\Models\Semester::find(session('semester_id'))->short()}}) <i class="bx bx-chevron-down text-xs"></i></a>
 
-            </div> -->
         </div>
 
         <!-- right sided current user info -->
         <div id="current-user-area" class="flex space-x-3 items-center justify-center relative mr-8">
-            <input type="checkbox" id='toggle-current-user-dropdown' hidden>
-            <label for="toggle-current-user-dropdown" class="hidden md:flex items-center">
-                <div class="">{{auth()->user()->name}}</div>
-                <i class="bx bx-chevron-down"></i>
-            </label>
+            <div class="hidden md:flex items-center text-sm">{{auth()->user()->name}}</div>
 
             @php
             $role=session('role')=='super'?'hod':session('role');
@@ -44,21 +25,10 @@
                 @endif
             </a>
 
-            <div class="hidden md:flex rounded-full bg-orange-100 text-orange-800 p-2">
+            <a href="{{url('signout/me')}}" class="hidden md:flex rounded-full bg-orange-100 text-orange-800 p-2">
                 <i class="bx bx-power-off"></i>
-            </div>
+            </a>
 
-            <div class="current-user-dropdown text-sm" id='current-user-dropdown'>
-
-                <a href="{{route('passwords.edit')}}" class="flex items-center border-b py-2 px-4">
-                    <i class="bx bx-key -rotate-45 mr-3"></i>
-                    Change Password
-                </a>
-                <a href="{{route('signout')}}" class="flex items-center border-b py-2 px-4">
-                    <i class="bx bx-log-out mr-3"></i>
-                    Sign Out
-                </a>
-            </div>
             <span id='menu' class="flex md:hidden">
                 <i class="bx bx-menu"></i>
             </span>

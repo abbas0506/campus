@@ -19,12 +19,14 @@
     <div class="w-full mt-12">
 
         @foreach($shifts as $shift)
+        <!-- dispaly shift only of it has some allocations -->
+        @if($teacher->course_allocations()->shift($shift->id)->count())
         <div class="collapsible">
-            <div class="head">
+            <div class="head active">
                 <h2 class="flex items-center space-x-2 ">
                     {{$shift->name}}
-                    <span class="text-xs ml-4 text-slate-600">{{$teacher->allocations()->where('short',$shift->short)->count()}}</span>
-                    <span class="text-xs text-slate-600">({{$teacher->allocations()->where('short',$shift->short)->sum('cr')}})</span>
+                    <span class="text-xs ml-4 text-slate-600">{{$teacher->course_allocations()->shift($shift->id)->count()}}</span>
+                    <span class="text-xs text-slate-600">({{$teacher->course_allocations()->shift($shift->id)->sumOfCr()}})</span>
                 </h2>
                 <i class="bx bx-chevron-down text-lg"></i>
             </div>
@@ -47,7 +49,7 @@
                         </thead>
                         <tbody>
                             @php $i=1; @endphp
-                            @foreach($teacher->allocations()->get()->where('short',$shift->short) as $course_allocation)
+                            @foreach($teacher->course_allocations()->shift($shift->id)->get() as $course_allocation)
                             <tr>
                                 <td class="text-center">{{$i++}}</td>
                                 <td class="text-center">
@@ -81,6 +83,7 @@
 
             </div>
         </div>
+        @endif
         @endforeach
 
     </div>
