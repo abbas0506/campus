@@ -1,7 +1,7 @@
 @extends('layouts.basic')
 
 @section('header')
-<x-internal.header></x-internal.header>
+<x-header></x-header>
 @endsection
 
 @section('sidebar')

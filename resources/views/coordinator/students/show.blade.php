@@ -113,10 +113,12 @@
                         <tbody>
                             @php $sr=1; @endphp
                             @foreach($student->first_attempts as $first_attempt)
+                            <!-- display only if course allocation has been actually made -->
+                            @if($first_attempt->course_allocation->course()->exists())
                             <tr>
                                 <td>{{$sr++}}</td>
-                                <td>{{$first_attempt->course_allocation->course->name}}</td>
-                                <td>{{$first_attempt->course_allocation->teacher->name ?? ''}}</td>
+                                <td>{{$first_attempt->course_allocation->course->name??''}}</td>
+                                <td>{{$first_attempt->course_allocation->teacher->name??''}}</td>
                                 <td>@if($first_attempt->can_appear) active @else blocked @endif</td>
                                 <td>
                                     @if($first_attempt->can_appear)
@@ -136,6 +138,7 @@
                                     @endif
                                 </td>
                             </tr>
+                            @endif
                             @endforeach
                         </tbody>
                     </table>
@@ -165,7 +168,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($student->first_attempts()->get() as $attempt)
+                        @foreach($student->first_attempts as $attempt)
+                        <!-- display only if course allocation has been actually made -->
+                        @if($attempt->course_allocation->course()->exists())
                         <tr class="text-center">
                             <td>{{$attempt->semester->short()}}</td>
                             <td class="text-left">{{$attempt->course_allocation->course->name}}</td>
@@ -175,6 +180,7 @@
                             <td>{{$attempt->gpa()}}</td>
                             <td>{{$attempt->grade()}}</td>
                         </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>

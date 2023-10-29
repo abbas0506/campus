@@ -20,7 +20,7 @@
 
     <div class="flex flex-wrap items-center justify-center space-x-4 mt-8 border border-dashed p-4">
         <h2 class='text-slate-600'>@if($course_allocation->submitted_at) Preview Data @else Proof Reading @endif</h2>
-        <a href="{{route('teacher.assessment.preview', $course_allocation)}}" target="_blank" class="btn-teal text-sm"><i class="bi-eye"></i></a>
+        <a href="{{route('teacher.assessment.preview', $course_allocation)}}" class="btn-teal text-sm"><i class="bi-eye"></i></a>
     </div>
 
     <div class="mt-8">

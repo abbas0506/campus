@@ -55,9 +55,9 @@ use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SemesterPlanController;
 use App\Http\Controllers\hod\SlotController;
 use App\Http\Controllers\hod\SlotOptionController;
-use App\Http\Controllers\hod\students\MovementController;
-use App\Http\Controllers\hod\students\ResumptionController;
-use App\Http\Controllers\hod\students\SuspensionController;
+use App\Http\Controllers\hod\MovementController;
+use App\Http\Controllers\hod\ResumptionController;
+use App\Http\Controllers\hod\SuspensionController;
 
 use App\Http\Controllers\internal\InternalController as InternalInternalController;
 use App\Http\Controllers\internal\AssessmentController as InternalAssessmentController;
@@ -179,7 +179,6 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::patch('programs/{program}/internal/update', [ProgramController::class, 'updateInternal'])->name('programs.internal.update');
     Route::get('programs/{program}/coordinator', [ProgramController::class, 'coordinator'])->name('programs.coordinator');
     Route::patch('programs/{program}/coordinator/update', [ProgramController::class, 'updateCoordinator'])->name('programs.coordinator.update');
-
 
     Route::get('schemes//{id}/append', [SchemeController::class, 'append'])->name('schemes.append');
     Route::get('schemes/{scheme}/pdf', [SchemeController::class, 'pdf'])->name('schemes.pdf');

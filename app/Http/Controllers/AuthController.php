@@ -69,28 +69,37 @@ class AuthController extends Controller
     {
         $request->validate([
             'role' => 'required',
-            'department_id' => 'required_if:role,hod,super,coordinator',
-            'semester_id' => 'required_if:role,hod,teacher,coordinator',
+            'department_id' => 'required_if:role,super,hod,internal,coordinator',
         ]);
 
-        if (Auth::user()->hasRole($request->role)) {
 
+        if (Auth::user()->hasRole($request->role)) {
+            // get the latest of active semesters
+            $semester = Semester::active()->orderBy('id', 'desc')->first();
             session([
-                'current_role' => $request->role,
+                'role' => $request->role,
+                'semester_id' => $semester->id,
             ]);
-            //save selected semester id for entire session
-            if (Auth::user()->hasAnyRole('super', 'hod', 'internal', 'coordinator', 'teacher')) {
-                $semester = Semester::find($request->semester_id);
+
+            if ($request->role != 'teacher') {
+                $department = Department::find($request->department_id);
                 session([
-                    'semester_id' => $request->semester_id,
+                    'department_id' => $request->department_id,
                 ]);
-                if ($request->role == 'super' || $request->role == 'hod' || $request->role == 'internal' || $request->role == 'coordinator') {
-                    $department = Department::find($request->department_id);
-                    session([
-                        'department_id' => $request->department_id,
-                    ]);
-                }
             }
+            // //save selected semester id for entire session
+            // if (Auth::user()->hasAnyRole('super', 'hod', 'internal', 'coordinator', 'teacher')) {
+            //     $semester = Semester::find($request->semester_id);
+            //     session([
+            //         'semester_id' => $request->semester_id,
+            //     ]);
+            //     if ($request->role == 'super' || $request->role == 'hod' || $request->role == 'internal' || $request->role == 'coordinator') {
+            //         $department = Department::find($request->department_id);
+            //         session([
+            //             'department_id' => $request->department_id,
+            //         ]);
+            //     }
+            // }
             return redirect($request->role);
         } else
             return redirect('/');
@@ -175,6 +184,8 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/');
     }
+
+    // switch semester
     public function switchSemester(Request $request)
     {
         $request->validate([
@@ -184,7 +195,21 @@ class AuthController extends Controller
         session([
             'semester_id' => $request->semester_id,
         ]);
-        return redirect(session('current_role'));
+        return redirect(session('role'));
+    }
+
+    //switch current role
+    public function switchRole(Request $request)
+    {
+        $request->validate([
+            'role_id' => 'required|numeric',
+
+        ]);
+        session([
+            'role_id' => $request->role_id,
+            'role' => $request->role,
+        ]);
+        return redirect(session('role'));
     }
     public function resetPassword(Request $request, $id)
     {

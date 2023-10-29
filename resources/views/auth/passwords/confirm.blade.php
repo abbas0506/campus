@@ -15,7 +15,7 @@
         <x-message></x-message>
         @endif
 
-        <a href="{{url(session('current_role'))}}" class="btn-blue w-full text-center mt-8">Go Next</a>
+        <a href="{{url(session('role'))}}" class="btn-blue w-full text-center mt-8">Go Next</a>
 
     </div>
 </div>

@@ -7,7 +7,7 @@
 
         @guest
         <img class="md:w-3/4" alt="logo" src="{{asset('/images/logo/logo.png')}}">
-        <h1 class="text-2xl md:text-4xl font-thin text-indigo-900 font-culpa tracking-wider">Exam System</h1>
+        <h1 class="text-2xl md:text-4xl font-thin text-indigo-900 font-culpa tracking-wider">Exam Portal</h1>
 
         <div class="w-full mt-4">
 
@@ -51,29 +51,17 @@
         <form action="{{route('login.as')}}" method='post' class="w-full mt-2" onsubmit="return validate(event)">
             @csrf
             <select id="role" name="role" class="custom-input px-4 w-full py-0 mt-3 bg-transparent" onchange="loadDepartments()">
-                @if(Auth::user()->hasAnyRole('super','hod','internal','teacher'))
                 <option value="" class="py-0">Please select a role</option>
-                @endif
                 @foreach(Auth::user()->roles as $role)
-                <option value="{{$role->name}}" class="py-0">{{Str::upper($role->name)}}</option>
+                <option value="{{$role->name}}" class="py-0">{{ucfirst($role->name)}}</option>
                 @endforeach
             </select>
             <div id='deptt_container' class="hidden">
                 <div class="mt-3">
-                    <!-- <label for="" class="text-base text-gray-700 text-left">Department</label> -->
                     <select id="department_id" name="department_id" class="custom-input px-4 py-3 w-full">
 
                     </select>
                 </div>
-            </div>
-            <div id='semester_container' class="mt-3 hidden">
-                <!-- <label for="" class="text-base text-gray-700 text-left w-full">Semester</label> -->
-                <select id="semester_id" name="semester_id" class="custom-input px-4 py-3 w-full">
-                    <option value="">Select a semester</option>
-                    @foreach($semesters as $semester)
-                    <option value="{{$semester->id}}">{{$semester->title()}}</option>
-                    @endforeach
-                </select>
             </div>
             <div class="flex items-center space-x-4 mt-6">
                 <a href="{{url('signout')}}" class="flex flex-1 btn-orange justify-center py-2">Singout</a>
@@ -132,15 +120,9 @@
             }); //ajax end
 
             $('#deptt_container').slideDown()
-            $('#semester_container').slideDown()
-        } else if (role == 'teacher') {
-            $('#semester_container').slideDown();
-            $('#deptt_container').slideUp()
         } else {
             $('#deptt_container').slideUp()
-            $('#semester_container').slideUp()
         }
-
     }
 
     function validate(event) {

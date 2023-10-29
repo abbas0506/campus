@@ -5,7 +5,7 @@
         <ul class="space-y-2">
 
             <li>
-                <a href="{{url('hod')}}" class="flex items-center p-2">
+                <a href="{{url('coordinator')}}" class="flex items-center p-2">
                     <i class="bi-house"></i>
                     <span class="ml-3">Home</span>
                 </a>
@@ -30,12 +30,12 @@
                     <span class="ml-3">Assessment</span>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="{{url('hod/printable')}}" class="flex items-center p-2">
                     <i class="bi bi-printer"></i>
                     <span class="ml-3">Print / Download</span>
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="{{route('coordinator.students.index')}}" class="flex items-center p-2">
                     <i class="bi bi-person-circle"></i>

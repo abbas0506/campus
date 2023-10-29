@@ -6,8 +6,9 @@
             </a>
             <div class="hidden md:flex text-base md:text-xl font-semibold">Examination System</div>
             <div class="hidden md:flex px-1 md:px-4">|</div>
-            <div class="text-sm flex items-center space-x-2">
-                <div>{{ucfirst(session('current_role'))}}</div>
+            <div class="text-sm">{{ucfirst(session('role'))}} ({{App\Models\Semester::find(session('semester_id'))->short()}}) <i class="bx bx-chevron-down text-xs"></i></div>
+
+            <!-- <div class="text-sm flex items-center space-x-2">
                 <i class="bi bi-chevron-right text-[10px]"></i>
                 @if(Auth::user()->hasRole('super'))
                 <form action="{{route('switch.semester')}}" method="post" id='switchSemesterForm'>
@@ -22,7 +23,7 @@
                 <div>{{App\Models\Semester::find(session('semester_id'))->short()}}</div>
                 @endif
 
-            </div>
+            </div> -->
         </div>
 
         <!-- right sided current user info -->
@@ -40,8 +41,8 @@
                 @endif
             </a>
 
-            <div class="hidden md:flex rounded-full bg-indigo-300 text-indigo-800 p-2" id='current-user-avatar'>
-                <i class="bx bx-user"></i>
+            <div class="hidden md:flex rounded-full bg-orange-100 text-orange-800 p-2">
+                <i class="bx bx-power-off"></i>
             </div>
 
             <div class="current-user-dropdown text-sm" id='current-user-dropdown'>
