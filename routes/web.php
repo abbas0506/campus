@@ -222,7 +222,6 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::resource('students/movement', MovementController::class);
     Route::resource('students/suspension', SuspensionController::class);
     Route::resource('students/resumption', ResumptionController::class);
-    Route::resource('attempt-permission', AttemptPermissionController::class)->only('update');
     Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
     Route::post('search-reappear-data', [EnrollmentController::class, 'searchReappearData'])->name('search.reappear.data');
 
@@ -300,8 +299,6 @@ Route::group(['prefix' => 'coordinator', 'as' => 'coordinator.', 'middleware' =>
     Route::resource('sections', CoordinatorSectionController::class);
 
     Route::resource('students', CoordinatorStudentController::class);
-    Route::resource('attempt-permission', AttemptPermissionController::class)->only('update');
-
     Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
 
     Route::get('sections/{section}/students/feed', [CoordinatorStudentController::class, 'feed'])->name('students.feed');

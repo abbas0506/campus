@@ -193,6 +193,18 @@ class AuthController extends Controller
             'semester_id' => 'required|numeric',
 
         ]);
+
+        if (session('role') == 'teacher' && $request->role != 'teacher') {
+            if ($request->department_id) {
+                session([
+                    'department_id' => $request->department_id,
+                ]);
+            } else {
+                return redirect()->back()->with('warning', 'Department missing!');;
+            }
+        }
+        // if every thing ok, switch to new mode
+        // update session
         session([
             'role' => $request->role,
             'semester_id' => $request->semester_id,

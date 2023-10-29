@@ -70,7 +70,7 @@ class CourseAllocation extends Model
     }
     public function enrolled_students()
     {
-        return Student::whereRelation('first_attempts.student', 'course_allocation_id', $this->id)->get();
+        return Student::whereRelation('first_attempts', 'course_allocation_id', $this->id)->get();
     }
     public function first_attempts_sorted()
     {
@@ -79,13 +79,6 @@ class CourseAllocation extends Model
     public function reappears_sorted()
     {
         return Reappear::with('first_attempt')->where('course_allocation_id', $this->id)->get()->sortBy('first_attempt.student.rollno');
-    }
-
-    public function scopeSumOfCreditHrs($query, $id)
-    {
-        return $query->where('semester_id', $id)->get()->sum(function ($allocation) {
-            return $allocation->course->creditHrs();
-        });
     }
     public function scopeDuring($query, $semester_id)
     {
@@ -154,5 +147,9 @@ class CourseAllocation extends Model
     public function scopeShift($query, $shift)
     {
         return $query->whereRelation('section.clas', 'shift_id', $shift);
+    }
+    public function scopeToday($query)
+    {
+        return $query->whereDate('updated_at', today());
     }
 }

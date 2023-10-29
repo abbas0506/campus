@@ -5,14 +5,14 @@
         <ul class="space-y-2">
             <li>
                 <a href="{{url('teacher')}}" class="flex items-center p-2">
-                    <i class="bi-grid"></i>
-                    <span class="ml-3">Dashboard</span>
+                    <i class="bi-house"></i>
+                    <span class="ml-3">Home</span>
                 </a>
             </li>
 
             <li>
                 <a href="{{route('teacher.mycourses.index')}}" class="flex items-center p-2 ">
-                    <i class="bx bx-book"></i>
+                    <i class="bi-book"></i>
                     <span class="ml-3">My Courses</span>
                 </a>
             </li>

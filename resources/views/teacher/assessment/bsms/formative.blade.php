@@ -71,7 +71,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($course_allocation->first_attempts()->canAppear()->attendanceClear()->sorted() as $first_attempt)
+                    @foreach($course_allocation->first_attempts()->attendanceClear()->sorted() as $first_attempt)
                     <tr class="tr">
                         <td>{{$sr++}}</td>
                         <td>@if($first_attempt->student->gender=='M')
@@ -97,8 +97,7 @@
                     @endforeach
 
                     <!-- reappear -->
-                    <!-- can appear -->
-                    @foreach($course_allocation->reappears()->canAppear()->attendanceClear()->sorted() as $reappear)
+                    @foreach($course_allocation->reappears()->attendanceClear()->sorted() as $reappear)
                     <tr class="tr">
                         <td class="text-slate-400">{{$sr++}}</td>
                         <td>

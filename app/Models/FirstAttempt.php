@@ -18,7 +18,6 @@ class FirstAttempt extends Model
         'presentation',
         'midterm',
         'summative',
-        'can_apear',    // 0 if struck of from this course 
 
     ];
     public function student()
@@ -193,10 +192,7 @@ class FirstAttempt extends Model
     {
         return $query->whereRelation('course_allocation.course', 'id', $course_id);
     }
-    public function scopeCanAppear($query)
-    {
-        return $query->where('can_appear', 1);
-    }
+
     public function scopeSorted($query)
     {
         return $query->with('student')->get()->sortBy('student.rollno');

@@ -4,11 +4,11 @@
     <!--welcome  -->
     <div class="flex items-center">
         <div class="flex-1">
-            <h2>Welcome {{ Auth::user()->name }}!</h2>
+            <h2>{{ Auth::user()->name }}!</h2>
             <div class="bread-crumb">
                 <div>HOD</div>
                 <div>/</div>
-                <div>Home</div>
+                <div>{{Str::replace('Department of ','',$department->name)}}</div>
             </div>
         </div>
         <div class="text-slate-500">{{ today()->format('d/m/Y') }}</div>
@@ -25,7 +25,7 @@
                 <i class="bi bi-person-circle text-green-600"></i>
             </div>
         </a>
-        <a href="{{url('teachers')}}" class="pallet-box">
+        <a href="{{route('hod.teachers.index')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Teachers</div>
                 <div class="h2">{{$department->teachers()->count()}} </div>
@@ -43,12 +43,18 @@
                 <i class="bi bi-card-checklist text-teal-600"></i>
             </div>
         </a>
-        <a href="" class="pallet-box">
+        <a href="{{route('hod.assessment.submitted')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Result Submission</div>
                 <div class="h2">
                     @if($department->current_allocations()->count()>0)
-                    {{$department->current_allocations()->submitted()->count()}}/{{$department->current_allocations()->count()}} ({{round( $department->current_allocations()->submitted()->count()/$department->current_allocations()->count(),1)}} %)
+                    {{$department->current_allocations()->submitted()->count()}}/{{$department->current_allocations()->count()}} (
+                    @if($department->current_allocations()->count())
+                    {{round( $department->current_allocations()->submitted()->count()/$department->current_allocations()->count()*100,1)}}
+                    @else
+                    0
+                    @endif
+                    %)
                     @endif
                 </div>
 
@@ -66,7 +72,7 @@
             <div class="p-4 bg-slate-50">
                 <h2>Students</h2>
                 <div class="divider mt-4 border-slate-200"></div>
-                <div class="grid grid-cols-2 mt-2 gap-2">
+                <div class="grid grid-cols-4 mt-2 gap-2 text-center">
                     <div>
                         <label class="text-slate-600">Active</label>
                         <p>{{$department->students()->active()->count()}}</p>
@@ -85,7 +91,57 @@
                     </div>
                 </div>
             </div>
+            <!-- todays activity  -->
 
+            <div class="p-4 bg-slate-50 mt-4">
+                <h2>Today's Submission</h2>
+                <div class="overflow-x-auto mt-2">
+                    <table class="table-fixed w-full text-sm">
+                        <thead>
+                            <tr class="text-xs">
+                                <th class="w-40">Class</th>
+                                <th class="w-60">Course Name</th>
+                                <th class='w-24'>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $last_section_id='';
+                            @endphp
+
+
+                            @foreach($department->current_allocations()->submitted()->today()->get() as $course_allocation)
+                            <tr class="tr text-xs">
+                                <td>
+                                    @if($last_section_id!=$course_allocation->section->id)
+                                    {{$course_allocation->section->title()}}
+                                    @endif
+                                </td>
+                                <td class="text-left">{{$course_allocation->course->code}} | {{$course_allocation->course->name}} <span class="text-slate-400 text-xs">{{$course_allocation->course->lblCr()}}</span> <br> <span class="text-slate-400">{{$course_allocation->teacher->name}}</span></td>
+                                <td>
+                                    <div class="flex items-center justify-center mt-1 space-x-1">
+                                        <a href="{{route('hod.assessment.show',$course_allocation)}}" class="btn-green rounded"><i class="bi-eye"></i></a>
+                                        <form action="{{route('hod.assessment.unlock',$course_allocation)}}" method="post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn-sky rounded"><i class="bi-unlock"></i></button>
+                                        </form>
+
+                                    </div>
+                                </td>
+                            </tr>
+
+                            @php
+                            if($last_section_id!=$course_allocation->section->id)
+                            $last_section_id=$course_allocation->section->id;
+                            @endphp
+
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
         </div>
         <!-- middle panel end -->
         <!-- right side bar starts -->

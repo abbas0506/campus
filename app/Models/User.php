@@ -59,9 +59,13 @@ class User extends Authenticatable
 
 
 
-    public function student()
+    public function allocated_fresh()
     {
-        return $this->hasOne(Student::class);
+        return $this->hasManyThrough(FirstAttempt::class, CourseAllocation::class, 'teacher_id');
+    }
+    public function allocated_reappears()
+    {
+        return $this->hasManyThrough(Reappear::class, CourseAllocation::class, 'teacher_id');
     }
     public function headships()
     {

@@ -110,35 +110,16 @@
                                 <th class="w-8">Sr</th>
                                 <th class="w-48">Course</th>
                                 <th class="w-48">Teacher</th>
-                                <th class="16">Status</th>
-                                <th class="24">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php $sr=1; @endphp
-                            @foreach($student->first_attempts as $first_attempt)
+                            @foreach($student->first_attempts()->during(session('semester_id'))->get() as $first_attempt)
                             <tr>
                                 <td>{{$sr++}}</td>
                                 <td>{{$first_attempt->course_allocation->course->name}}</td>
                                 <td>{{$first_attempt->course_allocation->teacher->name ?? ''}}</td>
-                                <td>@if($first_attempt->can_appear) active @else blocked @endif</td>
-                                <td>
-                                    @if($first_attempt->can_appear)
-                                    <form action="{{route('hod.attempt-permission.update', $first_attempt)}}" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name='can_appear' value="0">
-                                        <button type="submit" class="btn btn-red rounded text-xs p-1 w-16">Block</button>
-                                    </form>
-                                    @else
-                                    <form action="{{route('hod.attempt-permission.update', $first_attempt)}}" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name='can_appear' value="1">
-                                        <button type="submit" class="btn btn-teal rounded text-xs p-1 w-16">Allow</button>
-                                    </form>
-                                    @endif
-                                </td>
+
                             </tr>
                             @endforeach
                         </tbody>

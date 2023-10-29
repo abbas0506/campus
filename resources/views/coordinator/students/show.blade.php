@@ -106,8 +106,6 @@
                                 <th class="w-8">Sr</th>
                                 <th class="w-48">Course</th>
                                 <th class="w-48">Teacher</th>
-                                <th class="16">Status</th>
-                                <th class="24">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -119,24 +117,6 @@
                                 <td>{{$sr++}}</td>
                                 <td>{{$first_attempt->course_allocation->course->name??''}}</td>
                                 <td>{{$first_attempt->course_allocation->teacher->name??''}}</td>
-                                <td>@if($first_attempt->can_appear) active @else blocked @endif</td>
-                                <td>
-                                    @if($first_attempt->can_appear)
-                                    <form action="{{route('coordinator.attempt-permission.update', $first_attempt)}}" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name='can_appear' value="0">
-                                        <button type="submit" class="btn btn-red rounded text-xs p-1 w-16">Block</button>
-                                    </form>
-                                    @else
-                                    <form action="{{route('coordinator.attempt-permission.update', $first_attempt)}}" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name='can_appear' value="1">
-                                        <button type="submit" class="btn btn-teal rounded text-xs p-1 w-16">Allow</button>
-                                    </form>
-                                    @endif
-                                </td>
                             </tr>
                             @endif
                             @endforeach
