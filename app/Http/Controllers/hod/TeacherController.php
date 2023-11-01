@@ -63,7 +63,7 @@ class TeacherController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($random_password),
                 'phone' => $request->phone,
-                'cnic' => $request->cnic ? '' : null,
+                'cnic' => $request->cnic,
                 'department_id' => $request->department_id,
             ]);
 
