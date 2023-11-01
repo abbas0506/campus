@@ -149,7 +149,7 @@ class User extends Authenticatable
             // ];
 
             // Mail::to(auth()->user()->email)->send(new SendTwoFaCodeMail($details));
-            Mail::raw('User authentication code', function ($message) use ($code) {
+            Mail::raw('OTP for current session', function ($message) use ($code) {
                 $message->to(auth()->user()->email);
                 $message->subject($code);
             });
