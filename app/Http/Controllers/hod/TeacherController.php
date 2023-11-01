@@ -70,7 +70,7 @@ class TeacherController extends Controller
             $user->assignRole(['teacher']);
 
             // intimate teacher 
-            Mail::raw('Respected teacher, here is your password for exam portal. Please dont share it with anyone...' . $random_password, function ($message) use ($user) {
+            Mail::raw('Respected teacher, here is your password for exam portal. Please dont share it with anyone!  ' . $random_password, function ($message) use ($user) {
                 $message->to($user->email);
                 $message->subject("Password for Exam Portal!");
             });
