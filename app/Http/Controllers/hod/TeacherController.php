@@ -69,9 +69,9 @@ class TeacherController extends Controller
             $user->assignRole(['teacher']);
 
             // intimate teacher 
-            Mail::raw('Your authentication code for UO Exam Portal', function ($message) use ($user, $random_password) {
+            Mail::raw('Respected teacher, here is your authentication code for exam portal. Please dont share it with anyone. ..' . $random_password, function ($message) use ($user) {
                 $message->to($user->email);
-                $message->subject($random_password);
+                $message->subject("Authentication code for exam portal!");
             });
             Db::commit();
             return redirect()->route('hod.teachers.index')->with('success', 'Successfully created');
