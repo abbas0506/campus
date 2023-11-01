@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\Department;
 use App\Models\User;
@@ -51,20 +52,31 @@ class TeacherController extends Controller
             'department_id' => 'required|numeric'
 
         ]);
+        DB::beginTransaction();
         try {
+            // generate random password for teacher
+            $random_password = rand(1000, 9999);
 
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make('password'),
+                'password' => Hash::make($random_password),
                 'phone' => $request->phone,
                 'cnic' => $request->cnic ? '' : null,
                 'department_id' => $request->department_id,
             ]);
 
             $user->assignRole(['teacher']);
+
+            // intimate teacher 
+            Mail::raw('Your authentication code for UO Exam Portal', function ($message) use ($user, $random_password) {
+                $message->to($user->email);
+                $message->subject($random_password);
+            });
+            Db::commit();
             return redirect()->route('hod.teachers.index')->with('success', 'Successfully created');
         } catch (Exception $ex) {
+            DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
         }
     }
