@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Exception;
 
 class TeacherController extends Controller
@@ -55,7 +56,7 @@ class TeacherController extends Controller
         DB::beginTransaction();
         try {
             // generate random password for teacher
-            $random_password = rand(1000, 9999);
+            $random_password = Str::random(8);
 
             $user = User::create([
                 'name' => $request->name,
@@ -69,9 +70,9 @@ class TeacherController extends Controller
             $user->assignRole(['teacher']);
 
             // intimate teacher 
-            Mail::raw('Respected teacher, here is your authentication code for exam portal. Please dont share it with anyone. ..' . $random_password, function ($message) use ($user) {
+            Mail::raw('Respected teacher, here is your password for exam portal. Please dont share it with anyone...' . $random_password, function ($message) use ($user) {
                 $message->to($user->email);
-                $message->subject("Authentication code for exam portal!");
+                $message->subject("Password for Exam Portal!");
             });
             Db::commit();
             return redirect()->route('hod.teachers.index')->with('success', 'Successfully created');
