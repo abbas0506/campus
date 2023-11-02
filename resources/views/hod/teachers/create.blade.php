@@ -35,12 +35,12 @@
 
             <div class="flex flex-col md:flex-row md:space-x-4">
                 <div class="flex flex-col flex-1 mt-3">
-                    <label for="">CNIC <span id="cnic_length" class="text-slate-500 text-xs ml-3">0/13</span></label>
+                    <label for="">CNIC <span id="cnic_length" class="text-xs ml-3">0/13</span></label>
                     <input type="text" id='cnic' name='cnic' class="custom-input" placeholder="Without dashes">
                 </div>
                 <div class="flex flex-col flex-1 mt-3">
-                    <label for="">Phone <span id="phone_length" class="text-slate-500 text-xs ml-3">0/11</span></label>
-                    <input type="text" id='phone' name='phone' class="custom-input" placeholder="Without dash" required>
+                    <label for="">Phone * <span id="phone_length" class="text-xs ml-3">0/11</span></label>
+                    <input type="text" id='phone' name='phone' class="custom-input" placeholder="Without dash, first digit 0" required>
                 </div>
             </div>
             <div class="flex mt-4 ">
@@ -55,11 +55,28 @@
         $('#cnic').on('input', function() {
             var cnic = $('#cnic').val()
             $('#cnic_length').html(cnic.length + "/13");
+            // cnic patten
+            var regex = /^[1-9]\d{0,12}$/;
+            if (!regex.test(cnic)) {
+                if (!$('#cnic_length').hasClass('flash-warning'))
+                    $('#cnic_length').addClass('flash-warning');
+            } else {
+                if ($('#cnic_length').hasClass('flash-warning'))
+                    $('#cnic_length').removeClass('flash-warning');
+            }
         });
 
         $('#phone').on('input', function() {
             var phone = $('#phone').val()
             $('#phone_length').html(phone.length + "/11");
+            // phone patten
+            var regex = /^[0]\d{0,10}$/;
+            if (!regex.test(phone)) {
+                if (!$('#phone_length').hasClass('flash-warning'))
+                    $('#phone_length').addClass('flash-warning');
+            } else if ($('#phone_length').hasClass('flash-warning'))
+                $('#phone_length').removeClass('flash-warning');
+
         });
     </script>
     @endsection

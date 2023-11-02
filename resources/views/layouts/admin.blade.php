@@ -10,59 +10,47 @@
         <ul class="space-y-2">
             <li>
                 <a href="{{url('admin')}}" class="flex items-center p-2">
-                    <i class="bi bi-grid"></i>
-                    <span class="ml-3">Dashboard</span>
+                    <i class="bi bi-house"></i>
+                    <span class="ml-3">Home</span>
                 </a>
             </li>
             <li>
-                <a href="{{url('departments')}}" class="flex items-center p-2">
-                    <i class="bi bi-pass"></i>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Departments</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{url('headships')}}" class="flex items-center p-2">
-                    <i class="bi bi-person-gear"></i>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Headships</span>
-                </a>
-            </li>
-            <!-- <li>
-                <a href="{{url('user-access')}}" class="flex items-center p-2">
-                    <i class="bi bi-people"></i>
-                    <span class="flex-1 ml-3 whitespace-nowrap">User Access</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{url('semesters')}}" class="flex items-center p-2">
-                    <i class="bi bi-gear"></i>
+                <a href="{{route('admin.semesters.index')}}" class="flex items-center p-2">
+                    <i class="bi bi-layers"></i>
                     <span class="flex-1 ml-3 whitespace-nowrap">Semesters</span>
                 </a>
             </li>
             <li>
-                <a href="{{url('coursetypes')}}" class="flex items-center p-2">
-                    <i class="bi bi-diamond"></i>
+                <a href="{{route('admin.departments.index')}}" class="flex items-center p-2">
+                    <i class="bi bi-pass"></i>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Departments</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{route('admin.user-access.index')}}" class="flex items-center p-2">
+                    <i class="bi bi-person-gear"></i>
+                    <span class="flex-1 ml-3 whitespace-nowrap">User Access</span>
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{{route('admin.coursetypes.index')}}" class="flex items-center p-2">
+                    <i class="bi bi-book"></i>
                     <span class="flex-1 ml-3 whitespace-nowrap">Course Types</span>
                 </a>
-            </li> -->
+            </li>
 
         </ul>
     </div>
 </aside>
-<div class="content-page">
-    <div class="offset-sidebar"></div>
-    <div class="flex flex-col flex-1">
-        <div class="offset-header"></div>
-        <div class="flex flex-col flex-1 p-12 overflow-x-hidden">
-            @yield('page-content')
-        </div>
-    </div>
 
+<div class="responsive-body">
+    @yield('page-content')
 </div>
+
 <script type="module">
-    $('#toggle-current-user-dropdown').click(function() {
-        $("#current-user-dropdown").toggle();
-    });
     $('#menu').click(function() {
         $("#sidebar").toggle();
     });

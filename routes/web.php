@@ -16,9 +16,10 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\HeadshipController;
 use App\Http\Controllers\Admin\UserAccessController;
 use App\Http\Controllers\Admin\CourseTypeController;
-
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\ce\AwardController as CeAwardController;
 use App\Http\Controllers\ce\GazetteController as CeGazetteController;
+use App\Http\Controllers\ce\NotificationController as CeNotificationController;
 use App\Http\Controllers\ce\StudentController as CeStudentController;
 use App\Http\Controllers\ce\TranscriptController;
 
@@ -131,14 +132,15 @@ Route::view('exception/b', 'exceptions.blocked')->name('user_blocked_exception')
 
 Route::get('exception/{code}', [MyExceptionController::class, 'show'])->name('exception.show');
 
-Route::group(['middleware' => ['role:admin']], function () {
-    Route::get('admin', [DashboardController::class, 'admin']);
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin']], function () {
+    Route::get('/', [DashboardController::class, 'admin']);
     Route::resource('user-access', UserAccessController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('headships', HeadshipController::class);
     Route::resource('coursetypes', CourseTypeController::class);
+    Route::resource('notifications', NotificationController::class);
     //
 });
 
@@ -165,6 +167,7 @@ Route::group(['middleware' => ['role:controller']], function () {
     Route::get('ce/gazette/step2', [CeGazetteController::class, 'step2'])->name('ce.gazette.step2');
     Route::get('ce/gazette/{section}/step3', [CeGazetteController::class, 'step3'])->name('ce.gazette.step3');
     Route::get('ce/gazette/{allocation}/pdf', [PdfController::class, 'gazette'])->name('ce.gazette.pdf');
+    Route::resource('notifications', CeNotificationController::class);
 });
 
 Route::get('super', [HodController::class, 'index']);

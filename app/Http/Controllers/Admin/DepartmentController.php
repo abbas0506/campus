@@ -43,7 +43,7 @@ class DepartmentController extends Controller
 
         try {
             Department::create($request->all());
-            return redirect()->route('departments.index')->with('success', 'Successfully created');
+            return redirect()->route('admin.departments.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -92,7 +92,7 @@ class DepartmentController extends Controller
         $department = Department::findOrFail($id);
         try {
             $department->update($request->all());
-            return redirect()->route('departments.index')->with('success', 'Successfully updated');;
+            return redirect()->route('admin.departments.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
                 ->withErrors($ex->getMessage());

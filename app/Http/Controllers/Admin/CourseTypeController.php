@@ -47,7 +47,7 @@ class CourseTypeController extends Controller
 
         try {
             CourseType::create($request->all());
-            return redirect()->route('coursetypes.index')->with('success', 'Successfully created');
+            return redirect()->route('admin.coursetypes.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -96,7 +96,7 @@ class CourseTypeController extends Controller
         try {
             $course = CourseType::findOrFail($id);
             $course->update($request->all());
-            return redirect()->route('coursetypes.index')->with('success', 'Successfully updated');;
+            return redirect()->route('admin.coursetypes.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()
                 ->withErrors($ex->getMessage());

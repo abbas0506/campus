@@ -1,76 +1,72 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1>Course Types</h1>
-<div class="bread-crumb">Courese Types / all</div>
+<div class="container">
+    <h2>Departments</h2>
+    <div class="bread-crumb">
+        <a href="{{url('admin')}}">Home</a>
+        <div>/</div>
+        <div>Departments</div>
+    </div>
 
-<div class="container w-fullmx-auto mt-8">
-    <div class="flex items-center flex-wrap justify-between">
-        <div class="flex relative w-60">
-            <input type="text" placeholder="Search ..." class="search-indigo w-60" oninput="search(event)">
-            <i class="bi bi-search absolute right-1 top-3"></i>
+
+    <!-- page message -->
+    @if($errors->any())
+    <x-message :errors='$errors'></x-message>
+    @else
+    <x-message></x-message>
+    @endif
+
+
+    <div class="mt-8">
+        <div class="flex items-center flex-wrap justify-between">
+            <!-- search -->
+            <div class="flex relative w-full md:w-1/3 mt-8">
+                <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
+                <i class="bx bx-search absolute top-2 right-2"></i>
+            </div>
+            <a href="{{route('admin.coursetypes.create')}}" class="btn-indigo text-sm">
+                Add New
+            </a>
         </div>
-        <a href="{{route('coursetypes.create')}}" class="btn-indigo text-sm">
-            Add New
-        </a>
+        @php $sr=1; @endphp
+        <table class="table-fixed w-full mt-8">
+            <thead>
+                <tr class="border-b border-slate-200">
+                    <th class="w-8">Sr</th>
+                    <th class="w-48">Course Type</th>
+                    <th class="w-16">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach($coursetypes->sortByDesc('updated_at') as $coursetype)
+                <tr class="tr">
+                    <td>{{$sr++}}</td>
+                    <td class="text-left">{{$coursetype->name}}</td>
+                    <td>
+                        <div class="flex justify-center items-center">
+                            <a href="{{route('admin.coursetypes.edit', $coursetype)}}" class="text-teal-800">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            @role('super')
+                            <form action="{{route('admin.coursetypes.destroy',$coursetype)}}" method="POST" id='del_form{{$coursetype->id}}' class="ml-2">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600" onclick="delme('{{$coursetype->id}}')">
+                                    <i class="bi bi-trash3 text-xs"></i>
+                                </button>
+                            </form>
+                            @endrole
+                        </div>
+                    </td>
+
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
     </div>
-    @if ($errors->any())
-    <div class="alert-danger mt-8">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-
-    @if(session('success'))
-    <div class="flex alert-success items-center mt-8">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-        </svg>
-
-        {{session('success')}}
-    </div>
-    @endif
-
-    <table class="table-fixed w-full mt-8">
-        <thead>
-            <tr class="border-b border-slate-200">
-                <th class="w-8">ID</th>
-                <th class="w-48">Course Type</th>
-                <th class="w-16">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach($coursetypes->sortBy('name') as $coursetype)
-            <tr class="tr">
-                <td>{{$coursetype->id}}</td>
-                <td class="text-left">{{$coursetype->name}}</td>
-                <td>
-                    <div class="flex justify-center items-center">
-                        <a href="{{route('coursetypes.edit', $coursetype)}}" class="text-teal-800">
-                            <i class="bi bi-pencil-square"></i>
-                        </a>
-                        @role('super')
-                        <form action="{{route('coursetypes.destroy',$coursetype)}}" method="POST" id='del_form{{$coursetype->id}}' class="ml-2">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600" onclick="delme('{{$coursetype->id}}')">
-                                <i class="bi bi-trash3 text-xs"></i>
-                            </button>
-                        </form>
-                        @endrole
-                    </div>
-                </td>
-
-            </tr>
-            @endforeach
-
-        </tbody>
-    </table>
 </div>
-
 <script type="text/javascript">
     function delme(formid) {
 
@@ -97,7 +93,7 @@
         var str = 0;
         $('.tr').each(function() {
             if (!(
-                    $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
+                    $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
                 )) {
                 $(this).addClass('hidden');
             } else {

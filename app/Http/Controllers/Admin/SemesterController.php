@@ -57,7 +57,7 @@ class SemesterController extends Controller
                     'semester_type_id' => $semester_type_id,
                 ]
             );
-            return redirect('semesters')->with('success', 'Successfully created');
+            return redirect()->route('admin.semesters.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -102,7 +102,7 @@ class SemesterController extends Controller
         try {
             $semester->status = ($semester->status == 1 ? 0 : 1);
             $semester->update($request->all());
-            return redirect('semesters')->with('success', 'Successfully updated');
+            return redirect()->route('admin.semesters.index')->with('success', 'Successfully updated');
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }

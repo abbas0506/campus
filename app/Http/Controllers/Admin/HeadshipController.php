@@ -22,8 +22,7 @@ class HeadshipController extends Controller
     public function index()
     {
         //
-        $departments = Department::where('id', '>', 1)->get();
-        return view('admin.headships.index', compact('departments'));
+
     }
 
     /**
@@ -35,8 +34,8 @@ class HeadshipController extends Controller
     {
         //
         $departments = Department::all();
-        $selected_department = Department::find(session('department_id'));
-        return view('admin.headships.create', compact('selected_department', 'departments'));
+        $department = Department::find(session('department_id'));
+        return view('admin.headships.create', compact('department', 'departments'));
     }
 
     /**
@@ -52,8 +51,8 @@ class HeadshipController extends Controller
         $request->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
-            'phone' => 'max:11',
-            'cnic' => 'required|unique:users|max:13|min:13',
+            'phone' => 'nullable|regex: /^[0]\d{0,10}$/|unique:users',
+            'cnic' => 'nullable|regex:/^[1-9]\d{0,12}$/|unique:users',
             'department_id' => 'required|numeric',
         ]);
         DB::beginTransaction();
@@ -84,7 +83,7 @@ class HeadshipController extends Controller
             }
 
             DB::commit();
-            return redirect('headships')->with('success', 'Successfully created');
+            return redirect()->route('admin.departments.index', $headship->department)->with('success', 'Successfully created');
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
@@ -117,8 +116,8 @@ class HeadshipController extends Controller
             'department_id' => $department_id,
         ]);
 
-        $selected_department = Department::find($department_id);
-        return view('admin.headships.edit', compact('departments', 'teachers', 'selected_department'));
+        $department = Department::find($department_id);
+        return view('admin.headships.edit', compact('departments', 'teachers', 'department'));
     }
 
     /**
@@ -150,7 +149,7 @@ class HeadshipController extends Controller
                 $department = Department::find($department_id);
                 $department->headship->user->assignRole('hod');
                 DB::commit();
-                return redirect('headships')->with('success', 'Successfully replaced');
+                return redirect()->route('admin.departments.show', $department)->with('success', 'Successfully replaced');
             } else {
                 $headship = Headship::create([
                     'department_id' => $department->id,
@@ -160,7 +159,7 @@ class HeadshipController extends Controller
                 //assign role
                 $headship->user->assignRole('hod');
                 DB::commit();
-                return redirect('headships')->with('success', 'Successfully assigned');
+                return redirect()->route('admin.departments.show', $department)->with('success', 'Successfully assigned');
             }
         } catch (Exception $ex) {
             DB::rollBack();

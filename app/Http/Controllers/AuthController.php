@@ -219,7 +219,7 @@ class AuthController extends Controller
         //change password process
         $request->validate([
             'current' => 'required',
-            'new' => 'required',
+            'new' => 'required|min:8',
         ]);
 
         try {

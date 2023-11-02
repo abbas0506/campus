@@ -1,37 +1,38 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1><a href="{{route('departments.index')}}">Departments</a></h1>
-<div class="flex items-center justify-between flex-wrap">
+
+<div class="container">
+    <h2>New Department</h2>
     <div class="bread-crumb">
-        Departments / new
+        <a href="{{url('admin')}}">Home</a>
+        <div>/</div>
+        <a href="{{route('admin.departments.index')}}">Departments</a>
+        <div>/</div>
+        <div>New</div>
     </div>
-</div>
 
-<div class="container md:w-3/4 mx-auto px-5">
+    <div class="md:w-3/4 mx-auto mt-12">
+        <!-- page message -->
+        @if($errors->any())
+        <x-message :errors='$errors'></x-message>
+        @else
+        <x-message></x-message>
+        @endif
 
-    @if ($errors->any())
-    <div class="alert-danger mt-8">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        <form action="{{route('admin.departments.store')}}" method='post' class="flex flex-col w-full mt-8">
+            @csrf
+            <label for="">Full Name</label>
+            <input type="text" id='' name='name' class="custom-input" placeholder="Department of Analytical Chemistry">
+
+            <label for="" class='mt-3'>Display Name <span class="text-sm text-orange-700">(to be displayed on final degree)</span></label>
+            <input type="text" id='' name='title' class="custom-input" placeholder="Department of Chemistry">
+
+            <div class="flex items-center justify-end mt-4 py-2">
+                <button type="submit" class="btn-indigo-rounded">Save</button>
+            </div>
+        </form>
+
     </div>
-    @endif
-
-    <form action="{{route('departments.store')}}" method='post' class="flex flex-col w-full mt-16">
-        @csrf
-        <label for="">Full Name</label>
-        <input type="text" id='' name='name' class="custom-input" placeholder="Department of Analytical Chemistry">
-
-        <label for="" class='mt-3'>Display Name <span class="text-sm text-orange-700">(to be displayed on final degree)</span></label>
-        <input type="text" id='' name='title' class="custom-input" placeholder="Department of Chemistry">
-
-        <div class="flex items-center justify-end mt-4 py-2">
-            <button type="submit" class="btn-indigo-rounded">Save</button>
-        </div>
-    </form>
-
 </div>
 
 @endsection

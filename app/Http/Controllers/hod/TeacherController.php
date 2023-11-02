@@ -48,8 +48,8 @@ class TeacherController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'phone' => 'nullable|unique:users',
-            'cnic' => 'nullable|unique:users',
+            'phone' => 'nullable|regex: /^[0]\d{0,10}$/|unique:users',
+            'cnic' => 'nullable|regex:/^[1-9]\d{0,12}$/|unique:users',
             'department_id' => 'required|numeric'
 
         ]);
@@ -119,7 +119,9 @@ class TeacherController extends Controller
         $request->validate([
             'name' => 'required',
             // 'email' => 'required|email|unique:users,email,' . $id, 'id',
-            'cnic' => 'nullable|unique:users,cnic,' . $id, 'id',
+            'cnic' => 'nullable|regex:/^[1-9]\d{0,12}$/|unique:users,cnic,' . $id, 'id',
+            'phone' => 'nullable|regex: /^[0]\d{0,10}$/|unique:users,phone,' . $id, 'id',
+
         ]);
 
 

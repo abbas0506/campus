@@ -25,12 +25,12 @@
                 @csrf
                 <div class="flex flex-col w-full items-start">
                     <div class="flex items-center w-full relative">
-                        <i class="bi bi-envelope-at absolute left-3 text-slate-600"></i>
-                        <input type="text" id="email" name="email" class="w-full custom-input px-9 py-1" placeholder="Type your email here">
+                        <i class="bi bi-envelope-at absolute left-2 text-slate-600"></i>
+                        <input type="text" id="email" name="email" class="w-full custom-input px-8 py-1" placeholder="Type your email here">
                     </div>
                     <div class="flex items-center w-full mt-3 relative">
-                        <i class="bi bi-key absolute left-3 text-slate-600 -rotate-[45deg]"></i>
-                        <input type="password" id="password" name="password" class="w-full custom-input px-9 py-1" placeholder="Password">
+                        <i class="bi bi-key absolute left-2 text-slate-600 -rotate-[45deg]"></i>
+                        <input type="password" id="password" name="password" class="w-full custom-input px-8 py-1" placeholder="Password">
                         <!-- eye -->
                         <i class="bi bi-eye-slash absolute right-5 eye-slash" onclick="showpw()"></i>
                         <i class="bi bi-eye absolute right-5 eye hidden" onclick="hidepw()"></i>

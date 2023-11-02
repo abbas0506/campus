@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 @section('page-content')
-<h1><a href="{{route('semesters.index')}}">Semester Control</a></h1>
-<div class="flex items-center justify-between flex-wrap">
-    <div class="bread-crumb">{{$semester->title()}} / edit</div>
-</div>
-
-<div class="flex items-center justify-center w-full h-full">
-
-    @if ($errors->any())
-    <div class="alert-danger mt-8">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+<div class="container">
+    <h2>Lock/Unlock Semesters</h2>
+    <div class="bread-crumb">
+        <a href="{{url('admin')}}">Home</a>
+        <div>/</div>
+        <div>Semester Control</div>
     </div>
+
+
+    <!-- page message -->
+    @if($errors->any())
+    <x-message :errors='$errors'></x-message>
+    @else
+    <x-message></x-message>
     @endif
 
-    <div class="flex flex-col w-full md:w-3/4">
+
+    <div class="flex flex-col mx-auto md:w-3/4 mt-12">
         <p><i class="bi bi-gear mr-2"></i><span class="text-lg font-semibold">{{$semester->short()}}</span> <span class="ml-4 text-sm">({{$semester->title()}})</span></p>
         <hr class="my-3">
 
@@ -28,14 +28,14 @@
 
                     @if($semester->status==1)
                     <i class="bi bi-toggle2-on text-teal-600 text-lg"></i>
-                    <form action="{{route('semesters.update', $semester)}}" method='post'>
+                    <form action="{{route('admin.semesters.update', $semester)}}" method='post'>
                         @csrf
                         @method('PATCH')
                         <button type="submmit" class="btn-red">Lock Semester</button>
                     </form>
                     @else
                     <i class="bi bi-toggle2-off text-red-600 text-lg"></i>
-                    <form action="{{route('semesters.update', $semester)}}" method='post'>
+                    <form action="{{route('admin.semesters.update', $semester)}}" method='post'>
                         @csrf
                         @method('PATCH')
                         <button type="submmit" class="btn-teal">Unlock Semester</button>

@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\ce;
 
 use App\Http\Controllers\Controller;
-use App\Models\Department;
-use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
 
-class UserAccessController extends Controller
+class NotificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +15,6 @@ class UserAccessController extends Controller
     public function index()
     {
         //
-        $users = User::where('id', '>', 3)->get();
-        return view('admin.user-access.index', compact('users'));
     }
 
     /**
@@ -30,7 +25,6 @@ class UserAccessController extends Controller
     public function create()
     {
         //
-
     }
 
     /**
@@ -64,8 +58,6 @@ class UserAccessController extends Controller
     public function edit($id)
     {
         //
-        $user = User::findOrFail($id);
-        return view('admin.user-access.edit', compact('user'));
     }
 
     /**
@@ -78,15 +70,6 @@ class UserAccessController extends Controller
     public function update(Request $request, $id)
     {
         //
-        try {
-            $user = User::findOrFail($id);
-            $user->is_active = ($user->is_active == 1 ? 0 : 1);
-            $user->save();
-
-            return redirect()->route('admin.user-access.index')->with('success', 'Successfully updated');;
-        } catch (Exception $ex) {
-            return redirect()->back()->withErrors($ex->getMessage());
-        }
     }
 
     /**
