@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -133,7 +134,7 @@ Route::view('exception/b', 'exceptions.blocked')->name('user_blocked_exception')
 Route::get('exception/{code}', [MyExceptionController::class, 'show'])->name('exception.show');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin']], function () {
-    Route::get('/', [DashboardController::class, 'admin']);
+    Route::view('/', 'admin.index');
     Route::resource('user-access', UserAccessController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);

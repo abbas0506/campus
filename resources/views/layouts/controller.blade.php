@@ -1,7 +1,42 @@
 @extends('layouts.basic')
 @section('body')
 <!-- header -->
-<x-header></x-header>
+<header>
+    <div class="flex flex-wrap w-full h-16 items-center justify-between">
+        <div class="flex items-center">
+            <a href="{{url('controller')}}">
+                <img alt="logo" src="{{asset('/images/logo/logo.png')}}" class="w-20 md:w-24">
+            </a>
+            <div class="hidden md:flex text-base md:text-xl font-semibold">Examination System</div>
+            <div class="hidden md:flex px-1 md:px-4">|</div>
+
+            <div class="text-sm">Controller</div>
+
+        </div>
+
+        <!-- right sided current user info -->
+        <div id="current-user-area" class="flex space-x-3 items-center justify-center relative mr-8">
+            <div class="hidden md:flex items-center text-sm">{{auth()->user()->name}}</div>
+
+            <a href="{{route('admin.notifications.index')}}" class="relative">
+                <i class="bi-bell"></i>
+                @if(Auth::user()->notifications_received()->unread()->count()>0)
+                <div class="absolute top-0 right-0 w-2 h-2 rounded-full bg-orange-400"></div>
+                @endif
+            </a>
+
+            <a href="{{url('signout/me')}}" class="hidden md:flex rounded-full bg-orange-100 text-orange-800 p-2">
+                <i class="bx bx-power-off"></i>
+            </a>
+
+            <span id='menu' class="flex md:hidden">
+                <i class="bx bx-menu"></i>
+            </span>
+        </div>
+    </div>
+
+</header>
+<!-- sidebar -->
 <aside aria-label="Sidebar" id='sidebar'>
     <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">Controller</div>
     <div class="text-sm text-center text-gray-400">{{date('M d, Y')}}</div>

@@ -65,7 +65,6 @@
                     </form>
                 </td>
                 @endrole
-                s
             </tr>
             @endforeach
 

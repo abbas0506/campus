@@ -23,7 +23,7 @@
                     <input type="text" id="id" name="code" class="w-full custom-input pl-4" placeholder="- - - -">
                 </div>
                 <div class="flex justify-end w-full mt-1">
-                    <a href="{{url('/')}}" class="link text-slate-700 float-right text-xs">Go direct</a>
+                    <a href="{{url('/')}}" class="link text-slate-700 float-right text-xs">Skip</a>
                 </div>
                 <button type='submit' class="w-full md:w-1/4 btn-indigo">Verify</button>
             </div>
