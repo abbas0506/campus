@@ -21,14 +21,24 @@
         <form action="{{route('hod.teachers.update',$teacher)}}" method='post' class="flex flex-col mt-16">
             @csrf
             @method('PATCH')
-            <div class="flex flex-col flex-1 mt-3">
-                <label for="">Email</label>
-                <h2>{{$teacher->email}}</h2>
-            </div>
+
             <div class="flex flex-col md:flex-row">
                 <div class="flex flex-col flex-1 mt-3">
                     <label for="">Teacher Name *</label>
                     <input type="text" id='' name='name' class="custom-input" placeholder="Dr. Sajjad Ahmad" value="{{$teacher->name}}" required>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row md:space-x-4">
+                <div class="flex flex-col flex-1 mt-3">
+                    <label for="">Job Type *</label>
+                    <select name="is_regular" id="" class="custom-input">
+                        <option value="1" @if($teacher->is_regular) selected @endif>Regular</option>
+                        <option value="0" @if(!$teacher->is_regular) selected @endif>Visiting</option>
+                    </select>
+                </div>
+                <div class="flex flex-col flex-1 mt-3">
+                    <label for="">Email</label>
+                    <h2>{{$teacher->email}}</h2>
                 </div>
             </div>
 

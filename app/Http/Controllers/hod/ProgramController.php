@@ -257,7 +257,7 @@ class ProgramController extends Controller
             //update existing internal status
             //if he performs somewhere else as internal, keep him as internal
             if ($program->coordinator) {
-                if ($program->coordinator->cdr_programs->count() == 1)
+                if ($program->coordinator->coordinated_programs->count() == 1)
                     $program->coordinator->removeRole('coordinator');
             }
 

@@ -35,7 +35,7 @@
             </div>
         </a>
         <a href="{{route('hod.course-allocations.index')}}" class="pallet-box">
-            <div class="flex-1 ">
+            <div class="flex-1">
                 <div class="title">Course Allocations</div>
                 <div class="h2">{{$department->current_allocations()->count()}}</div>
             </div>

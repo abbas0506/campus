@@ -3,7 +3,7 @@
 <div class="container">
     <h2>Teachers</h2>
     <div class="bread-crumb">
-        <a href="{{url('hod')}}">Home</a>
+        <a href="{{url('coordinator')}}">Home</a>
         <div>/</div>
         <div>Teachers</div>
         <div>/</div>
@@ -25,7 +25,7 @@
 
     <div class="flex flex-wrap items-center justify-between mt-4">
         <div class="text-sm  text-gray-500">{{$teachers->count()}} records found</div>
-        <a href="{{route('hod.teachers.create')}}" class="btn-indigo">
+        <a href="{{route('coordinator.teachers.create')}}" class="btn-indigo">
             Add New
         </a>
     </div>
@@ -51,11 +51,11 @@
                     <td>{{$teacher->cnic}} <br> {{$teacher->email}}</td>
                     <td class="shrink-0">
                         <div class="flex items-center justify-center space-x-3">
-                            <a href="{{route('hod.teachers.edit', $teacher)}}">
+                            <a href="{{route('coordinator.teachers.edit', $teacher)}}">
                                 <i class="bi-pencil-square"></i>
                             </a>
                             @role('super')
-                            <form action="{{route('hod.teachers.destroy',$teacher)}}" method="POST" id='del_form{{$teacher->id}}' class="">
+                            <form action="{{route('coordinator.teachers.destroy',$teacher)}}" method="POST" id='del_form{{$teacher->id}}' class="">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-transparent p-0 border-0 text-red-600" onclick="delme('{{$teacher->id}}')" @disabled($teacher->hasRole('hod'))>

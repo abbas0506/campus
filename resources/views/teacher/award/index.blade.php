@@ -52,11 +52,7 @@
                             @foreach($teacher->course_allocations()->shift($shift->id)->get() as $course_allocation)
                             <tr>
                                 <td class="text-center">{{$i++}}</td>
-                                <td class="text-center">
-                                    <a href="{{route('teacher.mycourses.show',$course_allocation->id)}}" class="link">
-                                        {{$course_allocation->course->code}}
-                                    </a>
-                                </td>
+                                <td class="text-center">{{$course_allocation->course->code}}</td>
                                 <td>{{$course_allocation->course->name}} <span class="text-slate-400 text-sm">{{$course_allocation->course->lblCr()}}</span> </td>
                                 <td>{{$course_allocation->slot_option->slot->cr}}</td>
                                 <td>{{$course_allocation->section->title()}}</td>

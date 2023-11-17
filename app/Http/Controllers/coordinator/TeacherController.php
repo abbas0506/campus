@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\hod;
+namespace App\Http\Controllers\coordinator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +21,7 @@ class TeacherController extends Controller
     {
         $department = Department::find(session('department_id'));
         $teachers = $department->teachers();
-        return view('hod.teachers.index', compact('teachers'));
+        return view('coordinator.teachers.index', compact('teachers'));
     }
 
     /**
@@ -32,7 +32,7 @@ class TeacherController extends Controller
     public function create()
     {
         //
-        return view('hod.teachers.create');
+        return view('coordinator.teachers.create');
     }
 
     /**
@@ -72,12 +72,12 @@ class TeacherController extends Controller
             $user->assignRole(['teacher']);
 
             // intimate teacher 
-            Mail::raw('Respected teacher, here is your password for exam portal. Please dont share it with anyone!  ' . $random_password, function ($message) use ($user) {
-                $message->to($user->email);
-                $message->subject("Password for Exam Portal!");
-            });
+            // Mail::raw('Respected teacher, here is your password for exam portal. Please dont share it with anyone!  ' . $random_password, function ($message) use ($user) {
+            //     $message->to($user->email);
+            //     $message->subject("Password for Exam Portal!");
+            // });
             Db::commit();
-            return redirect()->route('hod.teachers.index')->with('success', 'Successfully created');
+            return redirect()->route('coordinator.teachers.index')->with('success', 'Successfully created');
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
@@ -105,7 +105,7 @@ class TeacherController extends Controller
     {
         //
         $teacher = User::findOrFail($id);
-        return view('hod.teachers.edit', compact('teacher'));
+        return view('coordinator.teachers.edit', compact('teacher'));
     }
 
     /**
@@ -131,7 +131,7 @@ class TeacherController extends Controller
             $user = User::findOrFail($id);
             $user->update($request->all());
 
-            return redirect()->route('hod.teachers.index')->with('success', 'Successfully updated');;
+            return redirect()->route('coordinator.teachers.index')->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }

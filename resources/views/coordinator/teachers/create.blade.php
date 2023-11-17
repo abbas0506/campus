@@ -3,9 +3,9 @@
 <div class="container">
     <h2>New Teacher</h2>
     <div class="bread-crumb">
-        <a href="{{url('hod')}}">Home</a>
+        <a href="{{url('coordinator')}}">Home</a>
         <div>/</div>
-        <a href="{{route('hod.teachers.index')}}">Teachers</a>
+        <a href="{{route('coordinator.teachers.index')}}">Teachers</a>
         <div>/</div>
         <div>New</div>
     </div>
@@ -18,7 +18,7 @@
         <x-message></x-message>
         @endif
 
-        <form action="{{route('hod.teachers.store')}}" method='post' class="flex flex-col w-full mt-12">
+        <form action="{{route('coordinator.teachers.store')}}" method='post' class="flex flex-col w-full mt-12">
             @csrf
 
             <div class="flex flex-col md:flex-row">

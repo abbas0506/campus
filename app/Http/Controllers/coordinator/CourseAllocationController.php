@@ -5,6 +5,7 @@ namespace App\Http\Controllers\coordinator;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseAllocation;
+use App\Models\Department;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,7 +19,10 @@ class CourseAllocationController extends Controller
      */
     public function index()
     {
-        //
+        //fetch only those allocation which are related to program being coordinated by me
+
+        // $department = Department::find(session('department_id'));
+        // return view('hod.course-allocations.index', compact('department'));
     }
 
     /**

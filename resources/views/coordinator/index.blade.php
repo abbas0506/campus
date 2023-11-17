@@ -6,7 +6,7 @@
         <div class="flex-1">
             <h2>Welcome {{ Auth::user()->name }}!</h2>
             <div class="bread-crumb">
-                <div>Internal</div>
+                <div>Coordinator</div>
                 <div>/</div>
                 <div>{{$department->name}}</div>
             </div>
@@ -19,13 +19,13 @@
         <a href="#" class="pallet-box">
             <div class="flex-1">
                 <div class="title">My Programs</div>
-                <div class="h2">{{$user->cdr_programs()->where('department_id', session('department_id'))->count()}}</div>
+                <div class="h2">{{$user->coordinated_programs()->where('department_id', session('department_id'))->count()}}</div>
             </div>
             <div class="ico bg-green-100">
                 <i class="bi bi-book text-green-600"></i>
             </div>
         </a>
-        <a href="{{url('students')}}" class="pallet-box">
+        <a href="{{route('coordinator.teachers.index')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Teachers</div>
                 <div class="h2">{{$department->teachers()->count()}}</div>
@@ -34,7 +34,7 @@
                 <i class="bi bi-person-circle text-indigo-400"></i>
             </div>
         </a>
-        <a href="" class="pallet-box">
+        <a href="{{route('coordinator.semester-plan.index')}}" class="pallet-box">
             <div class="flex-1 ">
                 <div class="title">Course Allocations</div>
                 <div class="h2">{{$department->current_allocations()->count()}}</div>
@@ -43,7 +43,7 @@
                 <i class="bi bi-card-checklist text-teal-600"></i>
             </div>
         </a>
-        <a href="" class="pallet-box">
+        <a href="{{route('coordinator.assessment.submitted')}}" class="pallet-box">
             <div class="flex-1">
                 <div class="title">Result Submission</div>
                 <div class="h2">

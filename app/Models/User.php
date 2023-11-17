@@ -76,7 +76,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Program::class, 'internal_id');
     }
-    public function cdr_programs()
+    public function coordinated_programs()
     {
         return $this->hasMany(Program::class, 'coordinator_id');
     }

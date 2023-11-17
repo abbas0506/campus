@@ -36,7 +36,7 @@ use App\Http\Controllers\coordinator\SectionController as CoordinatorSectionCont
 use App\Http\Controllers\coordinator\SemesterPlanController as CoordinatorSemesterPlanController;
 use App\Http\Controllers\coordinator\StudentController as CoordinatorStudentController;
 use App\Http\Controllers\coordinator\SuspensionController as CoordinatorSuspensionController;
-
+use App\Http\Controllers\coordinator\TeacherController as CoordinatorTeacherController;
 use App\Http\Controllers\hod\AssessmentController as HodAssessmentController;
 use App\Http\Controllers\hod\AttemptPermissionController;
 use App\Http\Controllers\hod\AwardController;
@@ -301,14 +301,14 @@ Route::group(['prefix' => 'coordinator', 'as' => 'coordinator.', 'middleware' =>
     Route::resource('clases', CoordinatorClasController::class);
     Route::get('clases/{program}/add', [CoordinatorClasController::class, 'add'])->name('clases.add');
     Route::resource('sections', CoordinatorSectionController::class);
-
-    Route::resource('students', CoordinatorStudentController::class);
-    Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
+    Route::resource('teachers', CoordinatorTeacherController::class);
 
     Route::get('sections/{section}/students/feed', [CoordinatorStudentController::class, 'feed'])->name('students.feed');
     Route::get('sections/{section}/students/excel', [CoordinatorStudentController::class, 'excel'])->name('students.excel');
     Route::post('students/import', [CoordinatorStudentController::class, 'import'])->name('students.import');
 
+    Route::resource('students', CoordinatorStudentController::class);
+    Route::post('searchByRollNoOrName', [AjaxController::class, 'searchByRollNoOrName']);
     Route::resource('students/movement', CoordinatorMovementController::class);
     Route::resource('students/suspension', CoordinatorSuspensionController::class);
     Route::resource('students/resumption', CoordinatorResumptionController::class);
