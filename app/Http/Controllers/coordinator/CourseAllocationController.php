@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\coordinator;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
 use App\Models\CourseAllocation;
 use App\Models\Department;
@@ -20,9 +21,8 @@ class CourseAllocationController extends Controller
     public function index()
     {
         //fetch only those allocation which are related to program being coordinated by me
-
-        // $department = Department::find(session('department_id'));
-        // return view('hod.course-allocations.index', compact('department'));
+        $user = Auth::user();
+        return view('coordinator.course-allocations.index', compact('user'));
     }
 
     /**

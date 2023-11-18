@@ -25,10 +25,10 @@
     @endif
 
     <!-- records found -->
-    <div class="text-xs font-thin text-slate-600 mt-8 mb-1">{{$programs->count()}} programs found</div>
+    <div class="text-xs font-thin text-slate-600 mt-8 mb-1">{{$user->programsBeingCoordinated->count()}} programs found</div>
     <!-- classes & section detail -->
     <div class="flex flex-col accordion">
-        @foreach($programs->sortBy('level') as $program)
+        @foreach($user->programsBeingCoordinated->sortBy('level') as $program)
         <div class="collapsible">
             <div class="head">
                 <h2 class="flex items-center space-x-4">

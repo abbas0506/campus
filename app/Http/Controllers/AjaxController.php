@@ -45,7 +45,7 @@ class AjaxController extends Controller
             }
         } elseif ($request->role == 'coordinator') {
             // return departments headed by the user
-            $departments = $user->cdr_departments()->get();
+            $departments = $user->departmentsBeingCoordinated()->get();
             foreach ($departments as $department) {
                 $options .= "<option value='" . $department->id . "'>" . $department->name . "</option>";
             }

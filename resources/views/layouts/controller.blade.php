@@ -43,9 +43,9 @@
     <div class="mt-12">
         <ul class="space-y-2">
             <li>
-                <a href="{{route('ce.students.index')}}" class="flex items-center p-2">
-                    <i class="bi bi-person-circle"></i>
-                    <span class="ml-3">Student Profile</span>
+                <a href="{{url('controller')}}" class="flex items-center p-2">
+                    <i class="bi-house"></i>
+                    <span class="ml-3">Home</span>
                 </a>
             </li>
             <li>
@@ -66,14 +66,17 @@
                     <span class="ml-3">Cumulative Sheet</span>
                 </a>
             </li>
-
-
-
             <li>
                 <!-- <a href="{{url('transcripts')}}" class="flex items-center p-2"> -->
-                <a href="{{url('/ce/transcripts')}}" class="flex items-center p-2">
+                <a href="{{url('controller/transcripts')}}" class="flex items-center p-2">
                     <i class="bi bi-mortarboard text-lg"></i>
                     <span class="ml-3">Transcripts</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('ce.students.index')}}" class="flex items-center p-2">
+                    <i class="bi bi-person-circle"></i>
+                    <span class="ml-3">Student Profile</span>
                 </a>
             </li>
 
@@ -83,21 +86,11 @@
 </aside>
 
 
-<div class="content-page">
-    <div class="offset-sidebar"></div>
-    <div class="flex flex-col flex-1">
-        <div class="offset-header"></div>
-        <div class="flex flex-col flex-1 p-12 overflow-x-hidden">
-            <!-- <div class="w-full md:w-3/4 md:ml-auto px-5 md:mr-8 text-slate-600"> -->
-            @yield('page-content')
-            <!-- </div> -->
-        </div>
-    </div>
+<div class="responsive-body">
+    @yield('page-content')
 </div>
+
 <script type="module">
-    $('#toggle-current-user-dropdown').click(function() {
-        $("#current-user-dropdown").toggle();
-    });
     $('#menu').click(function() {
         $("#sidebar").toggle();
     });

@@ -76,10 +76,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Program::class, 'internal_id');
     }
-    public function coordinated_programs()
-    {
-        return $this->hasMany(Program::class, 'coordinator_id');
-    }
+
     public function intern_students_count()
     {
         $count = 0;
@@ -88,10 +85,24 @@ class User extends Authenticatable
         }
         return $count;
     }
-    public function cdr_departments()
+    public function departmentsBeingCoordinated()
     {
         return Department::whereRelation('programs.coordinator', 'coordinator_id', $this->id);
     }
+    public function programsBeingCoordinated()
+    {
+        return $this->hasMany(Program::class, 'coordinator_id');
+    }
+
+    public function courseAllocationsBeingCoordinated()
+    {
+        return CourseAllocation::where('semester_id', session('semester_id'))
+            ->whereRelation('course', 'department_id', session('department_id'))
+            ->whereRelation('section.clas.program', 'coordinator_id', $this->id)
+            ->whereNotNull('course_id')
+            ->whereNotNull('teacher_id');
+    }
+
     public function intern_departments()
     {
         return Department::whereRelation('programs.internal', 'internal_id', $this->id);

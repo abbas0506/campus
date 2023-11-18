@@ -16,12 +16,12 @@
     </div>
     <div class="flex flex-wrap items-center justify-between w-full mt-8 gap-y-4">
         <div class="flex items-center space-x-4 text-slate-600">
-            <a href="{{route('coordinator.assessment.submitted')}}" class="tab">Submitted ({{$department->current_allocations()->submitted()->count()}})</a>
-            <p class="tab active">Pending ({{$department->current_allocations()->pending()->count()}})</p>
+            <a href="{{route('coordinator.assessment.submitted')}}" class="tab">Submitted ({{$user->courseAllocationsBeingCoordinated()->submitted()->count()}})</a>
+            <p class="tab active">Pending ({{$user->courseAllocationsBeingCoordinated()->pending()->count()}})</p>
         </div>
         <form action="{{route('coordinator.assessment.missing.notify')}}" class="text-sm" method="post">
             @csrf
-            <button type="submit" class="btn-teal"><i class="bi-bell mr-2"></i>Send Reminder ({{$department->current_allocations()->pending()->count()}})</button>
+            <button type="submit" class="btn-teal"><i class="bi-bell mr-2"></i>Send Reminder ({{$user->courseAllocationsBeingCoordinated()->count()}})</button>
         </form>
 
     </div>
@@ -51,7 +51,7 @@
                 $last_section_id='';
                 @endphp
 
-                @foreach($department->current_allocations()->pending()->get() as $course_allocation)
+                @foreach($user->courseAllocationsBeingCoordinated()->pending()->get() as $course_allocation)
                 <tr class="tr text-xs">
                     <td>
                         @if($last_section_id!=$course_allocation->section->id)

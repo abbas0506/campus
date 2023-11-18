@@ -19,7 +19,7 @@
         <a href="#" class="pallet-box">
             <div class="flex-1">
                 <div class="title">My Programs</div>
-                <div class="h2">{{$user->coordinated_programs()->where('department_id', session('department_id'))->count()}}</div>
+                <div class="h2">{{$user->programsBeingCoordinated()->where('department_id', session('department_id'))->count()}}</div>
             </div>
             <div class="ico bg-green-100">
                 <i class="bi bi-book text-green-600"></i>
@@ -34,10 +34,10 @@
                 <i class="bi bi-person-circle text-indigo-400"></i>
             </div>
         </a>
-        <a href="{{route('coordinator.semester-plan.index')}}" class="pallet-box">
+        <a href="{{route('coordinator.course-allocations.index')}}" class="pallet-box">
             <div class="flex-1 ">
                 <div class="title">Course Allocations</div>
-                <div class="h2">{{$department->current_allocations()->count()}}</div>
+                <div class="h2">{{$user->courseAllocationsBeingCoordinated()->count()}}</div>
             </div>
             <div class="ico bg-teal-100">
                 <i class="bi bi-card-checklist text-teal-600"></i>
@@ -47,8 +47,10 @@
             <div class="flex-1">
                 <div class="title">Result Submission</div>
                 <div class="h2">
-                    @if($department->current_allocations()->count()>0)
-                    {{$department->current_allocations()->submitted()->count()}}/{{$department->current_allocations()->count()}} ({{round( $department->current_allocations()->submitted()->count()/$department->current_allocations()->count(),1)}} %)
+                    @if($user->courseAllocationsBeingCoordinated()->count()>0)
+                    {{$user->courseAllocationsBeingCoordinated()->submitted()->count()}}/{{$department->current_allocations()->count()}} ({{round( $department->current_allocations()->submitted()->count()/$department->current_allocations()->count(),1)}} %)
+                    @else
+                    -
                     @endif
                 </div>
 
@@ -62,8 +64,18 @@
     <div class="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
         <!-- middle panel  -->
         <div class="md:col-span-2">
-            <!-- update news  -->
             <div class="p-4 bg-slate-50">
+
+                <h2>Programs Being Coordinated</h2>
+                <div class="divider my-2"></div>
+                <ul class="list-disc list-inside pl-2 text-sm">
+                    @foreach($user->programsBeingCoordinated as $program)
+                    <li>{{ $program->name }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <!-- update news  -->
+            <div class="p-4 bg-slate-50 mt-6">
                 <h2>Students</h2>
                 <div class="divider mt-4 border-slate-200"></div>
                 <div class="grid grid-cols-2 mt-2 gap-2">

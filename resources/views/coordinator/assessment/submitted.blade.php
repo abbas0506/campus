@@ -16,8 +16,8 @@
     </div>
     <div class="flex flex-wrap items-center justify-between w-full mt-8 gap-y-4">
         <div class="flex items-center space-x-4 text-slate-600">
-            <div class="tab active">Submitted ({{$department->current_allocations()->submitted()->count()}})</div>
-            <a href="{{route('coordinator.assessment.pending')}}" class="tab">Pending ({{$department->current_allocations()->pending()->count()}})</a>
+            <div class="tab active">Submitted ({{$user->courseAllocationsBeingCoordinated()->submitted()->count()}})</div>
+            <a href="{{route('coordinator.assessment.pending')}}" class="tab">Pending ({{$user->courseAllocationsBeingCoordinated()->pending()->count()}})</a>
         </div>
     </div>
 
@@ -49,7 +49,7 @@
                 @endphp
 
 
-                @foreach($department->current_allocations()->submitted()->get() as $course_allocation)
+                @foreach($user->courseAllocationsBeingCoordinated()->submitted()->get() as $course_allocation)
                 <tr class="tr text-xs">
                     <td>
                         @if($last_section_id!=$course_allocation->section->id)

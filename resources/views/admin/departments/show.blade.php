@@ -16,6 +16,13 @@
         <div class="font-semibold text-slate-700 text-lg leading-relaxed">{{$department->name}}</div>
     </div>
 
+    <!-- page message -->
+    @if($errors->any())
+    <x-message :errors='$errors'></x-message>
+    @else
+    <x-message></x-message>
+    @endif
+
     <div class="relative border border-dashed bg-white p-4 mt-8">
         <a href="{{route('admin.headships.edit',$department)}}" class="absolute top-2 right-2"><i class="bx bx-pencil"></i></a>
         <label for="" class="text-xs">HoD</label>
@@ -28,13 +35,7 @@
         @endif
     </div>
 
-    <div class="mt-8 p-4 border">
-        <!-- page message -->
-        @if($errors->any())
-        <x-message :errors='$errors'></x-message>
-        @else
-        <x-message></x-message>
-        @endif
+    <div class="mt-8 p-4 border" hidden>
 
         <div class="text-md font-bold mt-8">Programs <span class="text-xs">({{$department->programs->count()}})</span></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 text-sm mt-3">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\coordinator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -26,10 +27,8 @@ class ClasController extends Controller
     public function index()
     {
         //
-        $department = Department::find(session('department_id'));
-        $programs = $department->programs;
-
-        return view('coordinator.clases.index', compact('programs'));
+        $user = Auth::user();
+        return view('coordinator.clases.index', compact('user'));
     }
 
     /**

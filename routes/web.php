@@ -145,11 +145,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admi
     //
 });
 
+Route::group(['prefix' => 'controller', 'as' => 'controller.', 'middleware' => ['role:controller']], function () {
+    Route::view('/', 'ce.index');
+    Route::view('transcripts', 'ce.transcripts.index');
+    Route::get('transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
+});
 Route::group(['middleware' => ['role:controller']], function () {
-    Route::redirect('controller', '/ce/students');
-    Route::view('ce/transcripts', 'ce.transcripts.index');
-    Route::get('ce/transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
-
+    // Route::redirect('controller', '/ce/students');
     Route::post('searchAllByRollNoOrName', [AjaxController::class, 'searchAllByRollNoOrName']);
     Route::post('searchByRollNoOrNameToViewProfile', [AjaxController::class, 'searchByRollNoOrNameToViewProfile']);
 

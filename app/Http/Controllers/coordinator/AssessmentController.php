@@ -20,8 +20,9 @@ class AssessmentController extends Controller
      */
     public function index()
     {
-        $department = Department::find(session('department_id'));
-        return view('coordinator.assessment.index', compact('department'));
+
+        $user = Auth::user();
+        return view('coordinator.assessment.index', compact('user'));
     }
 
     /**
@@ -164,13 +165,13 @@ class AssessmentController extends Controller
 
     public function submitted()
     {
-        $department = Department::find(session('department_id'));
-        return view('coordinator.assessment.submitted', compact('department'));
+        $user = Auth::user();
+        return view('coordinator.assessment.submitted', compact('user'));
     }
     public function pending()
     {
-        $department = Department::find(session('department_id'));
-        return view('coordinator.assessment.pending', compact('department'));
+        $user = Auth::user();
+        return view('coordinator.assessment.pending', compact('user'));
     }
     public function pdf($id)
     {

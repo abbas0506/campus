@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\coordinator;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\CourseAllocation;
 use App\Models\Department;
 use App\Models\Section;
@@ -21,10 +22,8 @@ class SemesterPlanController extends Controller
     public function index()
     {
         //
-        $department = Department::find(session('department_id'));
-        $programs = $department->programs;
-
-        return view('coordinator.semester-plan.index', compact('programs'));
+        $user = Auth::user();
+        return view('coordinator.semester-plan.index', compact('user'));
     }
 
     /**

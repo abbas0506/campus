@@ -33,18 +33,18 @@
             <tr class="border-b border-slate-200">
                 <th>Teacher Name</th>
                 <th>Parent Department</span> </th>
-                <th class="py-2 text-gray-600 text-center">Actions</th>
+                <th class="py-2 text-gray-600">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach($teachers as $teacher)
             <tr class="border-b tr">
-                <td class="py-2">
+                <td class="text-left pl-3">
                     <div>{{$teacher->name}}</div>
-                    <div class="text-sm text-slate-400">{{$teacher->email}}</div>
+                    <div class="text-slate-400">{{$teacher->email}}</div>
                 </td>
-                <td class="py-2 text-sm text-slate-600">
-                    <div>{{Str::replace('Department of ','',$teacher->department->name)}}</div>
+                <td class="text-slate-600">
+                    {{Str::replace('Department of ','',$teacher->department->name)}}
                 </td>
                 <td>
                     <div class="flex justify-center items-center">
