@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\ce\AwardController as CeAwardController;
 use App\Http\Controllers\ce\GazetteController as CeGazetteController;
 use App\Http\Controllers\ce\NotificationController as CeNotificationController;
+use App\Http\Controllers\ce\PrintController;
 use App\Http\Controllers\ce\StudentController as CeStudentController;
 use App\Http\Controllers\ce\TranscriptController;
 
@@ -149,14 +150,21 @@ Route::group(['prefix' => 'controller', 'as' => 'controller.', 'middleware' => [
     Route::view('/', 'ce.index');
     Route::view('transcripts', 'ce.transcripts.index');
     Route::get('transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
-});
-Route::group(['middleware' => ['role:controller']], function () {
-    // Route::redirect('controller', '/ce/students');
+
     Route::post('searchAllByRollNoOrName', [AjaxController::class, 'searchAllByRollNoOrName']);
     Route::post('searchByRollNoOrNameToViewProfile', [AjaxController::class, 'searchByRollNoOrNameToViewProfile']);
 
-    Route::get('ce/students', [CeStudentController::class, 'index'])->name('ce.students.index');
-    Route::get('ce/students/profile/{student}', [CeStudentController::class, 'show'])->name('ce.students.show');
+    Route::resource('students', CeStudentController::class);
+    Route::get('students/profile/{student}', [CeStudentController::class, 'show'])->name('ce.students.show');
+    Route::get('printable/choose-class', [PrintController::class, 'chooseClass'])->name('printable.choose.class');
+    Route::post('printable/class/allocations', [PrintController::class, 'classAllocations'])->name('printable.clas.allocations');
+
+    Route::post('fetchProgramsByDepartment', [AjaxController::class, 'fetchProgramsByDepartment']);
+    Route::post('fetchClassesByProgram', [AjaxController::class, 'fetchClassesByProgram']);
+    Route::post('fetchSectionsByClass', [AjaxController::class, 'fetchSectionsByClass']);
+});
+Route::group(['middleware' => ['role:controller']], function () {
+    // Route::redirect('controller', '/ce/students');
 
     Route::get('ce/award/step1', [CeAwardController::class, 'step1']);
     Route::post('ce/award/step1', [CeAwardController::class, 'store'])->name('ce.award.step1.store');
@@ -164,6 +172,7 @@ Route::group(['middleware' => ['role:controller']], function () {
     Route::get('ce/award/{section}/step3', [CeAwardController::class, 'step3'])->name('ce.award.step3');
     Route::get('ce/award/{allocation}/pdf', [PdfController::class, 'award'])->name('ce.award.pdf');
     Route::get('ce/award/{allocation}/export', [CeAwardController::class, 'export'])->name('ce.award.export');
+
 
     Route::get('ce/gazette/step1', [CeGazetteController::class, 'step1']);
     Route::post('ce/gazette/step1', [CeGazetteController::class, 'store'])->name('ce.gazette.step1.store');

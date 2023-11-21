@@ -49,6 +49,18 @@
                 </a>
             </li>
             <li>
+                <a href="{{route('controller.students.index')}}" class="flex items-center p-2">
+                    <i class="bi bi-search"></i>
+                    <span class="ml-3">Search Student</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('controller.printable.choose.class')}}" class="flex items-center p-2">
+                    <i class="bi bi-printer"></i>
+                    <span class="ml-3">Printable</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{url('ce/award/step1')}}" class="flex items-center p-2">
                     <i class="bi bi-award text-lg"></i>
                     <span class="ml-3">Award List</span>
@@ -73,12 +85,7 @@
                     <span class="ml-3">Transcripts</span>
                 </a>
             </li>
-            <li>
-                <a href="{{route('ce.students.index')}}" class="flex items-center p-2">
-                    <i class="bi bi-person-circle"></i>
-                    <span class="ml-3">Student Profile</span>
-                </a>
-            </li>
+
 
         </ul>
 

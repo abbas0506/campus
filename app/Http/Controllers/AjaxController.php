@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clas;
 use App\Models\Course;
 use App\Models\CourseAllocation;
 use App\Models\Department;
@@ -16,6 +17,60 @@ use Illuminate\Support\Facades\DB;
 class AjaxController extends Controller
 {
     //
+
+    public function fetchProgramsByDepartment(Request $request)
+    {
+        $request->validate([
+            'department_id' => 'required',
+        ]);
+
+        $department = Department::find($request->department_id);
+        $programs = $department->programs;
+        $text = "<option value=''>Select a program </option>";
+        foreach ($programs as $program) {
+            $text .= "<option value='" . $program->id . "'>" . $program->short . "</option>";
+        }
+        return response()->json([
+            'options' => $text,
+        ]);
+    }
+
+    public function fetchClassesByProgram(Request $request)
+    {
+        $request->validate([
+            'semester_id' => 'required',
+            'program_id' => 'required',
+        ]);
+        session([
+            'semester_id' => $request->semester_id,
+        ]);
+
+        $program = Program::find($request->program_id);
+        $text = "<option value=''>Select a class </option>";
+        foreach ($program->clases()->active()->get() as $clas) {
+            $text .= "<option value='" . $clas->id . "'>" . $clas->title() . "</option>";
+        }
+        return response()->json([
+            'options' => $text,
+        ]);
+    }
+
+
+    public function fetchSectionsByClass(Request $request)
+    {
+        $request->validate([
+            'clas_id' => 'required',
+        ]);
+        $clas = Clas::find($request->clas_id);
+        $text = "<option value=''>Select a section </option>";
+        foreach ($clas->sections as $section) {
+            $text .= "<option value='" . $section->id . "'>" . $section->name . "</option>";
+        }
+        return response()->json([
+            'options' => $text,
+        ]);
+    }
+
     public function fetchDepttByRole(Request $request)
     {
 
@@ -231,7 +286,7 @@ class AjaxController extends Controller
             $result .=
 
                 "<div class='flex flex-row w-full py-1'>" .
-                "<a href='/ce/transcripts/pdf/" . $student->id . "' class='link w-1/4' target='_blank'>" . $student->rollno . "</a>" .
+                "<a href='/controller/transcripts/pdf/" . $student->id . "' class='link w-1/4' target='_blank'>" . $student->rollno . "</a>" .
                 "<div class='w-1/4'>" . $student->name . "</div>" .
                 "<div class='w-1/4'>" . $student->father . "</div>" .
                 "<div class='w-1/4'>" . $student->section->clas->short() . "</div>" .
@@ -264,7 +319,7 @@ class AjaxController extends Controller
             $result .=
 
                 "<div class='flex flex-row w-full py-1'>" .
-                "<a href='/ce/students/profile/" . $student->id . "' class='link w-1/4'>" . $student->rollno . "</a>" .
+                "<a href='/controller/students/" . $student->id . "' class='link w-1/4'>" . $student->rollno . "</a>" .
                 "<div class='w-1/4'>" . $student->name . "</div>" .
                 "<div class='w-1/4'>" . $student->father . "</div>" .
                 "<div class='w-1/4'>" . $student->section->clas->short() . "</div>" .

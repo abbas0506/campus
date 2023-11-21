@@ -49,7 +49,7 @@
             //show sweet alert and confirm submission
             $.ajax({
                 type: 'POST',
-                url: "{{url('searchAllByRollNoOrName')}}",
+                url: "{{url('/controller/searchAllByRollNoOrName')}}",
                 data: {
                     "searchby": searchby,
                     "_token": token,
