@@ -129,7 +129,7 @@
             @endif
         </div>
     </div>
-    <div class="collapsible mt-3">
+    <!-- <div class="collapsible mt-3">
         <div class="head">
             <h2><span class="bx bx-time mr-2"></span> Previous Courses <span class="text-xs text-slate-600">(have been studied)</span></h2>
             <i class="bx bx-chevron-down text-lg"></i>
@@ -165,6 +165,6 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 @endsection
