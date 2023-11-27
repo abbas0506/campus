@@ -117,7 +117,7 @@
                             @foreach($student->first_attempts()->during(session('semester_id'))->get() as $first_attempt)
                             <tr>
                                 <td>{{$sr++}}</td>
-                                <td>{{$first_attempt->course_allocation->course->name}}</td>
+                                <td>{{$first_attempt->course_allocation->course->name ?? ''}}</td>
                                 <td>{{$first_attempt->course_allocation->teacher->name ?? ''}}</td>
 
                             </tr>
