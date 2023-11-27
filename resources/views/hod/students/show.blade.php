@@ -94,14 +94,13 @@
         </div>
     </div>
     <!-- Current semester Courses -->
-    <div class="collapsible mt-3">
+    <!-- <div class="collapsible mt-3">
         <div class="head">
             <h2><span class="bx bx-book mr-2"></span>Current Courses <span class="text-xs text-slate-600">(this semester)</span></h2>
             <i class="bx bx-chevron-down text-lg"></i>
         </div>
         <div class="body">
             <div class="p-4 rounded w-full">
-                <!-- <h2 class="underline underline-offset-4">Semester ({{App\Models\Semester::find(session('semester_id'))->title()}})</h2> -->
                 @if($student->status_id==1)
                 <div class="overflow-x-auto w-full">
                     <table class="table-auto w-full">
@@ -128,7 +127,7 @@
             </div>
             @endif
         </div>
-    </div>
+    </div> -->
     <!-- <div class="collapsible mt-3">
         <div class="head">
             <h2><span class="bx bx-time mr-2"></span> Previous Courses <span class="text-xs text-slate-600">(have been studied)</span></h2>
