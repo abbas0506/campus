@@ -114,7 +114,9 @@ class SlotController extends Controller
         //
         $course_type_ids = SlotOption::where('slot_id', $slot->id)->pluck('course_type_id')->toArray();
 
-        $missing_course_types = CourseType::whereNotIn('id', $course_type_ids)->get();
+
+        // $missing_course_types = CourseType::whereNotIn('id', $course_type_ids)->get();
+        $missing_course_types = CourseType::all();
 
         return view('hod.schemes.slots.edit', compact('slot', 'missing_course_types'));
     }
