@@ -96,9 +96,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('two/fa', [AuthController::class, 'twoFA']);
 
 Route::post('login/as', [AuthController::class, 'loginAs'])->name('login.as');
-Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
-Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
-Route::post('switch/semester', [AuthController::class, 'switchSemester'])->name('switch.semester');; //for ajax call
+Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole'); //for ajax call
+Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer'); //for ajax call
+Route::post('switch/semester', [AuthController::class, 'switchSemester'])->name('switch.semester'); //for ajax call
 
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 Route::view('exception/r', 'exceptions.missing.role')->name('role_missed_exception');
