@@ -1,11 +1,12 @@
 @extends('layouts.basic')
 
 @section('body')
-<div class="flex flex-col w-screen h-screen justify-center items-center ">
-    <div class="md:w-1/3">
+<div class="flex flex-col w-screen h-screen justify-center items-center px-5 bg-gray-600">
+    <div class="md:w-1/3 p-8 bg-white relative">
+        <a href="{{url('/')}}" class="absolute top-1 right-2"><i class="bi-x text-black"></i></a>
         <div class="flex justify-center items-center">
             <!-- <i class="bi-shield-shaded text-8xl"></i> -->
-            <img src="{{asset('/images/lock.png')}}" alt="lock" class="w-64 h-64">
+            <img src="{{asset('/images/lock.png')}}" alt="lock" class="w-48 h-48">
         </div>
         <!-- page message -->
         @if($errors->any())

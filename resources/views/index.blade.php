@@ -1,12 +1,12 @@
 @extends('layouts.basic')
 
 @section('body')
-<div class="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-blue-100 to-blue-400">
+<div class="flex flex-col items-center justify-center h-screen bg-gray-600 px-5">
 
-    <div class="flex flex-col items-center w-full px-5 md:w-1/3">
+    <div class="flex flex-col items-center w-full p-8 md:w-1/3 bg-white relative">
 
         @guest
-        <img class="md:w-3/4" alt="logo" src="{{asset('/images/logo/logo.png')}}">
+        <img class="md:w-3/4 mt-8" alt="logo" src="{{asset('/images/logo/logo.png')}}">
         <h1 class="text-2xl md:text-4xl font-thin text-indigo-900 font-culpa tracking-wider">Exam Portal</h1>
 
         <div class="w-full mt-4">
@@ -46,7 +46,8 @@
         @else
         <!-- authenticated -->
         <i class="bi bi-person-fill-check text-8xl text-sky-600"></i>
-        <h1 class="text-slate-800 mt-2 text-xl">Welcome back {{Auth::user()->name}}!</h1>
+        <a href="{{url('signout')}}" class="absolute top-1 right-2"><i class="bi-x text-black"></i></a>
+        <h1 class="text-slate-800 mt-8 text-xl">Welcome back {{Auth::user()->name}}!</h1>
 
         <form action="{{route('login.as')}}" method='post' class="w-full mt-2" onsubmit="return validate(event)">
             @csrf
@@ -57,15 +58,15 @@
                 @endforeach
             </select>
             <div id='deptt_container' class="hidden">
-                <div class="mt-3">
+                <div class="mt-6">
                     <select id="department_id" name="department_id" class="custom-input px-4 py-3 w-full">
 
                     </select>
                 </div>
             </div>
-            <div class="flex items-center space-x-4 mt-6">
-                <a href="{{url('signout')}}" class="flex flex-1 btn-orange justify-center py-2">Singout</a>
-                <button type="submit" class="flex flex-1 btn-indigo justify-center py-2">Proceed <i class="bx bx-right-arrow-alt bx-fade-right text-lg"></i></button>
+            <div class="flex items-center space-x-4 mt-3">
+                <!-- <a href="{{url('signout')}}" class="flex flex-1 btn-orange justify-center py-2">Singout</a> -->
+                <button type="submit" class="flex flex-1 btn-indigo justify-center py-2">Proceed </button>
             </div>
 
         </form>
