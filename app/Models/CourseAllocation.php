@@ -80,6 +80,19 @@ class CourseAllocation extends Model
     {
         return Reappear::with('first_attempt')->where('course_allocation_id', $this->id)->get()->sortBy('first_attempt.student.rollno');
     }
+
+    // all enrolled
+    public function enrolled()
+    {
+        $freshIds = $this->first_attempts()->pluck('student_id');
+        $reappearFirstAttemptIds = $this->reappears->pluck('first_attempt_id');
+        $reappearIds = FirstAttempt::whereIn('id', $reappearFirstAttemptIds)->pluck('student_id');
+        $studentIds = $freshIds->merge($reappearIds);
+
+        return Student::whereIn('id', $studentIds)->get();
+    }
+
+
     public function scopeDuring($query, $semester_id)
     {
         return $query->where('semester_id', $semester_id);

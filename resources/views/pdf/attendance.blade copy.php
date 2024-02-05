@@ -134,7 +134,7 @@ $roman = config('global.romans');
             @if($course_allocation->course_id!='')
             <div class="mt-4">{{$course_allocation->course->code}} {{$course_allocation->course->name}}</div>
             @php $i=1; @endphp
-            @foreach($course_allocation->enrolled()->chunk(32) as $chunk)
+            @foreach($course_allocation->first_attempts_sorted()->chunk(30) as $chunk)
             <table class="w-full mt-2 data">
                 <thead>
                     <tr style="background-color: #bbb;">
@@ -148,11 +148,11 @@ $roman = config('global.romans');
                 </thead>
                 <tbody>
 
-                    @foreach($chunk as $student)
+                    @foreach($chunk as $first_attempt)
                     <tr>
                         <td>{{$i}}</td>
-                        <td>{{$student->rollno}}</td>
-                        <td class="pl-1" style="text-align: left !important;">{{$student->name}}</td>
+                        <td>{{$first_attempt->student->rollno}}</td>
+                        <td class="pl-1" style="text-align: left !important;">{{$first_attempt->student->name}}</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -161,7 +161,7 @@ $roman = config('global.romans');
                 </tbody>
             </table>
 
-            @if($i%32!=1)
+            @if($i%30!=1)
             @break
             @endif
             <div class="page-break"></div>
