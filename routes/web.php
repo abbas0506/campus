@@ -40,6 +40,7 @@ use App\Http\Controllers\coordinator\SuspensionController as CoordinatorSuspensi
 use App\Http\Controllers\coordinator\TeacherController as CoordinatorTeacherController;
 use App\Http\Controllers\hod\AssessmentController as HodAssessmentController;
 use App\Http\Controllers\hod\AttemptPermissionController;
+use App\Http\Controllers\hod\AttendanceSheetController;
 use App\Http\Controllers\hod\AwardController;
 use App\Http\Controllers\hod\ProgramController;
 use App\Http\Controllers\hod\CourseController;
@@ -137,7 +138,7 @@ Route::get('exception/{code}', [MyExceptionController::class, 'show'])->name('ex
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin']], function () {
     Route::view('/', 'admin.index');
     Route::resource('user-access', UserAccessController::class);
-    Route::resource('roles', RoleController::class);
+    // Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('headships', HeadshipController::class);
@@ -245,6 +246,10 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
 
     Route::view('printable', 'hod.printable.index');
+
+    Route::get('attendance/sheets/', [AttendanceSheetController::class, 'index'])->name('attendance-sheets.index');
+    Route::get('attendance/sheets/{program}/{shift}/{term}/pdf', [AttendanceSheetController::class, 'pdf'])->name('attendance-sheets.pdf');
+
     Route::get('award/index', [AwardController::class, 'index'])->name('award.index');
     Route::get('award/{section}/courses', [AwardController::class, 'courses'])->name('award.courses');
     Route::get('award/{allocation}/pdf', [PdfController::class, 'award'])->name('award.pdf');

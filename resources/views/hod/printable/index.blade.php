@@ -9,7 +9,7 @@
         <div>Print Options</div>
     </div>
 
-    <div class="w-full md:w-3/4 mx-auto mt-24">
+    <div class="w-full md:w-3/4 mx-auto mt-12">
         <div class="flex flex-col md:flex-row md:items-center gap-x-2">
             <i class="bi bi-info-circle px-2 text-2xl"></i>
             <ul class="text-sm">
@@ -18,8 +18,12 @@
             </ul>
         </div>
 
-        <div class="grid  grid-cols-1 md:grid-cols-3 gap-5 mt-12">
+        <div class="grid  grid-cols-1 md:grid-cols-2 gap-5 mt-12">
 
+            <a href="{{route('hod.attendance-sheets.index')}}" class="text-center rounded-lg bg-sky-200 p-4">
+                <i class="bi bi-pass text-2xl"></i>
+                <div class="mt-2">Attendance Sheet</div>
+            </a>
             <a href="{{route('hod.award.index')}}" class="text-center rounded-lg bg-sky-200 p-4">
                 <i class="bi bi-award text-2xl"></i>
                 <div class="mt-2">Award Lists</div>

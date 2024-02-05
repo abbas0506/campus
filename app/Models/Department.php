@@ -40,7 +40,7 @@ class Department extends Model
     }
     public function clases()
     {
-        return Clas::whereRelation('program', 'department_id', $this->id)->get();
+        return Clas::whereRelation('program', 'department_id', $this->id);
     }
     public function sections()
     {

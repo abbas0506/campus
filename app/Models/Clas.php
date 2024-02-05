@@ -112,4 +112,12 @@ class Clas extends Model
     {
         return  $query->where('scheme_id', $scheme_id);
     }
+    public function scopeMorning($query)
+    {
+        return $query->where('shift_id', 1);
+    }
+    public function scopeSelfSupport($query)
+    {
+        return $query->where('shift_id', 2);
+    }
 }
