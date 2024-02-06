@@ -13,21 +13,21 @@
         <i class="bi bi-info-circle pr-2 text-2xl"></i>
         <ul class="text-xs">
             <li>Click on any program, sections will appear</li>
-            <li>Click on any section to see or print award lists of the section</li>
+            <li>Click on mid or final for attendance sheets</li>
         </ul>
     </div>
 
     <div class="flex flex-wrap items-center justify-between w-full mt-8 gap-y-4">
         <div class="flex items-center space-x-4 text-slate-600">
             <div class="tab active">Morning ({{$department->clases()->morning()->active()->get()->count()}})</div>
-            <a href="{{route('hod.assessment.pending')}}" class="tab">Self Support ({{$department->clases()->selfSupport()->active()->get()->count()}})</a>
+            <a href="{{route('hod.attendance-sheets.index',2)}}" class="tab">Self Support ({{$department->clases()->selfSupport()->active()->get()->count()}})</a>
         </div>
     </div>
-    <div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$programs->count()}} programs found</div>
-    <div class="flex flex-col accordion">
+    <!-- <div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$programs->count()}} programs found</div> -->
+    <div class="flex flex-col accordion mt-8">
         @foreach($programs->sortBy('level') as $program)
         <!-- show only those programs which has some classes -->
-        @if($program->clases()->morning()->count()>0)
+        @if($program->clases()->active()->morning()->count()>0)
         <div class="collapsible">
             <div class="head">
                 <h2 class="flex items-center space-x-4">
@@ -59,7 +59,10 @@
                             @endforeach
                         </div>
                     </div>
-                    <div><a href="{{route('hod.attendance-sheets.pdf',[$clas,1,1])}}" target='_blank'><i class="bi-file-pdf"></i></a></div>
+                    <div class="flex justify-center items-center space-x-4">
+                        <a href="{{route('hod.attendance-sheets.pdf',[$clas,1])}}" target='_blank' class="btn-sky text-xs">Mid</i></a>
+                        <a href="{{route('hod.attendance-sheets.pdf',[$clas,2])}}" target='_blank' class="btn-orange text-xs">Final</a>
+                    </div>
                 </div>
                 @endforeach
             </div>

@@ -247,8 +247,8 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
 
     Route::view('printable', 'hod.printable.index');
 
-    Route::get('attendance/sheets/', [AttendanceSheetController::class, 'index'])->name('attendance-sheets.index');
-    Route::get('attendance/sheets/{program}/{shift}/{term}/pdf', [AttendanceSheetController::class, 'pdf'])->name('attendance-sheets.pdf');
+    Route::get('attendance/sheets/{shift}', [AttendanceSheetController::class, 'index'])->name('attendance-sheets.index');
+    Route::get('attendance/sheets/{clas}/{term}/pdf', [AttendanceSheetController::class, 'pdf'])->name('attendance-sheets.pdf');
 
     Route::get('award/index', [AwardController::class, 'index'])->name('award.index');
     Route::get('award/{section}/courses', [AwardController::class, 'courses'])->name('award.courses');

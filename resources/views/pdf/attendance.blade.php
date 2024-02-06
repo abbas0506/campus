@@ -42,7 +42,7 @@
             text-align: center;
             padding-bottom: 4px;
             border: 0.5px solid;
-            line-height: 16px;
+            line-height: 14px;
         }
 
         td.border-t {
@@ -66,7 +66,7 @@ $roman = config('global.romans');
                         <td class="text-center text-xl font-bold">UNIVERSITY OF OKARA</td>
                     </tr>
                     <tr>
-                        <td class="text-center text-m font-bold">Attendance Sheet</td>
+                        <td class="text-center text-m font-bold">@if($termId==1) Midterm @else Final Term @endif Attendance Sheet</td>
                     </tr>
                 </tbody>
             </table>
@@ -111,6 +111,8 @@ $roman = config('global.romans');
             <!-- table header -->
             @foreach($clas->sections as $section)
             @foreach($section->course_allocations as $course_allocation)
+
+            @if($course_allocation->course_id!='')
             <table class="w-full">
                 <tbody>
                     <tr>
@@ -131,10 +133,9 @@ $roman = config('global.romans');
                 </tbody>
             </table>
 
-            @if($course_allocation->course_id!='')
             <div class="mt-4">{{$course_allocation->course->code}} {{$course_allocation->course->name}}</div>
             @php $i=1; @endphp
-            @foreach($course_allocation->enrolled()->chunk(32) as $chunk)
+            @foreach($course_allocation->enrolled()->chunk(35) as $chunk)
             <table class="w-full mt-2 data">
                 <thead>
                     <tr style="background-color: #bbb;">
@@ -161,7 +162,7 @@ $roman = config('global.romans');
                 </tbody>
             </table>
 
-            @if($i%32!=1)
+            @if($i%35!=1)
             @break
             @endif
             <div class="page-break"></div>
@@ -174,6 +175,7 @@ $roman = config('global.romans');
             <div class="page-break"></div>
             @endif
             @endforeach
+            <div class="page-break"></div>
             @endforeach
         </div>
     </main>

@@ -20,7 +20,7 @@
 
         <div class="grid  grid-cols-1 md:grid-cols-2 gap-5 mt-12">
 
-            <a href="{{route('hod.attendance-sheets.index')}}" class="text-center rounded-lg bg-sky-200 p-4">
+            <a href="{{route('hod.attendance-sheets.index',1)}}" class="text-center rounded-lg bg-sky-200 p-4">
                 <i class="bi bi-pass text-2xl"></i>
                 <div class="mt-2">Attendance Sheet</div>
             </a>
