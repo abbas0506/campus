@@ -23,7 +23,7 @@ class ResetPasswordController extends Controller
         //send password reset code
         if (session('user_id')) {
             $user = User::find(session('user_id'));
-            return view('reset_password', compact('user'));
+            return view('auth.passwords.reset', compact('user'));
         } else {
             echo "user id missing";
         }

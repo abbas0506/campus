@@ -53,12 +53,9 @@
                 showConfirmButton: false,
                 timer: 1500,
             })
-
         }
 
         return validated;
-        // return false;
-
     }
 </script>
 @endsection
