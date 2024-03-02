@@ -92,7 +92,6 @@
                 </div>
             </div>
             <!-- todays activity  -->
-
             <div class="p-4 bg-slate-50 mt-4">
                 <h2>Today's Submission</h2>
                 <div class="overflow-x-auto mt-2">

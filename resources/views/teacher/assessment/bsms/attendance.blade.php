@@ -65,7 +65,7 @@
                         <th class="w-8"></th>
                         <th class="w-48 text-left">Name</th>
                         <th class="w-48 text-left">Father</th>
-                        <th class="w-20">Attendance <br> <span class="font-thin">(2%)</span></th>
+                        <th class="w-20">Attendance <br> <span class="font-thin">(out of 100)</span></th>
                     </tr>
                 </thead>
                 <tbody>
