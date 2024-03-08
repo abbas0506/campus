@@ -1,16 +1,26 @@
 @extends('layouts.basic')
 
 @section('body')
+<style>
+    .hero {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 50, 0.5)),
+        url("{{asset('/images/bg/uo.jpg')}}");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-clip: border-box;
+        position: relative;
+    }
+</style>
 
-
-<div class="flex flex-col items-center justify-center h-screen bg-gray-600 px-5">
-    <div class="flex flex-col items-center w-full p-8 md:w-1/3 bg-white relative">
-        <a href="{{url('signout')}}" class="absolute top-1 right-2"><i class="bi-x text-black"></i></a>
-        <img src="{{asset('/images/lock.png')}}" alt="lock" class="w-48 h-48 mt-8">
-        <!-- <h1 class="text-2xl md:text-4xl font-thin text-indigo-900 font-culpa tracking-wider">Exam Portal</h1> -->
-
+<div class="hero flex flex-col items-center justify-center h-screen px-5">
+    <div class="flex flex-col justify-between items-center w-full h-4/5 py-4 px-8 md:w-1/3 bg-white relative">
         <div>
-            <h1 class="text-xl mt-8">Please confirm that it is really <a href="{{url('/')}}">you!</a></h1>
+            <img src="{{asset('/images/lock.png')}}" alt="lock" class="w-36 h-36 mx-auto">
+        </div>
+        <div>
+            <h1 class="text-xl">Please confirm that it is really <a href="{{url('/')}}">you!</a></h1>
             <p class="text-sm mt-2">Check your email inbox/spam folder and enter 4-digits code here without any spaces.</p>
 
             <!-- page message -->
@@ -24,15 +34,14 @@
                 @csrf
                 <div class="flex flex-col gap-2">
                     <div class="flex-1">
-                        <!-- <label for="" class="">Verification Code</label> -->
                         <input type="text" id="id" name="code" class="w-full custom-input px-4 py-2" placeholder="- - - -">
                     </div>
-                    <!-- <div class="flex justify-end w-full mt-1">
-                    <a href="{{url('/')}}" class="link text-slate-700 float-right text-xs">Skip</a>
-                </div> -->
                     <button type='submit' class="btn-indigo py-2 rounded">Verify</button>
                 </div>
             </form>
+        </div>
+        <div class="text-center">
+            <a href="{{url('signout')}}" class="text-xs text-slate-600">Cancel & Go back</a>
         </div>
     </div>
 </div>

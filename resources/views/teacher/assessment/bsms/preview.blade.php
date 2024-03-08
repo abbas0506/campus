@@ -57,6 +57,7 @@
                     <th class="w-12">Asgn <br> <span class="font-thin">(10%)</span></th>
                     <th class="w-12">Pres <br> <span class="font-thin">(10%)</span></th>
                     <th class="w-12">Mid<br> <span class="font-thin">(30%)</span></th>
+                    <th class="w-12">Fmt<br> <span class="font-thin">(50%)</span></th>
                     <th class="w-12">Smt<br> <span class="font-thin">(50%)</span></th>
                     <th class="w-12">Total</th>
                     <th class="w-12">GP</th>
@@ -80,6 +81,7 @@
                     <td>{{$first_attempt->assignment}}</td>
                     <td>{{$first_attempt->presentation}}</td>
                     <td>{{$first_attempt->midterm}}</td>
+                    <td>{{$first_attempt->formative()}}</td>
                     <td>{{$first_attempt->summative}}</td>
                     <td>{{$first_attempt->total()}}</td>
                     <td>{{$first_attempt->gpa()}}</td>

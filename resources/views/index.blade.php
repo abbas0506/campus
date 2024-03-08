@@ -1,15 +1,28 @@
 @extends('layouts.basic')
 
 @section('body')
-<div class="flex flex-col items-center justify-center h-screen bg-gray-600 px-5">
-
-    <div class="flex flex-col items-center w-full p-8 md:w-1/3 bg-white relative">
+<style>
+    .hero {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 50, 0.5)),
+        url("{{asset('/images/bg/uo.jpg')}}");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-clip: border-box;
+        position: relative;
+    }
+</style>
+<div class="hero flex flex-col items-center justify-center h-screen px-5">
+    <div class="flex flex-col justify-between items-center w-full h-4/5 px-8 py-4 md:w-1/3 bg-white relative">
 
         @guest
-        <img class="md:w-3/4 mt-8" alt="logo" src="{{asset('/images/logo/logo.png')}}">
-        <h1 class="text-2xl md:text-4xl font-thin text-indigo-900 font-culpa tracking-wider">Exam Portal</h1>
+        <div class="text-center">
+            <img class="md:w-3/4 mx-auto" alt="logo" src="{{asset('/images/logo/logo.png')}}">
+            <h1 class="text-2xl md:text-4xl font-thin text-indigo-900 font-culpa tracking-wider">Exam Portal</h1>
+        </div>
 
-        <div class="w-full mt-4">
+        <div class="w-full">
 
             @if ($errors->any())
             <div class="alert-danger text-sm w-full mb-3">
@@ -35,30 +48,37 @@
                         <i class="bi bi-eye-slash absolute right-5 eye-slash" onclick="showpw()"></i>
                         <i class="bi bi-eye absolute right-5 eye hidden" onclick="hidepw()"></i>
                     </div>
-                    <div class="flex justify-end w-full mt-1">
+                    <!-- <div class="flex justify-end w-full mt-1">
                         <a href="{{route('passwords.forgot')}}" class="link text-slate-700 float-right text-xs">Forgot password?</a>
-                    </div>
+                    </div> -->
                     <button type="submit" class="w-full mt-4 btn-indigo p-2">Login</button>
 
                 </div>
             </form>
         </div>
+        <div class="text-center">
+            <a href="{{route('passwords.forgot')}}" class="link text-slate-700 float-right text-xs">Forgot password?</a>
+        </div>
         @else
         <!-- authenticated -->
-        <i class="bi bi-person-fill-check text-8xl text-sky-600"></i>
-        <a href="{{url('signout')}}" class="absolute top-1 right-2"><i class="bi-x text-black"></i></a>
-        <h1 class="text-slate-800 mt-8 text-xl">Welcome back {{Auth::user()->name}}!</h1>
+        <div>
+            <i class="bi bi-person-fill-check text-8xl text-sky-600"></i>
+        </div>
 
-        <form action="{{route('login.as')}}" method='post' class="w-full mt-2" onsubmit="return validate(event)">
+        <div class="border border-dashed p-4 w-full">
+            <h2>Welcome back {{Auth::user()->name}}!</h2>
+            <p class="text-sm text-slate-600">Please select a role for your current session and click on proceed button. </p>
+        </div>
+        <form action="{{route('login.as')}}" method='post' class="w-full" onsubmit="return validate(event)">
             @csrf
-            <select id="role" name="role" class="custom-input px-4 w-full py-0 mt-3 bg-transparent" onchange="loadDepartments()">
+            <select id="role" name="role" class="custom-input px-4 w-full py-0 bg-transparent" onchange="loadDepartments()">
                 <option value="" class="py-0">Please select a role</option>
                 @foreach(Auth::user()->roles as $role)
                 <option value="{{$role->name}}" class="py-0">{{ucfirst($role->name)}}</option>
                 @endforeach
             </select>
             <div id='deptt_container' class="hidden">
-                <div class="mt-6">
+                <div class="mt-3">
                     <select id="department_id" name="department_id" class="custom-input px-4 py-3 w-full">
 
                     </select>
@@ -70,7 +90,9 @@
             </div>
 
         </form>
-
+        <div class="text-center">
+            <a href="{{url('signout')}}" class="link text-slate-700 float-right text-xs">Cancel & Go back</a>
+        </div>
         @endguest
     </div>
 
