@@ -14,7 +14,7 @@
     }
 </style>
 <div class="hero flex flex-col items-center justify-center h-screen px-5">
-    <div class="flex flex-col justify-between items-center w-full h-4/5 px-8 py-4 md:w-1/3 bg-white relative">
+    <div class="flex flex-col justify-between items-center w-full h-4/5 px-8 py-4 md:w-1/3 bg-white relative opacity-80">
 
         @guest
         <div class="text-center">
