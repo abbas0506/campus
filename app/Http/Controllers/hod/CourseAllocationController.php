@@ -134,8 +134,15 @@ class CourseAllocationController extends Controller
     {
 
         $course_allocation = CourseAllocation::find($id);
-        $courses = Course::where('course_type_id', $course_allocation->slot_option->course_type_id)
-            ->where('department_id', session('department_id'))
+        // $courses = Course::where('course_type_id', $course_allocation->slot_option->course_type_id)
+        //     ->where('department_id', session('department_id'))
+        //     ->where('id', '<>', $course_allocation->course_id)
+        //     ->whereRaw('cr_theory+cr_practical=' . $course_allocation->slot_option->slot->cr)
+        //     ->get();
+
+        // course type skipped on the request of dr shehzad sb
+        // to allow optional as well as elective subjects 
+        $courses = Course::where('department_id', session('department_id'))
             ->where('id', '<>', $course_allocation->course_id)
             ->whereRaw('cr_theory+cr_practical=' . $course_allocation->slot_option->slot->cr)
             ->get();
