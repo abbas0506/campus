@@ -36,10 +36,18 @@
                         <option value="0" @if(!$teacher->is_regular) selected @endif>Visiting</option>
                     </select>
                 </div>
+                @if(Auth::user()->hasRole('super'))
+                <div class="flex flex-col flex-1 mt-3">
+                    <label for="">Email *</label>
+                    <input type="text" id='' name='email' class="custom-input" placeholder="email" value="{{$teacher->email}}" required>
+                </div>
+                @else
                 <div class="flex flex-col flex-1 mt-3">
                     <label for="">Email</label>
                     <h2>{{$teacher->email}}</h2>
                 </div>
+                @endif
+
             </div>
 
             <div class="flex flex-col md:flex-row md:space-x-4">
