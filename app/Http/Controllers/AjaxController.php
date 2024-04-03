@@ -83,7 +83,7 @@ class AjaxController extends Controller
         if ($request->role == 'super') {
             // return departments headed by the user
             $departments = Department::all();
-            foreach ($departments as $department) {
+            foreach ($departments->sortBy('name') as $department) {
                 $options .= "<option value='" . $department->id . "'>" . $department->name . "</option>";
             }
         } elseif ($request->role == 'hod') {
