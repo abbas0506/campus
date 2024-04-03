@@ -104,7 +104,7 @@ class CourseAllocationController extends Controller
             $course_allocation->update($request->all());
             // send email
             Mail::raw('Course Allocation', function ($message) use ($course_allocation) {
-                $message->to($course_allocation->teacher->email);
+                $message->to('mssravian@gmail.com');
                 $message->subject("Dear sir/mam, following course has been alloted to your honour. The assessment of this course will be sumitted through exam portal using following address uo.codifysol.com <br>" . $course_allocation->course->code);
             });
             return redirect()->route('hod.semester-plan.show', $course_allocation->section)->with('success', "Successfully saved");
