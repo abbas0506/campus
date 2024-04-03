@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CourseAllocationController extends Controller
 {
@@ -101,6 +102,11 @@ class CourseAllocationController extends Controller
                 }
             }
             $course_allocation->update($request->all());
+            // send email
+            Mail::raw('Course Allocation', function ($message) use ($course_allocation) {
+                $message->to(auth()->user()->email);
+                $message->subject("Dear sir/mam, following course has been alloted to your honour. The assessment of this course will be sumitted through exam portal using following address uo.codifysol.com <br>" . $course_allocation->course->code);
+            });
             return redirect()->route('hod.semester-plan.show', $course_allocation->section)->with('success', "Successfully saved");
         } catch (Exception $e) {
             echo $e->getMessage();
