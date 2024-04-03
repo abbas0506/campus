@@ -105,7 +105,7 @@ class CourseAllocationController extends Controller
 
             if ($course_allocation->teacher) {
                 // send email
-                Mail::raw('Dear sir/mam,' . $course_allocation->course->name . '(' . $course_allocation->course->code . ') course has been alloted to your honour. The assessment of this course will be sumitted through exam portal using following address uo.codifysol.com <br> Course Code:' . $course_allocation->course->code, function ($message) use ($course_allocation) {
+                Mail::raw("Dear sir/madam, the course entitled " . $course_allocation->course->name . '('  . $course_allocation->course->code . ') has been alloted to your honour. The assessment of this course will be sumitted through exam portal using following address https://uo.codifysol.com', function ($message) use ($course_allocation) {
                     $message->to($course_allocation->teacher->email);
                     $message->subject("Course Allocation:" . $course_allocation->course->code);
                 });
