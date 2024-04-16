@@ -1,8 +1,27 @@
 @extends('layouts.basic')
 
 @section('body')
+<style>
+    .main {
+        position: relative;
+        overflow: hidden;
+    }
 
-<div class="flex flex-col w-screen h-screen justify-center items-center">
+    .main::before {
+        background: #edf3fb;
+        content: "";
+        position: absolute;
+        width: 30rem;
+        height: 30rem;
+        border-radius: 50%;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        transform: scale(120%);
+        z-index: -1;
+    }
+</style>
+<div class="main flex flex-col w-screen h-screen justify-center items-center">
     <div class="flex justify-center items-center">
         <img src="{{asset('/images/lock.png')}}" alt="lock" class="w-48 h-48">
     </div>
@@ -15,17 +34,17 @@
         <x-message></x-message>
         @endif
 
-        <form action="{{route('passwords.change', Auth::user()->id)}}" method="post" class="flex flex-col mt-4" onsubmit="return validate(event)">
+        <form action="{{route('passwords.change', Auth::user()->id)}}" method="post" class="grid gap-4 mt-4 w-2/3 mx-auto" onsubmit="return validate(event)">
             @csrf
             @method('PATCH')
 
-            <input type="text" id="current" name="current" class="custom-input py-1" placeholder="Current password" required>
-            <input type="password" id="new" name="new" class="custom-input py-1" placeholder="New password" required>
-            <input type="password" id="confirmpw" class="custom-input py-1" placeholder="Confirm password" required>
+            <input type="text" id="current" name="current" class="custom-input-borderless py-1" placeholder="Current password" required>
+            <input type="password" id="new" name="new" class="custom-input-borderless py-1" placeholder="New password" required>
+            <input type="password" id="confirmpw" class="custom-input-borderless py-1" placeholder="Confirm password" required>
 
-            <div class="flex flex-wrap space-x-4 mt-4">
-                <a href="{{url(session('role'))}}" class="flex-1 btn-teal text-center rounded-sm py-1">Not Now</a>
-                <button type="submit" class="flex-1 btn-indigo rounded-sm py-1">Change Password</button>
+            <div class="flex flex-wrap justify-center gap-x-4 mt-4">
+                <a href="{{url(session('role'))}}" class="btn-teal text-center rounded-sm py-1">Cancel</a>
+                <button type="submit" class="btn-blue rounded-sm py-1">Change Password</button>
             </div>
         </form>
     </div>

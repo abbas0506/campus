@@ -1,7 +1,27 @@
 @extends('layouts.basic')
 
 @section('body')
-<div class="flex flex-col w-screen h-screen justify-center items-center bg-gradient-to-b from-blue-100 to-blue-400">
+<style>
+    .main {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .main::before {
+        background: #edf3fb;
+        content: "";
+        position: absolute;
+        width: 30rem;
+        height: 30rem;
+        border-radius: 50%;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        transform: scale(120%);
+        z-index: -1;
+    }
+</style>
+<div class="main flex flex-col w-screen h-screen justify-center items-center bg-gradient-to-b from-blue-100 to-blue-400">
     <div class="flex flex-col w-full md:w-2/3 lg:w-1/3 p-4">
         <h1 class="text-2xl">Reset Password</h1>
         <div class="flex flex-col mt-4">

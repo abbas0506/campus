@@ -85,6 +85,14 @@
     select.custom-input {
         @apply py-3;
     }
+    .custom-input-borderless {
+        @apply w-full text-gray-600 border-b bg-transparent border-slate-300  focus:bg-transparent focus:border-indigo-500 text-base outline-none leading-8 transition-colors duration-200 ease-in-out;
+    }
+    .custom-input-borderless option {
+        @apply flex justify-between;
+    }
+
+
     .search-indigo {
         @apply bg-opacity-50 border-b border-gray-300 focus:border-b focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out;
     }
