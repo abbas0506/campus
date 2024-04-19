@@ -90,9 +90,51 @@
                     <h3 class="w-24">Class:</h3>
                     <label>{{$student->section->clas->short()}}</label>
                 </div>
+
+
             </div>
+
         </div>
     </div>
+    <div class="collapsible mt-6">
+        <div class="head">
+            <h2> <span class="bx bx-time mr-2"></span> Academic History</h2>
+            <i class="bx bx-chevron-down text-lg"></i>
+        </div>
+        <div class="body">
+            <div class="relative flex flex-col p-4 text-sm w-full">
+                @php $roman = config('global.romans'); @endphp
+                <div class="overflow-x-auto mt-4">
+                    <table class="table-fixed w-full">
+                        <thead>
+                            <tr>
+                                <th class="w-24">Semester</th>
+                                <th class="w-36">Course</th>
+                                <th class="w-16">Cr</th>
+                                <th class="w-16">No</th>
+                                <th class="w-24">Marks</th>
+                                <th class="w-16">GPA</th>
+                                <th class="w-16">Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($student->first_attempts()->get() as $attempt)
+                            <tr class="text-center">
+                                <td>{{$attempt->semester->short()}}</td>
+                                <td class="text-left">{{$attempt->course_allocation->course->name}}</td>
+                                <td>{{$attempt->course_allocation->course->cr()}}</td>
+                                <td>{{$roman[$student->section->clas->semesterNo($attempt->semester_id)-1]}}</td>
+                                <td>{{$attempt->obtained()}}/100</td>
+                                <td>{{$attempt->gpa()}}</td>
+                                <td>{{$attempt->grade()}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-</div>
-@endsection
+            </div>
+        </div>
+
+    </div>
+    @endsection
