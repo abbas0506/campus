@@ -110,7 +110,7 @@ $roman = config('global.romans');
         <div class="container">
             <!-- table header -->
             @foreach($clas->sections as $section)
-            @foreach($section->course_allocations as $course_allocation)
+            @foreach($section->course_allocations()->current()->get() as $course_allocation)
 
             @if($course_allocation->course_id!='')
             <table class="w-full">
