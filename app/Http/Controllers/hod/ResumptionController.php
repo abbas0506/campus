@@ -66,10 +66,16 @@ class ResumptionController extends Controller
     {
         //
         $student = Student::find($id);
+
+        // get frozen period: current semester - frozen semester
+        // get all class from same program whose firs semester leg behind equal to frozen period
+
+
+
         $grace_period = $student->section->clas->program->max_t - $student->section->clas->program->min_t;
         $clases = Clas::where('program_id', $student->section->clas->program_id)
-            ->whereBetween('last_semester_id', [$student->root_section->clas->last_semester_id, $student->root_section->clas->last_semester_id + $grace_period * 2])
-            ->where('last_semester_id', '>=', $student->section->clas->last_semester_id);
+            // ->whereBetween('last_semester_id', [$student->root_section->clas->last_semester_id, $student->root_section->clas->last_semester_id + $grace_period * 2])
+            ->where('first_semester_id', '>=', $student->section->clas->first_semester_id);
 
         return view('hod.students.resume', compact('student', 'clases'));
     }
