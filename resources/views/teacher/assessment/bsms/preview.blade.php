@@ -107,7 +107,7 @@
                     <td>{{$reappear->assignment}}</td>
                     <td>{{$reappear->presentation}}</td>
                     <td>{{$reappear->midterm}}</td>
-                    <td>{{$reappear->formative}}</td>
+                    <td>{{$reappear->formative()}}</td>
                     <td>{{$reappear->summative}}</td>
                     <td>{{$reappear->total()}}</td>
                     <td>{{$reappear->gpa()}}</td>
