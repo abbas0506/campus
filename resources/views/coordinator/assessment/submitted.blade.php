@@ -58,7 +58,7 @@
                     </td>
                     <td>{{$course_allocation->course->code}}</td>
                     <td class="text-left">{{$course_allocation->course->name}} <span class="text-slate-400 text-xs">{{$course_allocation->course->lblCr()}}</span> <br> <span class="text-slate-400">{{$course_allocation->teacher->name}}</span></td>
-                    <td>{{$course_allocation->first_attempts->count()}}</td>
+                    <td>{{$course_allocation->first_attempts_active()->count()}}</td>
                     <td>{{$course_allocation->reappears->count()}}</td>
                     <td>{{$course_allocation->submitted_at}}</td>
                     <td>

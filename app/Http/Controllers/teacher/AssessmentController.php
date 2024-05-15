@@ -104,6 +104,7 @@ class AssessmentController extends Controller
     public function preview($id)
     {
         $course_allocation = CourseAllocation::find($id);
+
         //if phd
         if ($course_allocation->section->clas->program->level == 21)
             return view('teacher.assessment.phd.preview', compact('course_allocation'));

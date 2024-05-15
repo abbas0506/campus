@@ -125,7 +125,7 @@ $roman = config('global.romans');
                 </tbody>
             </table>
             @php $i=1; @endphp
-            @foreach($course_allocation->first_attempts_sorted()->chunk(30) as $chunk)
+            @foreach($course_allocation->first_attempts_active()->chunk(30) as $chunk)
             <table class="w-full mt-2 data">
                 <thead>
                     <tr style="background-color: #bbb;">
@@ -174,7 +174,7 @@ $roman = config('global.romans');
                 </tbody>
             </table>
             <div class="text-xs py-2">
-                Fresh:{{$course_allocation->first_attempts->count()}}, Reappear: {{$course_allocation->reappears->count()}}, Total: {{$course_allocation->strength()}} </td>
+                Fresh:{{$course_allocation->first_attempts_active()->count()}}, Reappear: {{$course_allocation->reappears->count()}}, Total: {{$course_allocation->strength()}} </td>
             </div>
             @if($i%30!=1)
             @break
@@ -229,6 +229,35 @@ $roman = config('global.romans');
                 </tbody>
             </table>
             @endif
+
+            <!-- Inactives: frozen, struck off, ceased -->
+            <div class="text-xs py-2">* Excluded Students</div>
+
+            @if($course_allocation->inactives()->count()>0)
+            <table class="w-full mt-2 data">
+                <thead>
+                    <tr style="background-color: #bbb;">
+                        <th class="w-32">Roll No.</th>
+                        <th class="w-36">Student Name</th>
+                        <th class='w-8'>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach($course_allocation->inactives() as $student)
+                    <tr>
+                        <td>{{$student->rollno}}</td>
+                        <td class="pl-1" style="text-align: left !important;">{{$student->name}}</td>
+                        <td>{{ $student->latestSuspension()->status->name }}</td>
+                    </tr>
+
+                    @endforeach
+
+                </tbody>
+            </table>
+            @endif
+
+
     </main>
     <script type="text/php">
         if (isset($pdf) ) {

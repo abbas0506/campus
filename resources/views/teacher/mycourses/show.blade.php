@@ -33,7 +33,7 @@
                 <div class="flex items-center justify-center rounded-full bg-orange-100 w-8 h-8">
                     <span class="bx bx-group text-sm rounded-full"></span>
                 </div>
-                <div>Fresh : {{$course_allocation->first_attempts->count()}}</div>
+                <div>Fresh : {{$course_allocation->first_attempts_active()->count()}}</div>
                 <div class="mx-1 text-xs font-thin">|</div>
                 <div>Re-Appear : {{$course_allocation->reappears->count()}}</div>
             </div>
@@ -63,7 +63,7 @@
                 </thead>
                 <tbody>
                     <!-- fresh students -->
-                    @foreach($course_allocation->first_attempts_sorted() as $first_attempt)
+                    @foreach($course_allocation->first_attempts_active() as $first_attempt)
                     <tr class="tr text-sm">
                         <td>{{$sr++}}</td>
                         <td>@if($first_attempt->student->gender=='M')

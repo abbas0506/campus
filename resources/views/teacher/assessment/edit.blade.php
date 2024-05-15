@@ -35,7 +35,7 @@
                 <div class="flex items-center justify-center rounded-full bg-orange-100 w-8 h-8">
                     <span class="bx bx-group text-sm rounded-full"></span>
                 </div>
-                <div>Fresh : {{$course_allocation->first_attempts->count()}}</div>
+                <div>Fresh : {{$course_allocation->first_attempts_active()->count()}}</div>
                 <div class="mx-1 text-xs font-thin">|</div>
                 <div>Re-Appear : {{$course_allocation->reappears->count()}}</div>
             </div>

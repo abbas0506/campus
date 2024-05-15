@@ -169,7 +169,7 @@ $roman = config('global.romans');
 
             @endforeach
             <div class="text-xs py-2">
-                Fresh:{{$course_allocation->first_attempts->count()}}, Reappear: {{$course_allocation->reappears->count()}}, Total: {{$course_allocation->strength()}} </td>
+                Fresh:{{$course_allocation->first_attempts_active()->count()}}, Reappear: {{$course_allocation->reappears->count()}}, Total: {{$course_allocation->strength()}} </td>
             </div>
 
             <div class="page-break"></div>

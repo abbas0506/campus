@@ -65,6 +65,7 @@ class AttendanceController extends Controller
     {
         //
         $course_allocation = CourseAllocation::findOrFail($id);
+
         return view('teacher.assessment.bsms.attendance', compact('course_allocation'));
     }
 

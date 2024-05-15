@@ -59,7 +59,7 @@
         <label for="" class="text-xs">Enrollment</label>
         @if($course_allocation->teacher()->exists())
         <div class="flex items-center gap-x-4">
-            <div> <a href="{{route('hod.course-allocations.enrollment.fresh', $course_allocation)}}" class="link">Fresh</a> <span class="text-slate-400 ml-2">({{$course_allocation->first_attempts->count()}})</span></div>
+            <div> <a href="{{route('hod.course-allocations.enrollment.fresh', $course_allocation)}}" class="link">Fresh</a> <span class="text-slate-400 ml-2">({{$course_allocation->first_attempts_active()->count()}})</span></div>
             <div>|</div>
             <div><a href="{{route('hod.course-allocations.enrollment.reappear', $course_allocation)}}" class="link">Reappear</a><span class="text-slate-400 ml-2">({{$course_allocation->reappears->count()}})</span></div>
         </div>
@@ -82,7 +82,7 @@
             </thead>
             <tbody>
                 @php $sr=1; @endphp
-                @foreach($course_allocation->first_attempts_sorted() as $first_attempt)
+                @foreach($course_allocation->first_attempts_active() as $first_attempt)
                 <tr class="tr">
                     <td>{{$sr++}}</td>
                     <td>@if($first_attempt->student->gender=='M')

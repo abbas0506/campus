@@ -66,21 +66,41 @@ class CourseAllocation extends Model
     }
     public function strength()
     {
-        return $this->first_attempts->count() + $this->reappears->count();
+        return $this->first_attempts_active()->count() + $this->reappears->count();
     }
     public function enrolled_students()
     {
         return Student::whereRelation('first_attempts', 'course_allocation_id', $this->id)->get();
     }
-    public function first_attempts_sorted()
+    public function first_attempts_active()
     {
-        return FirstAttempt::with('student')->where('course_allocation_id', $this->id)->get()->sortBy('student.rollno');
+        // return FirstAttempt::with('student')->where('course_allocation_id', $this->id)->get()->sortBy('student.rollno');
+        $firstAttempts = FirstAttempt::whereRelation('student', function ($query) {
+            $query->where('status_id', 1);  //exclude frozen or ceased
+        })->where('course_allocation_id', $this->id)
+            ->where('semester_id', session('semester_id'))
+            ->get()
+            ->sortBy('student.rollno');
+
+        return $firstAttempts;
     }
+
+
     public function reappears_sorted()
     {
         return Reappear::with('first_attempt')->where('course_allocation_id', $this->id)->get()->sortBy('first_attempt.student.rollno');
     }
 
+    public function inactives()
+    {
+
+        $students = Student::whereRelation('section.course_allocations', function ($query) {
+            $query->where('id', $this->id);
+        })->where('status_id', '>', 1)
+            ->get();
+
+        return $students;
+    }
     // all enrolled
     public function enrolled()
     {

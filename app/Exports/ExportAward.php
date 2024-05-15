@@ -78,7 +78,7 @@ class ExportAward implements FromCollection
                 'grade' => 'Grade',
 
             ]);
-            foreach ($this->course_allocation->first_attempts_sorted() as $first_attempt) {
+            foreach ($this->course_allocation->first_attempts_active() as $first_attempt) {
                 $award->push((object)[
                     'rollno' => $first_attempt->student->rollno,
                     'name' => $first_attempt->student->name,
@@ -107,7 +107,7 @@ class ExportAward implements FromCollection
                 'grade' => 'Grade',
 
             ]);
-            foreach ($this->course_allocation->first_attempts_sorted() as $first_attempt) {
+            foreach ($this->course_allocation->first_attempts_active() as $first_attempt) {
                 $award->push((object)[
                     'rollno' => $first_attempt->student->rollno,
                     'name' => $first_attempt->student->name,
