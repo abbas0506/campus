@@ -34,6 +34,12 @@
                 </a>
             </li>
             <li>
+                <a href=" {{route('hod.inactive-students.index')}} " class="flex items-center p-2">
+                    <i class="bi-person-fill-slash"></i>
+                    <span class="ml-3">Inactive Students</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{route('hod.students.index')}}" class="flex items-center p-2">
                     <i class="bi bi-person-circle"></i>
                     <span class="ml-3">Student Profile</span>

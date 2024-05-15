@@ -54,6 +54,7 @@ use App\Http\Controllers\hod\CumulativeController;
 use App\Http\Controllers\hod\EnrollmentController;
 
 use App\Http\Controllers\hod\HodController;
+use App\Http\Controllers\hod\InactiveStudentController;
 use App\Http\Controllers\hod\NotificationCotroller;
 use App\Http\Controllers\hod\SectionController;
 use App\Http\Controllers\hod\SemesterPlanController;
@@ -261,6 +262,8 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
 
     Route::get('cumulative/index', [CumulativeController::class, 'index'])->name('cumulative.index');
     Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');
+
+    Route::resource('inactive-students', InactiveStudentController::class);
 });
 
 Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:teacher', 'my_exception_handler']], function () {

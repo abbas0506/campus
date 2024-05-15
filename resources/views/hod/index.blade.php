@@ -81,10 +81,10 @@
                         <label class="text-slate-600">Ceased</label>
                         <p>{{$department->students()->ceased()->count()}}</p>
                     </div>
-                    <div>
+                    <a href="{{ route('hod.inactive-students.index') }}" class="">
                         <label class="text-slate-600">Frozen</label>
                         <p>{{$department->students()->frozen()->count()}}</p>
-                    </div>
+                    </a>
                     <div>
                         <label class="text-slate-600">Struck Off</label>
                         <p>{{$department->students()->struckoff()->count()}}</p>

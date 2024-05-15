@@ -26,8 +26,8 @@ class Student extends Model
         'rollno',
 
         //current
-        'status_id',
         'section_id',
+        'status_id',
 
     ];
 
@@ -39,6 +39,7 @@ class Student extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
     public function scopeGender($query, $gender)
     {
         return $query->where('gender', $gender);
@@ -72,6 +73,11 @@ class Student extends Model
     public function suspensions()
     {
         return $this->hasMany(Suspension::class);
+    }
+
+    public function latestSuspension()
+    {
+        return $this->suspensions->last();
     }
     public function credits_covered()
     {

@@ -13,4 +13,13 @@ class Suspension extends Model
         'status_id',
         'remarks',
     ];
+
+    public function status()
+    {
+        return  $this->belongsTo(Status::class);
+    }
+    public function student()
+    {
+        return  $this->belongsTo(Student::class);
+    }
 }
