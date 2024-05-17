@@ -134,7 +134,7 @@ $roman = config('global.romans');
                         <th class="w-36">Student Name</th>
 
                         @if($course_allocation->section->clas->program->level==21)
-                        <th class="w-12">Asgn etc. <br>20%</th>
+                        <th class="w-12">Asgn etc. <br>10%</th>
                         @else
                         <th class="w-8">Assign <br>10%</th>
                         <th class="w-8">Pres<br>10%</th>
@@ -193,7 +193,7 @@ $roman = config('global.romans');
                     <tr style="background-color: #bbb;">
                         <th class="w-32">Roll No.</th>
                         <th class="w-36">Student Name</th>
-                        <th class="w-12">Asgn etc. <br>20%</th>
+                        <th class="w-12">Asgn etc. <br>10%</th>
                         <th class="w-8">Pres<br>10%</th>
                         <th class='w-8'>Mid<br> 30%</th>
                         <th class='w-12'>Fmt.<br>50%</th>
@@ -234,7 +234,7 @@ $roman = config('global.romans');
             <div class="text-xs py-2">* Excluded Students</div>
 
             @if($course_allocation->inactives()->count()>0)
-            <table class="w-full mt-2 data">
+            <table class="w-full data">
                 <thead>
                     <tr style="background-color: #bbb;">
                         <th class="w-32">Roll No.</th>
