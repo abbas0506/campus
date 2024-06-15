@@ -17,8 +17,7 @@ class InactiveStudentController extends Controller
     {
         //
         $department = Department::find(session('department_id'));
-        $students = $department->currentlyInactiveStudents();
-        return view('hod.students.inactive', compact('students'));
+        return view('hod.students.inactive', compact('department'));
     }
 
     /**

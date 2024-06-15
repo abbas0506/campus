@@ -11,7 +11,7 @@
         <div>Inactive</div>
     </div>
 
-    <h2 class="text-red-600 mt-5 "> <i class="bi-person-fill-slash mr-2"></i>Inactive Students: {{$students->count()}}</h2>
+    <h2 class="text-red-600 mt-5 "> <i class="bi-person-fill-slash mr-2"></i>Inactive Students: {{$department->currentStudents()->inactive()->count()}}</h2>
     <!-- search -->
     <div class="flex relative w-full md:w-1/3 mt-5">
         <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
@@ -30,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($students as $student)
+                @foreach($department->currentStudents()->inactive()->get() as $student)
                 <tr class="tr text-xs md:text-sm">
                     <td>{{ $student->rollno }}</td>
                     <td class="text-left">{{ $student->name }}</td>

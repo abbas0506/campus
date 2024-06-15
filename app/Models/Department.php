@@ -51,6 +51,17 @@ class Department extends Model
         return Student::whereRelation('section.clas.program', 'department_id', $this->id);
     }
 
+    public function currentStudents()
+    {
+        $currentSemesterId = session('semester_id');
+        return Student::whereRelation('section.clas', function ($query) use ($currentSemesterId) {
+            $query->where('first_semester_id', '<=', $currentSemesterId)
+                ->where('last_semester_id', '>=', $currentSemesterId)
+                ->whereRelation('program', function ($query) {
+                    $query->where('department_id', $this->id);
+                });
+        });
+    }
     public function current_allocations()
     {
         // 
@@ -60,9 +71,6 @@ class Department extends Model
             ->whereNotNull('teacher_id');
     }
 
-    public function currentlyActiveStudents()
-    {
-    }
     public function currentlyInactiveStudents()
     {
         $currentSemesterId = session('semester_id');

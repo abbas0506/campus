@@ -4,6 +4,7 @@ namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class HodController extends Controller
@@ -17,6 +18,10 @@ class HodController extends Controller
     {
         //
         $department = Department::find(session('department_id'));
+        // $students = Student::active()->get()->count();
+        // dd($students);
+        // dd($department->currentStudents()->active()->get());
+
         return view('hod.index', compact('department'));
     }
 

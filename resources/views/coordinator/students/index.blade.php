@@ -18,7 +18,7 @@
             <li>You may type part of name or roll no and click on serach button</li>
         </ul>
     </div>
-    <h2 class="text-red-600 mt-8 ">Students: {{$department->students()->count()}}</h2>
+    <h2 class="text-red-600 mt-8 ">Students: {{$department->currentStudents()->count()}}</h2>
     <!-- search -->
     <div class="flex items-center mt-4">
         <input type="text" id='searchby' placeholder="Search by name or roll no." class="search-indigo w-full md:w-1/2">

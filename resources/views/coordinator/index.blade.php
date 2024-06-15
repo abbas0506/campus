@@ -81,19 +81,19 @@
                 <div class="grid grid-cols-2 mt-2 gap-2">
                     <div>
                         <label class="text-slate-600">Active</label>
-                        <p>{{$department->students()->active()->count()}}</p>
+                        <p>{{$department->currentStudents()->active()->count()}}</p>
                     </div>
                     <div>
                         <label class="text-slate-600">Ceased</label>
-                        <p>{{$department->students()->ceased()->count()}}</p>
+                        <p>{{$department->currentStudents()->ceased()->count()}}</p>
                     </div>
                     <div>
                         <label class="text-slate-600">Frozen</label>
-                        <p>{{$department->students()->frozen()->count()}}</p>
+                        <p>{{$department->currentStudents()->frozen()->count()}}</p>
                     </div>
                     <div>
                         <label class="text-slate-600">Struck Off</label>
-                        <p>{{$department->students()->struckoff()->count()}}</p>
+                        <p>{{$department->currentStudents()->struckoff()->count()}}</p>
                     </div>
                 </div>
             </div>

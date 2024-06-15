@@ -157,9 +157,22 @@ class Student extends Model
         }
         return $subjects;
     }
+    public function scopeCurrent($query)
+    {
+        $currentSemesterId = session('semester_id');
+        return $query->whereRelation('section.clas', function ($clas) use ($currentSemesterId) {
+            return $clas->where('first_semester_id', '<=', $currentSemesterId)
+                ->where('last_semester_id', '>=', $currentSemesterId);
+        });
+    }
+
     public function scopeActive($query)
     {
         return $query->where('status_id', 1);
+    }
+    public function scopeInactive($query)
+    {
+        return $query->whereNot('status_id', 1);
     }
     public function scopeCeased($query)
     {
