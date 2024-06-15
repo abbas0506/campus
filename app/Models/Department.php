@@ -70,18 +70,4 @@ class Department extends Model
             ->whereNotNull('course_id')
             ->whereNotNull('teacher_id');
     }
-
-    public function currentlyInactiveStudents()
-    {
-        $currentSemesterId = session('semester_id');
-        $inactiveStudents = Student::whereRelation('section.clas', function ($query) use ($currentSemesterId) {
-            $query->where('first_semester_id', '<=', $currentSemesterId)
-                ->where('last_semester_id', '>=', $currentSemesterId)
-                ->whereRelation('program', function ($query) {
-                    $query->where('department_id', $this->id);
-                });
-        })->where('status_id', '>', 1)
-            ->get();
-        return $inactiveStudents;
-    }
 }
