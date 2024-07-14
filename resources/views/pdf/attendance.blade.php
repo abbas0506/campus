@@ -72,39 +72,6 @@ $roman = config('global.romans');
             </table>
         </div>
     </header>
-    <footer class="footer">
-        <table class="mt-8 w-full">
-            <tbody>
-                <tr class="text-xs text-center">
-                    <td style="color:#777; font-size:10px">Sign & date</td>
-                    <td style="color:#777; font-size:10px">Sign & date</td>
-                    <td style="color:#777; font-size:10px">Sign & date</td>
-                </tr>
-                <tr class="text-xs text-center">
-                    <td>__________________</td>
-                    <td>__________________</td>
-                    <td>__________________</td>
-                </tr>
-                <tr class="text-xs text-center">
-                    <td class="font-bold "></td>
-                    <td class="font-bold ">
-                    </td>
-                    <td class="font-bold "></td>
-                </tr>
-                <tr class="text-xs text-center">
-                    <td>Teacher</td>
-                    <td>Incharge, Internal Exams</td>
-                    <td>Chairperson/HoD/Incharge </td>
-                </tr>
-                <tr>
-                    <td colspan=3 class="pt-4" style="border-bottom:1px solid #888;border-bottom-style:dashed"></td>
-                </tr>
-                <tr class="text-xs text-center ">
-                    <td colspan="3" style="color:#222;font-size:10px"></td>
-                </tr>
-            </tbody>
-        </table>
-    </footer>
 
     <main>
         <div class="container">
@@ -162,9 +129,43 @@ $roman = config('global.romans');
                 </tbody>
             </table>
 
+            <footer class="footer">
+                <table class="mt-8 w-full">
+                    <tbody>
+                        <tr class="text-xs text-center">
+                            <td style="color:#777; font-size:10px">Sign & date</td>
+                            <td style="color:#777; font-size:10px">Sign & date</td>
+                            <td style="color:#777; font-size:10px">Sign & date</td>
+                        </tr>
+                        <tr class="text-xs text-center">
+                            <td>__________________</td>
+                            <td>__________________</td>
+                            <td>__________________</td>
+                        </tr>
+                        <tr class="text-xs text-center">
+                            <td class="font-bold ">{{$course_allocation->teacher->name ?? ''}}</td>
+                            <td class="font-bold ">@if($course_allocation->internal()!='')
+                                {{$course_allocation->internal()->name}}
+                                @else
+                                -
+                                @endif
+                            </td>
+                            <td class="font-bold ">{{$course_allocation->hod()->name}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan=3 class="pt-4" style="border-bottom:1px solid #888;border-bottom-style:dashed"></td>
+                        </tr>
+                        <tr class="text-xs text-center ">
+                            <td colspan="3" style="color:#222;font-size:10px"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </footer>
+
             @if($i%35!=1)
             @break
             @endif
+
             <div class="page-break"></div>
 
             @endforeach
@@ -175,6 +176,7 @@ $roman = config('global.romans');
             <div class="page-break"></div>
             @endif
             @endforeach
+
             <div class="page-break"></div>
             @endforeach
         </div>
