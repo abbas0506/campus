@@ -122,6 +122,40 @@ class ExportAward implements FromCollection
 
                 ]);
             }
+
+            $award->push((object)[
+                'Reappearing *',
+            ]);
+
+            // reappearing students data
+            $award->push((object)[
+                'rollno' => 'Roll No',
+                'name' => 'Name',
+                'assignment' => 'Assignment 10%',
+                'presentation' => "Prsentation 10%",
+                'mid' => "Assignment 30%",
+                'formative' => "Formative 50%",
+                'summative' => "Summative 50%",
+                'obt' => "Obtained",
+                'gpa' => 'GPA',
+                'grade' => 'Grade',
+
+            ]);
+            foreach ($this->course_allocation->reappears_sorted() as $reappear) {
+                $award->push((object)[
+                    'rollno' => $reappear->first_attempt->student->rollno,
+                    'name' => $reappear->first_attempt->student->name,
+                    'assignment' => $reappear->assignment,
+                    'presentation' => $reappear->presentation,
+                    'mid' => $reappear->mid,
+                    'formative' => $reappear->formative(),
+                    'summative' => $reappear->summative,
+                    'obt' => $reappear->total(),
+                    'gpa' => $reappear->gpa(),
+                    'grade' => $reappear->grade(),
+
+                ]);
+            }
         }
 
         return $award;
