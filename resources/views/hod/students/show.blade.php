@@ -123,7 +123,7 @@
                                 <td>{{$attempt->semester->short()}}</td>
                                 <td class="text-left">{{$attempt->course_allocation->course->name}}</td>
                                 <td>{{$attempt->course_allocation->course->cr()}}</td>
-                                <td>{{$roman[$student->section->clas->semesterNo($attempt->semester_id)-1]}}</td>
+                                <td>@if($student->section->clas->semesterNo($attempt->semester_id)>0){{$roman[$student->section->clas->semesterNo($attempt->semester_id)-1]}}@endif</td>
                                 <td>{{$attempt->obtained()}}/100</td>
                                 <td>{{$attempt->gpa()}}</td>
                                 <td>{{$attempt->grade()}}</td>
