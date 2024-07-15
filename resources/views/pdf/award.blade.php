@@ -210,18 +210,18 @@ $roman = config('global.romans');
                     <tr>
                         <td>{{$reappear->first_attempt->student->rollno}}</td>
                         <td class="pl-1" style="text-align: left !important;">{{$reappear->first_attempt->student->name}}</td>
-                        <td>{{$reappear->first_attempt->best_attempt()->assignment}}</td>
+                        <td>{{$reappear->assignment}}</td>
                         <!-- dont show for phd -->
                         @if($course_allocation->section->clas->program->level!=21)
-                        <td>{{$reappear->first_attempt->best_attempt()->presentation}}</td>
+                        <td>{{$reappear->presentation}}</td>
                         @endif
-                        <td>{{$reappear->first_attempt->best_attempt()->midterm}}</td>
-                        <td>{{$reappear->first_attempt->best_attempt()->formative()}}</td>
-                        <td>{{$reappear->first_attempt->best_attempt()->summative}}</td>
-                        <td style="background-color: #ddd;">{{$reappear->first_attempt->best_attempt()->total()}}</td>
-                        <td>{{$reappear->first_attempt->best_attempt()->gpa()}}</td>
-                        <td>{{$reappear->first_attempt->best_attempt()->grade()}}</td>
-                        <td>{{$reappear->first_attempt->best_attempt()->status()}}</td>
+                        <td>{{$reappear->midterm}}</td>
+                        <td>{{$reappear->formative()}}</td>
+                        <td>{{$reappear->summative}}</td>
+                        <td style="background-color: #ddd;">{{$reappear->total()}}</td>
+                        <td>{{$reappear->gpa()}}</td>
+                        <td>{{$reappear->grade()}}</td>
+                        <td>{{$reappear->status()}}</td>
                     </tr>
 
                     @endforeach

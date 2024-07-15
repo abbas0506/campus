@@ -124,8 +124,6 @@ class ExportAward implements FromCollection
             }
         }
 
-
-
         return $award;
     }
 }
