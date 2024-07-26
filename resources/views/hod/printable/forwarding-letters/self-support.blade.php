@@ -1,13 +1,13 @@
 @extends('layouts.hod')
 @section('page-content')
 <div class="container">
-    <h2>Print Attendance Sheets</h2>
+    <h2>Result Submission Proforma</h2>
     <div class="bread-crumb">
         <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <a href="{{url('hod/printable')}}">Print Options</a>
         <div>/</div>
-        <div>Attendance Sheets</div>
+        <div>Proforma</div>
     </div>
     <div class="flex flex-col md:flex-row md:items-center gap-x-2 mt-8">
         <i class="bi bi-info-circle pr-2 text-2xl"></i>
@@ -19,8 +19,8 @@
 
     <div class="flex flex-wrap items-center justify-between w-full mt-8 gap-y-4">
         <div class="flex items-center space-x-4 text-slate-600">
-            <a href="{{route('hod.attendance-sheets.index',1)}}" class="tab">Morning ({{$department->clases()->morning()->active()->get()->count()}})</a>
-            <div class="tab active">Self Support ({{$department->clases()->selfSupport()->active()->get()->count()}})</div>
+            <a href="{{route('hod.forwarding-letters.index',1)}}" class="tab">Morning ({{$department->clases()->morning()->active()->get()->count()}})</a>
+            <div class="tab active">Self-Support ({{$department->clases()->selfSupport()->active()->get()->count()}})</div>
         </div>
     </div>
     <!-- <div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$programs->count()}} programs found</div> -->
@@ -32,7 +32,7 @@
             <div class="head">
                 <h2 class="flex items-center space-x-4">
                     {{$program->short}}
-                    <span class="text-xs ml-4 font-thin">Classes:{{$program->clases()->selfSupport()->active()->count()}}</span>
+                    <span class="text-xs ml-4 font-thin">Classes:{{$program->clases()->morning()->active()->count()}}</span>
                 </h2>
                 <i class="bx bx-chevron-down text-lg"></i>
             </div>
@@ -59,9 +59,8 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="flex justify-center items-center space-x-4">
-                        <a href="{{route('hod.attendance-sheets.pdf',[$clas,1])}}" target='_blank' class="btn-sky text-xs">Mid</i></a>
-                        <a href="{{route('hod.attendance-sheets.pdf',[$clas,2])}}" target='_blank' class="btn-orange text-xs">Final</a>
+                    <div class="text-right">
+                        <a href="{{route('hod.forwarding-letters.pdf',$clas)}}" target='_blank' class="btn-sky text-xs"><i class="bi-printer"></i></a>
                     </div>
                 </div>
                 @endforeach

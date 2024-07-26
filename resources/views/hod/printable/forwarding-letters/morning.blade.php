@@ -1,13 +1,13 @@
 @extends('layouts.hod')
 @section('page-content')
 <div class="container">
-    <h2>Print Attendance Sheets</h2>
+    <h2>Result Submission Proforma</h2>
     <div class="bread-crumb">
         <a href="{{url('hod')}}">Home</a>
         <div>/</div>
         <a href="{{url('hod/printable')}}">Print Options</a>
         <div>/</div>
-        <div>Attendance Sheets</div>
+        <div>Proforma</div>
     </div>
     <div class="flex flex-col md:flex-row md:items-center gap-x-2 mt-8">
         <i class="bi bi-info-circle pr-2 text-2xl"></i>
@@ -20,7 +20,7 @@
     <div class="flex flex-wrap items-center justify-between w-full mt-8 gap-y-4">
         <div class="flex items-center space-x-4 text-slate-600">
             <div class="tab active">Morning ({{$department->clases()->morning()->active()->get()->count()}})</div>
-            <a href="{{route('hod.attendance-sheets.index',2)}}" class="tab">Self Support ({{$department->clases()->selfSupport()->active()->get()->count()}})</a>
+            <a href="{{route('hod.forwarding-letters.index',2)}}" class="tab">Self Support ({{$department->clases()->selfSupport()->active()->get()->count()}})</a>
         </div>
     </div>
     <!-- <div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$programs->count()}} programs found</div> -->
