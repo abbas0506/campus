@@ -52,7 +52,7 @@ use App\Http\Controllers\hod\ClasController;
 use App\Http\Controllers\hod\CourseAllocationController;
 use App\Http\Controllers\hod\CumulativeController;
 use App\Http\Controllers\hod\EnrollmentController;
-
+use App\Http\Controllers\hod\ForwardingLetterController;
 use App\Http\Controllers\hod\HodController;
 use App\Http\Controllers\hod\InactiveStudentController;
 use App\Http\Controllers\hod\NotificationCotroller;
@@ -251,14 +251,17 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('attendance/sheets/{shift}', [AttendanceSheetController::class, 'index'])->name('attendance-sheets.index');
     Route::get('attendance/sheets/{clas}/{term}/pdf', [AttendanceSheetController::class, 'pdf'])->name('attendance-sheets.pdf');
 
+    Route::get('forwarding-letters/{shift}', [ForwardingLetterController::class, 'index'])->name('forwarding-letters.index');
+    Route::get('forwarding-letters/{clas}/pdf', [ForwardingLetterController::class, 'pdf'])->name('forwarding-letters.pdf');
+
     Route::get('award/index', [AwardController::class, 'index'])->name('award.index');
     Route::get('award/{section}/courses', [AwardController::class, 'courses'])->name('award.courses');
     Route::get('award/{allocation}/pdf', [PdfController::class, 'award'])->name('award.pdf');
     Route::get('award/{allocation}/export', [AwardController::class, 'export'])->name('award.export');
 
-    Route::get('gazette/index', [GazetteController::class, 'index'])->name('gazette.index');
-    Route::get('gazette/{section}/preview', [GazetteController::class, 'preview'])->name('gazette.preview');
-    Route::get('gazette/{section}/pdf', [PdfController::class, 'gazette'])->name('gazette.pdf');
+    // Route::get('gazette/index', [GazetteController::class, 'index'])->name('gazette.index');
+    // Route::get('gazette/{section}/preview', [GazetteController::class, 'preview'])->name('gazette.preview');
+    // Route::get('gazette/{section}/pdf', [PdfController::class, 'gazette'])->name('gazette.pdf');
 
     Route::get('cumulative/index', [CumulativeController::class, 'index'])->name('cumulative.index');
     Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');

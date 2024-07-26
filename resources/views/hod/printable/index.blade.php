@@ -28,9 +28,9 @@
                 <i class="bi bi-award text-2xl"></i>
                 <div class="mt-2">Award Lists</div>
             </a>
-            <a href="{{route('hod.gazette.index')}}" class="text-center rounded-lg bg-sky-200 p-4">
+            <a href="{{route('hod.forwarding-letters.index',1)}}" class="text-center rounded-lg bg-sky-200 p-4">
                 <i class="bi-journal-check text-2xl" -></i>
-                <div class="mt-2">Gazette</div>
+                <div class="mt-2">Forwarding Letter</div>
             </a>
             <a href="{{route('hod.cumulative.index')}}" class="text-center rounded-lg bg-sky-200 p-4">
                 <i class="bi-clipboard-check text-2xl"></i>
