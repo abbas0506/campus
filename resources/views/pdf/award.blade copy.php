@@ -9,16 +9,16 @@
     <link href="{{public_path('css/pdf_tw.css')}}" rel="stylesheet">
     <style>
         @page {
-            margin: 50px 50px 150px 50px;
+            margin: 50px;
         }
 
         .footer {
             position: fixed;
-            bottom: 20px;
+            bottom: 50px;
             left: 30px;
             right: 0px;
             background-color: white;
-            height: 0px;
+            height: 50px;
         }
 
         .page-break {
@@ -180,16 +180,17 @@ $roman = config('global.romans');
             @break
             @endif
             <div class="page-break"></div>
-            @endforeach
 
+            @endforeach
 
             <!-- <div class="page-break"></div> -->
             @if($course_allocation->reappears->count()>0)
+
             <div class="text-xs py-2">* Reappearing</div>
+
             <table class="w-full mt-2 data">
                 <thead>
                     <tr style="background-color: #bbb;">
-                        <th class="w-4">#</th>
                         <th class="w-32">Roll No.</th>
                         <th class="w-36">Student Name</th>
                         <th class="w-12">Asgn etc. <br>10%</th>
@@ -204,9 +205,9 @@ $roman = config('global.romans');
                     </tr>
                 </thead>
                 <tbody>
+
                     @foreach($course_allocation->reappears_sorted() as $reappear)
                     <tr>
-                        <td>{{$i}}</td>
                         <td>{{$reappear->first_attempt->student->rollno}}</td>
                         <td class="pl-1" style="text-align: left !important;">{{$reappear->first_attempt->student->name}}</td>
                         <td>{{$reappear->assignment}}</td>
@@ -222,11 +223,11 @@ $roman = config('global.romans');
                         <td>{{$reappear->grade()}}</td>
                         <td>{{$reappear->status()}}</td>
                     </tr>
-                    @php $i++; @endphp
+
                     @endforeach
+
                 </tbody>
             </table>
-
             @endif
 
             <!-- Inactives: frozen, struck off, ceased -->
