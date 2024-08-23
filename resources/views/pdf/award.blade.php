@@ -192,12 +192,17 @@ $roman = config('global.romans');
                         <th class="w-4">#</th>
                         <th class="w-32">Roll No.</th>
                         <th class="w-36">Student Name</th>
+
+                        @if($course_allocation->section->clas->program->level==21)
                         <th class="w-12">Asgn etc. <br>10%</th>
+                        @else
+                        <th class="w-8">Assign <br>10%</th>
                         <th class="w-8">Pres<br>10%</th>
+                        @endif
                         <th class='w-8'>Mid<br> 30%</th>
-                        <th class='w-12'>Fmt.<br>50%</th>
-                        <th class='w-12'>Smt.<br>50%</th>
-                        <th class='w-12'>Total</th>
+                        <th class='w-10'>Fmt.<br>50%</th>
+                        <th class='w-10'>Smt.<br>50%</th>
+                        <th class='w-10'>Total</th>
                         <th class='w-8'>GP</th>
                         <th class='w-8'>Grade</th>
                         <th class='w-8'>Rem.</th>
