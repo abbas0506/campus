@@ -45,7 +45,10 @@
             <tbody>
                 @foreach($teachers->sortByDesc('id') as $teacher)
                 <tr class="tr">
-                    <td class="text-left md:pl-4">{{$teacher->name}}</td>
+                    <td class="text-left md:pl-4">
+                        <a href="{{ route('hod.teachers.show',$teacher) }}" class="link">{{$teacher->name}}</a>
+
+                    </td>
                     <td>@if($teacher->is_regular)Regular @else Visiting @endif</td>
                     <td>{{$teacher->phone}} </td>
                     <td>{{$teacher->cnic}} <br> {{$teacher->email}}</td>

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 use App\Models\Department;
+use App\Models\Shift;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -93,6 +94,10 @@ class TeacherController extends Controller
     public function show($id)
     {
         //
+        $department = Department::find(session('department_id'));
+        $teacher = $department->teachers()->find($id);
+        $shifts = Shift::all();
+        return view('hod.teachers.show', compact('teacher', 'shifts'));
     }
 
     /**
@@ -121,8 +126,10 @@ class TeacherController extends Controller
         $request->validate([
             'name' => 'required',
             // 'email' => 'required|email|unique:users,email,' . $id, 'id',
-            'cnic' => 'nullable|regex:/^[1-9]\d{0,12}$/|unique:users,cnic,' . $id, 'id',
-            'phone' => 'nullable|regex: /^[0]\d{0,10}$/|unique:users,phone,' . $id, 'id',
+            'cnic' => 'nullable|regex:/^[1-9]\d{0,12}$/|unique:users,cnic,' . $id,
+            'id',
+            'phone' => 'nullable|regex: /^[0]\d{0,10}$/|unique:users,phone,' . $id,
+            'id',
 
         ]);
 
