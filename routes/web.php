@@ -193,6 +193,7 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::resource('courses', CourseController::class);
     Route::resource('schemes', SchemeController::class);
     Route::resource('teachers', TeacherController::class);
+    Route::get('teachers/having/allocations', [TeacherController::class, 'allocations'])->name('teachers.having.allocations');
 
     Route::get('programs/{program}/schemes/add', [ProgramController::class, 'scheme'])->name('programs.schemes.add');
     Route::post('programs/schemes/add', [ProgramController::class, 'addScheme'])->name('programs.schemes.store');

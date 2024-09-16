@@ -96,8 +96,7 @@ class TeacherController extends Controller
         //
         $department = Department::find(session('department_id'));
         $teacher = $department->teachers()->find($id);
-        $shifts = Shift::all();
-        return view('hod.teachers.show', compact('teacher', 'shifts'));
+        return view('hod.teachers.show', compact('teacher'));
     }
 
     /**
@@ -161,5 +160,17 @@ class TeacherController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
         }
+    }
+
+    public function allocations()
+    {
+
+        $department = Department::find(session('department_id'));
+        $teachers = User::whereHas('roles', function ($query) {
+            $query->where('name', 'teacher')->where('department_id', session('department_id'));
+        })->whereHas('course_allocations', function ($qry) {
+            $qry->where('semester_id', session('semester_id'));
+        })->get();
+        return view('hod.teachers.allocations', compact('teachers'));
     }
 }

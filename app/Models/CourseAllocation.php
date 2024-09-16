@@ -181,6 +181,12 @@ class CourseAllocation extends Model
     {
         return $query->whereRelation('section.clas', 'shift_id', $shift);
     }
+    public function scopeMorning($query)
+    {
+        return $query->whereRelation('section.clas', 'shift_id', 1);
+    }
+
+
     public function scopeToday($query)
     {
         return $query->whereDate('updated_at', today());

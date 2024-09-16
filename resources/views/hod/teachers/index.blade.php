@@ -10,6 +10,11 @@
         <div>All</div>
     </div>
 
+
+    <div class="flex items-center space-x-4 text-slate-600 mt-8">
+        <p class="tab active">All</p>
+        <a href="{{route('hod.teachers.having.allocations')}}" class="tab">Having Allocations</a>
+    </div>
     <!-- search -->
     <div class="flex relative w-full md:w-1/3 mt-8">
         <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
@@ -23,14 +28,15 @@
     <x-message></x-message>
     @endif
 
+
+
+
     <div class="flex flex-wrap items-center justify-between mt-4">
         <div class="text-sm  text-gray-500">{{$teachers->count()}} records found</div>
         <a href="{{route('hod.teachers.create')}}" class="btn-indigo">
             Add New
         </a>
     </div>
-
-
     <div class="overflow-x-auto mt-4 w-full">
         <table class="table-fixed w-full">
             <thead>
