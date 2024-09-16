@@ -37,7 +37,12 @@
                 <tr class="tr border-b">
                     <td class="py-2 pl-3 text-left">
                         <a href="{{route('admin.user-access.edit',$user)}}" class="link">{{$user->name}}</a>
-                        <div class="text-sm text-slate-600">{{$user->email}}</div>
+                        <div class="text-sm text-slate-600">{{$user->email}}
+                            @role('super')
+                            <a href="{{ route('admin.login.direct',$user) }}" class="link ml-3 text-xs">login</a>
+                            @endrole
+                        </div>
+
                     </td>
                     <td class="text-slate-600 text-sm">{{Str::replace('Department of ','',$user->department->name)}}</td>
                     <td class="text-sm text-center text-slate-600">

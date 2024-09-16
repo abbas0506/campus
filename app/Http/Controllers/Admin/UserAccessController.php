@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserAccessController extends Controller
 {
@@ -98,5 +99,12 @@ class UserAccessController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function direct($id)
+    {
+        //
+        $user = User::find($id);
+        Auth::login($user);
+        echo "successful";
     }
 }

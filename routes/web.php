@@ -136,9 +136,11 @@ Route::view('exception/b', 'exceptions.blocked')->name('user_blocked_exception')
 
 Route::get('exception/{code}', [MyExceptionController::class, 'show'])->name('exception.show');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:super|admin']], function () {
     Route::view('/', 'admin.index');
     Route::resource('user-access', UserAccessController::class);
+    Route::get('login/direct/{user}', [UserAccessController::class, 'direct'])->name('login.direct');
+
     // Route::resource('roles', RoleController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('departments', DepartmentController::class);
@@ -148,7 +150,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admi
     //
 });
 
-Route::group(['prefix' => 'controller', 'as' => 'controller.', 'middleware' => ['role:controller']], function () {
+Route::group(['prefix' => 'controller', 'as' => 'controller.', 'middleware' => ['role:super|controller']], function () {
     Route::view('/', 'ce.index');
     Route::view('transcripts', 'ce.transcripts.index');
     Route::get('transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
@@ -165,7 +167,7 @@ Route::group(['prefix' => 'controller', 'as' => 'controller.', 'middleware' => [
     Route::post('fetchClassesByProgram', [AjaxController::class, 'fetchClassesByProgram']);
     Route::post('fetchSectionsByClass', [AjaxController::class, 'fetchSectionsByClass']);
 });
-Route::group(['middleware' => ['role:controller']], function () {
+Route::group(['middleware' => ['role:super|controller']], function () {
     // Route::redirect('controller', '/ce/students');
 
     Route::get('ce/award/step1', [CeAwardController::class, 'step1']);
@@ -269,7 +271,7 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::resource('inactive-students', InactiveStudentController::class);
 });
 
-Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:teacher', 'my_exception_handler']], function () {
+Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:super|teacher', 'my_exception_handler']], function () {
 
     Route::get('/', [TeacherTeacherController::class, 'index']);
     Route::view('change/pw', 'teacher.changepw')->name('changepw');
@@ -317,7 +319,7 @@ Route::group(['prefix' => 'internal', 'as' => 'internal.', 'middleware' => ['rol
     Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');
 });
 
-Route::group(['prefix' => 'coordinator', 'as' => 'coordinator.', 'middleware' => ['role:coordinator', 'my_exception_handler']], function () {
+Route::group(['prefix' => 'coordinator', 'as' => 'coordinator.', 'middleware' => ['role:super|coordinator', 'my_exception_handler']], function () {
     Route::get('/', [CoordinatorController::class, 'index']);
 
     Route::resource('clases', CoordinatorClasController::class);

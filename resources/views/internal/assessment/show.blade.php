@@ -10,13 +10,15 @@
         </div>
     </div>
 
-    <div class="flex flex-wrap items-center justify-between space-x-4 mt-8 border border-dashed p-4">
+    <div class="flex flex-wrap items-center justify-between gap-4 mt-8 border border-dashed p-4">
         <div>
             <h2 class='text-red-600'>{{$course_allocation->course->name}}</h2>
             <p>{{$course_allocation->section->title()}}</p>
         </div>
-        <div></div>
-        <a href="{{route('internal.assessment.pdf',$course_allocation)}}" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i>&nbsp Print</a>
+        <div class="flex items-center gap-3">
+            <a href="{{route('internal.assessment.pdf',$course_allocation)}}" target='_blank' class="btn-teal text-sm"><i class="bi-printer"></i>&nbsp Print</a>
+            <a href="{{route('internal.award.export', $course_allocation)}}" target="_blank" class="mr-2 btn-teal text-sm"><i class="bi-file-earmark-excel text-slate-100"></i>&nbsp Excel</a>
+        </div>
     </div>
 
     <!-- page message -->
