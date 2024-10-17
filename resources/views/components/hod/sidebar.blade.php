@@ -1,5 +1,5 @@
 <aside aria-label="Sidebar" id='sidebar'>
-    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">{{App\Models\Semester::find(session('semester_id'))->title()}}</div>
+    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">{{App\Models\Semester::findOrFail(session('semester_id'))->title()}}</div>
     <div class="text-xs text-center">{{date('M d, Y')}}</div>
     <div class="mt-12">
         <ul class="space-y-2">

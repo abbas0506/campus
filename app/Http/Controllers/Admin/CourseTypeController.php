@@ -75,7 +75,7 @@ class CourseTypeController extends Controller
 
     {
         //
-        $coursetype = CourseType::find($id);
+        $coursetype = CourseType::findOrFail($id);
         return view('admin.coursetypes.edit', compact('coursetype'));
     }
 
@@ -90,7 +90,8 @@ class CourseTypeController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|unique:course_types,name,' . $id, 'id',
+            'name' => 'required|unique:course_types,name,' . $id,
+            'id',
         ]);
 
         try {

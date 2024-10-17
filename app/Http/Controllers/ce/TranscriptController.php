@@ -42,14 +42,14 @@ class TranscriptController extends Controller
     // show method
     public function show($id)
     {
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         $first_attempts = $student->first_attempts;
         $semester_nos = array_unique($first_attempts->pluck('semester_no')->toArray());
         return view('ce.transcripts.show', compact('student', 'first_attempts', 'semester_nos'));
     }
     public function pdf($id)
     {
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
 
         $pdf = PDF::loadView('ce.transcripts.pdf', compact('student'))->setPaper('a4', 'portrait');
         return $pdf->stream();

@@ -49,7 +49,7 @@ class StudentController extends Controller
     public function show($id)
     {
         //
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         return view('ce.students.show', compact('student'));
     }
 

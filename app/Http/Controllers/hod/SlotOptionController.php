@@ -46,7 +46,7 @@ class SlotOptionController extends Controller
             'course_type_id' => 'required',
         ]);
 
-        $slot = Slot::find($request->slot_id);
+        $slot = Slot::findOrFail($request->slot_id);
 
         $course_type_ids = array();
         $course_type_ids = $request->course_type_id;
@@ -89,7 +89,7 @@ class SlotOptionController extends Controller
     public function edit($id)
     {
         //
-        $slot_option = SlotOption::find($id);
+        $slot_option = SlotOption::findOrFail($id);
         if ($slot_option->course()->exists()) {
             $courses = Course::where('course_type_id', $slot_option->course_type_id)
                 ->where('id', '<>', $slot_option->course_id)
@@ -113,7 +113,7 @@ class SlotOptionController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $slot_option = SlotOption::find($id);
+        $slot_option = SlotOption::findOrFail($id);
 
         try {
             $slot_option->update($request->all());

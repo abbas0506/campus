@@ -19,7 +19,7 @@ class TeacherController extends Controller
     //
     public function index()
     {
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $teachers = $department->teachers();
         return view('coordinator.teachers.index', compact('teachers'));
     }
@@ -121,8 +121,10 @@ class TeacherController extends Controller
         $request->validate([
             'name' => 'required',
             // 'email' => 'required|email|unique:users,email,' . $id, 'id',
-            'cnic' => 'nullable|regex:/^[1-9]\d{0,12}$/|unique:users,cnic,' . $id, 'id',
-            'phone' => 'nullable|regex: /^[0]\d{0,10}$/|unique:users,phone,' . $id, 'id',
+            'cnic' => 'nullable|regex:/^[1-9]\d{0,12}$/|unique:users,cnic,' . $id,
+            'id',
+            'phone' => 'nullable|regex: /^[0]\d{0,10}$/|unique:users,phone,' . $id,
+            'id',
 
         ]);
 

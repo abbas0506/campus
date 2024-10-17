@@ -18,14 +18,14 @@ class GazetteController extends Controller
      */
     public function index()
     {
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $programs = $department->programs;
 
         return view('hod.printable.gazette.index', compact('programs'));
     }
     public function preview($id)
     {
-        $section = Section::find($id);
+        $section = Section::findOrFail($id);
         return view('hod.printable.gazette.preview', compact('section'));
     }
 }

@@ -107,13 +107,13 @@ $roman = config('global.romans');
 
                 </thead>
                 <tbody>
-                    @php $sr=1; @endphp
+
                     @foreach($section->course_allocations()->current()->assigned()->get() as $course_allocation)
                     <tr>
-                        @if($sr==1)
+                        @if($loop->index==0)
                         <td class="text-center" rowspan="{{$section->course_allocations()->current()->assigned()->count()}}">{{ $section->title() }}</td>
                         @endif
-                        <td class="text-center py-3">{{ $sr++ }}</td>
+                        <td class="text-center py-3">{{ $loop->index+1 }}</td>
                         <td class="pl-2">{{ $course_allocation->course->name }}</td>
                         <td class="text-center">{{ $course_allocation->course->cr() }}</td>
                         <td class="text-center">{{ $course_allocation->course->code }}</td>
@@ -139,13 +139,14 @@ $roman = config('global.romans');
                             <td>__________________</td>
                         </tr>
                         <tr class="text-xs text-center">
-                            <td class="font-bold ">@if($course_allocation->internal()!='')
-                                {{$course_allocation->internal()->name}}
+                            <td class="font-bold ">
+                                @if($section->clas->program->internal_id)
+                                {{$section->clas->program->internal->name}}
                                 @else
                                 -
                                 @endif
                             </td>
-                            <td class="font-bold ">{{$course_allocation->hod()->name}}</td>
+                            <td class="font-bold ">{{$section->clas->program->department->headship->user->name}}</td>
                         </tr>
                         <tr class="text-xs text-center">
                             <td style="color:#666; font-size:12px">Incharge Internal Examination</td>

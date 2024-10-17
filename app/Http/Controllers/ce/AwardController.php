@@ -26,14 +26,14 @@ class AwardController extends Controller
     public function step2()
     {
         //
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $programs = $department->programs;
         return view('ce.award.step2', compact('department', 'programs'));
     }
 
     public function step3($id)
     {
-        $section = Section::find($id);
+        $section = Section::findOrFail($id);
 
         $semester_nos = collect();
         for ($i = 1; $i <= $section->clas->semester_no; $i++) {
@@ -61,7 +61,7 @@ class AwardController extends Controller
     }
     public function export($id)
     {
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         return Excel::download(new ExportAward($course_allocation), 'award_' . ($course_allocation->course->code == '' ? $course_allocation->id : $course_allocation->course->code) . '.xlsx');
     }
 }

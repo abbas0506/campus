@@ -22,7 +22,7 @@ class ResetPasswordController extends Controller
     {
         //send password reset code
         if (session('user_id')) {
-            $user = User::find(session('user_id'));
+            $user = User::findOrFail(session('user_id'));
             return view('auth.passwords.reset', compact('user'));
         } else {
             echo "user id missing";
@@ -86,7 +86,7 @@ class ResetPasswordController extends Controller
             'code' => 'required',
         ]);
 
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $matched = TwoFa::where('user_id', $user->id)
             ->where('code', $request->code)
             ->where('updated_at', '>=', now()->subMinutes(5))

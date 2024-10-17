@@ -84,7 +84,7 @@ class SemesterController extends Controller
     public function edit(Semester $semester)
     {
         //
-        // $seemster=Semester::find($id);
+        // $seemster=Semester::findOrFail($id);
         $semester_types = SemesterType::all();
         return view('admin.semesters.edit', compact('semester_types', 'semester'));
     }

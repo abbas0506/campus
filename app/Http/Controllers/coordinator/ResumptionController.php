@@ -65,7 +65,7 @@ class ResumptionController extends Controller
     public function edit($id)
     {
         //
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         $grace_period = $student->section->clas->program->max_t - $student->section->clas->program->min_t;
         $clases = Clas::where('program_id', $student->section->clas->program_id)
             ->whereBetween('last_semester_id', [$student->root_section->clas->last_semester_id, $student->root_section->clas->last_semester_id + $grace_period * 2])
@@ -88,7 +88,7 @@ class ResumptionController extends Controller
             'section_id' => 'required|numeric',
         ]);
         DB::beginTransaction();
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         try {
             Resumption::create([
                 'student_id' => $student->id,

@@ -24,7 +24,7 @@
 
 
     @php
-    $semester=App\Models\Semester::find(session('semester_id'));
+    $semester=App\Models\Semester::findOrFail(session('semester_id'));
     $roman = config('global.romans');
     @endphp
 

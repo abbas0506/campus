@@ -103,7 +103,7 @@ class Clas extends Model
     }
     public function scopeValidForMove($query, $id)
     {
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         //grace period in years
         $grace_period = $student->section->clas->program->max_t - $student->section->clas->program->min_t;
         return  $query->where('last_semester_id', '<=', $student->section->clas->last_semester_id + $grace_period * 2);

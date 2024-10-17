@@ -63,7 +63,7 @@ class FormativeController extends Controller
     public function edit($id)
     {
         //
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         //if phd
         if ($course_allocation->section->clas->program->level == 21)
             return view('teacher.assessment.phd.formative', compact('course_allocation'));
@@ -98,9 +98,9 @@ class FormativeController extends Controller
         try {
             foreach ($ids as $key => $id) {
                 if ($attempt_type[$key] == 'F')
-                    $attempt = FirstAttempt::find($id);
+                    $attempt = FirstAttempt::findOrFail($id);
                 else
-                    $attempt = Reappear::find($id);
+                    $attempt = Reappear::findOrFail($id);
 
                 $attempt->assignment = $assignment[$key];
                 $attempt->presentation = $presentation[$key];

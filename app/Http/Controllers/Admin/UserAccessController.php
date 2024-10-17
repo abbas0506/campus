@@ -103,7 +103,7 @@ class UserAccessController extends Controller
     public function direct($id)
     {
         //
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         Auth::login($user);
         echo "successful";
     }

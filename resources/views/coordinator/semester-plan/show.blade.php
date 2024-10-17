@@ -29,7 +29,7 @@
     </div>
 
     @php
-    $semester=App\Models\Semester::find(session('semester_id'));
+    $semester=App\Models\Semester::findOrFail(session('semester_id'));
     @endphp
     <div class="py-2 mt-4">
         <h2 class="flex items-center">Semester {{$roman[$semester->id-$section->clas->first_semester_id+$section->clas->program->intake-1]}}

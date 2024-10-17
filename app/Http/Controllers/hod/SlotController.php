@@ -32,7 +32,7 @@ class SlotController extends Controller
     public function create($scheme_id, $semester_no)
     {
         //
-        $scheme = Scheme::find($scheme_id);
+        $scheme = Scheme::findOrFail($scheme_id);
         $slot_no = Slot::where('scheme_id', $scheme_id)
             ->where('semester_no', $semester_no)
             ->max('slot_no');

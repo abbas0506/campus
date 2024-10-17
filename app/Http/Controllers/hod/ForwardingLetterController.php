@@ -18,7 +18,7 @@ class ForwardingLetterController extends Controller
     public function index($shiftId)
     {
         //
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $programs = $department->programs;
         // $programs = Program::where('department_id', $department->id)
         //     ->whereHas('clases.sections')->get();
@@ -31,7 +31,7 @@ class ForwardingLetterController extends Controller
     public function pdf($clasId)
     {
 
-        $clas = Clas::find($clasId);
+        $clas = Clas::findOrFail($clasId);
         $pdf = PDF::loadView('pdf.forwarding-letter', compact('clas'))->setPaper('a4', 'landscape');
         $pdf->set_option("isPhpEnabled", true);
 

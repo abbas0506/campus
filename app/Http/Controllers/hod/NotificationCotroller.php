@@ -83,7 +83,7 @@ class NotificationCotroller extends Controller
 
         try {
 
-            $notification = Notification::find($id);
+            $notification = Notification::findOrFail($id);
             $notification->is_read = 1;
             $notification->update();
             return redirect()->route('hod.notifications.index')->with('success', 'Successfully updated');;

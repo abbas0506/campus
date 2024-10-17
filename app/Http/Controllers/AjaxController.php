@@ -24,7 +24,7 @@ class AjaxController extends Controller
             'department_id' => 'required',
         ]);
 
-        $department = Department::find($request->department_id);
+        $department = Department::findOrFail($request->department_id);
         $programs = $department->programs;
         $text = "<option value=''>Select a program </option>";
         foreach ($programs as $program) {
@@ -45,7 +45,7 @@ class AjaxController extends Controller
             'semester_id' => $request->semester_id,
         ]);
 
-        $program = Program::find($request->program_id);
+        $program = Program::findOrFail($request->program_id);
         $text = "<option value=''>Select a class </option>";
         foreach ($program->clases()->active()->get() as $clas) {
             $text .= "<option value='" . $clas->id . "'>" . $clas->title() . "</option>";
@@ -61,7 +61,7 @@ class AjaxController extends Controller
         $request->validate([
             'clas_id' => 'required',
         ]);
-        $clas = Clas::find($request->clas_id);
+        $clas = Clas::findOrFail($request->clas_id);
         $text = "<option value=''>Select a section </option>";
         foreach ($clas->sections as $section) {
             $text .= "<option value='" . $section->id . "'>" . $section->name . "</option>";
@@ -126,7 +126,7 @@ class AjaxController extends Controller
         $request->validate([
             'program_id' => 'required',
         ]);
-        $program = Program::find($request->program_id);
+        $program = Program::findOrFail($request->program_id);
         $schemes = $program->schemes;
         $scheme_options = "";
         foreach ($schemes as $scheme) {
@@ -156,7 +156,7 @@ class AjaxController extends Controller
             'semester_id' => $request->semester_id,
             'department_id' => $request->department_id,
         ]);
-        $department = Department::find($request->department_id);
+        $department = Department::findOrFail($request->department_id);
         $programs = $department->programs;
         $text = "";
         foreach ($programs as $program) {
@@ -175,7 +175,7 @@ class AjaxController extends Controller
         ]);
 
         $student = Student::where('rollno', $request->rollno)->first();
-        $current_course_allocation = CourseAllocation::find($request->current_course_allocation_id);
+        $current_course_allocation = CourseAllocation::findOrFail($request->current_course_allocation_id);
 
         $eligible = 0;
         $student_info = 'Student not found';

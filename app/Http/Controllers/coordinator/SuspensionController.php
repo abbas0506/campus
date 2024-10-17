@@ -64,7 +64,7 @@ class SuspensionController extends Controller
     public function edit($id)
     {
         //
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         $clases = Clas::where('program_id', $student->section->clas->program_id)
             ->where('first_semester_id', $student->section->clas->first_semester_id);
 
@@ -88,7 +88,7 @@ class SuspensionController extends Controller
         ]);
         DB::beginTransaction();
         try {
-            $student = Student::find($id);
+            $student = Student::findOrFail($id);
             $student->status_id = $request->status_id;
             $student->update();
             //log student suspension status as well

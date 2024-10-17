@@ -7,7 +7,7 @@
             <div class="hidden md:flex text-base md:text-xl font-semibold">Examination System</div>
             <div class="hidden md:flex px-1 md:px-4">|</div>
 
-            <a href="{{route('switch.me.view')}}" class="text-sm">{{ucfirst(session('role'))}} ({{App\Models\Semester::find(session('semester_id'))->short()}}) <i class="bx bx-chevron-down text-xs"></i></a>
+            <a href="{{route('switch.me.view')}}" class="text-sm">{{ucfirst(session('role'))}} ({{App\Models\Semester::findOrFail(session('semester_id'))->short()}}) <i class="bx bx-chevron-down text-xs"></i></a>
 
         </div>
 

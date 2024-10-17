@@ -23,7 +23,7 @@ class SchemeController extends Controller
     {
         //
         // $schemes = Scheme::all();
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $programs = $department->programs;
         return view('hod.schemes.index', compact('programs'));
     }
@@ -120,14 +120,14 @@ class SchemeController extends Controller
 
     public function append($id)
     {
-        $program = Program::find($id);
+        $program = Program::findOrFail($id);
         $semesters = Semester::active()->get();
         return view('hod.schemes.create', compact('semesters', 'program',));
     }
     public function pdf($scheme_id)
     {
 
-        $scheme = Scheme::find($scheme_id);
+        $scheme = Scheme::findOrFail($scheme_id);
         $pdf = PDF::loadView('hod.schemes.pdf', compact('scheme'))->setPaper('a4', 'portrait');
         $pdf->set_option("isPhpEnabled", true);
 

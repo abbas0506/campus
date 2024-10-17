@@ -20,7 +20,7 @@ class TeacherController extends Controller
     //
     public function index()
     {
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $teachers = $department->teachers();
         return view('hod.teachers.index', compact('teachers'));
     }
@@ -94,7 +94,7 @@ class TeacherController extends Controller
     public function show($id)
     {
         //
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $teacher = $department->teachers()->find($id);
         return view('hod.teachers.show', compact('teacher'));
     }
@@ -165,7 +165,7 @@ class TeacherController extends Controller
     public function allocations()
     {
 
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $teachers = User::whereHas('roles', function ($query) {
             $query->where('name', 'teacher')->where('department_id', session('department_id'));
         })->whereHas('course_allocations', function ($qry) {

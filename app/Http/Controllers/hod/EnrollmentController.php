@@ -17,7 +17,7 @@ class EnrollmentController extends Controller
     //
     public function fresh($id)
     {
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
 
         $first_attempts = $course_allocation->first_attempts();
         $student_ids = $first_attempts->pluck('student_id')->toArray();
@@ -36,7 +36,7 @@ class EnrollmentController extends Controller
 
     public function reappear($id)
     {
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         return view('hod.course-allocations.enrollment.reappear', compact('course_allocation'));
     }
 
@@ -48,7 +48,7 @@ class EnrollmentController extends Controller
             'course_allocation_id' => 'required|numeric',
         ]);
 
-        $course_allocation = CourseAllocation::find($request->course_allocation_id);
+        $course_allocation = CourseAllocation::findOrFail($request->course_allocation_id);
 
         DB::beginTransaction();
 
@@ -78,7 +78,7 @@ class EnrollmentController extends Controller
         ]);
 
         $student = Student::where('rollno', $request->rollno)->first();
-        $requested_course_allocation = CourseAllocation::find($request->course_allocation_id);
+        $requested_course_allocation = CourseAllocation::findOrFail($request->course_allocation_id);
         //search for an attempt in the course before current semester
         $basic_attempt_in_course = $student->first_attempts()
             ->course($requested_course_allocation->course_id)
@@ -144,7 +144,7 @@ class EnrollmentController extends Controller
     public function destroyFresh($attempt_id)
     {
         try {
-            $attempt = FirstAttempt::find($attempt_id);
+            $attempt = FirstAttempt::findOrFail($attempt_id);
             $attempt->delete();
             return redirect()->back()->with('success', 'Successfully removed');
         } catch (Exception $e) {
@@ -154,7 +154,7 @@ class EnrollmentController extends Controller
     public function destroyReappear($attempt_id)
     {
         try {
-            $attempt = Reappear::find($attempt_id);
+            $attempt = Reappear::findOrFail($attempt_id);
             $attempt->delete();
             return redirect()->back()->with('success', 'Successfully removed');
         } catch (Exception $e) {

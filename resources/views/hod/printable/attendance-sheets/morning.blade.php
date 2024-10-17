@@ -20,7 +20,7 @@
     <div class="flex flex-wrap items-center justify-between w-full mt-8 gap-y-4">
         <div class="flex items-center space-x-4 text-slate-600">
             <div class="tab active">Morning ({{$department->clases()->morning()->active()->get()->count()}})</div>
-            <a href="{{route('hod.forwarding-letters.index',2)}}" class="tab">Self Support ({{$department->clases()->selfSupport()->active()->get()->count()}})</a>
+            <a href="{{route('hod.attendance-sheets.index',2)}}" class="tab">Self Support ({{$department->clases()->selfSupport()->active()->get()->count()}})</a>
         </div>
     </div>
     <!-- <div class="text-xs font-thin text-slate-600 mt-8 mb-3">{{$programs->count()}} programs found</div> -->
@@ -53,15 +53,15 @@
                     <div class="md:pl-4">
                         <div class="flex flex-wrap gap-2">
                             @foreach($clas->sections as $section)
-                            <a href="#" class='pallet-teal'>
+                            <div class="bg-teal-100 w-16 text-center">
                                 {{$section->name}} <span class="ml-1 text-xs">({{$section->students->count()}})</span>
-                            </a>
+                            </div>
                             @endforeach
                         </div>
                     </div>
                     <div class="flex justify-center items-center space-x-4">
-                        <a href="{{route('hod.forwarding-letters.pdf',[$clas,1])}}" target='_blank' class="btn-sky text-xs">Mid</i></a>
-                        <a href="{{route('hod.forwarding-letters.pdf',[$clas,2])}}" target='_blank' class="btn-orange text-xs">Final</a>
+                        <a href="{{route('hod.attendance-sheets.pdf',[$clas,1])}}" target='_blank' class="btn-sky text-xs">Mid</i></a>
+                        <a href="{{route('hod.attendance-sheets.pdf',[$clas,2])}}" target='_blank' class="btn-orange text-xs">Final</a>
                     </div>
                 </div>
                 @endforeach

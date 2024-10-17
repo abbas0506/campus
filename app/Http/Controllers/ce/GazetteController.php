@@ -23,8 +23,8 @@ class GazetteController extends Controller
     public function step2()
     {
         //
-        $department = Department::find(session('department_id'));
-        $semester = Semester::find(session('semester_id'));
+        $department = Department::findOrFail(session('department_id'));
+        $semester = Semester::findOrFail(session('semester_id'));
 
         return view('ce.gazette.step2', compact('semester', 'department'));
     }
@@ -32,12 +32,12 @@ class GazetteController extends Controller
     public function step3($id)
     {
 
-        $section = Section::find($id);
-        $department = Department::find(session('department_id'));
+        $section = Section::findOrFail($id);
+        $department = Department::findOrFail(session('department_id'));
 
         return view('ce.gazette.step3', compact('department', 'section'));
 
-        // $section = Section::find($id);
+        // $section = Section::findOrFail($id);
 
         // $semester_nos = collect();
         // for ($i = 1; $i <= $section->clas->semester_no; $i++) {
@@ -56,8 +56,8 @@ class GazetteController extends Controller
             'department_id' => 'required',
         ]);
 
-        $department = Department::find($request->department_id);
-        $semester = Semester::find($request->semester_id);
+        $department = Department::findOrFail($request->department_id);
+        $semester = Semester::findOrFail($request->semester_id);
 
         //save for next pages
         session([

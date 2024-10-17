@@ -25,8 +25,6 @@
             <p><i class="bi-at mr-2"></i>{{ $teacher->email }}</p>
 
         </div>
-
-
         <div class="overflow-x-auto mt-4 w-full">
             <table class="table-fixed w-full">
                 <thead>

@@ -25,7 +25,7 @@ class ProgramController extends Controller
     public function index()
     {
         //
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $programs = $department->programs;
         return view('hod.programs.index', compact('programs'));
     }
@@ -179,7 +179,7 @@ class ProgramController extends Controller
     }
     public function scheme($id)
     {
-        $program = Program::find($id);
+        $program = Program::findOrFail($id);
         $semesters = Semester::active()->get();
         return view('hod.programs.schemes.add', compact('semesters', 'program',));
     }
@@ -202,7 +202,7 @@ class ProgramController extends Controller
 
     public function internal($id)
     {
-        $program = Program::find($id);
+        $program = Program::findOrFail($id);
         $teachers = User::whereRelation('roles', 'name', 'teacher')
             ->where('id', '<>', $program->internal_id)->get();
         return view('hod.programs.internal', compact('program', 'teachers'));
@@ -212,7 +212,7 @@ class ProgramController extends Controller
         $request->validate([
             'internal_id' => 'required|numeric',
         ]);
-        $user = User::find($request->internal_id);
+        $user = User::findOrFail($request->internal_id);
         DB::beginTransaction();
         try {
             $program = Program::findOrFail($id);
@@ -240,7 +240,7 @@ class ProgramController extends Controller
 
     public function coordinator($id)
     {
-        $program = Program::find($id);
+        $program = Program::findOrFail($id);
         $teachers = User::whereRelation('roles', 'name', 'teacher')
             ->where('id', '<>', $program->coordinator_id)->get();
         return view('hod.programs.coordinator', compact('program', 'teachers'));
@@ -250,7 +250,7 @@ class ProgramController extends Controller
         $request->validate([
             'coordinator_id' => 'required|numeric',
         ]);
-        $user = User::find($request->coordinator_id);
+        $user = User::findOrFail($request->coordinator_id);
         DB::beginTransaction();
         try {
             $program = Program::findOrFail($id);

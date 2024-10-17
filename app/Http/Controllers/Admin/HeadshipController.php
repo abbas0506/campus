@@ -34,7 +34,7 @@ class HeadshipController extends Controller
     {
         //
         $departments = Department::all();
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         return view('admin.headships.create', compact('department', 'departments'));
     }
 
@@ -116,7 +116,7 @@ class HeadshipController extends Controller
             'department_id' => $department_id,
         ]);
 
-        $department = Department::find($department_id);
+        $department = Department::findOrFail($department_id);
         return view('admin.headships.edit', compact('departments', 'teachers', 'department'));
     }
 
@@ -133,7 +133,7 @@ class HeadshipController extends Controller
         DB::beginTransaction();
         try {
             $department_id = session('department_id');
-            $department = Department::find($department_id);
+            $department = Department::findOrFail($department_id);
 
 
             if ($department->headship) {
@@ -146,7 +146,7 @@ class HeadshipController extends Controller
                 $headship->update();
 
                 //assign role
-                $department = Department::find($department_id);
+                $department = Department::findOrFail($department_id);
                 $department->headship->user->assignRole('hod');
                 DB::commit();
                 return redirect()->route('admin.departments.show', $department)->with('success', 'Successfully replaced');

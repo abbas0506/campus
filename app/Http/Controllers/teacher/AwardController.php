@@ -24,7 +24,7 @@ class AwardController extends Controller
 
     public function pdf($id)
     {
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         if ($course_allocation->section->clas->program->level == 21)
             $pdf = PDF::loadView('teacher.award.pdf_phd', compact('course_allocation'))->setPaper('a4', 'portrait');
         else

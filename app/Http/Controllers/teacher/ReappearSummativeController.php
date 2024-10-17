@@ -61,7 +61,7 @@ class ReappearSummativeController extends Controller
     public function edit($id)
     {
         //
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         return view('teacher.results.reappear.summative.edit', compact('course_allocation'));
     }
 
@@ -85,7 +85,7 @@ class ReappearSummativeController extends Controller
         try {
             foreach ($ids as $key => $id) {
 
-                $reappear = Reappear::find($id);
+                $reappear = Reappear::findOrFail($id);
                 $reappear->summative = $summative[$key];
                 $reappear->update();
             }

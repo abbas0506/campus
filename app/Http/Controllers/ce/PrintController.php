@@ -24,7 +24,7 @@ class PrintController extends Controller
             'clas_id' => 'required',
             'semester_id' => 'required',
         ]);
-        $clas = Clas::find($request->clas_id);
+        $clas = Clas::findOrFail($request->clas_id);
         $semester_id = $request->semester_id;
 
         return view('ce.printable.class-allocations', compact('clas', 'semester_id'));

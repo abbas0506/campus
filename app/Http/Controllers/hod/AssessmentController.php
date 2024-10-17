@@ -20,7 +20,7 @@ class AssessmentController extends Controller
      */
     public function index()
     {
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         return view('hod.assessment.index', compact('department'));
     }
 
@@ -54,7 +54,7 @@ class AssessmentController extends Controller
     public function show($id)
     {
         //
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         return view('hod.assessment.show', compact('course_allocation'));
     }
 
@@ -127,7 +127,7 @@ class AssessmentController extends Controller
 
         ]);
 
-        $course_allocation = CourseAllocation::find($request->course_allocation_id);
+        $course_allocation = CourseAllocation::findOrFail($request->course_allocation_id);
 
         DB::beginTransaction();
         try {
@@ -164,12 +164,12 @@ class AssessmentController extends Controller
 
     public function submitted()
     {
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         return view('hod.assessment.submitted', compact('department'));
     }
     public function pending()
     {
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         return view('hod.assessment.pending', compact('department'));
     }
 }

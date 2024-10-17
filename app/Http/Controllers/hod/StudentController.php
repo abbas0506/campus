@@ -25,7 +25,7 @@ class StudentController extends Controller
     public function index()
     {
         //
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         return view('hod.students.index', compact('department'));
     }
 
@@ -78,7 +78,7 @@ class StudentController extends Controller
     public function show($id)
     {
         //
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         return view('hod.students.show', compact('student'));
     }
 
@@ -105,7 +105,7 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         $request->validate([
             'name' => 'required|string|max:100',
             'gender' => 'required|string|max:1',
@@ -145,13 +145,13 @@ class StudentController extends Controller
     public function feed($id)
     {
         //
-        $section = Section::find($id);
+        $section = Section::findOrFail($id);
         return view('hod.students.add', compact('section'));
     }
 
     public function excel($id)
     {
-        $section = Section::find($id);
+        $section = Section::findOrFail($id);
         session(['section_id' => $section->id]);
         return view('hod.students.excel', compact('section'));
     }

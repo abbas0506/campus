@@ -66,7 +66,7 @@ class AssessmentController extends Controller
     public function edit($id)
     {
         //final submission
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         return view('teacher.assessment.edit', compact('course_allocation'));
     }
 
@@ -103,7 +103,7 @@ class AssessmentController extends Controller
     }
     public function preview($id)
     {
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
 
         //if phd
         if ($course_allocation->section->clas->program->level == 21)

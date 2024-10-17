@@ -61,7 +61,7 @@ class FreshSummativeController extends Controller
     public function edit($id)
     {
         //
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         return view('teacher.results.fresh.summative.edit', compact('course_allocation'));
     }
 
@@ -85,7 +85,7 @@ class FreshSummativeController extends Controller
         try {
             foreach ($ids as $key => $id) {
 
-                $first_attempt = FirstAttempt::find($id);
+                $first_attempt = FirstAttempt::findOrFail($id);
                 $first_attempt->summative = $summative[$key];
                 $first_attempt->update();
             }

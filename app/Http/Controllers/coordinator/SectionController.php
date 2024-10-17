@@ -24,9 +24,7 @@ class SectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * Show the form for creating a new resource.
@@ -54,7 +52,7 @@ class SectionController extends Controller
         try {
 
             $letters = config('global.letters');
-            $clas = Clas::find($request->clas_id);
+            $clas = Clas::findOrFail($request->clas_id);
 
             //if section exists, assign next letter
             if ($clas->lastSection()) {
@@ -89,7 +87,7 @@ class SectionController extends Controller
     {
         //
 
-        $section = Section::find($id);
+        $section = Section::findOrFail($id);
         $students = $section->students;
         return view('coordinator.clases.sections.show', compact('section', 'students'));
     }
@@ -138,7 +136,7 @@ class SectionController extends Controller
     // public function append($program_id, $shift_id)
     // {
     //     if (session('semester_id')) {
-    //         $semester = Semester::find(session('semester_id'));
+    //         $semester = Semester::findOrFail(session('semester_id'));
     //         return view('coordinator.sections.append', compact('semester', 'program_id', 'shift_id'));
     //     } else {
     //         echo 'session or program variable not set... probably you have tried direct access to this page';
@@ -148,7 +146,7 @@ class SectionController extends Controller
 
     // public function fetchSectionsByClas(Request $request)
     // {
-    //     $clas = Clas::find($request->clas_id);
+    //     $clas = Clas::findOrFail($request->clas_id);
     //     $sections = $clas->sections;
 
 

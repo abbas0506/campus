@@ -87,7 +87,8 @@ class DepartmentController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|unique:departments,name,' . $id, 'id',
+            'name' => 'required|unique:departments,name,' . $id,
+            'id',
         ]);
         $department = Department::findOrFail($id);
         try {

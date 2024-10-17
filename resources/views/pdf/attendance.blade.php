@@ -93,7 +93,7 @@ $roman = config('global.romans');
                         <td class="font-bold text-xs">Program:</td>
                         <td class="text-xs">{{$clas->program->name}}</td>
                         <td class="font-bold text-xs">Semester:</td>
-                        <td class="text-xs">{{App\Models\Semester::find(session('semester_id'))->short()}}</td>
+                        <td class="text-xs">{{App\Models\Semester::findOrFail(session('semester_id'))->short()}}</td>
                         <td class="font-bold text-xs">Section:</td>
                         <td class="text-xs">{{$section->name}}</td>
                     </tr>

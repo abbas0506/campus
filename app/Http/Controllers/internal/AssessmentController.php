@@ -45,7 +45,7 @@ class AssessmentController extends Controller
     public function show($id)
     {
         //
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         return view('internal.assessment.show', compact('course_allocation'));
     }
 
@@ -97,7 +97,7 @@ class AssessmentController extends Controller
 
         ]);
 
-        $course_allocation = CourseAllocation::find($request->course_allocation_id);
+        $course_allocation = CourseAllocation::findOrFail($request->course_allocation_id);
 
         DB::beginTransaction();
         try {
@@ -127,7 +127,7 @@ class AssessmentController extends Controller
      */
     public function pdf($id)
     {
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         $pdf = PDF::loadView('pdf.award', compact('course_allocation'))->setPaper('a4', 'portrait');
 
         $pdf->set_option("isPhpEnabled", true);

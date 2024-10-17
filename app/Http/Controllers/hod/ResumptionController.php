@@ -65,7 +65,7 @@ class ResumptionController extends Controller
     public function edit($id)
     {
         //
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
 
         // get frozen period: current semester - frozen semester
         // get all class from same program whose firs semester leg behind equal to frozen period
@@ -94,7 +94,7 @@ class ResumptionController extends Controller
             'section_id' => 'required|numeric',
         ]);
         DB::beginTransaction();
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         try {
             Resumption::create([
                 'student_id' => $student->id,

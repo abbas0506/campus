@@ -56,7 +56,7 @@ class SemesterPlanController extends Controller
     public function show($id)
     {
         //
-        $section = Section::find($id);
+        $section = Section::findOrFail($id);
         if (!$section->course_allocations()->for(session('semester_id'))->exists()) {
             //if empty, auto create course allocation plan according to related scheme
             DB::beginTransaction();
@@ -124,7 +124,7 @@ class SemesterPlanController extends Controller
     public function pdf($section_id)
     {
 
-        $section = Section::find($section_id);
+        $section = Section::findOrFail($section_id);
         $pdf = PDF::loadView('coordinator.semester-plan.pdf', compact('section'))->setPaper('a4', 'portrait');
         $pdf->set_option("isPhpEnabled", true);
 

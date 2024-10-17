@@ -49,12 +49,12 @@ class FinalGazetteController extends Controller
             'semester_id' => 'required',
             'department_id' => 'required',
         ]);
-        $department = Department::find($request->department_id);
+        $department = Department::findOrFail($request->department_id);
         session([
             'semester_id' => $request->semester_id,
             'department' => $department,
         ]);
-        $department = Department::find($request->department_id);
+        $department = Department::findOrFail($request->department_id);
         $programs = $department->programs;
         return view('ce.gazette.sections', compact('programs', 'department'));
     }
@@ -68,7 +68,7 @@ class FinalGazetteController extends Controller
     public function show($id)
     {
         //
-        $section = Section::find($id);
+        $section = Section::findOrFail($id);
         return view('ce.gazette.show', compact('section'));
     }
 

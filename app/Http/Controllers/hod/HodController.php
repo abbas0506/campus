@@ -17,7 +17,7 @@ class HodController extends Controller
     public function index()
     {
         //
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         // $students = Student::active()->get()->count();
         // dd($students);
         // dd($department->currentStudents()->active()->get());

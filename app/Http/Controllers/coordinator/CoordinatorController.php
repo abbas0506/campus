@@ -18,7 +18,7 @@ class CoordinatorController extends Controller
     {
         //
         $user = Auth::user();
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         return view('coordinator.index', compact('department', 'user'));
     }
 

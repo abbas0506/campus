@@ -55,7 +55,7 @@ class CourseAllocationController extends Controller
     public function show($id)
     {
         //
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         if ($course_allocation->course()->exists())
             return view('coordinator.course-allocations.show', compact('course_allocation'));
         else {
@@ -93,10 +93,10 @@ class CourseAllocationController extends Controller
     {
         //
         try {
-            $course_allocation = CourseAllocation::find($id);
+            $course_allocation = CourseAllocation::findOrFail($id);
             // if request for course update, check for its prerequiste course 
             if ($request->course_id) {
-                $course = Course::find($request->course_id);
+                $course = Course::findOrFail($request->course_id);
                 if ($course->prerequisite_course()->exists() && !$course_allocation->section->course_allocations()->before(session('semester_id'))->contains($course->prerequisite_course_id)) {
                     return redirect()->back()->with('warning', 'Pre-requisite course "' . $course->prerequisite_course->code . " " . $course->prerequisite_course->name . ' ' . $course->prerequisite_course->lblCr() . '" required!');
                 }
@@ -119,7 +119,7 @@ class CourseAllocationController extends Controller
     {
         //
         try {
-            $course_allocation = CourseAllocation::find($id);
+            $course_allocation = CourseAllocation::findOrFail($id);
             $course_allocation->course_id = null;
             $course_allocation->teacher_id = null;
             $course_allocation->update();
@@ -134,7 +134,7 @@ class CourseAllocationController extends Controller
     public function courses($id)
     {
 
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         $courses = Course::where('course_type_id', $course_allocation->slot_option->course_type_id)
             ->where('department_id', session('department_id'))
             ->where('id', '<>', $course_allocation->course_id)
@@ -145,7 +145,7 @@ class CourseAllocationController extends Controller
 
     public function teachers($course_allocation_id)
     {
-        $course_allocation = CourseAllocation::find($course_allocation_id);
+        $course_allocation = CourseAllocation::findOrFail($course_allocation_id);
         $teachers = User::whereRelation('roles', 'name', 'teacher')
             ->where('id', '<>', $course_allocation->teacher_id)
             ->where('is_active', 1)

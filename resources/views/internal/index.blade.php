@@ -9,7 +9,7 @@
             <div class="bread-crumb">
                 <div>Internal</div>
                 <div>/</div>
-                <div>{{Str::replace('Department of', '', App\Models\Department::find(session('department_id'))->name)}}</div>
+                <div>{{Str::replace('Department of', '', App\Models\Department::findOrFail(session('department_id'))->name)}}</div>
                 <div>/</div>
                 <div>Home</div>
             </div>

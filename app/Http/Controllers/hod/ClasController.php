@@ -26,7 +26,7 @@ class ClasController extends Controller
     public function index()
     {
         //
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $programs = $department->programs;
 
         return view('hod.clases.index', compact('programs'));
@@ -59,7 +59,7 @@ class ClasController extends Controller
             'first_semester_id' => 'required|numeric',
 
         ]);
-        $program = Program::find($request->program_id);
+        $program = Program::findOrFail($request->program_id);
         //derive last semester of the class
 
         $request->merge([
@@ -112,7 +112,7 @@ class ClasController extends Controller
     public function edit($id)
     {
         //
-        $clas = Clas::find($id);
+        $clas = Clas::findOrFail($id);
         $shifts = Shift::all();
         $semesters = Semester::till(session('semester_id'))->get();
         return view('hod.clases.edit', compact('clas', 'shifts', 'semesters'));
@@ -138,7 +138,7 @@ class ClasController extends Controller
         try {
 
             //derive last semester id
-            $clas = Clas::find($id);
+            $clas = Clas::findOrFail($id);
             $request->merge([
                 'last_semester_id' => $request->first_semester_id + intval($clas->program->min_t * 2) - 1,
             ]);
@@ -180,7 +180,7 @@ class ClasController extends Controller
     }
     public function add($pid)
     {
-        $program = Program::find($pid);
+        $program = Program::findOrFail($pid);
         $shifts = Shift::all();
         $schemes = Scheme::all();
         $semesters = Semester::till(session('semester_id'))->get();

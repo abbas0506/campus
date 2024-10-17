@@ -61,7 +61,7 @@ class MovementController extends Controller
     public function edit($id)
     {
         //
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         $clases = Clas::where('program_id', $student->section->clas->program_id)
             ->where('first_semester_id', $student->section->clas->first_semester_id);
         return view('coordinator.students.move', compact('student', 'clases'));
@@ -82,7 +82,7 @@ class MovementController extends Controller
         ]);
 
         try {
-            $student = Student::find($id);
+            $student = Student::findOrFail($id);
             $student->section_id = $request->section_id;
             $student->update();
             return redirect()->route('coordinator.students.show', $student->id)->with('success', 'Successfully updated');;

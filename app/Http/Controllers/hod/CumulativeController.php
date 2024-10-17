@@ -17,14 +17,14 @@ class CumulativeController extends Controller
     //
     public function index()
     {
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         $programs = $department->programs;
         return view('hod.printable.cumulative.index', compact('programs', 'department'));
     }
 
     public function preview($section_id)
     {
-        $section = Section::find($section_id);
+        $section = Section::findOrFail($section_id);
         $slots = $section->clas->scheme->slots()->for($section->clas->semesterNo(session('semester_id')))->orderBy('slot_no');
         $slot_nos = array_unique($slots->pluck('slot_no')->toArray());
         return view('hod.printable.cumulative.preview', compact('section', 'slot_nos'));

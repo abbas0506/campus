@@ -18,7 +18,7 @@ class InternalController extends Controller
     {
         //
         $user = Auth::user();
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         return view('internal.index', compact('user', 'department'));
     }
 

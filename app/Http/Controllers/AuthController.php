@@ -82,19 +82,19 @@ class AuthController extends Controller
             ]);
 
             if ($request->role != 'teacher') {
-                $department = Department::find($request->department_id);
+                $department = Department::findOrFail($request->department_id);
                 session([
                     'department_id' => $request->department_id,
                 ]);
             }
             // //save selected semester id for entire session
             // if (Auth::user()->hasAnyRole('super', 'hod', 'internal', 'coordinator', 'teacher')) {
-            //     $semester = Semester::find($request->semester_id);
+            //     $semester = Semester::findOrFail($request->semester_id);
             //     session([
             //         'semester_id' => $request->semester_id,
             //     ]);
             //     if ($request->role == 'super' || $request->role == 'hod' || $request->role == 'internal' || $request->role == 'coordinator') {
-            //         $department = Department::find($request->department_id);
+            //         $department = Department::findOrFail($request->department_id);
             //         session([
             //             'department_id' => $request->department_id,
             //         ]);
@@ -215,7 +215,7 @@ class AuthController extends Controller
     //switch current role
     public function changePassword(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         //change password process
         $request->validate([
             'current' => 'required',

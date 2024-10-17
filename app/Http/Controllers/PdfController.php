@@ -15,7 +15,7 @@ class PdfController extends Controller
     {
 
         // echo "Award.pdf is temporarily not available for maintenance purpose.";
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         $pdf = PDF::loadView('pdf.award', compact('course_allocation'))->setPaper('a4', 'portrait');
         $pdf->set_option("isPhpEnabled", true);
 
@@ -26,7 +26,7 @@ class PdfController extends Controller
     public function gazette($id)
     {
         // echo "Gazzette is temporarily not available for maintenance purpose.";
-        $section = Section::find($id);
+        $section = Section::findOrFail($id);
         $pdf = PDF::loadView('pdf.gazette', compact('section'))->setPaper('a4', 'landscape');
 
         return $pdf->stream();
@@ -37,7 +37,7 @@ class PdfController extends Controller
 
         echo "Cumulative Sheet is temporarily not available for maintenance purpose.";
 
-        // $section = Section::find($section_id);
+        // $section = Section::findOrFail($section_id);
         // $course_allocations = $section->course_allocations;
 
 

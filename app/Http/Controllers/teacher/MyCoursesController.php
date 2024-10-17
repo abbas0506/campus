@@ -58,7 +58,7 @@ class MyCoursesController extends Controller
     public function show($id)
     {
         //
-        $course_allocation = CourseAllocation::find($id);
+        $course_allocation = CourseAllocation::findOrFail($id);
         // $students = $course_allocation->registered_students()->sortBy('rollno');
         $first_attempts = FirstAttempt::with('student')->where('course_allocation_id', $id)->get()->sortBy('student.rollno');
 

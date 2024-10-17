@@ -92,9 +92,9 @@ class AttendanceController extends Controller
         try {
             foreach ($ids as $key => $id) {
                 if ($attempt_type[$key] == 'F')
-                    $attempt = FirstAttempt::find($id);
+                    $attempt = FirstAttempt::findOrFail($id);
                 else
-                    $attempt = Reappear::find($id);
+                    $attempt = Reappear::findOrFail($id);
 
                 $attempt->attendance = $attendance[$key];
                 $attempt->update();

@@ -97,7 +97,7 @@
         </div>
         <div class="body">
             <div class="p-4 rounded w-full">
-                <!-- <h2 class="underline underline-offset-4">Semester ({{App\Models\Semester::find(session('semester_id'))->title()}})</h2> -->
+                <!-- <h2 class="underline underline-offset-4">Semester ({{App\Models\Semester::findOrFail(session('semester_id'))->title()}})</h2> -->
                 @if($student->status_id==1)
                 <div class="overflow-x-auto w-full">
                     <table class="table-auto w-full">

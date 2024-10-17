@@ -38,7 +38,7 @@
 @php
 $roman=config('global.romans');
 $prev_slot_no='';
-$semester=App\Models\Semester::find(session('semester_id'));
+$semester=App\Models\Semester::findOrFail(session('semester_id'));
 @endphp
 
 <body>

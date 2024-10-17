@@ -16,7 +16,7 @@ class InactiveStudentController extends Controller
     public function index()
     {
         //
-        $department = Department::find(session('department_id'));
+        $department = Department::findOrFail(session('department_id'));
         return view('hod.students.inactive', compact('department'));
     }
 
