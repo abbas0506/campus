@@ -43,7 +43,6 @@
                         <th class="w-16">Re</th>
                         <th class='w-32'>Submission</th>
                         <th class='w-24'>Download</th>
-                        <th class='w-24'>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,7 +59,13 @@
                             @endif
                         </td>
                         <td>{{$course_allocation->course->code}}</td>
-                        <td class="text-left">{{$course_allocation->course->name}} <span class="text-slate-400 text-xs">{{$course_allocation->course->lblCr()}}</span> <br> <span class="text-slate-400">{{$course_allocation->teacher->name}}</span></td>
+                        <td class="text-left">
+                            <a href="{{route('internal.assessment.show',$course_allocation)}}" class="link">
+                                {{$course_allocation->course->name}} <span class="text-slate-400 text-xs">{{$course_allocation->course->lblCr()}}</span>
+                            </a>
+                            <br>
+                            <span class="text-slate-400">{{$course_allocation->teacher->name}}</span>
+                        </td>
                         <td>{{$course_allocation->first_attempts_active()->count()}}</td>
                         <td>{{$course_allocation->reappears->count()}}</td>
                         <td>{{$course_allocation->submitted_at}}</td>
@@ -68,9 +73,7 @@
                             <a href="{{ route('internal.award.export',$course_allocation) }}"><i class="bi-file-earmark-excel text-green-700 mr-2 text-base"></i></a>
                             <a href="{{ route('internal.assessment.pdf',$course_allocation) }}"><i class="bi-file-earmark-pdf text-red-700 text-base"></i></a>
                         </td>
-                        <td>
-                            <a href="{{route('internal.assessment.show',$course_allocation)}}" class="btn-green rounded"><i class="bi-eye"></i></a>
-                        </td>
+
                     </tr>
 
                     @php

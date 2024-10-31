@@ -60,12 +60,11 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-y-2 text-sm mt-3">
                 @foreach($course_types as $course_type)
                 <div class="flex space-x-2 items-center awesome-chk">
-                    <input type="checkbox" id='chk-{{$course_type->id}}' name='course_type_id[]' value="{{$course_type->id}}" class="chk hidden">
+                    <input type="checkbox" id='chk-{{$course_type->id}}' name='course_type_id[]' value="{{$course_type->id}}" class="chk">
                     <label for="chk-{{$course_type->id}}">
                         <!-- bullet from app.css -->
-                        <span></span>
+                        {{$course_type->name}}
                     </label>
-                    <div>{{$course_type->name}}</div>
                 </div>
                 @endforeach
             </div>
