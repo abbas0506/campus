@@ -63,7 +63,7 @@ class CourseAllocationController extends Controller
             $courses = Course::where('course_type_id', $course_allocation->slot_option->course_type_id)
                 ->where('department_id', session('department_id'))
                 ->where('id', '<>', $course_allocation->course_id)
-                ->whereRaw('cr_theory+cr_practical=' . $course_allocation->slot_option->slot->cr)
+                ->whereRaw('cr_theory+cr_practical=' . $course_allocation->slot_option->slot)
                 ->get();
 
             return redirect()->route('hod.course-allocations.courses', $course_allocation);
