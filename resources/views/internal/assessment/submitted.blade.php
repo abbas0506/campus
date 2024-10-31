@@ -61,8 +61,9 @@
                         <td>{{$course_allocation->course->code}}</td>
                         <td class="text-left">
                             <a href="{{route('internal.assessment.show',$course_allocation)}}" class="link">
-                                {{$course_allocation->course->name}} <span class="text-slate-400 text-xs">{{$course_allocation->course->lblCr()}}</span>
-                            </a>
+                                {{$course_allocation->course->name}} </a>
+                            <span class="text-slate-400 text-xs">{{$course_allocation->course->lblCr()}}</span>
+
                             <br>
                             <span class="text-slate-400">{{$course_allocation->teacher->name}}</span>
                         </td>
