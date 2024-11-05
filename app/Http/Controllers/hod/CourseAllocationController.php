@@ -60,14 +60,7 @@ class CourseAllocationController extends Controller
             return view('hod.course-allocations.show', compact('course_allocation'));
         else {
             // enlist courses for selection
-            $courses = Course::where('course_type_id', $course_allocation->slot_option->course_type_id)
-                ->where('department_id', session('department_id'))
-                ->where('id', '<>', $course_allocation->course_id)
-                ->whereRaw('cr_theory+cr_practical=' . $course_allocation->slot_option->slot)
-                ->get();
-
             return redirect()->route('hod.course-allocations.courses', $course_allocation);
-            // return view('hod.course-allocations.courses', compact('course_allocation', 'courses'));
         }
     }
 
@@ -152,10 +145,17 @@ class CourseAllocationController extends Controller
 
         // course type skipped on the request of dr shehzad sb
         // to allow optional as well as elective subjects 
-        $courses = Course::where('department_id', session('department_id'))
+
+        $courseTypeId = $course_allocation->slot_option->course_type_id;
+        $departmentId = session('department_id');
+        $credits = $course_allocation->slot_option->slot->cr;
+
+        // courses available for this course allocation
+        $courses = Course::where('department_id', $departmentId)
             ->where('id', '<>', $course_allocation->course_id)
-            ->whereRaw('cr_theory+cr_practical=' . $course_allocation->slot_option->slot->cr)
+            ->whereRaw('cr_theory + cr_practical = ?', [$credits])
             ->get();
+
         return view('hod.course-allocations.courses', compact('course_allocation', 'courses'));
     }
 
