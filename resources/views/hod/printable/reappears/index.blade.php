@@ -11,7 +11,7 @@
         <div>Reappear</div>
     </div>
 
-    <h2 class="text-red-600 mt-5 "> <i class="bi-person-fill-slash mr-2"></i>Re-appearing Students: {{ $students->count() }}</h2>
+    <h2 class="text-red-600 mt-5 "> <i class="bi-person-fill-down mr-2"></i>Re-appearing Students: {{ $students->count() }}</h2>
     <!-- search -->
     <div class="flex relative w-full md:w-1/3 mt-5">
         <input type="text" id='searchby' placeholder="Search ..." class="search-indigo w-full" oninput="search(event)">
@@ -22,22 +22,24 @@
         <table class="table-fixed w-full">
             <thead>
                 <tr>
-                    <th class="w-48">Roll No</th>
-                    <th class="w-48">Name</th>
-                    <th class="w-24">Course</th>
+                    <th class="w-12">Sr</th>
+                    <th class="w-36">Roll No</th>
+                    <th class="w-36">Name</th>
+                    <th class="w-48">Course</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($students as $student)
 
                 <tr class="tr text-xs md:text-sm">
+                    <td>{{ $loop->index+1 }}</td>
                     <td>{{ $student->rollno }}</td>
                     <td class="text-left">{{ $student->name }}</td>
-                    <td>
+                    <td class="text-left">
                         @foreach($student->first_attempts as $firstAttempt)
                         @foreach($firstAttempt->reappears as $reappear)
                         <p>
-                            {{ $reappear->course_allocation->course->name }}
+                            {{$reappear->course_allocation->course->code}} {{ $reappear->course_allocation->course->name }} <span class="text-slate-500">{{ $reappear->course_allocation->course->lblCr() }}</span>
                         </p>
                         @endforeach
                         @endforeach
