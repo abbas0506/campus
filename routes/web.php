@@ -61,6 +61,7 @@ use App\Http\Controllers\hod\SemesterPlanController;
 use App\Http\Controllers\hod\SlotController;
 use App\Http\Controllers\hod\SlotOptionController;
 use App\Http\Controllers\hod\MovementController;
+use App\Http\Controllers\hod\ReappearController;
 use App\Http\Controllers\hod\ResumptionController;
 use App\Http\Controllers\hod\SuspensionController;
 
@@ -270,6 +271,7 @@ Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|ho
     Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');
 
     Route::resource('inactive-students', InactiveStudentController::class);
+    Route::resource('reappearing-students', ReappearController::class);
 });
 
 Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:super|teacher', 'my_exception_handler']], function () {

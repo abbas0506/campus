@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\hod;
 
 use App\Http\Controllers\Controller;
-use App\Models\Department;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
-class InactiveStudentController extends Controller
+class ReappearController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,20 @@ class InactiveStudentController extends Controller
     public function index()
     {
         //
-        $department = Department::findOrFail(session('department_id'));
-        return view('hod.printable.inactive.index', compact('department'));
+        $semesterId = session('semester_id'); // Replace 'desired_semester' with the semester you're looking for
+        $departmentId = session('department_id');
+        $students = Student::whereHas('section.clas.program', function ($query) use ($departmentId) {
+            $query->where('department_id', $departmentId);
+        })
+            ->whereHas('first_attempts.reappears', function ($query) use ($semesterId) {
+                $query->where('semester_id', $semesterId);
+            })
+            ->with(['first_attempts.reappears' => function ($query) use ($semesterId) {
+                $query->where('semester_id', $semesterId);
+            }])
+            ->get();
+
+        return view('hod.printable.reappears.index', compact('students'));
     }
 
     /**
