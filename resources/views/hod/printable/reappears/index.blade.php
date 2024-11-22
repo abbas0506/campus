@@ -30,18 +30,18 @@
             </thead>
             <tbody>
                 @foreach($students as $student)
-
                 <tr class="tr text-xs md:text-sm">
                     <td>{{ $loop->index+1 }}</td>
                     <td>{{ $student->rollno }}</td>
                     <td class="text-left">{{ $student->name }}</td>
                     <td class="text-left">
-                        @foreach($student->first_attempts as $firstAttempt)
-                        @foreach($firstAttempt->reappears as $reappear)
-                        <p>
-                            {{$reappear->course_allocation->course->code}} {{ $reappear->course_allocation->course->name }} <span class="text-slate-500">{{ $reappear->course_allocation->course->lblCr() }}</span>
-                        </p>
-                        @endforeach
+                        @foreach($student->reappears->where('semester_id', session('semester_id')) as $reappear)
+                        <p class="text-slate-800 font-semibold">{{ $reappear->course_allocation->course->code }} {{ $reappear->course_allocation->course->name }} <span class="text-slate-500">{{ $reappear->course_allocation->course->lblCr() }}</span></p>
+                        <p>{{ $reappear->course_allocation->section->title() }}</p>
+                        <p>{{ $reappear->course_allocation->teacher->name }}</p>
+                        @if(!$loop->last)
+                        <p>-----</p>
+                        @endif
                         @endforeach
                     </td>
                 </tr>

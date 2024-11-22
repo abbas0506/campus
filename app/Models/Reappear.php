@@ -119,4 +119,8 @@ class Reappear extends Model
     {
         $query->whereRaw('assignment+presentation+midterm>=25');
     }
+    public function scopeForCurrentSemester($query)
+    {
+        return $query->where('semester_id', session('semester_id'));
+    }
 }

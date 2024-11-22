@@ -117,10 +117,6 @@ class User extends Authenticatable
             ->whereNotNull('teacher_id');
     }
 
-    public function teacher()
-    {
-        return  $this->hasOne(Teacher::class);
-    }
     public function department()
     {
         return $this->belongsTo(Department::class);

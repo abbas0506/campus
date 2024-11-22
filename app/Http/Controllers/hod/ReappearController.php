@@ -18,15 +18,16 @@ class ReappearController extends Controller
         //
         $semesterId = session('semester_id'); // Replace 'desired_semester' with the semester you're looking for
         $departmentId = session('department_id');
+
+
+
+
         $students = Student::whereHas('section.clas.program', function ($query) use ($departmentId) {
             $query->where('department_id', $departmentId);
         })
             ->whereHas('first_attempts.reappears', function ($query) use ($semesterId) {
                 $query->where('semester_id', $semesterId);
             })
-            ->with(['first_attempts.reappears' => function ($query) use ($semesterId) {
-                $query->where('semester_id', $semesterId);
-            }])
             ->get();
 
         return view('hod.printable.reappears.index', compact('students'));

@@ -40,6 +40,11 @@ class Student extends Model
         return $this->belongsTo(Status::class);
     }
 
+    public function reappears()
+    {
+        return $this->hasManyThrough(Reappear::class, FirstAttempt::class);
+    }
+
     public function scopeGender($query, $gender)
     {
         return $query->where('gender', $gender);
