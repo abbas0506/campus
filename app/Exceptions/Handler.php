@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -46,6 +49,19 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+
         });
+    }
+
+    // Override render() to handle specific exceptions globally
+    public function render($request, Throwable $exception)
+    {
+        // Handle MethodNotAllowedHttpException (e.g., GET on POST route)
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            Log::info('Method not found exception');
+            return redirect('/'); // Redirect to homepage
+        }
+
+        return parent::render($request, $exception);
     }
 }

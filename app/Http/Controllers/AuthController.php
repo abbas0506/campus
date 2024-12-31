@@ -75,6 +75,9 @@ class AuthController extends Controller
 
         if (Auth::user()->hasRole($request->role)) {
             // get the latest of active semesters
+
+            if (Auth::user()->hasRole('admin')) return redirect('admin');
+
             $semester = Semester::active()->orderBy('id', 'desc')->first();
             session([
                 'role' => $request->role,
