@@ -19,8 +19,7 @@ class UserAccessController extends Controller
     public function index()
     {
         //
-        $users = User::all();
-        // $users = User::where('id', '>', 3)->get();
+        $users = User::where('id', '>', 3)->get();
         return view('admin.user-access.index', compact('users'));
     }
 
