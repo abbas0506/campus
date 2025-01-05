@@ -150,15 +150,9 @@ class User extends Authenticatable
 
         try {
 
-            // $details = [
-            //     'title' => 'Mail from admin@es.codifysol.com',
-            //     'code' => $code
-            // ];
-
-            // Mail::to(auth()->user()->email)->send(new SendTwoFaCodeMail($details));
-            Mail::raw('OTP for current session', function ($message) use ($code) {
+            Mail::raw('Dear User, please use this OTP for your current session: ' . $code, function ($message) {
                 $message->to(auth()->user()->email);
-                $message->subject($code);
+                $message->subject("OTP");
             });
         } catch (Exception $e) {
             echo $e->getMessage();
