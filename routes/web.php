@@ -128,48 +128,43 @@ Route::get('/{url?}', function () {
 
 
 Route::post('login', [AuthController::class, 'login']);
-Route::view('OTP/verify', 'otp-verification');
-Route::post('OTP/verify', [AuthController::class, 'verifyOTP'])->name('otp.verify');
-Route::view('role-selection', 'role-selection')->name('role-selection');
-Route::view('signout', 'signout');
-
-Route::view('auth/passwords/forgot', 'auth.passwords.forgot')->name('passwords.forgot');
-Route::resource('resetpassword', ResetPasswordController::class);
-Route::post('resetpassword/sendcode', [ResetPasswordController::class, 'sendCode'])->name('resetpassword.sendcode');
-
-Route::view('auth/passwords/edit', 'auth.passwords.edit')->name('passwords.edit');
-Route::view('auth/passwords/edit/confirm', 'auth.passwords.confirm')->name('passwords.confirm');
-Route::patch('auth/passwords/change/{id}', [AuthController::class, 'changePassword'])->name('passwords.change');
-
-Route::post('login-as', [AuthController::class, 'loginAs'])->name('login.as');
-Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
-Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
-Route::get('switch/me', [AuthController::class, 'viewSwitch'])->name('switch.me.view');
-Route::post('switch/me', [AuthController::class, 'switch'])->name('switch.me');; //for ajax call
-
-Route::get('signout', [AuthController::class, 'signout'])->name('signout');
-Route::view('exception/r', 'exceptions.missing.role')->name('role_missed_exception');
-Route::view('exception/d', 'exceptions.missing.department')->name('department_missed_exception');
-Route::view('exception/s', 'exceptions.missing.semester')->name('semester_missed_exception');
-Route::view('exception/b', 'exceptions.blocked')->name('user_blocked_exception');
-
 Route::get('exception/{code}', [MyExceptionController::class, 'show'])->name('exception.show');
 
 Route::middleware(['auth'])->group(function () {
-    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:super|admin', 'verifyOTP']], function () {
+    // place here all routes /urls that should be accessed by only authorized users in general
+    Route::view('OTP/verify', 'otp-verification');
+    Route::post('OTP/verify', [AuthController::class, 'verifyOTP'])->name('otp.verify');
+    Route::get('role-selection', [AuthController::class, 'selectRole']);
+
+    Route::view('auth/passwords/forgot', 'auth.passwords.forgot')->name('passwords.forgot');
+    Route::resource('resetpassword', ResetPasswordController::class);
+    Route::post('resetpassword/sendcode', [ResetPasswordController::class, 'sendCode'])->name('resetpassword.sendcode');
+
+    Route::view('auth/passwords/edit', 'auth.passwords.edit')->name('passwords.edit');
+    Route::view('auth/passwords/edit/confirm', 'auth.passwords.confirm')->name('passwords.confirm');
+    Route::patch('auth/passwords/change/{id}', [AuthController::class, 'changePassword'])->name('passwords.change');
+
+    Route::post('login-as', [AuthController::class, 'loginAs'])->name('login.as');
+    Route::post('fetchDepttByRole', [AjaxController::class, 'fetchDepttByRole'])->name('fetchDepttByRole');; //for ajax call
+    Route::post('searchReappearer', [AjaxController::class, 'searchReappearer'])->name('searchReappearer');; //for ajax call
+    Route::get('switch/me', [AuthController::class, 'viewSwitch'])->name('switch.me.view');
+    Route::post('switch/me', [AuthController::class, 'switch'])->name('switch.me');; //for ajax call
+
+    Route::get('signout', [AuthController::class, 'signout'])->name('signout');
+
+    // Admin  routes / urls
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:super|admin', 'verifyOTP', 'verifyRoleSelection']], function () {
         Route::view('/', 'admin.index');
         Route::resource('user-access', UserAccessController::class);
         Route::get('login/direct/{user}', [UserAccessController::class, 'direct'])->name('login.direct');
-
-        // Route::resource('roles', RoleController::class);
         Route::resource('semesters', SemesterController::class);
         Route::resource('departments', DepartmentController::class);
         Route::resource('headships', HeadshipController::class);
         Route::resource('coursetypes', CourseTypeController::class);
         Route::resource('notifications', NotificationController::class);
-        //
     });
 
+    // Exam Controller 
     Route::group(['prefix' => 'controller', 'as' => 'controller.', 'middleware' => ['role:super|controller', 'verifyOTP']], function () {
         Route::view('/', 'ce.index');
         Route::view('transcripts', 'ce.transcripts.index');
@@ -187,9 +182,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('fetchClassesByProgram', [AjaxController::class, 'fetchClassesByProgram']);
         Route::post('fetchSectionsByClass', [AjaxController::class, 'fetchSectionsByClass']);
     });
-    Route::group(['middleware' => ['role:super|controller']], function () {
-        // Route::redirect('controller', '/ce/students');
 
+    // under development
+    Route::group(['middleware' => ['role:super|controller']], function () {
         Route::get('ce/award/step1', [CeAwardController::class, 'step1']);
         Route::post('ce/award/step1', [CeAwardController::class, 'store'])->name('ce.award.step1.store');
         Route::get('ce/award/step2', [CeAwardController::class, 'step2'])->name('ce.award.step2');
@@ -207,7 +202,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('super', [HodController::class, 'index']);
-    Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'my_exception_handler']], function () {
+    // HOD
+    Route::group(['prefix' => 'hod', 'as' => 'hod.', 'middleware' => ['role:super|hod', 'verifyOTP', 'verifyRoleSelection', 'verifyDepartmentSelection']], function () {
         Route::get('/', [HodController::class, 'index']);
         Route::resource('programs', ProgramController::class);
         Route::resource('courses', CourseController::class);
@@ -293,23 +289,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('reappearing-students', ReappearController::class);
     });
 
-    Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:super|teacher', 'my_exception_handler', 'verifyOTP']], function () {
-
-        Route::get('/', [TeacherTeacherController::class, 'index']);
-        Route::view('change/pw', 'teacher.changepw')->name('changepw');
-        Route::resource('mycourses', MyCoursesController::class);
-        Route::resource('attendance', AttendanceController::class);
-        Route::resource('assessment', AssessmentController::class);
-        Route::get('assessment/{allocation}/preview', [AssessmentController::class, 'preview'])->name('assessment.preview');
-        Route::resource('notifications', TeacherNotificationCotroller::class);
-        Route::resource('formative', FormativeController::class);
-        Route::resource('summative', SummativeController::class);
-
-        Route::get('award', [TeacherAwardController::class, 'index'])->name('award');
-        Route::get('award/{allocation}/pdf', [PdfController::class, 'award'])->name('award.pdf');
-    });
-
-    Route::group(['prefix' => 'internal', 'as' => 'internal.', 'middleware' => ['role:super|internal', 'my_exception_handler', 'verifyOTP']], function () {
+    // Internal Examiner
+    Route::group(['prefix' => 'internal', 'as' => 'internal.', 'middleware' => ['role:super|internal', 'verifyOTP', 'verifyRoleSelection', 'verifyDepartmentSelection']], function () {
         Route::get('/', [InternalInternalController::class, 'index']);
         Route::resource('notifications', InternalNotificationCotroller::class);
         Route::post('notifications/mark/as/read', [InternalNotificationCotroller::class, 'markAsRead'])->name('notifications.mark');
@@ -341,7 +322,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('cumulative/{section}/preview', [CumulativeController::class, 'preview'])->name('cumulative.preview');
     });
 
-    Route::group(['prefix' => 'coordinator', 'as' => 'coordinator.', 'middleware' => ['role:super|coordinator', 'my_exception_handler']], function () {
+    // Program Coordinator
+    Route::group(['prefix' => 'coordinator', 'as' => 'coordinator.', 'middleware' => ['role:super|coordinator', 'verifyOTP', 'verifyRoleSelection', 'verifyDepartmentSelection']], function () {
         Route::get('/', [CoordinatorController::class, 'index']);
 
         Route::resource('clases', CoordinatorClasController::class);
@@ -384,5 +366,22 @@ Route::middleware(['auth'])->group(function () {
         Route::get('assessment/view/pending', [CoordinatorAssessmentController::class, 'pending'])->name('assessment.pending');
         Route::get('assessment/view/submitted', [CoordinatorAssessmentController::class, 'submitted'])->name('assessment.submitted');
         Route::get('assessment/{allocation}/pdf', [PdfController::class, 'award'])->name('assessment.pdf');
+    });
+
+    // Teacher
+    Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:super|teacher', 'verifyOTP', 'verifyRoleSelection']], function () {
+
+        Route::get('/', [TeacherTeacherController::class, 'index']);
+        Route::view('change/pw', 'teacher.changepw')->name('changepw');
+        Route::resource('mycourses', MyCoursesController::class);
+        Route::resource('attendance', AttendanceController::class);
+        Route::resource('assessment', AssessmentController::class);
+        Route::get('assessment/{allocation}/preview', [AssessmentController::class, 'preview'])->name('assessment.preview');
+        Route::resource('notifications', TeacherNotificationCotroller::class);
+        Route::resource('formative', FormativeController::class);
+        Route::resource('summative', SummativeController::class);
+
+        Route::get('award', [TeacherAwardController::class, 'index'])->name('award');
+        Route::get('award/{allocation}/pdf', [PdfController::class, 'award'])->name('award.pdf');
     });
 });

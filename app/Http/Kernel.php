@@ -70,7 +70,9 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
 
-        'my_exception_handler' => \App\Http\Middleware\MyExceptionHandler::class,
+        // custom (my)
         'verifyOTP' => \App\Http\Middleware\VerifyOTP::class,
+        'verifyRoleSelection' => \App\Http\Middleware\VerifyRoleSelection::class,
+        'verifyDepartmentSelection' => \App\Http\Middleware\VerifyDepartmentSelection::class,
     ];
 }

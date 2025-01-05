@@ -73,60 +73,33 @@ class AuthController extends Controller
 
 
         if (Auth::user()->hasRole($request->role)) {
-            // get the latest of active semesters
-            if (Auth::user()->hasRole('admin')) return redirect('admin');
-            $semester = Semester::active()->orderBy('id', 'desc')->first();
-            session([
-                'role' => $request->role,
-                'semester_id' => $semester->id,
-            ]);
+            // start user session
+            session(['role' => $request->role,]);
 
-            if ($request->role != 'teacher') {
+            if (Auth::user()->hasRole('admin'))
+                return redirect('admin');
+
+            $semester = Semester::active()->orderBy('id', 'desc')->first();
+            session(['semester_id' => $semester->id,]);
+
+            // teacher does not require department selection 
+            if (Auth::user()->hasRole('teacher'))
+                return redirect('teacher');
+
+            // only super, HOD, internal, coordinator require department selection
+            if (Auth::user()->hasAnyRole(['super', 'hod', 'internal', 'coordinator'])) {
                 $department = Department::findOrFail($request->department_id);
                 session([
-                    'department_id' => $request->department_id,
+                    'department_id' => $department->id,
                 ]);
             }
-            // //save selected semester id for entire session
-            // if (Auth::user()->hasAnyRole('super', 'hod', 'internal', 'coordinator', 'teacher')) {
-            //     $semester = Semester::findOrFail($request->semester_id);
-            //     session([
-            //         'semester_id' => $request->semester_id,
-            //     ]);
-            //     if ($request->role == 'super' || $request->role == 'hod' || $request->role == 'internal' || $request->role == 'coordinator') {
-            //         $department = Department::findOrFail($request->department_id);
-            //         session([
-            //             'department_id' => $request->department_id,
-            //         ]);
-            //     }
-            // }
+            // redirect to user dashboard
             return redirect($request->role);
         } else
             return redirect('/');
     }
 
 
-    public function verifyOTP(Request $request)
-    {
-        //get 2nd factor secret code sent to gmail
-        //if matched, redirect to user dashboard
-        $request->validate([
-            'otp' => 'required',
-        ]);
-
-        $OTPVerified = TwoFa::where('user_id', auth()->user()->id)
-            ->where('code', $request->otp)
-            ->where('updated_at', '>=', now()->subMinutes(2))
-            ->first();
-
-        if ($OTPVerified) {
-            session([
-                'otp_verified' => 1,
-            ]);
-            return redirect('role-selection');
-        }
-        return back()->with('warning', 'Invalid OTP! ');
-    }
 
     /**
      * Display the specified resource.
@@ -240,6 +213,38 @@ class AuthController extends Controller
             return redirect()->back()
                 ->withErrors($e->getMessage());
             // something went wrong
+        }
+    }
+
+    public function verifyOTP(Request $request)
+    {
+        //get 2nd factor secret code sent to gmail
+        //if matched, redirect to user dashboard
+        $request->validate([
+            'otp' => 'required',
+        ]);
+
+        $OTPVerified = TwoFa::where('user_id', auth()->user()->id)
+            ->where('code', $request->otp)
+            ->where('updated_at', '>=', now()->subMinutes(2))
+            ->first();
+
+        if ($OTPVerified) {
+            session([
+                'otp_verified' => 1,
+            ]);
+            return redirect('role-selection');
+        }
+        return back()->with('warning', 'Invalid OTP! ');
+    }
+
+    public function selectRole()
+    {
+        if (Auth::user()) {
+            if (session('otp_verified'))
+                return view('role-selection');
+            else
+                return redirect()->route('exception.show', 1);
         }
     }
 }

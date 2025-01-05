@@ -150,7 +150,7 @@ class User extends Authenticatable
 
         try {
 
-            Mail::raw('Dear User, please use this OTP for your current session: ' . $code, function ($message) {
+            Mail::raw('OTP for your current session: ' . $code, function ($message) {
                 $message->to(auth()->user()->email);
                 $message->subject("OTP");
             });

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class VerifyOTP
+class VerifyRoleSelection
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class VerifyOTP
      */
     public function handle(Request $request, Closure $next)
     {
-        if (session('otp_verified'))
+        if (session('role'))
             return $next($request);
         else
-            abort(403, 'OTP Verification Required');
+            abort(403, "User Role Undefined");
     }
 }
