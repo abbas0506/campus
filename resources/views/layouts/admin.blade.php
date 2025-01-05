@@ -25,7 +25,7 @@
                 @endif
             </a>
 
-            <a href="{{url('signout/me')}}" class="hidden md:flex rounded-full bg-orange-100 text-orange-800 p-2">
+            <a href="{{url('signout')}}" class="hidden md:flex rounded-full bg-orange-100 text-orange-800 p-2">
                 <i class="bx bx-power-off"></i>
             </a>
 

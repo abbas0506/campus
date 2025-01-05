@@ -128,9 +128,10 @@ Route::get('/{url?}', function () {
 
 
 Route::post('login', [AuthController::class, 'login']);
-Route::view('auth/verification', 'auth.passwords.verification');
-Route::post('auth/verify', [AuthController::class, 'verify'])->name('auth.verify');
-Route::view('signout/me', 'signout');
+Route::view('OTP/verify', 'otp-verification');
+Route::post('OTP/verify', [AuthController::class, 'verifyOTP'])->name('otp.verify');
+Route::view('role-selection', 'role-selection')->name('role-selection');
+Route::view('signout', 'signout');
 
 Route::view('auth/passwords/forgot', 'auth.passwords.forgot')->name('passwords.forgot');
 Route::resource('resetpassword', ResetPasswordController::class);
@@ -155,7 +156,7 @@ Route::view('exception/b', 'exceptions.blocked')->name('user_blocked_exception')
 Route::get('exception/{code}', [MyExceptionController::class, 'show'])->name('exception.show');
 
 Route::middleware(['auth'])->group(function () {
-    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:super|admin']], function () {
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:super|admin', 'verifyOTP']], function () {
         Route::view('/', 'admin.index');
         Route::resource('user-access', UserAccessController::class);
         Route::get('login/direct/{user}', [UserAccessController::class, 'direct'])->name('login.direct');
@@ -169,7 +170,7 @@ Route::middleware(['auth'])->group(function () {
         //
     });
 
-    Route::group(['prefix' => 'controller', 'as' => 'controller.', 'middleware' => ['role:super|controller']], function () {
+    Route::group(['prefix' => 'controller', 'as' => 'controller.', 'middleware' => ['role:super|controller', 'verifyOTP']], function () {
         Route::view('/', 'ce.index');
         Route::view('transcripts', 'ce.transcripts.index');
         Route::get('transcripts/pdf/{id}', [TranscriptController::class, 'pdf']);
@@ -292,7 +293,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('reappearing-students', ReappearController::class);
     });
 
-    Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:super|teacher', 'my_exception_handler']], function () {
+    Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:super|teacher', 'my_exception_handler', 'verifyOTP']], function () {
 
         Route::get('/', [TeacherTeacherController::class, 'index']);
         Route::view('change/pw', 'teacher.changepw')->name('changepw');
@@ -308,7 +309,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('award/{allocation}/pdf', [PdfController::class, 'award'])->name('award.pdf');
     });
 
-    Route::group(['prefix' => 'internal', 'as' => 'internal.', 'middleware' => ['role:super|internal', 'my_exception_handler']], function () {
+    Route::group(['prefix' => 'internal', 'as' => 'internal.', 'middleware' => ['role:super|internal', 'my_exception_handler', 'verifyOTP']], function () {
         Route::get('/', [InternalInternalController::class, 'index']);
         Route::resource('notifications', InternalNotificationCotroller::class);
         Route::post('notifications/mark/as/read', [InternalNotificationCotroller::class, 'markAsRead'])->name('notifications.mark');

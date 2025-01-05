@@ -51,15 +51,14 @@ class AuthController extends Controller
 
         ]);
 
-        // echo $request->email;
+        // if credentials matched, send OTP;
         try {
             if (Auth::attempt($credentials)) {
                 Auth::user()->sendCode();
-
-                return redirect('auth/verification');
-            } else {
-                return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
+                return redirect('OTP/verify');
             }
+            // if credential not matched, show warning
+            return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }
@@ -75,9 +74,7 @@ class AuthController extends Controller
 
         if (Auth::user()->hasRole($request->role)) {
             // get the latest of active semesters
-
             if (Auth::user()->hasRole('admin')) return redirect('admin');
-
             $semester = Semester::active()->orderBy('id', 'desc')->first();
             session([
                 'role' => $request->role,
@@ -109,23 +106,26 @@ class AuthController extends Controller
     }
 
 
-    public function verify(Request $request)
+    public function verifyOTP(Request $request)
     {
         //get 2nd factor secret code sent to gmail
         //if matched, redirect to user dashboard
         $request->validate([
-            'code' => 'required',
+            'otp' => 'required',
         ]);
 
-        $authorized = TwoFa::where('user_id', auth()->user()->id)
-            ->where('code', $request->code)
+        $OTPVerified = TwoFa::where('user_id', auth()->user()->id)
+            ->where('code', $request->otp)
             ->where('updated_at', '>=', now()->subMinutes(2))
             ->first();
 
-        if ($authorized)
-            return redirect('/');
-        else
-            return back()->with('warning', 'Code incorrect!');
+        if ($OTPVerified) {
+            session([
+                'otp_verified' => 1,
+            ]);
+            return redirect('role-selection');
+        }
+        return back()->with('warning', 'Invalid OTP! ');
     }
 
     /**
@@ -179,6 +179,7 @@ class AuthController extends Controller
         //destroy session
         session()->flush();
         Auth::logout();
+
         return redirect('/');
     }
 

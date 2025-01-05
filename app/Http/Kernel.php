@@ -71,6 +71,6 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
 
         'my_exception_handler' => \App\Http\Middleware\MyExceptionHandler::class,
-
+        'verifyOTP' => \App\Http\Middleware\VerifyOTP::class,
     ];
 }
