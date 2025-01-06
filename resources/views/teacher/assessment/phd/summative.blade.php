@@ -1,6 +1,6 @@
 @extends('layouts.teacher')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <div class="flex flex-wrap justify-between items-center">
         <div>
             <h2>Summative Assessment</h2>

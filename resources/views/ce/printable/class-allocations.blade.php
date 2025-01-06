@@ -1,7 +1,7 @@
 @extends('layouts.controller')
 @section('page-content')
 
-<div class="container">
+<div class="responsive-container">
     <h1>Class Allocations</h1>
     <div class="bread-crumb">
         <a href="{{url('controller')}}">Home</a>

@@ -1,6 +1,6 @@
 @extends('layouts.controller')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <h2>Search Student</h2>
     <div class="bread-crumb">
         <a href="{{url('controller')}}">Cancel & Go Back</a>

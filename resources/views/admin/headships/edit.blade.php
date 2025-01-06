@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('page-content')
 
-<div class="container">
+<div class="responsive-container">
     <h2>Assign/Edit Headship</h2>
     <p>{{$department->name}}</p>
     <div class="bread-crumb">

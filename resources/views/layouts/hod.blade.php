@@ -5,7 +5,7 @@
 @endsection
 
 @section('sidebar')
-<x-hod.sidebar></x-hod.sidebar>
+<x-sidebars.hod></x-sidebars.hod>
 @endsection
 
 
@@ -19,9 +19,10 @@
     $('#toggle-current-user-dropdown').click(function() {
         $("#current-user-dropdown").toggle();
     });
-    $('#menu').click(function() {
-        $("#sidebar").toggle();
-    });
+    // $('#menu').click(function() {
+    //     alert()
+    //     // $("#sidebar").toggle();
+    // });
     $('#cboSemesterId').change(function() {
         $('#switchSemesterForm').submit();
     });

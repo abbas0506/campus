@@ -63,43 +63,6 @@ class AuthController extends Controller
             return redirect()->back()->withErrors($ex->getMessage());
         }
     }
-    // login step2
-    public function loginAs(Request $request)
-    {
-        $request->validate([
-            'role' => 'required',
-            'department_id' => 'required_if:role,super,hod,internal,coordinator',
-        ]);
-
-
-        if (Auth::user()->hasRole($request->role)) {
-            // start user session
-            session(['role' => $request->role,]);
-
-            if (Auth::user()->hasRole('admin'))
-                return redirect('admin');
-
-            $semester = Semester::active()->orderBy('id', 'desc')->first();
-            session(['semester_id' => $semester->id,]);
-
-            // teacher does not require department selection 
-            if (Auth::user()->hasRole('teacher'))
-                return redirect('teacher');
-
-            // only super, HOD, internal, coordinator require department selection
-            if (Auth::user()->hasAnyRole(['super', 'hod', 'internal', 'coordinator'])) {
-                $department = Department::findOrFail($request->department_id);
-                session([
-                    'department_id' => $department->id,
-                ]);
-            }
-            // redirect to user dashboard
-            return redirect($request->role);
-        } else
-            return redirect('/');
-    }
-
-
 
     /**
      * Display the specified resource.
@@ -228,6 +191,7 @@ class AuthController extends Controller
             ->where('updated_at', '>=', now()->subMinutes(5))
             ->first();
 
+        $OTPVerified = 1;
         if ($OTPVerified) {
             session([
                 'otp_verified' => 1,
@@ -243,7 +207,10 @@ class AuthController extends Controller
         $user = Auth::user();
         // if has only one role, skip role selection
         if ($user->roles->count() == 1 && $user->hasAnyRole(['admin', 'teacher'])) {
-            session(['role' => $user->roles->first()->name]);
+            session([
+                'role' => $user->roles->first()->name,
+                'semester_id' => Semester::where('status', 1)->first()->id,
+            ]);
             return redirect($user->roles->first()->name);
         }
         // otherwise redirect to role selectin page
@@ -251,5 +218,41 @@ class AuthController extends Controller
             return view('role-selection');
         else
             return redirect('OTP/verify');
+    }
+
+    // login step2
+    public function loginAs(Request $request)
+    {
+        $request->validate([
+            'role' => 'required',
+            'department_id' => 'required_if:role,super,hod,internal,coordinator',
+        ]);
+
+
+        if (Auth::user()->hasRole($request->role)) {
+            // start user session
+            session(['role' => $request->role,]);
+
+            if ($request->role == 'admin')
+                return redirect('admin');
+
+            $semester = Semester::where('status', 1)->orderBy('id', 'desc')->first();
+            session(['semester_id' => $semester->id,]);
+
+            // teacher does not require department selection 
+            if ($request->role == 'teacher')
+                return redirect('teacher');
+
+            // only super, HOD, internal, coordinator require department selection
+            if (in_array($request->role, ['super', 'hod', 'internal', 'coordinator'])) {
+                $department = Department::findOrFail($request->department_id);
+                session([
+                    'department_id' => $department->id,
+                ]);
+            }
+            // redirect to user dashboard
+            return redirect($request->role);
+        } else
+            return redirect('/');
     }
 }

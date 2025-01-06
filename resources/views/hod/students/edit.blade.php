@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <h2>Edit Student</h2>
     <div class="bread-crumb">
         <a href="{{route('hod.sections.show',$student->section)}}">{{$student->section->title()}}</a>

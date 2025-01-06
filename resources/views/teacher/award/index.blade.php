@@ -1,6 +1,6 @@
 @extends('layouts.teacher')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <h2>Award Lists</h2>
     <div class="bread-crumb">
         <a href="/">Home</a>

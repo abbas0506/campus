@@ -19,6 +19,8 @@
 </head>
 
 <body>
+
+
     @yield('header')
     @yield('sidebar')
     @yield('body')
@@ -29,6 +31,19 @@
 
     @yield('script')
     @yield('footer')
+
+    <script type="module">
+        $('#menu').click(function() {
+            $("aside").toggleClass('shown');
+        });
+
+        $('.responsive-container').click(function(event) {
+            var box = $('#sidebar');
+            if (!box.is(event.target) && box.has(event.target).length === 0) {
+                box.removeClass('shown');
+            }
+        })
+    </script>
 </body>
 
 </html>

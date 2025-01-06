@@ -357,7 +357,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Teacher
-    Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:super|teacher', 'verifyOTP', 'verifyRoleSelection']], function () {
+    Route::group(['prefix' => 'teacher', 'as' => 'teacher.', 'middleware' => ['role:super|teacher', 'verifyOTP', 'verifyRoleSelection', 'verifySemesterSelection']], function () {
 
         Route::get('/', [TeacherTeacherController::class, 'index']);
         Route::view('change/pw', 'teacher.changepw')->name('changepw');

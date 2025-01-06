@@ -22,6 +22,14 @@
                     <span class="ml-3">Award Lists</span>
                 </a>
             </li>
+            <li class="md:hidden border-t border-dashed border-slate border-slate-400">
+                <a href="{{route('signout')}}" class="flex items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
+                    </svg>
+                    <span class="ml-3">Log Off</span>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

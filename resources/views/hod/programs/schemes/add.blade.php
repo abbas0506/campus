@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<div class="container">
+<div class="responsive-container">
     <h2>New Scheme</h2>
     <div class="bread-crumb">
         <a href="{{route('hod.programs.show',$program)}}">Cancel & Go Back</a>

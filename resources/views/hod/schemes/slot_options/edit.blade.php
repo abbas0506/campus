@@ -1,7 +1,7 @@
 @extends('layouts.hod')
 @section('page-content')
 
-<div class="container">
+<div class="responsive-container">
     <h2>Course Fixation on Slot</h2>
     <div class="bread-crumb">
         <a href="{{route('hod.slots.edit',$slot_option->slot)}}">Cancel & Go Back</a>

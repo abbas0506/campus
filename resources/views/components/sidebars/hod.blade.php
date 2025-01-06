@@ -1,4 +1,10 @@
 <aside aria-label="Sidebar" id='sidebar'>
+
+    <div class="flex items-center justify-center w-full mt-16">
+        <a href="{{url('/')}}" class="">
+            <img alt="logo" src="{{asset('images/logo/logo.png')}}" class="w-24">
+        </a>
+    </div>
     <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">{{App\Models\Semester::findOrFail(session('semester_id'))->title()}}</div>
     <div class="text-xs text-center">{{date('M d, Y')}}</div>
     <div class="mt-12">
@@ -39,12 +45,12 @@
                     <span class="ml-3">Student Profile</span>
                 </a>
             </li>
-            <li class="md:hidden border-t border-dashed">
+            <li class="md:hidden border-t border-dashed border-slate border-slate-400">
                 <a href="{{route('signout')}}" class="flex items-center p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
                     </svg>
-                    <span class="ml-3">Logout</span>
+                    <span class="ml-3">Log Off</span>
                 </a>
             </li>
 

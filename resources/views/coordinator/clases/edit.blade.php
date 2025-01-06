@@ -1,7 +1,7 @@
 @extends('layouts.coordinator')
 @section('page-content')
 
-<div class="container">
+<div class="responsive-container">
     <h2>Edit Class</h2>
     <div class="bread-crumb">
         <a href="{{url('coordinator')}}">Home</a>

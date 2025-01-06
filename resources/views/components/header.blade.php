@@ -1,7 +1,7 @@
-<header>
-    <div class="flex flex-wrap w-full h-16 items-center justify-between">
+<header class="user-header">
+    <div class="flex flex-wrap w-full h-16 items-center justify-between px-4 md:px-12">
         <div class="flex items-center">
-            <a href="{{url('coordinator')}}">
+            <a href="{{url('coordinator')}}" class="md:hidden">
                 <img alt="logo" src="{{asset('/images/logo/logo.png')}}" class="w-20 md:w-24">
             </a>
             <div class="hidden md:flex text-base md:text-xl font-semibold">Examination System</div>
@@ -12,7 +12,7 @@
         </div>
 
         <!-- right sided current user info -->
-        <div id="current-user-area" class="flex space-x-3 items-center justify-center relative mr-8">
+        <div id="current-user-area" class="flex space-x-3 items-center justify-end relative">
             <div class="hidden md:flex items-center text-sm">{{auth()->user()->name}}</div>
 
             @php

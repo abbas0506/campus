@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <h2>Print Gazette</h2>
     <div class="bread-crumb">
         <a href="{{route('hod.gazette.index')}}">Cancel & Go Back</a>

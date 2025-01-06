@@ -1,6 +1,6 @@
 @extends('layouts.teacher')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <h2>My Courses</h2>
     <div class="bread-crumb">
         <a href="{{url('teacher')}}">Home</a>

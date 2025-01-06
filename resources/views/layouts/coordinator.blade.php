@@ -5,7 +5,7 @@
 @endsection
 
 @section('sidebar')
-<x-coordinator.sidebar></x-coordinator.sidebar>
+<x-sidebars.coordinator></x-sidebars.coordinator>
 @endsection
 
 

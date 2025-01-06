@@ -74,5 +74,6 @@ class Kernel extends HttpKernel
         'verifyOTP' => \App\Http\Middleware\VerifyOTP::class,
         'verifyRoleSelection' => \App\Http\Middleware\VerifyRoleSelection::class,
         'verifyDepartmentSelection' => \App\Http\Middleware\VerifyDepartmentSelection::class,
+        'verifySemesterSelection' => \App\Http\Middleware\VerifySemesterSelection::class,
     ];
 }

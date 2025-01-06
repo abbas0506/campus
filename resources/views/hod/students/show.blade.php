@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <h2>Student Profile</h2>
     <div class="bread-crumb">
         <a href="{{route('hod.sections.show', $student->section)}}" class="text-sm link">Cancel & Go Back</a>

@@ -55,12 +55,13 @@
 }
 
 @layer components {
-    .responsive-body {
-        @apply md:pl-60 mt-16 bg-white min-h-screen;
+    .responsive-container {
+        @apply px-5 md:pl-60 md:pr-12 mt-24 w-full min-h-screen;
     }
     .container {
-        @apply p-4 md:p-12 min-w-full bg-white;
+        @apply px-5 md:px-8;
     }
+
     .bread-crumb {
         @apply flex flex-wrap items-center space-x-1 text-sm;
     }
@@ -157,36 +158,37 @@
     }
 
     /* header */
+    
     header {
-        @apply w-full fixed top-0 z-20 bg-white text-slate-700 shadow;
+        @apply fixed top-0 left-0 right-0 z-10 bg-white text-slate-800;
+    }
+    header.user-header {
+        @apply fixed top-0 left-0 md:left-48 right-0 z-10 text-slate-800 border-b border-slate-100;
     }
     header .current-user-dropdown {
-        @apply flex flex-col absolute w-48 top-12 right-8 z-20 bg-white drop-shadow-xl hidden;
+        @apply flex flex-col absolute w-48 top-12 right-8 z-20 bg-white font-thin drop-shadow-xl hidden;
     }
     header .current-user-dropdown a:hover {
         @apply text-orange-700;
     }
+
     aside {
-        @apply fixed top-16 z-10 hidden md:flex flex-col w-60 h-full px-4 overflow-auto text-slate-300;
+        @apply fixed top-0 left-0 z-30 md:flex flex-col w-48 text-slate-800 font-medium text-sm -translate-x-60 md:translate-x-0 h-full px-4 transition-all duration-500 ease-in-out;
     }
     aside {
-        @apply bg-gradient-to-b from-cyan-800 to-cyan-500;
+        @apply text-slate-100 bg-gradient-to-b from-cyan-800 to-cyan-700;
+    }
+    aside .current-page{
+        @apply text-green-600;
     }
 
-    aside li:hover {
-        @apply text-orange-400;
+    aside li:hover i{
+        @apply text-green-600;
     }
-
-    .content-page {
-        @apply flex w-screen min-h-screen top-16;
+    aside.shown {
+        @apply translate-x-0;
     }
-    .content-page .offset-header {
-        @apply h-16;
-    }
-    .content-page .offset-sidebar {
-        @apply w-0 md:w-56;
-    }
-
+    
     /* .bread-crumb {
         @apply flex items-center space-x-4 text-sm italic;
     }

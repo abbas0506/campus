@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <h2>Enroll Re-Appearing Students</h2>
     <div class="bread-crumb">
         <a href="{{route('hod.course-allocations.show',$course_allocation)}}">Cancel & Go Back</a>

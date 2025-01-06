@@ -5,7 +5,7 @@
 @endsection
 
 @section('sidebar')
-<x-internal.sidebar></x-internal.sidebar>
+<x-sidebars.internal></x-sidebars.internal>
 @endsection
 
 

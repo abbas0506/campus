@@ -1,6 +1,6 @@
 @extends('layouts.coordinator')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <h2>Teacher Allocation</h2>
     <div class="bread-crumb">
         <a href="{{route('coordinator.semester-plan.show', $course_allocation->section)}}">Cancel & Go Back</a>

@@ -1,7 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-
-<div class="container">
+<div class="responsive-container">
     <h2>Assessment Progress</h2>
     <div class="bread-crumb">
         <a href="{{url('hod')}}">Home</a>

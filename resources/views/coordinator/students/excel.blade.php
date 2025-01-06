@@ -1,6 +1,6 @@
 @extends('layouts.coordinator')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <h2>Import Students</h2>
     <h1 class="mt-1">{{$section->title()}}</h1>
 

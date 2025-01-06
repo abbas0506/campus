@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container">
+<div class="responsive-container">
     <h2>Semester Plan</h2>
     <div class="bread-crumb">
         <a href="{{route('hod.semester-plan.show', $course_allocation->section_id)}}">{{$course_allocation->section->title()}}</a>

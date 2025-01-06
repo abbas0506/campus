@@ -5,7 +5,7 @@
 @endsection
 
 @section('sidebar')
-<x-teacher.sidebar></x-teacher.sidebar>
+<x-sidebars.teacher></x-sidebars.teacher>
 @endsection
 
 
