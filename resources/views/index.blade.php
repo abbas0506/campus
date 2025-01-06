@@ -23,15 +23,12 @@
 
         <div class="w-full">
 
-            @if ($errors->any())
-            <div class="alert-danger text-sm w-full mt-8">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+            @if($errors->any())
+            <x-message :errors='$errors'></x-message>
+            @else
+            <x-message></x-message>
             @endif
+
             <!-- <h3 class="text-xs">Not a user? Please, contact system admin!</h3> -->
             <form action="{{url('login')}}" method="post" class="w-full mt-8">
                 @csrf
