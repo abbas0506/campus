@@ -103,7 +103,7 @@ class ResetPasswordController extends Controller
 
                 $user->password = Hash::make($request->new);
                 $user->update();
-                return redirect()->back()->with('success', 'successfuly changed');
+                return redirect('/');
             } catch (Exception $e) {
                 return redirect()->back()
                     ->withErrors($e->getMessage());
