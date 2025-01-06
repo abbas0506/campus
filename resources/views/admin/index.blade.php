@@ -21,5 +21,6 @@
             <p class="text-center mt-4">Here you can manage departments, their headship, and course types. You can also control user access, lock and unlock the semesters etc.</p>
         </div>
     </div>
+    <div class="w-[234px] hidden"></div>
 </div>
 @endsection
