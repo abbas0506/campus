@@ -1,6 +1,6 @@
 @extends('layouts.controller')
 @section('page-content')
-<div class="container bg-slate-100">
+<div class="responsive-container">
     <h2>Student Detail</h2>
     <div class="bread-crumb">
         <a href="{{route('controller.students.index')}}">Cancel & Go Back</a>

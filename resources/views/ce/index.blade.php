@@ -1,6 +1,6 @@
 @extends('layouts.controller')
 @section('page-content')
-<div class="container bg-slate-100 h-[90vh]">
+<div class="responsive-container h-[90vh]">
     <!--welcome  -->
     <div class="flex items-center">
         <div class="flex-1">

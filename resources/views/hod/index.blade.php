@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="container bg-slate-100">
+<div class="responsive-container">
     <!--welcome  -->
     <div class="flex items-center">
         <div class="flex-1">
@@ -69,7 +69,7 @@
         <!-- middle panel  -->
         <div class="md:col-span-2">
             <!-- update news  -->
-            <div class="p-4 bg-slate-50">
+            <div class="p-4 bg-slate-100">
                 <h2>Students</h2>
                 <div class="divider mt-4 border-slate-200"></div>
                 <div class="grid grid-cols-2 lg:grid-cols-4 mt-2 gap-2 text-center">
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <!-- todays activity  -->
-            <div class="p-4 bg-slate-50 mt-4">
+            <div class="p-4 bg-slate-100 mt-4">
                 <h2>Today's Submission</h2>
                 <div class="overflow-x-auto mt-2">
                     <table class="table-fixed w-full text-sm">
@@ -182,7 +182,7 @@
 
             </div>
 
-            <div class="mt-4 bg-white p-4">
+            <div class="mt-4 bg-slate-100 p-4">
                 <h2>Profile</h2>
                 <div class="flex flex-col">
                     <div class="flex text-sm mt-4">

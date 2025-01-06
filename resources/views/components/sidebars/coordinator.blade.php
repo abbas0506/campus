@@ -1,4 +1,9 @@
 <aside aria-label="Sidebar" id='sidebar'>
+    <div class="flex items-center justify-center w-full mt-16">
+        <a href="{{url('/')}}" class="">
+            <img alt="logo" src="{{asset('images/logo/logo.png')}}" class="w-24">
+        </a>
+    </div>
     <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">{{App\Models\Semester::findOrFail(session('semester_id'))->title()}}</div>
     <div class="text-xs text-center">{{date('M d, Y')}}</div>
     <div class="mt-12">

@@ -19,9 +19,6 @@
     $('#toggle-current-user-dropdown').click(function() {
         $("#current-user-dropdown").toggle();
     });
-    $('#menu').click(function() {
-        $("#sidebar").toggle();
-    });
     $('#cboSemesterId').change(function() {
         $('#switchSemesterForm').submit();
     });

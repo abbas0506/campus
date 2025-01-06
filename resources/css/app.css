@@ -75,7 +75,7 @@
         @apply text-blue-600 hover:text-blue-800 hover:underline hover:underline-offset-4;
     }
     .header {
-        @apply fixed top-12 md:top-10 left-0 w-full h-16 z-40 bg-transparent transition-all duration-500 ease-in-out;
+        @apply fixed top-12 md:top-10 left-0 w-full z-40 bg-transparent transition-all duration-500 ease-in-out;
     }
     .header.scrolled {
         @apply top-0 bg-white border-b-[1px] text-slate-800;
@@ -295,7 +295,7 @@
     }
 
     .pallet-box {
-        @apply flex w-full rounded-lg bg-white drop-shadow-sm p-4;
+        @apply flex w-full rounded-lg bg-slate-100 drop-shadow-sm p-4;
     }
     .pallet-box .title {
         @apply text-sm text-slate-500 font-thin;

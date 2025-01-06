@@ -1,7 +1,7 @@
 @extends('layouts.internal')
 @section('page-content')
 
-<div class="container bg-slate-100">
+<div class="responsive-container">
     <!--welcome  -->
     <div class="flex flex-wrap items-center justify-between gap-y-4">
         <div class="flex flex-col flex-wrap">
