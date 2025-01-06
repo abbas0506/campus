@@ -81,54 +81,45 @@ use App\Http\Controllers\teacher\SummativeController;
 
 use App\Http\Controllers\PdfController;
 use App\Models\Semester;
-
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 Route::get('/{url?}', function () {
-    if (Auth::check()) {
-        //if authenticated, attach semesters
 
-        if (!Auth::user()->is_active) {
+    // chek if user has signed in successfully
+    if (Auth::check()) {
+        //if user status: blcoked
+        if (Auth::user()->is_active) {
+            if (session('otp_verified')) {
+                if (session('role')) {
+                    return redirect(session('role'));
+                } else {
+                    return redirect('role-selection');
+                }
+            } else {
+                return redirect('OTP/verify');
+            }
+        } else {
+            // if user credential matched, but status: blocked
             Auth::logout();
             session()->flush();
-            return redirect()->route('exception.show', 0);
-        } else {
-            $semesters = Semester::active()->get();
-            return view('index', compact('semesters'));
+            abort(403, 'User Status Blocked!');
         }
     } else
+        //if user has not signed in
         return view('index');
 })->where('url', ('login|signin|index'));
 
-// Route::get('/', function () {
-//     if (Auth::check()) {
-//         //if authenticated, attach semesters
-
-//         if (!Auth::user()->is_active) {
-//             Auth::logout();
-//             session()->flush();
-//             return redirect()->route('exception.show', 0);
-//         } else {
-//             $semesters = Semester::active()->get();
-//             return view('index', compact('semesters'));
-//         }
-//     } else
-//         return view('index');
-// });
-
-
 Route::post('login', [AuthController::class, 'login']);
-Route::get('exception/{code}', [MyExceptionController::class, 'show'])->name('exception.show');
+Route::view('password/forgot', 'auth.passwords.forgot');
+Route::post('password/resend', [ResetPasswordController::class, 'sendCode'])->name('password.resend');
+Route::get('password/reset', [ResetPasswordController::class, 'index']);
+Route::patch('password/reset/{id}', [ResetPasswordController::class, 'update'])->name('password.update');
 
 Route::middleware(['auth'])->group(function () {
     // place here all routes /urls that should be accessed by only authorized users in general
@@ -136,9 +127,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('OTP/verify', [AuthController::class, 'verifyOTP'])->name('otp.verify');
     Route::get('role-selection', [AuthController::class, 'selectRole']);
 
-    Route::view('auth/passwords/forgot', 'auth.passwords.forgot')->name('passwords.forgot');
-    Route::resource('resetpassword', ResetPasswordController::class);
-    Route::post('resetpassword/sendcode', [ResetPasswordController::class, 'sendCode'])->name('resetpassword.sendcode');
 
     Route::view('auth/passwords/edit', 'auth.passwords.edit')->name('passwords.edit');
     Route::view('auth/passwords/edit/confirm', 'auth.passwords.confirm')->name('passwords.confirm');

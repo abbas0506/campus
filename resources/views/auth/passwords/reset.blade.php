@@ -2,54 +2,48 @@
 
 @section('body')
 <style>
-    .main {
+    .hero {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 50, 0.5)),
+        url("{{asset('/images/bg/uo.jpg')}}");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-clip: border-box;
         position: relative;
-        overflow: hidden;
-    }
-
-    .main::before {
-        background: #edf3fb;
-        content: "";
-        position: absolute;
-        width: 30rem;
-        height: 30rem;
-        border-radius: 50%;
-        align-items: center;
-        display: flex;
-        justify-content: center;
-        transform: scale(120%);
-        z-index: -1;
     }
 </style>
-<div class="main flex flex-col w-screen h-screen justify-center items-center bg-gradient-to-b from-blue-100 to-blue-400">
-    <div class="flex flex-col w-full md:w-2/3 lg:w-1/3 p-4">
-        <h1 class="text-2xl">Reset Password</h1>
-        <div class="flex flex-col mt-4">
-            <!-- page message -->
-            @if($errors->any())
-            <x-message :errors='$errors'></x-message>
-            @else
-            <x-message></x-message>
-            @endif
-
-            <form action="{{route('resetpassword.update', $user)}}" method="post" class="flex flex-col" onsubmit="return validate(event)">
-                @csrf
-                @method('PATCH')
-                <label for="" class="mt-3">New Password</label>
-                <input type="password" id="new" name="new" class="w-full custom-input" placeholder="Enter your login id" required>
-                <label for="" class="mt-3">Confirm Password</label>
-                <input type="password" id="confirmpw" class="w-full custom-input" placeholder="Enter your login id" required>
-                <label for="" class="mt-3">Verification Code</label>
-                <input type="text" name="code" class="custom-input pl-4" placeholder="- - - -" value="" autocomplete="off">
-                <p class="text-xs mt-1">4 digits verification code has been sent to your email account. Please visit your inbox / spam folder. </p>
-                <div class="flex space-x-4 mt-6">
-                    <a href="{{url('/')}}" type="submit" class="w-1/2 btn-orange p-2 text-center">Go Back</a>
-                    <button type="submit" class="w-1/2 btn-indigo p-2">Reset Password</button>
-                </div>
-            </form>
+<div class="hero flex flex-col w-screen h-screen justify-center items-center px-5 bg-gray-600">
+    <div class="md:w-1/3 p-8 bg-white relative opacity-80 rounded">
+        <div class="text-center">
+            <i class="bi-shield-shaded text-6xl text-teal-600"></i>
         </div>
+        <!-- page message -->
+        @if($errors->any())
+        <x-message :errors='$errors'></x-message>
+        @else
+        <x-message></x-message>
+        @endif
 
+
+        <form action="{{route('password.update', $user)}}" method="post" class="flex flex-col mt-8" onsubmit="return validate(event)">
+            @csrf
+            @method('PATCH')
+            <label for="" class="mt-3">New Password</label>
+            <input type="password" id="new" name="new" class="w-full custom-input" placeholder="Enter your login id" required>
+            <label for="" class="mt-3">Confirm Password</label>
+            <input type="password" id="confirmpw" class="w-full custom-input" placeholder="Enter your login id" required>
+            <label for="" class="mt-3">OTP</label>
+            <input type="text" name="code" class="custom-input pl-4" placeholder="- - - -" value="" autocomplete="off">
+            <p class="text-xs mt-1">4 digits OTP has been sent to your email account. Please visit your inbox / spam folder. </p>
+            <div class="flex space-x-4 mt-6">
+                <a href="{{url('/')}}" type="submit" class="w-1/2 btn-orange p-2 text-center rounded">Cancel</a>
+                <button type="submit" class="w-1/2 btn-indigo p-2 rounded">Reset Password</button>
+            </div>
+        </form>
     </div>
+
+</div>
 </div>
 <script type="module">
     $('#toggle-current-user-dropdown').click(function() {

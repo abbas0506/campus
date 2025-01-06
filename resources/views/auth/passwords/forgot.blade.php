@@ -14,9 +14,9 @@
     }
 </style>
 <div class="hero flex flex-col w-screen h-screen justify-center items-center px-5 bg-gray-600">
-    <div class="md:w-1/3 px-8 py-3 bg-white relative opacity-80">
+    <div class="md:w-1/3 px-8 py-3 bg-white relative opacity-80 rounded">
         <div class="flex justify-center items-center">
-            <!-- <i class="bi-shield-shaded text-8xl"></i> -->
+
             <img src="{{asset('/images/lock.png')}}" alt="lock" class="w-36 h-36">
         </div>
         <!-- page message -->
@@ -26,7 +26,7 @@
         <x-message></x-message>
         @endif
 
-        <form action="{{route('resetpassword.sendcode')}}" method="post" class="flex flex-col mt-8" onsubmit="return validate(event)">
+        <form action="{{route('password.resend')}}" method="post" class="flex flex-col mt-8" onsubmit="return validate(event)">
             @csrf
             <label for="" class="mt-3">Your Email</label>
             <input type="text" name="email" class="custom-input" placeholder="Enter your email" required>

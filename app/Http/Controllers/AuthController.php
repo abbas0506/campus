@@ -218,15 +218,14 @@ class AuthController extends Controller
 
     public function verifyOTP(Request $request)
     {
-        //get 2nd factor secret code sent to gmail
-        //if matched, redirect to user dashboard
+        //if OTP verified, redirect to role selection
         $request->validate([
             'otp' => 'required',
         ]);
 
         $OTPVerified = TwoFa::where('user_id', auth()->user()->id)
             ->where('code', $request->otp)
-            ->where('updated_at', '>=', now()->subMinutes(2))
+            ->where('updated_at', '>=', now()->subMinutes(5))
             ->first();
 
         if ($OTPVerified) {
@@ -240,11 +239,17 @@ class AuthController extends Controller
 
     public function selectRole()
     {
-        if (Auth::user()) {
-            if (session('otp_verified'))
-                return view('role-selection');
-            else
-                return redirect()->route('exception.show', 1);
+
+        $user = Auth::user();
+        // if has only one role, skip role selection
+        if ($user->roles->count() == 1 && $user->hasAnyRole(['admin', 'teacher'])) {
+            session(['role' => $user->roles->first()->name]);
+            return redirect($user->roles->first()->name);
         }
+        // otherwise redirect to role selectin page
+        if (session('otp_verified'))
+            return view('role-selection');
+        else
+            return redirect('OTP/verify');
     }
 }

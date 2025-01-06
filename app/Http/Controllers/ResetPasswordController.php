@@ -113,7 +113,7 @@ class ResetPasswordController extends Controller
             return redirect('/');
         }
 
-        return redirect()->back()->with('warning', 'You entered wrong code.');
+        return redirect()->back()->with('warning', 'OTP invalid!');
     }
 
     /**
@@ -128,13 +128,12 @@ class ResetPasswordController extends Controller
     }
     public function sendCode(Request $request)
     {
-
-
         $request->validate([
             'email' => 'required|email',
         ]);
         $email = $request->email;
         $user = User::where('email', $request->email)->first();
+        // if user with given email exists
         if ($user) {
             $code = rand(1000, 9999);
             TwoFa::updateOrCreate(
@@ -148,12 +147,12 @@ class ResetPasswordController extends Controller
 
             try {
 
-                Mail::raw('Password reset code', function ($message) use ($code, $email) {
+                Mail::raw('Password reset code: ' . $code, function ($message) use ($email) {
                     $message->to($email);
-                    $message->subject($code);
+                    $message->subject('Password Reset Code');
                 });
 
-                return redirect()->route('resetpassword.index');
+                return redirect('password/reset');
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
