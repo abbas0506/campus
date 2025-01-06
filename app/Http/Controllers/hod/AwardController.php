@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Controllers\hod;
+
+use App\Exports\ExportAward;
+use App\Http\Controllers\Controller;
+use App\Models\CourseAllocation;
+use App\Models\Department;
+use App\Models\Section;
+use App\Models\Semester;
+use Maatwebsite\Excel\Facades\Excel;
+
+class AwardController extends Controller
+{
+    //
+    public function index()
+    {
+
+        $department = Department::findOrFail(session('department_id'));
+        $programs = $department->programs;
+
+        return view('hod.printable.award.index', compact('programs', 'department'));
+    }
+    public function courses($id)
+    {
+        $section = Section::findOrFail($id);
+        return view('hod.printable.award.courses', compact('section'));
+    }
+
+    public function export($id)
+    {
+        $course_allocation = CourseAllocation::findOrFail($id);
+        return Excel::download(new ExportAward($course_allocation), 'award_' . ($course_allocation->course->code == '' ? $course_allocation->id : $course_allocation->course->code) . '.xlsx');
+    }
+}

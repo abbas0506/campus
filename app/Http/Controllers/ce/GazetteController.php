@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers\ce;
+
+use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Models\Section;
+use App\Models\Semester;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+
+class GazetteController extends Controller
+{
+    //
+    public function step1()
+    {
+        //
+        $semesters = Semester::where('year', '<=', Carbon::now()->format('Y'))->get();
+        $departments = Department::all();
+        return view('ce.gazette.step1', compact('semesters', 'departments'));
+    }
+
+    public function step2()
+    {
+        //
+        $department = Department::findOrFail(session('department_id'));
+        $semester = Semester::findOrFail(session('semester_id'));
+
+        return view('ce.gazette.step2', compact('semester', 'department'));
+    }
+
+    public function step3($id)
+    {
+
+        $section = Section::findOrFail($id);
+        $department = Department::findOrFail(session('department_id'));
+
+        return view('ce.gazette.step3', compact('department', 'section'));
+
+        // $section = Section::findOrFail($id);
+
+        // $semester_nos = collect();
+        // for ($i = 1; $i <= $section->clas->semester_no; $i++) {
+        //     $semester_nos->add($i);
+        // }
+        // return view('ce.award.step3', compact('section', 'semester_nos'));
+    }
+
+
+
+    public function store(Request $request)
+    {
+
+        $request->validate([
+            'semester_id' => 'required',
+            'department_id' => 'required',
+        ]);
+
+        $department = Department::findOrFail($request->department_id);
+        $semester = Semester::findOrFail($request->semester_id);
+
+        //save for next pages
+        session([
+            'semester_id' => $request->semester_id,
+            'department' => $request->department_id,
+        ]);
+
+        return redirect()->route('ce.gazette.step2');
+    }
+}
