@@ -7,7 +7,7 @@
             <a href="{{url('admin')}}">
                 <img alt="logo" src="{{asset('/images/logo/logo.png')}}" class="w-20 md:hidden">
             </a>
-            <div class="hidden md:flex text-base md:text-xl font-semibold">Examination System</div>
+            <div class="hidden md:flex text-base md:text-lg font-semibold">Exam Portal</div>
             <div class="hidden md:flex px-1 md:px-4">|</div>
 
             <div class="text-sm">Admin</div>

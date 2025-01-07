@@ -1,6 +1,6 @@
 @extends('layouts.hod')
 @section('page-content')
-<div class="responsive-container">
+<div class="responsive-container bg-slate-100">
     <!--welcome  -->
     <div class="flex items-center">
         <div class="flex-1">
@@ -69,7 +69,7 @@
         <!-- middle panel  -->
         <div class="md:col-span-2">
             <!-- update news  -->
-            <div class="p-4 bg-slate-100">
+            <div class="p-4 bg-white">
                 <h2>Students</h2>
                 <div class="divider mt-4 border-slate-200"></div>
                 <div class="grid grid-cols-2 lg:grid-cols-4 mt-2 gap-2 text-center">
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <!-- todays activity  -->
-            <div class="p-4 bg-slate-100 mt-4">
+            <div class="p-4 bg-white mt-4">
                 <h2>Today's Submission</h2>
                 <div class="overflow-x-auto mt-2">
                     <table class="table-fixed w-full text-sm">
@@ -147,8 +147,8 @@
         <div class="">
             <div class="bg-sky-100 p-4">
                 <div class="flex items-center space-x-2">
-                    <i class="bi-tools text-sm"></i>
-                    <h2>Basic Configuration</h2>
+                    <i class="bi-database text-sm"></i>
+                    <h2>Basic Data</h2>
                 </div>
                 <div class="divider mt-4 border-sky-200"></div>
                 <div class="flex items-center justify-between mt-2 text-sm">
@@ -167,14 +167,14 @@
                 </div>
                 <div class="flex items-center justify-between mt-2 text-sm">
                     <div class="flex items-center">
-                        <i class="bi-database-gear w-8"></i>
+                        <i class="bi-tools w-8"></i>
                         <a href="{{route('hod.schemes.index')}}" class="link">Schemes</a>
                     </div>
                     <div>{{$department->schemes()->count()}}</div>
                 </div>
                 <div class="flex items-center justify-between mt-2 text-sm">
                     <div class="flex items-center">
-                        <i class="bi-person-workspace w-8"></i>
+                        <i class="bi-people w-8"></i>
                         <a href="{{route('hod.teachers.index')}}" class="link">Teachers</a>
                     </div>
                     <div>{{$department->teachers()->count()}}</div>
@@ -182,8 +182,12 @@
 
             </div>
 
-            <div class="mt-4 bg-slate-100 p-4">
-                <h2>Profile</h2>
+            <div class="mt-4 bg-sky-100 p-4">
+                <div class="flex items-center space-x-2">
+                    <i class="bi-person-circle text-sm"></i>
+                    <h2>Profile</h2>
+                </div>
+                <div class="divider mt-4 border-sky-200"></div>
                 <div class="flex flex-col">
                     <div class="flex text-sm mt-4">
                         <div class="w-8"><i class="bi-person"></i></div>

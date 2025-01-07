@@ -17,29 +17,8 @@
     <div class="flex flex-col justify-between items-center w-full px-8 py-4 md:w-1/3 bg-white relative opacity-80 rounded">
 
         <div>
-            <i class="bi bi-person-fill-check text-8xl text-sky-600"></i>
+            <i class="bi bi-person-fill-check text-8xl text-teal-600"></i>
         </div>
-
-        <h2 class="mt-6">Welcome, {{ Auth::user()->name }}</h2>
-
-        <ol class="flex items-center w-full mt-6">
-            <li class="flex w-full items-center text-green-600 dark:text-green-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-teal-800">
-                <span class="flex items-center justify-center w-10 h-10 bg-teal-200 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-                    <i class="bi-check-lg"></i>
-                </span>
-            </li>
-            <li class="flex w-full items-center text-green-600 dark:text-green-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-teal-800">
-                <span class="flex items-center justify-center w-10 h-10 bg-teal-200 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-                    <i class="bi-check-lg"></i>
-                </span>
-            </li>
-            <li class="flex items-center">
-                <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-                    3
-                </span>
-            </li>
-        </ol>
-
 
         <div class="border border-dashed p-4 w-full mt-8">
             <p class="text-sm text-slate-600">Please select a role for your current session and click on proceed button. </p>

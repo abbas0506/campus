@@ -102,7 +102,7 @@ Route::get('/{url?}', function () {
                     return redirect('role-selection');
                 }
             } else {
-                return redirect('OTP/verify');
+                return redirect('verify/otp');
             }
         } else {
             // if user credential matched, but status: blocked
@@ -123,8 +123,8 @@ Route::patch('password/reset/{id}', [ResetPasswordController::class, 'update'])-
 
 Route::middleware(['auth'])->group(function () {
     // place here all routes /urls that should be accessed by only authorized users in general
-    Route::view('OTP/verify', 'otp-verification');
-    Route::post('OTP/verify', [AuthController::class, 'verifyOTP'])->name('otp.verify');
+    Route::view('verify/otp', 'auth.mail.verify');
+    Route::post('verify/otp', [AuthController::class, 'verifyOTP'])->name('verify.otp');
     Route::get('role-selection', [AuthController::class, 'selectRole']);
 
 

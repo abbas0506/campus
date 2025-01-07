@@ -56,7 +56,7 @@
 
 @layer components {
     .responsive-container {
-        @apply px-5 md:pl-60 md:pr-12 mt-24 w-full min-h-screen;
+        @apply px-5 md:pl-60 md:pr-12 mt-16 pt-8 w-full min-h-screen;
     }
     .container {
         @apply px-5 md:px-8;
@@ -175,7 +175,7 @@
         @apply fixed top-0 left-0 z-30 md:flex flex-col w-48 text-slate-800 font-medium text-sm -translate-x-60 md:translate-x-0 h-full px-4 transition-all duration-500 ease-in-out;
     }
     aside {
-        @apply text-slate-100 bg-gradient-to-b from-cyan-800 to-cyan-700;
+        @apply text-slate-100 bg-gradient-to-b from-cyan-800 to-cyan-700 overflow-y-auto;
     }
     aside .current-page{
         @apply text-green-600;
@@ -275,7 +275,7 @@
     }
 
     .pallet-box {
-        @apply flex w-full rounded-lg bg-slate-100 drop-shadow-sm p-4;
+        @apply flex w-full rounded-lg bg-white drop-shadow-md p-4;
     }
     .pallet-box .title {
         @apply text-sm text-slate-500 font-thin;

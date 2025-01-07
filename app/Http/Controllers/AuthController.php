@@ -55,7 +55,7 @@ class AuthController extends Controller
         try {
             if (Auth::attempt($credentials)) {
                 Auth::user()->sendCode();
-                return redirect('OTP/verify');
+                return redirect('verify/otp');
             }
             // if credential not matched, show warning
             return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
@@ -216,7 +216,7 @@ class AuthController extends Controller
         if (session('otp_verified'))
             return view('role-selection');
         else
-            return redirect('OTP/verify');
+            return redirect('verify/otp');
     }
 
     // login step2
