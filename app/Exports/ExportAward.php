@@ -26,7 +26,8 @@ class ExportAward implements FromCollection
         $award = new Collection();
 
         $award->push((object)[
-            '', '',
+            '',
+            '',
             'University of Okara',
             '',
             'Award Sheet'
@@ -35,14 +36,18 @@ class ExportAward implements FromCollection
         $award->push((object)[
             'Department',
             $this->course_allocation->section->clas->program->department->name,
-            '', '', '', '',
+            '',
+            '',
+            '',
+            '',
             'Session',
             $this->course_allocation->section->clas->session(),
         ]);
         $award->push((object)[
             'Porgram',
             $this->course_allocation->section->clas->program->name,
-            '', '',
+            '',
+            '',
             'Semester',
             $roman[$this->course_allocation->section->clas->semesterNo($this->course_allocation->semester_id) - 1],
             'Section',
@@ -53,7 +58,8 @@ class ExportAward implements FromCollection
         $award->push((object)[
             'Course',
             $this->course_allocation->course->name,
-            '', '',
+            '',
+            '',
             'Code',
             $this->course_allocation->course->code,
             'Cr. Hr',
@@ -83,7 +89,7 @@ class ExportAward implements FromCollection
                     'rollno' => $first_attempt->student->rollno,
                     'name' => $first_attempt->student->name,
                     'assignment' => $first_attempt->assignment,
-                    'mid' => $first_attempt->mid,
+                    'mid' => $first_attempt->midterm,
                     'formative' => $first_attempt->formative(),
                     'summative' => $first_attempt->summative,
                     'obt' => $first_attempt->obtained(),
@@ -113,7 +119,7 @@ class ExportAward implements FromCollection
                     'name' => $first_attempt->student->name,
                     'assignment' => $first_attempt->assignment,
                     'presentation' => $first_attempt->presentation,
-                    'mid' => $first_attempt->mid,
+                    'mid' => $first_attempt->midterm,
                     'formative' => $first_attempt->formative(),
                     'summative' => $first_attempt->summative,
                     'obt' => $first_attempt->obtained(),
@@ -147,7 +153,7 @@ class ExportAward implements FromCollection
                     'name' => $reappear->first_attempt->student->name,
                     'assignment' => $reappear->assignment,
                     'presentation' => $reappear->presentation,
-                    'mid' => $reappear->mid,
+                    'mid' => $reappear->midterm,
                     'formative' => $reappear->formative(),
                     'summative' => $reappear->summative,
                     'obt' => $reappear->total(),
