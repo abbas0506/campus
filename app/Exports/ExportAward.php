@@ -70,13 +70,14 @@ class ExportAward implements FromCollection
         $award->push((object)[
             '',
         ]);
+        // Fresh
         //if PhD course
         if ($this->course_allocation->section->clas->program->level == 21) {
             $award->push((object)[
                 'rollno' => 'Roll No',
                 'name' => 'Name',
+                'mid' => "Mid 20%",
                 'assignment' => 'Assignment 20%',
-                'mid' => "Assignment 30%",
                 'formative' => "Formative 50%",
                 'summative' => "Summative 50%",
                 'obt' => "Obtained",
@@ -88,8 +89,8 @@ class ExportAward implements FromCollection
                 $award->push((object)[
                     'rollno' => $first_attempt->student->rollno,
                     'name' => $first_attempt->student->name,
-                    'assignment' => $first_attempt->assignment,
                     'mid' => $first_attempt->midterm,
+                    'assignment' => $first_attempt->assignment,
                     'formative' => $first_attempt->formative(),
                     'summative' => $first_attempt->summative,
                     'obt' => $first_attempt->obtained(),
@@ -99,15 +100,17 @@ class ExportAward implements FromCollection
                 ]);
             }
         } else {
-            //header row
+            //BS, MS case: header row
             $award->push((object)[
                 'rollno' => 'Roll No',
                 'name' => 'Name',
+                'mid' => "Mid 30%",
+                'quiz1' => "Quiz 10%",
                 'assignment' => 'Assignment 10%',
-                'presentation' => "Prsentation 10%",
-                'mid' => "Assignment 30%",
                 'formative' => "Formative 50%",
-                'summative' => "Summative 50%",
+                'quiz2' => "Quiz 10%",
+                'summative' => "Summative 40%",
+                'total_summative' => "Total Summative 50%",
                 'obt' => "Obtained",
                 'gpa' => 'GPA',
                 'grade' => 'Grade',
@@ -117,11 +120,13 @@ class ExportAward implements FromCollection
                 $award->push((object)[
                     'rollno' => $first_attempt->student->rollno,
                     'name' => $first_attempt->student->name,
-                    'assignment' => $first_attempt->assignment,
-                    'presentation' => $first_attempt->presentation,
                     'mid' => $first_attempt->midterm,
+                    'quiz1' => $first_attempt->quiz1,
+                    'assignment' => $first_attempt->assignment,
                     'formative' => $first_attempt->formative(),
+                    'quiz2' => $first_attempt->quiz1,
                     'summative' => $first_attempt->summative,
+                    'total_summative' => $first_attempt->summative(),
                     'obt' => $first_attempt->obtained(),
                     'gpa' => $first_attempt->gpa(),
                     'grade' => $first_attempt->grade(),
@@ -137,11 +142,13 @@ class ExportAward implements FromCollection
             $award->push((object)[
                 'rollno' => 'Roll No',
                 'name' => 'Name',
+                'mid' => "Mid 30%",
+                'quiz1' => "Quiz 10%",
                 'assignment' => 'Assignment 10%',
-                'presentation' => "Prsentation 10%",
-                'mid' => "Assignment 30%",
                 'formative' => "Formative 50%",
-                'summative' => "Summative 50%",
+                'quiz2' => "Quiz 10%",
+                'summative' => "Summative 40%",
+                'total_summative' => "Total Summative 50%",
                 'obt' => "Obtained",
                 'gpa' => 'GPA',
                 'grade' => 'Grade',
@@ -151,11 +158,13 @@ class ExportAward implements FromCollection
                 $award->push((object)[
                     'rollno' => $reappear->first_attempt->student->rollno,
                     'name' => $reappear->first_attempt->student->name,
-                    'assignment' => $reappear->assignment,
-                    'presentation' => $reappear->presentation,
                     'mid' => $reappear->midterm,
+                    'quiz1' => $reappear->quiz1,
+                    'assignment' => $reappear->assignment,
                     'formative' => $reappear->formative(),
+                    'quiz2' => $reappear->quiz2,
                     'summative' => $reappear->summative,
+                    'total_summative' => $reappear->summative(),
                     'obt' => $reappear->total(),
                     'gpa' => $reappear->gpa(),
                     'grade' => $reappear->grade(),
