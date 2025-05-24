@@ -13,9 +13,11 @@ class Reappear extends Model
         'semester_id',
         'course_allocation_id',
         'attendance',
+        'midterm',
+        'quiz1',
         'assignment',
         'presentation',
-        'midterm',
+        'quiz2',
         'summative',
 
     ];
@@ -33,19 +35,33 @@ class Reappear extends Model
     }
     public function formative()
     {
-        return $this->assignment + $this->presentation + $this->midterm;
+        // phd
+        if ($this->first_attempt->student->section->clas->program->level == 21)
+            return $this->midterm + $this->assignment;
+        //bs or ms
+        else
+            return $this->midterm + $this->quiz1 + $this->assignment;
+    }
+    public function summative()
+    {
+        //phd
+        if ($this->first_attempt->student->section->clas->program->level == 21)
+            return $this->summative;
+        //bs or ms
+        else
+            return $this->quiz2 + $this->summative;
     }
     public function total()
     {
         if ($this->status() == 'Pass')
-            return $this->assignment + $this->presentation + $this->midterm + $this->summative;
+            return $this->formative() + $this->summative();
         else
             return 0;
     }
 
     public function status()
     {
-        if ($this->formative() > 24 && $this->summative > 24)
+        if ($this->formative() >= 25 && $this->summative() >= 25)
             return "Pass";
         else
             return "Fail";
@@ -54,7 +70,7 @@ class Reappear extends Model
     public function obtained()
     {
         if ($this->status() == 'Pass')
-            return $this->assignment + $this->presentation + $this->midterm + $this->summative;
+            return $this->formative() + $this->summative();
         else return 0;
     }
     public function gpa()

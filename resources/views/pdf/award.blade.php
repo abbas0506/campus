@@ -130,18 +130,26 @@ $roman = config('global.romans');
                 <thead>
                     <tr style="background-color: #bbb;">
                         <th class="w-4">#</th>
-                        <th class="w-32">Roll No.</th>
-                        <th class="w-36">Student Name</th>
+                        <th class="w-24">Roll No.</th>
+                        <th class="w-32">Student Name</th>
 
+                        <!-- phd -->
                         @if($course_allocation->section->clas->program->level==21)
-                        <th class="w-12">Asgn etc. <br>10%</th>
-                        @else
-                        <th class="w-8">Assign <br>10%</th>
-                        <th class="w-8">Pres<br>10%</th>
-                        @endif
-                        <th class='w-8'>Mid<br> 30%</th>
+                        <th class='w-8'>Mid<br> 20%</th>
+                        <th class="w-8">Asgn etc. <br>30%</th>
                         <th class='w-10'>Fmt.<br>50%</th>
                         <th class='w-10'>Smt.<br>50%</th>
+                        <!-- bs or ms -->
+                        @else
+                        <th class='w-8'>Mid<br> 30%</th>
+                        <th class='w-8'>Quiz<br> 10%</th>
+                        <th class="w-8">Asgn <br>10%</th>
+                        <th class='w-10'>Fmt.<br>50%</th>
+                        <th class='w-8'>Quiz<br> 10%</th>
+                        <th class='w-10'>Smt.<br>40%</th>
+                        <th class='w-10'>Summative<br>50%</th>
+                        @endif
+
                         <th class='w-10'>Total</th>
                         <th class='w-8'>GP</th>
                         <th class='w-8'>Grade</th>
@@ -155,14 +163,25 @@ $roman = config('global.romans');
                         <td>{{$i}}</td>
                         <td>{{$first_attempt->student->rollno}}</td>
                         <td class="pl-1" style="text-align: left !important;">{{$first_attempt->student->name}}</td>
-                        <td>{{$first_attempt->assignment}}</td>
-                        <!-- dont show for phd -->
-                        @if($course_allocation->section->clas->program->level!=21)
-                        <td>{{$first_attempt->presentation}}</td>
-                        @endif
+
+                        <!-- PhD-->
+                        @if($course_allocation->section->clas->program->level==21)
                         <td>{{$first_attempt->midterm}}</td>
+                        <td>{{$first_attempt->assignment}}</td>
                         <td>{{$first_attempt->formative()}}</td>
                         <td>{{$first_attempt->summative}}</td>
+                        <!-- bs or ms -->
+                        @else
+                        <td>{{$first_attempt->midterm}}</td>
+                        <td>{{$first_attempt->quiz1}}</td>
+                        <td>{{$first_attempt->assignment}}</td>
+                        <td>{{$first_attempt->formative()}}</td>
+                        <td>{{$first_attempt->quiz2}}</td>
+                        <td>{{$first_attempt->summative}}</td>
+                        <!-- total summative -->
+                        <td>{{$first_attempt->summative()}}</td>
+                        @endif
+
                         <td style="background-color: #ddd;">{{$first_attempt->total()}}</td>
                         <td>{{$first_attempt->gpa()}}</td>
                         <td>{{$first_attempt->grade()}}</td>
@@ -190,18 +209,24 @@ $roman = config('global.romans');
                 <thead>
                     <tr style="background-color: #bbb;">
                         <th class="w-4">#</th>
-                        <th class="w-32">Roll No.</th>
-                        <th class="w-36">Student Name</th>
-
+                        <th class="w-24">Roll No.</th>
+                        <th class="w-32">Student Name</th>
+                        <!-- phd -->
                         @if($course_allocation->section->clas->program->level==21)
-                        <th class="w-12">Asgn etc. <br>10%</th>
-                        @else
-                        <th class="w-8">Assign <br>10%</th>
-                        <th class="w-8">Pres<br>10%</th>
-                        @endif
-                        <th class='w-8'>Mid<br> 30%</th>
+                        <th class='w-8'>Mid<br> 20%</th>
+                        <th class="w-8">Asgn etc. <br>30%</th>
                         <th class='w-10'>Fmt.<br>50%</th>
                         <th class='w-10'>Smt.<br>50%</th>
+                        <!-- bs or ms -->
+                        @else
+                        <th class='w-8'>Mid<br> 30%</th>
+                        <th class='w-8'>Quiz<br> 10%</th>
+                        <th class="w-8">Asgn <br>10%</th>
+                        <th class='w-10'>Fmt.<br>50%</th>
+                        <th class='w-8'>Quiz<br> 10%</th>
+                        <th class='w-10'>Smt.<br>40%</th>
+                        <th class='w-10'>Summative<br>50%</th>
+                        @endif
                         <th class='w-10'>Total</th>
                         <th class='w-8'>GP</th>
                         <th class='w-8'>Grade</th>
@@ -214,14 +239,23 @@ $roman = config('global.romans');
                         <td>{{$i}}</td>
                         <td>{{$reappear->first_attempt->student->rollno}}</td>
                         <td class="pl-1" style="text-align: left !important;">{{$reappear->first_attempt->student->name}}</td>
-                        <td>{{$reappear->assignment}}</td>
-                        <!-- dont show for phd -->
-                        @if($course_allocation->section->clas->program->level!=21)
-                        <td>{{$reappear->presentation}}</td>
-                        @endif
+
+                        @if($course_allocation->section->clas->program->level==21)
                         <td>{{$reappear->midterm}}</td>
+                        <td>{{$reappear->assignment}}</td>
+                        <td>{{$reappear->formative}}</td>
                         <td>{{$reappear->formative()}}</td>
                         <td>{{$reappear->summative}}</td>
+                        @else
+                        <td>{{$reappear->midterm}}</td>
+                        <td>{{$reappear->quiz1}}</td>
+                        <td>{{$reappear->assignment}}</td>
+                        <td>{{$reappear->formative()}}</td>
+                        <td>{{$reappear->quiz2}}</td>
+                        <td>{{$reappear->summative}}</td>
+                        <!-- full summative -->
+                        <td>{{$reappear->summative()}}</td>
+                        @endif
                         <td style="background-color: #ddd;">{{$reappear->total()}}</td>
                         <td>{{$reappear->gpa()}}</td>
                         <td>{{$reappear->grade()}}</td>

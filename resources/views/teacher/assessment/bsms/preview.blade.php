@@ -54,11 +54,13 @@
                     <th class="w-40 text-left">Name</th>
                     <th class="w-40 text-left">Father</th>
                     <th class="w-12">Att.<br><span class="font-thin">(2%)</span></th>
-                    <th class="w-12">Asgn <br> <span class="font-thin">(10%)</span></th>
-                    <th class="w-12">Pres <br> <span class="font-thin">(10%)</span></th>
                     <th class="w-12">Mid<br> <span class="font-thin">(30%)</span></th>
+                    <th class="w-12">Quiz <br> <span class="font-thin">(10%)</span></th>
+                    <th class="w-12">Asgn <br> <span class="font-thin">(10%)</span></th>
                     <th class="w-12">Fmt<br> <span class="font-thin">(50%)</span></th>
-                    <th class="w-12">Smt<br> <span class="font-thin">(50%)</span></th>
+                    <th class="w-12">Quiz<br> <span class="font-thin">(10%)</span></th>
+                    <th class="w-12">Smt<br> <span class="font-thin">(40%)</span></th>
+                    <th class="w-12">T.Smt<br> <span class="font-thin">(50%)</span></th>
                     <th class="w-12">Total</th>
                     <th class="w-12">GP</th>
                     <th class="w-12">Grade</th>
@@ -78,11 +80,13 @@
                     <td class="text-left">{{$first_attempt->student->name}}<br>{{$first_attempt->student->rollno}}</td>
                     <td class="text-left">{{$first_attempt->student->father}}</td>
                     <td>{{$first_attempt->attendance}}</td>
-                    <td>{{$first_attempt->assignment}}</td>
-                    <td>{{$first_attempt->presentation}}</td>
                     <td>{{$first_attempt->midterm}}</td>
-                    <td>{{$first_attempt->formative()}}</td>
+                    <td>{{$first_attempt->presentation}}</td>
+                    <td>{{$first_attempt->assignment}}</td>
+                    <td class="font-semibold">{{$first_attempt->formative()}}</td>
+                    <td>{{$first_attempt->quiz2}}</td>
                     <td>{{$first_attempt->summative}}</td>
+                    <td class="font-semibold">{{$first_attempt->summative()}}</td>
                     <td>{{$first_attempt->total()}}</td>
                     <td>{{$first_attempt->gpa()}}</td>
                     <td>{{$first_attempt->grade()}}</td>
@@ -107,7 +111,7 @@
                     <td>{{$reappear->assignment}}</td>
                     <td>{{$reappear->presentation}}</td>
                     <td>{{$reappear->midterm}}</td>
-                    <td>{{$reappear->formative()}}</td>
+                    <td class="font-bold">{{$reappear->formative()}}</td>
                     <td>{{$reappear->summative}}</td>
                     <td>{{$reappear->total()}}</td>
                     <td>{{$reappear->gpa()}}</td>

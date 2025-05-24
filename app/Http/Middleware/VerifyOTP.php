@@ -16,6 +16,7 @@ class VerifyOTP
      */
     public function handle(Request $request, Closure $next)
     {
+
         if (session('otp_verified'))
             return $next($request);
         else

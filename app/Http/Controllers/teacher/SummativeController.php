@@ -88,6 +88,7 @@ class SummativeController extends Controller
         ]);
 
         $ids = $request->id;
+        $quiz2 = $request->quiz2;
         $summative = $request->summative;
         $attempt_type = $request->attempt_type;
         DB::beginTransaction();
@@ -98,6 +99,7 @@ class SummativeController extends Controller
                 else
                     $attempt = Reappear::findOrFail($id);
 
+                $attempt->quiz2 = $quiz2[$key];
                 $attempt->summative = $summative[$key];
                 $attempt->update();
             }

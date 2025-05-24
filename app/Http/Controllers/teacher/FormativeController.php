@@ -84,15 +84,15 @@ class FormativeController extends Controller
         $request->validate([
             'id' => 'required',
             'assignment' => 'required',
-            'presentation' => 'required',
+            'quiz1' => 'required',
             'midterm' => 'required',
             'attempt_type' => "required",
         ]);
 
         $ids = $request->id;
-        $assignment = $request->assignment;
-        $presentation = $request->presentation;
         $midterm = $request->midterm;
+        $quiz1 = $request->quiz1;
+        $assignment = $request->assignment;
         $attempt_type = $request->attempt_type;
         DB::beginTransaction();
         try {
@@ -102,9 +102,9 @@ class FormativeController extends Controller
                 else
                     $attempt = Reappear::findOrFail($id);
 
-                $attempt->assignment = $assignment[$key];
-                $attempt->presentation = $presentation[$key];
                 $attempt->midterm = $midterm[$key];
+                $attempt->quiz1 = $quiz1[$key];
+                $attempt->assignment = $assignment[$key];
 
                 $attempt->update();
             }

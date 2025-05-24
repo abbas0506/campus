@@ -54,8 +54,8 @@
                     <th class="w-40 text-left">Name</th>
                     <th class="w-40 text-left">Father</th>
                     <th class="w-12">Att..<br><span class="font-thin">(2%)</span></th>
-                    <th class="w-16">As/P/Qz/R <br> <span class="font-thin">(20%)</span></th>
                     <th class="w-12">Mid<br> <span class="font-thin">(30%)</span></th>
+                    <th class="w-16">As/P/Qz/R <br> <span class="font-thin">(20%)</span></th>
                     <th class="w-12">Fmt<br> <span class="font-thin">(50%)</span></th>
                     <th class="w-12">Smt<br> <span class="font-thin">(50%)</span></th>
                     <th class="w-12">Total</th>
@@ -77,11 +77,11 @@
                     <td class="text-left">{{$first_attempt->student->name}}<br>{{$first_attempt->student->rollno}}</td>
                     <td class="text-left">{{$first_attempt->student->father}}</td>
                     <td></td>
-                    <td>{{$first_attempt->assignment}}</td>
                     <td>{{$first_attempt->midterm}}</td>
+                    <td>{{$first_attempt->assignment}}</td>
                     <td>{{$first_attempt->formative()}}</td>
                     <td>{{$first_attempt->summative}}</td>
-                    <td>{{$first_attempt->total()}}</td>
+                    <td class="font-semibold">{{$first_attempt->total()}}</td>
                     <td>{{$first_attempt->gpa()}}</td>
                     <td>{{$first_attempt->grade()}}</td>
                     <td>{{$first_attempt->status()}}</td>
@@ -102,11 +102,11 @@
                     <td class="text-left">{{$reappear->first_attempt->student->name}}<br>{{$reappear->first_attempt->student->rollno}}</td>
                     <td>{{$reappear->first_attempt->student->father}}</td>
                     <td></td>
-                    <td>{{$reappear->assignment}}</td>
                     <td>{{$reappear->midterm}}</td>
+                    <td>{{$reappear->assignment}}</td>
                     <td>{{$reappear->formative()}}</td>
                     <td>{{$reappear->summative}}</td>
-                    <td>{{$reappear->total()}}</td>
+                    <td class="font-semibold">{{$reappear->total()}}</td>
                     <td>{{$reappear->gpa()}}</td>
                     <td>{{$reappear->grade()}}</td>
                     <td>{{$reappear->status()}}</td>

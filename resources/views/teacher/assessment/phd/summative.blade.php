@@ -84,6 +84,7 @@
                         @if($first_attempt->formative()>=25)
                         <td hidden><input type="text" name='id[]' value="{{$first_attempt->id}}"></td>
                         <td hidden><input type="text" name='attempt_type[]' value="F"></td>
+                        <td hidden><input type='text' name='quiz2[]' value=""></td>
                         <td>
                             <input type='text' name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->summative}}" placeholder="absent" onchange="validate(event,50)">
                         </td>

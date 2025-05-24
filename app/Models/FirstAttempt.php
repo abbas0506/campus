@@ -14,9 +14,11 @@ class FirstAttempt extends Model
         'semester_id',
         'course_allocation_id',
         'attendance',
+        'midterm',
+        'quiz1',
         'assignment',
         'presentation',
-        'midterm',
+        'quiz2',
         'summative',
 
     ];
@@ -24,14 +26,18 @@ class FirstAttempt extends Model
     {
         return $this->belongsTo(Student::class);
     }
-    public function program()
+    public function level()
     {
-        return $this->belongsTo(Program::class);
+        return $this->whereRelation('course_allocation.section.program.level');
     }
-    public function course()
-    {
-        return $this->belongsTo(Course::class);
-    }
+    // public function program()
+    // {
+    //     return $this->belongsTo(Program::class);
+    // }
+    // public function course()
+    // {
+    //     return $this->belongsTo(Course::class);
+    // }
     public function semester()
     {
         return $this->belongsTo(Semester::class);
@@ -46,12 +52,26 @@ class FirstAttempt extends Model
     }
     public function formative()
     {
-        return $this->assignment + $this->presentation + $this->midterm;
+        // phd
+        if ($this->student->section->clas->program->level == 21)
+            return $this->midterm + $this->assignment;
+        //bs or ms
+        else
+            return $this->midterm + $this->quiz1 + $this->assignment;
+    }
+    public function summative()
+    {
+        //phd
+        if ($this->student->section->clas->program->level == 21)
+            return $this->summative;
+        //bs or ms
+        else
+            return $this->quiz2 + $this->summative;
     }
 
     public function status()
     {
-        if ($this->formative() > 24 && $this->summative > 24)
+        if ($this->formative() >= 25 && $this->summative() >= 25)
             return "Pass";
         else
             return "Fail";
@@ -59,20 +79,18 @@ class FirstAttempt extends Model
     public function obtained()
     {
         if ($this->status() == 'Pass')
-            return $this->assignment + $this->presentation + $this->midterm + $this->summative;
+            return $this->formative() + $this->summative();
         else return 0;
     }
     public function total()
     {
         //if pass, then return total else zero
         if ($this->status() == 'Pass')
-            return $this->assignment + $this->presentation + $this->midterm + $this->summative;
+            return $this->formative() + $this->summative();
         else return 0;
     }
 
-    public function cr()
-    {
-    }
+    public function cr() {}
     public function gpa()
     {
         $marks = $this->total();
@@ -180,14 +198,14 @@ class FirstAttempt extends Model
     {
         return $query->whereRelation('course_allocation.slot_option.slot', 'slot_no', $slot_no);
     }
-    public function scopePassed($query)
-    {
-        return $query->whereRaw('assignment+presentation+midterm+summative>=50');
-    }
-    public function scopeFailed($query)
-    {
-        return $query->whereRaw('assignment+presentation+midterm+summative<50');
-    }
+    // public function scopePassed($query)
+    // {
+    //     return $query->whereRaw('assignment+presentation+midterm+summative>=50');
+    // }
+    // public function scopeFailed($query)
+    // {
+    //     return $query->whereRaw('assignment+presentation+midterm+summative<50');
+    // }
     public function scopeCourse($query, $course_id)
     {
         return $query->whereRelation('course_allocation.course', 'id', $course_id);
@@ -203,6 +221,7 @@ class FirstAttempt extends Model
     }
     public function scopeFormativeClear($query)
     {
-        $query->whereRaw('assignment+presentation+midterm>=25');
+        // same rule for phd, bs, ms (quiz 0 will be reduced to zero for phd) 
+        return $query->whereRaw('COALESCE(midterm, 0) + COALESCE(quiz1, 0) + COALESCE(assignment, 0) >= 25');
     }
 }

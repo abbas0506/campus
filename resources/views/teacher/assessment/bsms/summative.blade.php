@@ -65,7 +65,8 @@
                         <th class="w-8"></th>
                         <th class="w-48 text-left">Name</th>
                         <th class="w-48 text-left">Father</th>
-                        <th class="w-20">Summative<br> <span class="font-thin">(50%)</span></th>
+                        <th class="w-20">Quiz<br> <span class="font-thin">(10%)</span></th>
+                        <th class="w-20">Summative<br> <span class="font-thin">(40%)</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,7 +84,10 @@
                         <td hidden><input type="text" name='id[]' value="{{$first_attempt->id}}"></td>
                         <td hidden><input type="text" name='attempt_type[]' value="F"></td>
                         <td>
-                            <input type='text' name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->summative}}" placeholder="absent" onchange="validate(event,50)">
+                            <input type="text" name='quiz2[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->quiz2}}" placeholder="absent" onchange="validate(event,10)">
+                        </td>
+                        <td>
+                            <input type='text' name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->summative}}" placeholder="absent" onchange="validate(event,40)">
                         </td>
 
                     </tr>
@@ -106,7 +110,10 @@
                         <td hidden><input type="text" name='id[]' value="{{$reappear->id}}"></td>
                         <td hidden><input type="text" name='attempt_type[]' value="R"></td>
                         <td>
-                            <input type='text' name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->summative}}" placeholder="absent" onchange="validate(event,50)">
+                            <input type="text" name='quiz2[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->quiz2}}" placeholder="absent" onchange="validate(event,10)">
+                        </td>
+                        <td>
+                            <input type='text' name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->summative}}" placeholder="absent" onchange="validate(event,40)">
                         </td>
                         @else
                         <td></td>

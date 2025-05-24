@@ -65,8 +65,8 @@
                         <th class="w-8"></th>
                         <th class="w-48 text-left">Name</th>
                         <th class="w-48 text-left">Father</th>
-                        <th class="w-20">Asg/Pr/Qz/Rv <br> <span class="font-thin">(20%)</span></th>
-                        <th class="w-20">Mid<br> <span class="font-thin">(30%)</span></th>
+                        <th class="w-20">Mid<br> <span class="font-thin">(20%)</span></th>
+                        <th class="w-20">Asg/Pr/Qz/Rv <br> <span class="font-thin">(30%)</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,14 +84,15 @@
                         <td hidden><input type="text" name='id[]' value="{{$first_attempt->id}}"></td>
                         <td hidden><input type="text" name='attempt_type[]' value="F"></td>
                         <td>
-                            <input type='text' name='assignment[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->assignment}}" placeholder="absent" onchange="validate(event,10)">
-                        </td>
-                        <td hidden>
-                            <input type="text" name='presentation[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="0" placeholder="absent" onchange="validate(event,10)">
+                            <input type="text" name='midterm[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->midterm}}" placeholder="absent" onchange="validate(event,20)">
                         </td>
                         <td>
-                            <input type="text" name='midterm[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->midterm}}" placeholder="absent" onchange="validate(event,30)">
+                            <input type='text' name='assignment[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->assignment}}" placeholder="absent" onchange="validate(event,30)">
                         </td>
+                        <td hidden>
+                            <input type="text" name='quiz1[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="0" placeholder="absent" onchange="validate(event,10)">
+                        </td>
+
                     </tr>
                     @endforeach
 
@@ -111,15 +112,14 @@
                         <td hidden><input type="text" name='id[]' value="{{$reappear->id}}"></td>
                         <td hidden><input type="text" name='attempt_type[]' value="R"></td>
                         <td>
-                            <input type='text' name='assignment[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->assignment}}" placeholder="absent" onchange="validate(event,10)">
-                        </td>
-                        <td>
-                            <input type="text" name='presentation[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="0" placeholder="absent" onchange="validate(event,10)">
-                        </td>
-                        <td>
                             <input type="text" name='midterm[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->midterm}}" placeholder="absent" onchange="validate(event,30)">
                         </td>
-
+                        <td>
+                            <input type='text' name='assignment[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->assignment}}" placeholder="absent" onchange="validate(event,10)">
+                        </td>
+                        <td hidden>
+                            <input type="text" name='quiz1[]' value=0>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
