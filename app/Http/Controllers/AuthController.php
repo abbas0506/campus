@@ -201,7 +201,7 @@ class AuthController extends Controller
             ->where('code', $request->otp)
             ->where('updated_at', '>=', now()->subMinutes(5))
             ->first();
-
+        // $OTPVerified = 1;
         if ($OTPVerified) {
             session([
                 'otp_verified' => 1,

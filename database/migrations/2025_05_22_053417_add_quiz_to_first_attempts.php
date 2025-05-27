@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::table('first_attempts', function (Blueprint $table) {
             //
-            $table->text('quiz1')->nullable();
-            $table->text('quiz2')->nullable();
+            $table->tinyInteger('quiz1')->nullable();
+            $table->tinyInteger('quiz2')->nullable();
         });
     }
 
