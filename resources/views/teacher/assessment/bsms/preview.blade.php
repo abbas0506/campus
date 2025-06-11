@@ -81,7 +81,7 @@
                     <td class="text-left">{{$first_attempt->student->father}}</td>
                     <td>{{$first_attempt->attendance}}</td>
                     <td>{{$first_attempt->midterm}}</td>
-                    <td>{{$first_attempt->presentation}}</td>
+                    <td>{{$first_attempt->quiz1}}</td>
                     <td>{{$first_attempt->assignment}}</td>
                     <td class="font-semibold">{{$first_attempt->formative()}}</td>
                     <td>{{$first_attempt->quiz2}}</td>
@@ -108,11 +108,13 @@
                     <td class="text-left">{{$reappear->first_attempt->student->name}}<br>{{$reappear->first_attempt->student->rollno}}</td>
                     <td>{{$reappear->first_attempt->student->father}}</td>
                     <td>{{$reappear->attendance}}</td>
-                    <td>{{$reappear->assignment}}</td>
-                    <td>{{$reappear->presentation}}</td>
                     <td>{{$reappear->midterm}}</td>
+                    <td>{{$reappear->quiz1}}</td>
+                    <td>{{$reappear->assignment}}</td>
                     <td class="font-bold">{{$reappear->formative()}}</td>
                     <td>{{$reappear->summative}}</td>
+                    <td>{{$reappear->quiz2}}</td>
+                    <td>{{$reappear->summative()}}</td>
                     <td>{{$reappear->total()}}</td>
                     <td>{{$reappear->gpa()}}</td>
                     <td>{{$reappear->grade()}}</td>

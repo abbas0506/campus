@@ -158,7 +158,7 @@ $roman = config('global.romans');
                         <td>{{$first_attempt->assignment}}</td>
                         <!-- dont show for phd -->
                         @if($course_allocation->section->clas->program->level!=21)
-                        <td>{{$first_attempt->presentation}}</td>
+                        <td>{{$first_attempt->quiz1}}</td>
                         @endif
                         <td>{{$first_attempt->midterm}}</td>
                         <td>{{$first_attempt->formative()}}</td>
@@ -213,7 +213,7 @@ $roman = config('global.romans');
                         <td>{{$reappear->assignment}}</td>
                         <!-- dont show for phd -->
                         @if($course_allocation->section->clas->program->level!=21)
-                        <td>{{$reappear->presentation}}</td>
+                        <td>{{$reappear->quiz1}}</td>
                         @endif
                         <td>{{$reappear->midterm}}</td>
                         <td>{{$reappear->formative()}}</td>

@@ -80,7 +80,7 @@
                     <td class="text-left">{{$first_attempt->student->father}}</td>
                     <td></td>
                     <td>{{$first_attempt->assignment}}</td>
-                    <td>{{$first_attempt->presentation}}</td>
+                    <td>{{$first_attempt->quiz1}}</td>
                     <td>{{$first_attempt->midterm}}</td>
                     <td>{{$first_attempt->summative}}</td>
                     <td>{{$first_attempt->total()}}</td>
@@ -105,7 +105,7 @@
                     <td>{{$reappear->first_attempt->student->father}}</td>
                     <td></td>
                     <td>{{$reappear->assignment}}</td>
-                    <td>{{$reappear->presentation}}</td>
+                    <td>{{$reappear->quiz1}}</td>
                     <td>{{$reappear->midterm}}</td>
                     <td>{{$reappear->summative}}</td>
                     <td>{{$reappear->total()}}</td>
