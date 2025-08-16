@@ -112,10 +112,10 @@
                         <td hidden><input type="text" name='id[]' value="{{$reappear->id}}"></td>
                         <td hidden><input type="text" name='attempt_type[]' value="R"></td>
                         <td>
-                            <input type="text" name='midterm[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->midterm}}" placeholder="absent" onchange="validate(event,30)">
+                            <input type="text" name='midterm[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->midterm}}" placeholder="absent" onchange="validate(event,20)">
                         </td>
                         <td>
-                            <input type='text' name='assignment[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->assignment}}" placeholder="absent" onchange="validate(event,10)">
+                            <input type='text' name='assignment[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->assignment}}" placeholder="absent" onchange="validate(event,30)">
                         </td>
                         <td hidden>
                             <input type="text" name='quiz1[]' value=0>
