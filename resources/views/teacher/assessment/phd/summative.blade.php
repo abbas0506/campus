@@ -110,6 +110,7 @@
                         @if($reappear->formative()>=25)
                         <td hidden><input type="text" name='id[]' value="{{$reappear->id}}"></td>
                         <td hidden><input type="text" name='attempt_type[]' value="R"></td>
+                        <td hidden><input type='text' name='quiz2[]' value=""></td>
                         <td>
                             <input type='text' name='summative[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$reappear->summative}}" placeholder="absent" onchange="validate(event,50)">
                         </td>
