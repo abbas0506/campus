@@ -90,7 +90,7 @@
                             <input type='text' name='assignment[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="{{$first_attempt->assignment}}" placeholder="absent" onchange="validate(event,30)">
                         </td>
                         <td hidden>
-                            <input type="text" name='quiz1[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="0" placeholder="absent" onchange="validate(event,10)">
+                            <input type="text" name='quiz1[]' class="outline outline-1 outline-gray-300 text-center py-1 w-16 marks" value="0" onchange="validate(event,10)">
                         </td>
 
                     </tr>
