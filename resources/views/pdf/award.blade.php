@@ -243,7 +243,6 @@ $roman = config('global.romans');
                         @if($course_allocation->section->clas->program->level==21)
                         <td>{{$reappear->midterm}}</td>
                         <td>{{$reappear->assignment}}</td>
-                        <td>{{$reappear->formative}}</td>
                         <td>{{$reappear->formative()}}</td>
                         <td>{{$reappear->summative}}</td>
                         @else
