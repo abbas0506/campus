@@ -65,8 +65,11 @@ class AuthController extends Controller
                 redirect($user->roles->first->name);
             }
             if (Auth::attempt($credentials)) {
-                Auth::user()->sendCode();
-                return redirect('verify/otp');
+                // OTP verification skipped temporarily
+                // Auth::user()->sendCode();
+                // return redirect('verify/otp');
+
+                return view('role-selection');
             }
             // if credential not matched, show warning
             return redirect()->back()->withErrors(['auth' => 'User credentials incorrect !']);
