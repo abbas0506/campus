@@ -133,7 +133,7 @@ class Reappear extends Model
     }
     public function scopeFormativeClear($query)
     {
-        $query->whereRaw('assignment+presentation+midterm>=25');
+        $query->whereRaw('COALESCE(midterm, 0) + COALESCE(quiz1, 0) + COALESCE(assignment, 0)>=25');
     }
     public function scopeForCurrentSemester($query)
     {
