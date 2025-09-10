@@ -69,6 +69,11 @@ class AuthController extends Controller
                 // Auth::user()->sendCode();
                 // return redirect('verify/otp');
 
+                // for temporary cease of OTP verification 
+                session([
+                    'otp_verified' => 1,
+                ]);
+
                 return view('role-selection');
             }
             // if credential not matched, show warning
